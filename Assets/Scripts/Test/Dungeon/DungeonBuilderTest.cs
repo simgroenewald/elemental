@@ -21,8 +21,10 @@ public class DungeonBuilderTest : SingletonMonobehaviour<DungeonBuilderTest>
 
     [Header("Mappers")]
     [SerializeField] StructureTypeToGridMapperSO structureToGridMapper;
+    [SerializeField] TileTypeToTileMapperSO tileTypeToTileMapper;
 
     [Header("Tilemaps")]
+    [SerializeField] Tilemap structureTilemap;
     [SerializeField] Tilemap baseTilemap;
     [SerializeField] Tilemap baseDecorationTilemap;
     [SerializeField] Tilemap environmentDecorationTilemap;
@@ -35,11 +37,8 @@ public class DungeonBuilderTest : SingletonMonobehaviour<DungeonBuilderTest>
     [SerializeField] Tilemap tileTypeTilemap;
     [SerializeField] Tilemap collisionTilemap;
 
-
     List<DungeonRoom> dungeonRooms;
     List<Connector> connectors;
-    public Tilemap tilemap;
-    public TileTypeToTileMapperSO tileTypeToTileMapper;
 
     /// <summary>
     /// Generate random dungeon, returns true if dungeon built, false if failed
@@ -203,20 +202,20 @@ public class DungeonBuilderTest : SingletonMonobehaviour<DungeonBuilderTest>
         {
             //DrawBoundArea(room.outerBounds, tileTypeToTileMapper.tileTypeToTileDict[TileType.Bou]);
             //DrawBoundArea(room.bounds, tileTypeToTileMapper.tileTypeToTileDict[TileType.Bou]);
-            DrawRoomTiles(room.structureTiles, tileTypeToTileMapper.tileTypeToTileDict);
+            DrawRoomTiles(tileTypeTilemap, room.structureTiles, tileTypeToTileMapper.tileTypeToTileDict);
         }
 
         foreach (var connector in connectors)
         {
             if (connector.isStraight)
             {
-                DrawRoomTiles(connector.bridgeMain.structureTiles, tileTypeToTileMapper.tileTypeToTileDict);
+                DrawRoomTiles(tileTypeTilemap, connector.bridgeMain.structureTiles, tileTypeToTileMapper.tileTypeToTileDict);
             }
             else
             {
-                DrawRoomTiles(connector.platform.structureTiles, tileTypeToTileMapper.tileTypeToTileDict);
-                DrawRoomTiles(connector.bridgeStart.structureTiles, tileTypeToTileMapper.tileTypeToTileDict);
-                DrawRoomTiles(connector.bridgeEnd.structureTiles, tileTypeToTileMapper.tileTypeToTileDict);
+                DrawRoomTiles(tileTypeTilemap, connector.platform.structureTiles, tileTypeToTileMapper.tileTypeToTileDict);
+                DrawRoomTiles(tileTypeTilemap, connector.bridgeStart.structureTiles, tileTypeToTileMapper.tileTypeToTileDict);
+                DrawRoomTiles(tileTypeTilemap, connector.bridgeEnd.structureTiles, tileTypeToTileMapper.tileTypeToTileDict);
             }
         }
 
@@ -256,8 +255,8 @@ public class DungeonBuilderTest : SingletonMonobehaviour<DungeonBuilderTest>
             {
                 foreach (var tile in connector.platform.structureTiles)
                 {
-                    bridgeTilemap.SetTile((Vector3Int)tile.position, tile.baseTile);
-                    frontTilemap.SetTile((Vector3Int)tile.position, tile.decorTile);
+                    platformTilemap.SetTile((Vector3Int)tile.position, tile.baseTile);
+                    platformDecorationTilemap.SetTile((Vector3Int)tile.position, tile.decorTile);
                     collisionTilemap.SetTile((Vector3Int)tile.position, tile.collisionTile);
                 }
                 foreach (var tile in connector.bridgeStart.structureTiles)
@@ -283,7 +282,7 @@ public class DungeonBuilderTest : SingletonMonobehaviour<DungeonBuilderTest>
             foreach (var tilePos in doorway.positions)
             {
                 Vector3Int tilePosition = new Vector3Int(tilePos.x, tilePos.y, 0);
-                tilemap.SetTile(tilePosition, tile);
+                tileTypeTilemap.SetTile(tilePosition, tile);
             }
         }
     }
@@ -295,7 +294,7 @@ public class DungeonBuilderTest : SingletonMonobehaviour<DungeonBuilderTest>
             for (var y = area.position.y; y < area.position.y + area.size.y; y++)
             {
                 Vector3Int tilePosition = new Vector3Int(x, y, 0);
-                tilemap.SetTile(tilePosition, tile);
+                structureTilemap.SetTile(tilePosition, tile);
             }
         }
     }
@@ -320,7 +319,7 @@ public class DungeonBuilderTest : SingletonMonobehaviour<DungeonBuilderTest>
             foreach (var position in edgeList.Value)
             {
                 Vector3Int tilePosition = new Vector3Int(position.x, position.y, 0);
-                tilemap.SetTile(tilePosition, tile);
+                structureTilemap.SetTile(tilePosition, tile);
             }
         }
     }
@@ -399,7 +398,7 @@ public class DungeonBuilderTest : SingletonMonobehaviour<DungeonBuilderTest>
 
     public void ClearTilemap()
     {
-        tilemap.ClearAllTiles();
+        structureTilemap.ClearAllTiles();
         baseTilemap.ClearAllTiles();
         baseDecorationTilemap.ClearAllTiles();
         environmentDecorationTilemap.ClearAllTiles();
@@ -413,7 +412,7 @@ public class DungeonBuilderTest : SingletonMonobehaviour<DungeonBuilderTest>
         collisionTilemap.ClearAllTiles();
     }
 
-    public void DrawRoomTiles(HashSet<StructureTile> roomTiles, Dictionary<TileType, UnityEngine.Tilemaps.Tile> tileTypeToTileDict)
+    public void DrawRoomTiles(Tilemap tilemap, HashSet<StructureTile> roomTiles, Dictionary<TileType, UnityEngine.Tilemaps.Tile> tileTypeToTileDict)
     {
         foreach (var roomTile in roomTiles)
         {

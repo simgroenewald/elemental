@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "RoomSizeSO", menuName = "Scriptable Objects/RoomSize")]
-    public class RoomSizeSO : ScriptableObject
+public class RoomSizeSO : ScriptableObject
     {
         public string size;
         public int width;

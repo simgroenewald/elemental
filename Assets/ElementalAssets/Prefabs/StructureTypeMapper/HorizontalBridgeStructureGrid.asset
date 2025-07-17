@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 689be684a3e3648469686210599fc11c, type: 3}
+  m_Name: HorizontalBridgeStructureGrid
+  m_EditorClassIdentifier: 
+  structureType: 6
+  grid: {fileID: 4790476110877816076, guid: 7621b414505fec34cbf0fa1568ffaed5, type: 3}
