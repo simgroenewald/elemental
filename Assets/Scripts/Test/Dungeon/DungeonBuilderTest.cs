@@ -8,33 +8,37 @@ using static UnityEditor.PlayerSettings;
 
 
 [DisallowMultipleComponent]
-public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
+public class DungeonBuilderTest : SingletonMonobehaviour<DungeonBuilderTest>
 {
+    [Header("Settings")]
+    [SerializeField] LevelSettingSO levelSettings;
+    [SerializeField] int seed;
 
     [Header("Generators")]
+    [SerializeField] DungeonLayoutGenerator dungeonLayoutGenerator;
     [SerializeField] RoomGenerator roomGenerator;
     [SerializeField] ConnectorGenerator connectorGenerator;
-    [SerializeField] DungeonLayoutGenerator dungeonLayoutGenerator;
-    [SerializeField] LevelSettingSO levelSettings;
-    [SerializeField]
-    public StructureTypeToGridMapperSO structureToGridMapper;
-    [SerializeField] Tilemap outputBaseTilemap;
-    [SerializeField] Tilemap outputDecorTilemap;
-    [SerializeField] Tilemap outputCollisionTilemap;
-    [SerializeField] Tilemap outputBasePlatformTilemap;
-    [SerializeField] Tilemap outputDecorPlatformTilemap;
-    [SerializeField] Tilemap outputBaseBridgeTilemap;
-    [SerializeField] Tilemap outputDecorBridgeTilemap;
+
+    [Header("Mappers")]
+    [SerializeField] StructureTypeToGridMapperSO structureToGridMapper;
+
+    [Header("Tilemaps")]
+    [SerializeField] Tilemap baseTilemap;
+    [SerializeField] Tilemap baseDecorationTilemap;
+    [SerializeField] Tilemap environmentDecorationTilemap;
+    [SerializeField] Tilemap platformTilemap;
+    [SerializeField] Tilemap platformDecorationTilemap;
+    [SerializeField] Tilemap bridgeTilemap;
+    [SerializeField] Tilemap instancesTilemap;
+    [SerializeField] Tilemap frontTilemap;
+    [SerializeField] Tilemap frontDecorationTilemap;
+    [SerializeField] Tilemap tileTypeTilemap;
+    [SerializeField] Tilemap collisionTilemap;
+
+
     List<DungeonRoom> dungeonRooms;
     List<Connector> connectors;
-
-    public Grid grid;
     public Tilemap tilemap;
-    public TileBase floorTile;
-    public TileBase outerBoundsTile;
-    public TileBase roomBoundsTile;
-    public TileBase corridorTile;
-    public TileBase doorTile;
     public TileTypeToTileMapperSO tileTypeToTileMapper;
 
     /// <summary>
@@ -55,21 +59,7 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
     {
         foreach (var dungeonRoom in dungeonRooms)
         {
-            if (dungeonRoom.theme == ElementTheme.Water || dungeonRoom.theme == ElementTheme.Earth)
-            {
-                /*                Debug.Log(dungeonRoom.theme);
-                                Debug.Log(dungeonRoom.bounds.position.x + " " + dungeonRoom.bounds.position.y);
-                                Debug.Log(dungeonRoom.bounds.size.x + " " + dungeonRoom.bounds.size.y);*/
-                //roomGenerator.GenerateNaturalRoom(dungeonRoom);
                 roomGenerator.GenerateStructuredRoom(dungeonRoom);
-            }
-            if (dungeonRoom.theme == ElementTheme.Fire || dungeonRoom.theme == ElementTheme.Air)
-            {
-                /*                Debug.Log(dungeonRoom.theme);
-                                Debug.Log(dungeonRoom.bounds.position.x + " " + dungeonRoom.bounds.position.y);
-                                Debug.Log(dungeonRoom.bounds.size.x + " " + dungeonRoom.bounds.size.y);*/
-                roomGenerator.GenerateStructuredRoom(dungeonRoom);
-            }
         }
     }
 
@@ -83,18 +73,11 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
         {
             if (dungeonRoom.theme == ElementTheme.Water || dungeonRoom.theme == ElementTheme.Earth)
             {
-                /*                Debug.Log(dungeonRoom.theme);
-                                Debug.Log(dungeonRoom.bounds.position.x + " " + dungeonRoom.bounds.position.y);
-                                Debug.Log(dungeonRoom.bounds.size.x + " " + dungeonRoom.bounds.size.y);*/
-                //roomGenerator.GenerateNaturalRoom(dungeonRoom);
                 WaveFunctionCollapse2 wfc = new WaveFunctionCollapse2(dungeonRoom.structureTiles, properties, 1);
                 wfc.PopulateOutputCells();
             }
             if (dungeonRoom.theme == ElementTheme.Fire || dungeonRoom.theme == ElementTheme.Air)
             {
-                /*                Debug.Log(dungeonRoom.theme);
-                                Debug.Log(dungeonRoom.bounds.position.x + " " + dungeonRoom.bounds.position.y);
-                                Debug.Log(dungeonRoom.bounds.size.x + " " + dungeonRoom.bounds.size.y);*/
                 WaveFunctionCollapse2 wfc = new WaveFunctionCollapse2(dungeonRoom.structureTiles, properties, 1);
                 wfc.PopulateOutputCells();
             }
@@ -105,13 +88,6 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
     {
         // Determines width of whole connector including 'walls'
         connectors = connectorGenerator.GenerateConnectors(dungeonRooms, 3);
-        /*        foreach (var corridor in corridors)
-                {
-                    foreach (var tile in corridor.floorPositions)
-                    {
-                        Debug.Log($"Generated: {tile.x}: {tile.y}");
-                    }
-                }*/
     }
 
     public void PopulateConnectorTiles()
@@ -217,27 +193,6 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
                 Gizmos.DrawLine(new Vector3(room.nodeGraphPosition.x, room.nodeGraphPosition.y, 0),
                                 new Vector3(room.parent.nodeGraphPosition.x, room.parent.nodeGraphPosition.y, 0));
             }
-
-            /*            // Semi-transparent gray fill for room bounds
-                        Gizmos.color = new Color(0.6f, 0.6f, 0.6f, 0.3f);
-                        Gizmos.DrawCube(
-                            room.outerBounds.position,
-                            room.outerBounds.size
-                        );
-
-                        // Semi-transparent gray fill for room bounds
-                        Gizmos.color = new Color(0.0f, 0.0f, 0.6f, 0.5f);
-                        Gizmos.DrawCube(
-                            room.bounds.position,
-                            room.bounds.size
-                        );
-
-                        // Red wireframe outline for clarity
-                        Gizmos.color = Color.red;
-                        Gizmos.DrawWireCube(
-                            room.outerBounds.position,
-                            room.outerBounds.size
-                        );*/
         }
     }
 
@@ -246,8 +201,8 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
         tileTypeToTileMapper.tileTypeToTileDict = tileTypeToTileMapper.GetTileTypeToTileDict();
         foreach (var room in dungeonRooms)
         {
-            DrawBoundArea(room.outerBounds, outerBoundsTile);
-            DrawBoundArea(room.bounds, roomBoundsTile);
+            //DrawBoundArea(room.outerBounds, tileTypeToTileMapper.tileTypeToTileDict[TileType.Bou]);
+            //DrawBoundArea(room.bounds, tileTypeToTileMapper.tileTypeToTileDict[TileType.Bou]);
             DrawRoomTiles(room.structureTiles, tileTypeToTileMapper.tileTypeToTileDict);
         }
 
@@ -277,9 +232,9 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
         {
             foreach (var tile in room.structureTiles)
             {
-                outputBaseTilemap.SetTile((Vector3Int)tile.position, tile.baseTile);
-                outputDecorTilemap.SetTile((Vector3Int)tile.position, tile.decorTile);
-                outputCollisionTilemap.SetTile((Vector3Int)tile.position, tile.collisionTile);
+                baseTilemap.SetTile((Vector3Int)tile.position, tile.baseTile);
+                baseDecorationTilemap.SetTile((Vector3Int)tile.position, tile.decorTile);
+                collisionTilemap.SetTile((Vector3Int)tile.position, tile.collisionTile);
             }
         }
     }
@@ -292,30 +247,30 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
             {
                 foreach (var tile in connector.bridgeMain.structureTiles)
                 {
-                    outputBaseBridgeTilemap.SetTile((Vector3Int)tile.position, tile.baseTile);
-                    outputDecorBridgeTilemap.SetTile((Vector3Int)tile.position, tile.decorTile);
-                    outputCollisionTilemap.SetTile((Vector3Int)tile.position, tile.collisionTile);
+                    bridgeTilemap.SetTile((Vector3Int)tile.position, tile.baseTile);
+                    frontTilemap.SetTile((Vector3Int)tile.position, tile.decorTile);
+                    collisionTilemap.SetTile((Vector3Int)tile.position, tile.collisionTile);
                 }
             }
             if (!connector.isStraight)
             {
                 foreach (var tile in connector.platform.structureTiles)
                 {
-                    outputBasePlatformTilemap.SetTile((Vector3Int)tile.position, tile.baseTile);
-                    outputDecorPlatformTilemap.SetTile((Vector3Int)tile.position, tile.decorTile);
-                    outputCollisionTilemap.SetTile((Vector3Int)tile.position, tile.collisionTile);
+                    bridgeTilemap.SetTile((Vector3Int)tile.position, tile.baseTile);
+                    frontTilemap.SetTile((Vector3Int)tile.position, tile.decorTile);
+                    collisionTilemap.SetTile((Vector3Int)tile.position, tile.collisionTile);
                 }
                 foreach (var tile in connector.bridgeStart.structureTiles)
                 {
-                    outputBaseBridgeTilemap.SetTile((Vector3Int)tile.position, tile.baseTile);
-                    outputDecorBridgeTilemap.SetTile((Vector3Int)tile.position, tile.decorTile);
-                    outputCollisionTilemap.SetTile((Vector3Int)tile.position, tile.collisionTile);
+                    bridgeTilemap.SetTile((Vector3Int)tile.position, tile.baseTile);
+                    frontTilemap.SetTile((Vector3Int)tile.position, tile.decorTile);
+                    collisionTilemap.SetTile((Vector3Int)tile.position, tile.collisionTile);
                 }
                 foreach (var tile in connector.bridgeEnd.structureTiles)
                 {
-                    outputBaseBridgeTilemap.SetTile((Vector3Int)tile.position, tile.baseTile);
-                    outputDecorBridgeTilemap.SetTile((Vector3Int)tile.position, tile.decorTile);
-                    outputCollisionTilemap.SetTile((Vector3Int)tile.position, tile.collisionTile);
+                    bridgeTilemap.SetTile((Vector3Int)tile.position, tile.baseTile);
+                    frontTilemap.SetTile((Vector3Int)tile.position, tile.decorTile);
+                    collisionTilemap.SetTile((Vector3Int)tile.position, tile.collisionTile);
                 }
             }
         }
@@ -349,7 +304,7 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
     {
         foreach (var room in dungeonRooms)
         {
-            DrawFloorTiles(room.floorPositions, floorTile);
+            DrawFloorTiles(room.floorPositions, tileTypeToTileMapper.tileTypeToTileDict[TileType.Floor]);
         }
     }
 
@@ -445,13 +400,17 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
     public void ClearTilemap()
     {
         tilemap.ClearAllTiles();
-        outputBaseTilemap.ClearAllTiles();
-        outputDecorTilemap.ClearAllTiles();
-        outputCollisionTilemap.ClearAllTiles();
-        outputBasePlatformTilemap.ClearAllTiles();
-        outputDecorPlatformTilemap.ClearAllTiles();
-        outputBaseBridgeTilemap.ClearAllTiles();
-        outputDecorBridgeTilemap.ClearAllTiles();
+        baseTilemap.ClearAllTiles();
+        baseDecorationTilemap.ClearAllTiles();
+        environmentDecorationTilemap.ClearAllTiles();
+        platformTilemap.ClearAllTiles();
+        platformDecorationTilemap.ClearAllTiles();
+        bridgeTilemap.ClearAllTiles();
+        instancesTilemap.ClearAllTiles();
+        frontTilemap.ClearAllTiles();
+        frontDecorationTilemap.ClearAllTiles();
+        tileTypeTilemap.ClearAllTiles();
+        collisionTilemap.ClearAllTiles();
     }
 
     public void DrawRoomTiles(HashSet<StructureTile> roomTiles, Dictionary<TileType, UnityEngine.Tilemaps.Tile> tileTypeToTileDict)
@@ -463,21 +422,4 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
         }
     }
 
-    private void DrawTile(Vector2Int position, TileBase tile)
-    {
-        var worldPosition = grid.CellToWorld(new Vector3Int(position.x, position.y, 0));
-        /*        worldPosition += new Vector3(0.5f, 0.5f, 0);
-                GameObject tile = GameObject.CreatePrimitive(PrimitiveType.Quad);
-                tile.transform.position = worldPosition;
-                tile.transform.localScale = Vector3.one;
-
-                var renderer = tile.GetComponent<Renderer>();
-                renderer.sharedMaterial = new Material(Shader.Find("Unlit/Color"));
-                renderer.sharedMaterial.color = Color.white;
-
-                tile.name = $"Tile_{position.x}_{position.y}";
-                tile.transform.parent = transform;*/
-        Vector3Int tilePosition = new Vector3Int(position.x, position.y, 0);
-        tilemap.SetTile(tilePosition, tile);
-    }
 }
