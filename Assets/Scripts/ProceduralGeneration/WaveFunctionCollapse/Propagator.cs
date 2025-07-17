@@ -53,7 +53,8 @@ public class Propagator
             // Check if that cell exists
             // Check that cell has not already been updates
             // Check if its collapsed
-            if (compWaveCell == null || propagationSet.Contains(compWaveCell) || compWaveCell.Collapsed) {
+            if (compWaveCell == null || propagationSet.Contains(compWaveCell) || compWaveCell.Collapsed)
+            {
                 // continue to next dir
                 continue;
             }
@@ -75,7 +76,8 @@ public class Propagator
                 compWaveCell.CalculateEntropy(tilemapProperties.IndexToFrequency);
                 lowEntropySet.Add(compWaveCell);
                 Propagate(compWaveCell);
-            } else
+            }
+            else
             {
                 continue;
             }
@@ -166,12 +168,13 @@ public class Propagator
                         conflictCell = waveCell;
                         LogConflictCell();
                         break;
-                    } else
+                    }
+                    else
                     {
                         waveCell.PossibleTiles.Remove(index);
                     }
                 }
-            } 
+            }
         }
     }
 
@@ -215,7 +218,7 @@ public class Propagator
 
     public HashSet<int> GetNoCollisionTiles(WaveCell wavecell)
     {
-        List <HashSet<int>> allowedTilesLists = new List<HashSet<int>>();
+        List<HashSet<int>> allowedTilesLists = new List<HashSet<int>>();
 
         foreach (WFCDirection direction in Enum.GetValues(typeof(WFCDirection)))
         {
@@ -307,12 +310,13 @@ public class Propagator
         Debug.Log($"Position: {conflictCell.Position.x}: {conflictCell.Position.y}");
         Debug.Log($"Neighbours");
 
-        List<Vector2Int> neighbourDiffs = new List<Vector2Int> { new Vector2Int(0, 1), new Vector2Int(0, -1), new Vector2Int(1, 0), new Vector2Int(-1, 0)};
+        List<Vector2Int> neighbourDiffs = new List<Vector2Int> { new Vector2Int(0, 1), new Vector2Int(0, -1), new Vector2Int(1, 0), new Vector2Int(-1, 0) };
 
-        foreach(var diff in neighbourDiffs)
+        foreach (var diff in neighbourDiffs)
         {
             Vector2Int neighbourPos = conflictCell.Position + diff;
-            foreach (var waveCell in outputCells) {
+            foreach (var waveCell in outputCells)
+            {
                 if (waveCell.Position == neighbourPos)
                 {
                     Debug.Log($"Cell Type: {waveCell.TileType}");

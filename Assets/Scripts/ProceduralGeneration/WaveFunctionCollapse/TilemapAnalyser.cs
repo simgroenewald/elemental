@@ -21,7 +21,7 @@ public class TilemapAnalyser
         int width = bounds.size.x;
         int height = bounds.size.y;
 
-        
+
         List<int> tileIndices = new List<int>(width * height);
         Dictionary<int, Cell> indexToCell = new Dictionary<int, Cell>();
         Dictionary<Vector2Int, int> positionToIndex = new Dictionary<Vector2Int, int>();
@@ -59,7 +59,7 @@ public class TilemapAnalyser
                 if (!indexToCell.ContainsKey(key))
                 {
                     //Debug.Log("Adding cell");
-                    indexToCell[key] = new Cell(tilebase, decorTile, collisionTile, typeTile, key, new Vector2Int(x,y));
+                    indexToCell[key] = new Cell(tilebase, decorTile, collisionTile, typeTile, key, new Vector2Int(x, y));
                 }
 
                 // Store tile index in flattened array (row-major order)

@@ -58,7 +58,7 @@ public static class BinarySpacePartitioning2
         return roomGroups;
     }
 
-    private static List<HashSet<BoundsInt>> ShiftAndMerge(List<BoundsInt>  partitions, BoundsInt area)
+    private static List<HashSet<BoundsInt>> ShiftAndMerge(List<BoundsInt> partitions, BoundsInt area)
     {
         // Shift, trim, and optionally merge on overlap
         List<BoundsInt> shiftedPartitions = new List<BoundsInt>();
@@ -118,7 +118,8 @@ public static class BinarySpacePartitioning2
     private static int GetGroup(BoundsInt part, BoundsInt shifted, List<HashSet<BoundsInt>> partGroups)
     {
         int index = 0;
-        foreach(var group in partGroups) { 
+        foreach (var group in partGroups)
+        {
             foreach (var gPart in group)
             {
                 if (part == gPart || shifted == gPart)

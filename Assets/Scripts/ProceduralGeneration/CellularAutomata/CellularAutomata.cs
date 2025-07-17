@@ -42,7 +42,7 @@ public class CellularAutomata
 
     private void ApplyCellularAutomaton(int wallThreshold)
     {
-       int[,] newGrid = new int[gridHeight, gridWidth];
+        int[,] newGrid = new int[gridHeight, gridWidth];
 
         for (int y = 0; y < gridHeight; y++)
         {

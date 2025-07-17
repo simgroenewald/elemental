@@ -50,9 +50,9 @@ public class RulesGenerator
             return;
         }
 
-        if (!mapProperties.PositionToIndex.TryGetValue(new Vector2Int(x,y), out var neighbourHash))
+        if (!mapProperties.PositionToIndex.TryGetValue(new Vector2Int(x, y), out var neighbourHash))
         {
-            AddNeighbor(currentHash,direction, 0);
+            AddNeighbor(currentHash, direction, 0);
             return;
         }
 
@@ -71,9 +71,9 @@ public class RulesGenerator
         {
             TileRules[0][dir] = new HashSet<int>();
         }
-        foreach (KeyValuePair <int, Dictionary <WFCDirection, HashSet<int>>> ruleSet in TileRules)
+        foreach (KeyValuePair<int, Dictionary<WFCDirection, HashSet<int>>> ruleSet in TileRules)
         {
-            foreach (KeyValuePair <WFCDirection, HashSet<int>> ruleDict in ruleSet.Value)
+            foreach (KeyValuePair<WFCDirection, HashSet<int>> ruleDict in ruleSet.Value)
             {
                 if (ruleSet.Value[ruleDict.Key].Contains(0))
                 {

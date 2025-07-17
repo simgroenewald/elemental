@@ -23,7 +23,7 @@ public static class BSPCorridorGenerator
 
         areaCenters.Remove(currentRoomCenter);
 
-        while(areaCenters.Count > 0)
+        while (areaCenters.Count > 0)
         {
             Vector2Int closest = FindClosestPoint(currentRoomCenter, areaCenters);
             areaCenters.Remove(closest);
@@ -69,7 +69,7 @@ public static class BSPCorridorGenerator
             }
             corridor.Add(position);
         }
-        while (position.x != destination.x) 
+        while (position.x != destination.x)
         {
             if (destination.x > position.x)
             {

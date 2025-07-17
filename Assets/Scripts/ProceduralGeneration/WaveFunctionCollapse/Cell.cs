@@ -40,19 +40,19 @@ public class Cell
             TileType = TileTypeMapper.GetTileType(TypeTile.name);
         }
 
-/*        PossibleNeighbours = new Dictionary<WFCDirection, HashSet<int>>();
-        foreach (WFCDirection dir in System.Enum.GetValues(typeof(WFCDirection)))
-        {
-            PossibleNeighbours[dir] = new HashSet<int>();
-        }*/
+        /*        PossibleNeighbours = new Dictionary<WFCDirection, HashSet<int>>();
+                foreach (WFCDirection dir in System.Enum.GetValues(typeof(WFCDirection)))
+                {
+                    PossibleNeighbours[dir] = new HashSet<int>();
+                }*/
         Position = position;
     }
 
-/*    public void AddNeighbor(WFCDirection dir, int neighborHash)
-    {
-        if (!PossibleNeighbours.ContainsKey(dir))
-            PossibleNeighbours[dir] = new HashSet<int>();
+    /*    public void AddNeighbor(WFCDirection dir, int neighborHash)
+        {
+            if (!PossibleNeighbours.ContainsKey(dir))
+                PossibleNeighbours[dir] = new HashSet<int>();
 
-        PossibleNeighbours[dir].Add(neighborHash);
-    }*/
+            PossibleNeighbours[dir].Add(neighborHash);
+        }*/
 }
