@@ -35,6 +35,7 @@ using UnityEngine.Tilemaps;
 
         public void displayInfo()
         {
+        Debug.Log("Hello");
             /*        Debug.Log($"--- Room Info ---");
                     Debug.Log("Room Type: " + roomType);
                     Debug.Log("Room Theme: " + theme);

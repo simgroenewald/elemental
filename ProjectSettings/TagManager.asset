@@ -78,8 +78,11 @@ TagManager:
   - name: Front
     uniqueID: 1025438153
     locked: 0
-  - name: Fron Decoration
+  - name: Front Decoration
     uniqueID: 3422606377
+    locked: 0
+  - name: TileType
+    uniqueID: 3593986277
     locked: 0
   - name: Collision
     uniqueID: 2870844909
