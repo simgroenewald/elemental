@@ -104,7 +104,7 @@ public class WaveFunctionCollapse2
 
             Cell cell = tilemapProperties.IndexToCell[waveCell.CollapsedIndex];
             tile.baseTile = cell.BaseTile;
-            tile.decorTile = cell.DecorTile;
+            tile.frontTile = cell.FrontTile;
             tile.collisionTile = cell.CollisionTile;
 
             index++;

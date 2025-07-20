@@ -12,7 +12,7 @@ public class TilemapAnalyser
     {
 
         Tilemap baseMap = grid.transform.Find("Base")?.GetComponent<Tilemap>();
-        Tilemap decorMap = grid.transform.Find("Decor")?.GetComponent<Tilemap>();
+        Tilemap frontMap = grid.transform.Find("Front")?.GetComponent<Tilemap>();
         Tilemap collisionMap = grid.transform.Find("Collision")?.GetComponent<Tilemap>();
         Tilemap typeMap = grid.transform.Find("TileType")?.GetComponent<Tilemap>();
 
@@ -41,17 +41,17 @@ public class TilemapAnalyser
                 //Debug.Log($"Base: {tilebase}");
                 TileBase collisionTile = collisionMap.GetTile(pos);
                 //Debug.Log($"Collision: {collisionTile}");
-                TileBase decorTile = decorMap.GetTile(pos);
+                TileBase frontTile = frontMap.GetTile(pos);
                 //Debug.Log($"Decor: {decorTile}");
                 TileBase typeTile = typeMap.GetTile(pos);
                 //Debug.Log($"Type: {typeTile}");
 
-                if (tilebase == null && collisionTile == null && decorTile == null && typeTile == null)
+                if (tilebase == null && collisionTile == null && frontTile == null && typeTile == null)
                 {
                     continue;
                 }
 
-                List<TileBase> layerTiles = new List<TileBase> { tilebase, typeTile };
+                List<TileBase> layerTiles = new List<TileBase> { tilebase, frontTile, typeTile };
                 int key = GetKey(layerTiles);
                 //Debug.Log("Key: " + key);
 
@@ -59,7 +59,7 @@ public class TilemapAnalyser
                 if (!indexToCell.ContainsKey(key))
                 {
                     //Debug.Log("Adding cell");
-                    indexToCell[key] = new Cell(tilebase, decorTile, collisionTile, typeTile, key, new Vector2Int(x, y));
+                    indexToCell[key] = new Cell(tilebase, frontTile, collisionTile, typeTile, key, new Vector2Int(x, y));
                 }
 
                 // Store tile index in flattened array (row-major order)

@@ -232,7 +232,7 @@ public class DungeonBuilderTest : SingletonMonobehaviour<DungeonBuilderTest>
             foreach (var tile in room.structureTiles)
             {
                 baseTilemap.SetTile((Vector3Int)tile.position, tile.baseTile);
-                baseDecorationTilemap.SetTile((Vector3Int)tile.position, tile.decorTile);
+                frontTilemap.SetTile((Vector3Int)tile.position, tile.frontTile);
                 collisionTilemap.SetTile((Vector3Int)tile.position, tile.collisionTile);
             }
         }
@@ -247,7 +247,7 @@ public class DungeonBuilderTest : SingletonMonobehaviour<DungeonBuilderTest>
                 foreach (var tile in connector.bridgeMain.structureTiles)
                 {
                     bridgeTilemap.SetTile((Vector3Int)tile.position, tile.baseTile);
-                    frontTilemap.SetTile((Vector3Int)tile.position, tile.decorTile);
+                    frontTilemap.SetTile((Vector3Int)tile.position, tile.frontTile);
                     collisionTilemap.SetTile((Vector3Int)tile.position, tile.collisionTile);
                 }
             }
@@ -256,19 +256,19 @@ public class DungeonBuilderTest : SingletonMonobehaviour<DungeonBuilderTest>
                 foreach (var tile in connector.platform.structureTiles)
                 {
                     platformTilemap.SetTile((Vector3Int)tile.position, tile.baseTile);
-                    platformDecorationTilemap.SetTile((Vector3Int)tile.position, tile.decorTile);
+                    frontTilemap.SetTile((Vector3Int)tile.position, tile.frontTile);
                     collisionTilemap.SetTile((Vector3Int)tile.position, tile.collisionTile);
                 }
                 foreach (var tile in connector.bridgeStart.structureTiles)
                 {
                     bridgeTilemap.SetTile((Vector3Int)tile.position, tile.baseTile);
-                    frontTilemap.SetTile((Vector3Int)tile.position, tile.decorTile);
+                    frontTilemap.SetTile((Vector3Int)tile.position, tile.frontTile);
                     collisionTilemap.SetTile((Vector3Int)tile.position, tile.collisionTile);
                 }
                 foreach (var tile in connector.bridgeEnd.structureTiles)
                 {
                     bridgeTilemap.SetTile((Vector3Int)tile.position, tile.baseTile);
-                    frontTilemap.SetTile((Vector3Int)tile.position, tile.decorTile);
+                    frontTilemap.SetTile((Vector3Int)tile.position, tile.frontTile);
                     collisionTilemap.SetTile((Vector3Int)tile.position, tile.collisionTile);
                 }
             }

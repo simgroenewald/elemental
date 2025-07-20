@@ -44,7 +44,7 @@ public class Propagator
         // If it isnt then loop through each direction
         foreach (WFCDirection direction in Enum.GetValues(typeof(WFCDirection)))
         {
-            if (waveCell.Position == new Vector2Int(135, 35))
+            if (waveCell.Position == new Vector2Int(58, 41))
             {
                 Debug.Log("Gotcha!!");
             }
@@ -59,7 +59,7 @@ public class Propagator
                 continue;
             }
 
-            if (compWaveCell.Position.Equals(new Vector2Int(41, 35)))
+            if (compWaveCell.Position.Equals(new Vector2Int(58, 41)))
             {
                 Debug.Log("Gotcha!!");
             }
@@ -180,6 +180,11 @@ public class Propagator
 
     public void CollapseCellNew(WaveCell waveCell)
     {
+
+        if (waveCell.Position == new Vector2Int(58, 41))
+        {
+            Debug.Log("Gotcha");
+        }
         HashSet<int> possibleTiles = waveCell.PossibleTiles;
 
         if (possibleTiles.Count == 0)

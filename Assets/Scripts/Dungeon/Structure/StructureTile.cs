@@ -7,7 +7,7 @@ public class StructureTile
     public Vector2Int position;
     public TileType tileType;
     public TileBase baseTile;
-    public TileBase decorTile;
+    public TileBase frontTile;
     public TileBase collisionTile;
 
     public StructureTile(Vector2Int position, TileType tileType)
