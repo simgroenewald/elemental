@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a66be432d53e90446bf018dff0b4d851, type: 3}
+  m_Name: TileTypeToTileMapper
+  m_EditorClassIdentifier: 
+  tileTypeToTileList:
+  - {fileID: 11400000, guid: aea16898fcbe7014998b2b22ff9046fc, type: 2}
+  - {fileID: 11400000, guid: b8c5696c39a21484c8283659c0e042c7, type: 2}
+  - {fileID: 11400000, guid: b5ffe420a44cc944bae16355dbcf1429, type: 2}
+  - {fileID: 11400000, guid: 7847516688560d94580a3001048f8453, type: 2}
+  - {fileID: 11400000, guid: f05036cecd5b630439c5f887fbe2ccc5, type: 2}
+  - {fileID: 11400000, guid: e927d0a16690a334b8506bb9341f1a7d, type: 2}
+  - {fileID: 11400000, guid: db40433f746c97c4aaf9b76fd29056eb, type: 2}
+  - {fileID: 11400000, guid: b0083c984d73fc1488feafeeec764ba8, type: 2}
+  - {fileID: 11400000, guid: 6eb77d8a5847d924fb8b6aa4ecdf033e, type: 2}
+  - {fileID: 11400000, guid: 3a8bcf8e5e9f4a9458755fc2b1020da1, type: 2}
+  - {fileID: 11400000, guid: 5069dfd7ceee9ad4fa81adf9cc98bca6, type: 2}
+  - {fileID: 11400000, guid: cb7622ea93443e84dba61cbdf409bb96, type: 2}
+  - {fileID: 11400000, guid: 44b55e547daef884da31732ed864d52d, type: 2}
+  - {fileID: 11400000, guid: 88c47dbd3b554c441abddfd55eaf63e5, type: 2}
+  - {fileID: 11400000, guid: 5b4a8ffe7ce2d0b48be7067dae5ef5be, type: 2}
+  - {fileID: 11400000, guid: cbcf8e4cb469ed247934fff071b19bd5, type: 2}
+  - {fileID: 11400000, guid: a6826c1f529063d40afdbdfa04693f3f, type: 2}
+  - {fileID: 11400000, guid: 9df5ff9bf21e1e54b98286fca4569fb3, type: 2}
+  - {fileID: 11400000, guid: 5700338ed7875f7469f5128886b56bed, type: 2}
+  - {fileID: 11400000, guid: 4e3c197bbd87ec04c939ac75bf8f7e19, type: 2}
+  - {fileID: 11400000, guid: 5025db826ff7d8a47940cd281d711bc3, type: 2}
+  - {fileID: 11400000, guid: 26ac5bcbe7862244c9ff45b25e9e7b62, type: 2}
