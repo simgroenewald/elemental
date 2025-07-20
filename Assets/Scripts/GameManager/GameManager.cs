@@ -7,6 +7,7 @@ using UnityEngine;
 public class GameManager : SingletonMonobehaviour<GameManager>
 {
     [SerializeField] List<LevelSettingSO> levels;
+    [SerializeField] DungeonBuilder dungeonBuilder;
     [SerializeField] int currentLevelIndex = 0;
     public GameState state;
 
@@ -32,7 +33,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         switch(state)
         {
             case GameState.start:
-                //DungeonBuilder.GenerateDungeon(1667, levels[currentLevelIndex]);
+                dungeonBuilder.GenerateDungeon(6776, levels[currentLevelIndex]);
                 state = GameState.playing;
                 break;
 

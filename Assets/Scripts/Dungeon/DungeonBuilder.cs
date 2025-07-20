@@ -11,35 +11,35 @@ using static UnityEditor.PlayerSettings;
 public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
 {
 
-    [Header("Mappers")]
-    [SerializeField] TileTypeToTileMapperSO tileTypeToTileMapper;
+    [Header("Templates")]
+    [SerializeField] GameObject dungeonTemplate;
 
-    [Header("Tilemaps")]
-    [SerializeField] Tilemap structureTilemap;
-    [SerializeField] Tilemap baseTilemap;
-    [SerializeField] Tilemap baseDecorationTilemap;
-    [SerializeField] Tilemap environmentDecorationTilemap;
-    [SerializeField] Tilemap platformTilemap;
-    [SerializeField] Tilemap platformDecorationTilemap;
-    [SerializeField] Tilemap bridgeTilemap;
-    [SerializeField] Tilemap instancesTilemap;
-    [SerializeField] Tilemap frontTilemap;
-    [SerializeField] Tilemap frontDecorationTilemap;
-    [SerializeField] Tilemap tileTypeTilemap;
-    [SerializeField] Tilemap collisionTilemap;
+    [Header("Scriptable Objects")]
+    [SerializeField] RoomSizePresetsSO roomSizePresets;
+    [SerializeField] StructureTypeToGridMapperSO structureToGridMapper;
+
 
     public void GenerateDungeon(int seed, LevelSettingSO level)
     {
         UnityEngine.Random.InitState(seed);
 
-        DungeonLayoutGenerator dungeonLayoutGenerator = new DungeonLayoutGenerator();
-        StructureTypeToGridMapperSO structureToGridMapper = new StructureTypeToGridMapperSO();
+        DungeonLayoutGenerator dungeonLayoutGenerator = new DungeonLayoutGenerator(roomSizePresets);
 
         List<DungeonRoom> dungeonRooms = dungeonLayoutGenerator.GenerateDungeonLayout(level);
         GenerateStructuredRooms(dungeonRooms);
         List<Connector> connectors = GenerateConnectors(dungeonRooms);
         PopulateRoomTiles(dungeonRooms, structureToGridMapper);
         PopulateConnectorTiles(connectors, structureToGridMapper);
+
+        GameObject dungeonTemplateInstance = Instantiate(dungeonTemplate);
+        DrawDungeonTemplateTiles(dungeonTemplateInstance, dungeonRooms, connectors);
+
+        HideCollisionLayer(dungeonTemplateInstance);
+    }
+
+    private void HideCollisionLayer(GameObject dungeonTemplateInstance)
+    {
+        dungeonTemplateInstance.transform.Find("Grid/CollisionTilemap").GetComponent<TilemapRenderer>().enabled = false;
     }
 
     public void GenerateStructuredRooms(List<DungeonRoom> dungeonRooms)
@@ -125,7 +125,20 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
         }
     }
 
-    public void DrawRoomTiles(List<DungeonRoom> dungeonRooms)
+    public void DrawDungeonTemplateTiles(GameObject dungeonTemplateInstance, List<DungeonRoom> dungeonRooms, List<Connector> connectors)
+    {
+        Tilemap baseTilemap = dungeonTemplateInstance.transform.Find("Grid/BaseTilemap").GetComponent<Tilemap>();
+        Tilemap frontTilemap = dungeonTemplateInstance.transform.Find("Grid/FrontTilemap").GetComponent<Tilemap>();
+        Tilemap collisionTilemap = dungeonTemplateInstance.transform.Find("Grid/CollisionTilemap").GetComponent<Tilemap>();
+        Tilemap platformTilemap = dungeonTemplateInstance.transform.Find("Grid/PlatformTilemap").GetComponent<Tilemap>();
+        Tilemap bridgeTilemap = dungeonTemplateInstance.transform.Find("Grid/BridgeTilemap").GetComponent<Tilemap>();
+
+        DrawRoomTiles(dungeonRooms, baseTilemap, frontTilemap, collisionTilemap);
+        DrawConnectorTiles(connectors, platformTilemap, bridgeTilemap, frontTilemap, collisionTilemap);
+
+    }
+
+    public void DrawRoomTiles(List<DungeonRoom> dungeonRooms, Tilemap baseTilemap, Tilemap frontTilemap, Tilemap collisionTilemap)
     {
         foreach (var room in dungeonRooms)
         {
@@ -138,7 +151,7 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
         }
     }
 
-    public void DrawConnectorTiles(List<Connector> connectors)
+    public void DrawConnectorTiles(List<Connector> connectors, Tilemap platformTilemap, Tilemap bridgeTilemap, Tilemap frontTilemap, Tilemap collisionTilemap)
     {
         foreach (var connector in connectors)
         {
@@ -174,21 +187,4 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
             }
         }
     }
-
-    public void ClearTilemap()
-    {
-        structureTilemap.ClearAllTiles();
-        baseTilemap.ClearAllTiles();
-        baseDecorationTilemap.ClearAllTiles();
-        environmentDecorationTilemap.ClearAllTiles();
-        platformTilemap.ClearAllTiles();
-        platformDecorationTilemap.ClearAllTiles();
-        bridgeTilemap.ClearAllTiles();
-        instancesTilemap.ClearAllTiles();
-        frontTilemap.ClearAllTiles();
-        frontDecorationTilemap.ClearAllTiles();
-        tileTypeTilemap.ClearAllTiles();
-        collisionTilemap.ClearAllTiles();
-    }
-
 }

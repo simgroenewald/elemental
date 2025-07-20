@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 public class DungeonLayoutGenerator : MonoBehaviour
 {
@@ -7,6 +8,11 @@ public class DungeonLayoutGenerator : MonoBehaviour
     public List<DungeonRoom> allRooms = new();
     [SerializeField]
     private RoomSizePresetsSO roomSizePresets;
+
+    public DungeonLayoutGenerator(RoomSizePresetsSO roomSizePresets)
+    {
+        this.roomSizePresets = roomSizePresets;
+    }
 
     public List<DungeonRoom> GenerateDungeonLayout(LevelSettingSO level)
     {
