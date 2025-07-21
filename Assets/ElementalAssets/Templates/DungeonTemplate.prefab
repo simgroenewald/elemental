@@ -287,6 +287,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1068158449991286101}
   - component: {fileID: 6328969353857184696}
+  - component: {fileID: 5114153027357477341}
   m_Layer: 12
   m_Name: DungeonTemplate
   m_TagString: Untagged
@@ -357,6 +358,30 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &5114153027357477341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2761768881728766154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac854238f31f4624d93e4afda69b1175, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grid: {fileID: 8550846602039956436}
+  baseTilemap: {fileID: 8693981450634254050}
+  baseDecorationTilemap: {fileID: 3820339959183677044}
+  environmentDecorationTilemap: {fileID: 361532824150478042}
+  platformTilemap: {fileID: 1640327551231488323}
+  platformDecorationTilemap: {fileID: 5328864232362826960}
+  bridgeTilemap: {fileID: 3063163576125300673}
+  frontTilemap: {fileID: 2637418879889115393}
+  frontDecorationTilemap: {fileID: 1886625375557954725}
+  collisionTilemap: {fileID: 5816264538513179714}
+  minimap: {fileID: 8671861416396381054}
+  environment: {fileID: 5754663318040660208}
 --- !u!1 &3040492877143641449
 GameObject:
   m_ObjectHideFlags: 0

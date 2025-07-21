@@ -13,15 +13,18 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
 
     [Header("Templates")]
     [SerializeField] GameObject dungeonTemplate;
+    DungeonLayers dungeonLayers;
 
     [Header("Scriptable Objects")]
     [SerializeField] RoomSizePresetsSO roomSizePresets;
     [SerializeField] StructureTypeToGridMapperSO structureToGridMapper;
 
 
-    public void GenerateDungeon(int seed, LevelSettingSO level)
+    public Dungeon GenerateDungeon(int seed, LevelSettingSO level)
     {
         UnityEngine.Random.InitState(seed);
+
+        Dungeon dungeon = new Dungeon();
 
         DungeonLayoutGenerator dungeonLayoutGenerator = new DungeonLayoutGenerator(roomSizePresets);
 
@@ -32,14 +35,22 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
         PopulateConnectorTiles(connectors, structureToGridMapper);
 
         GameObject dungeonTemplateInstance = Instantiate(dungeonTemplate);
+        dungeonLayers = dungeonTemplateInstance.GetComponent<DungeonLayers>();
+
         DrawDungeonTemplateTiles(dungeonTemplateInstance, dungeonRooms, connectors);
 
-        HideCollisionLayer(dungeonTemplateInstance);
+        HideCollisionLayer();
+
+        dungeon.dungeonRooms = dungeonRooms;
+        dungeon.connectors = connectors;
+        dungeon.seed = seed;
+        dungeon.dungeonLayers = dungeonLayers;
+        return dungeon;
     }
 
-    private void HideCollisionLayer(GameObject dungeonTemplateInstance)
+    private void HideCollisionLayer()
     {
-        dungeonTemplateInstance.transform.Find("Grid/CollisionTilemap").GetComponent<TilemapRenderer>().enabled = false;
+        dungeonLayers.collisionTilemap.GetComponent<TilemapRenderer>().enabled = false;
     }
 
     public void GenerateStructuredRooms(List<DungeonRoom> dungeonRooms)
@@ -127,11 +138,11 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
 
     public void DrawDungeonTemplateTiles(GameObject dungeonTemplateInstance, List<DungeonRoom> dungeonRooms, List<Connector> connectors)
     {
-        Tilemap baseTilemap = dungeonTemplateInstance.transform.Find("Grid/BaseTilemap").GetComponent<Tilemap>();
-        Tilemap frontTilemap = dungeonTemplateInstance.transform.Find("Grid/FrontTilemap").GetComponent<Tilemap>();
-        Tilemap collisionTilemap = dungeonTemplateInstance.transform.Find("Grid/CollisionTilemap").GetComponent<Tilemap>();
-        Tilemap platformTilemap = dungeonTemplateInstance.transform.Find("Grid/PlatformTilemap").GetComponent<Tilemap>();
-        Tilemap bridgeTilemap = dungeonTemplateInstance.transform.Find("Grid/BridgeTilemap").GetComponent<Tilemap>();
+        Tilemap baseTilemap = dungeonLayers.baseTilemap;
+        Tilemap frontTilemap = dungeonLayers.frontTilemap;
+        Tilemap collisionTilemap = dungeonLayers.collisionTilemap;
+        Tilemap platformTilemap = dungeonLayers.platformTilemap;
+        Tilemap bridgeTilemap = dungeonLayers.bridgeTilemap;
 
         DrawRoomTiles(dungeonRooms, baseTilemap, frontTilemap, collisionTilemap);
         DrawConnectorTiles(connectors, platformTilemap, bridgeTilemap, frontTilemap, collisionTilemap);
