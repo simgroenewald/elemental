@@ -80,5 +80,10 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         state = GameState.playing;
     }
 
+    internal Player GetPlayer()
+    {
+        return player;
+    }
+
 
 }
