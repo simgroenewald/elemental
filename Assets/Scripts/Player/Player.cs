@@ -1,12 +1,13 @@
-using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Rendering;
-using UnityEngine.UIElements;
-
-[DisallowMultipleComponent]
 
 [RequireComponent(typeof(Health))]
+[RequireComponent(typeof(PlayerControl))]
+[RequireComponent(typeof(MovementHandler))]
+[RequireComponent(typeof(AnimatePlayer))]
 [RequireComponent(typeof(SortingGroup))]
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Animator))]
@@ -14,30 +15,31 @@ using UnityEngine.UIElements;
 [RequireComponent(typeof(PolygonCollider2D))]
 [RequireComponent(typeof(Rigidbody2D))]
 
+[DisallowMultipleComponent]
 public class Player : MonoBehaviour
 {
-    public CharacterDetailSO characterDetail;
-    public Health health;
-    public SpriteRenderer spriteRenderer;
-    public Animator animator;
+    [HideInInspector] public CharacterDetailSO characterDetails;
+    [HideInInspector] public Health health;
+    [HideInInspector] public SpriteRenderer spriteRenderer;
+    [HideInInspector] public Animator animator;
 
     private void Awake()
     {
+        // Load components
         health = GetComponent<Health>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
     }
 
-    public void Initialise(CharacterDetailSO characterDetail)
+    public void Initialise(CharacterDetailSO characterDetails)
     {
-        this.characterDetail = characterDetail;
-
+        this.characterDetails = characterDetails;
         SetPlayerHealth();
     }
 
     private void SetPlayerHealth()
     {
-        health.SetMaxHealth(characterDetail.health);
+        health.SetMaxHealth(characterDetails.health);
     }
 
     public void SetPlayerStartPosition(DungeonRoom room, Grid grid)
@@ -46,8 +48,9 @@ public class Player : MonoBehaviour
         SetPlayerPosition(randomPos, grid);
     }
 
-    public void SetPlayerPosition(Vector2Int position, Grid grid) 
+    public void SetPlayerPosition(Vector2Int position, Grid grid)
     {
         this.gameObject.transform.position = grid.CellToWorld((Vector3Int)position);
     }
+
 }

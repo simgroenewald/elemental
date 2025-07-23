@@ -14,6 +14,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     private DungeonRoom currentDungeonRoom;
     private CharacterDetailSO characterDetail;
     private Player player;
+    private CameraController cameraController;
 
     public GameState state;
 
@@ -24,8 +25,9 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         GameResources gameResources = GameResources.Instance;
 
         PlayerSO playerSO = gameResources.player;
-
         characterDetail = playerSO.characterDetails;
+
+        cameraController = gameResources.cameraController;
 
         InstantiatePlayer();
     }
@@ -73,10 +75,13 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     private void StartGameLevel()
     {
         dungeon = dungeonBuilder.GenerateDungeon(6776, levels[currentLevelIndex]);
+        GameResources.Instance.dungeon = dungeon;
         DungeonRoom startRoom = dungeon.GetStartRoom();
         currentDungeonRoom = startRoom;
         previousDungeonRoom = startRoom;
         player.SetPlayerStartPosition(startRoom, dungeon.dungeonLayers.grid);
+        cameraController.SetupCamera(player.transform.position);
+
         state = GameState.playing;
     }
 

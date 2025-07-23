@@ -104,11 +104,6 @@ namespace Meryel.UnityCodeAssist.Editor
         }
 
 
-        /// <summary>
-        /// Set Everyone Full Control permissions for selected directory
-        /// </summary>
-        /// <param name="dirName"></param>
-        /// <returns></returns>
         static bool SetEveryoneAccessToDirectory(string dirName, out string _lastError)
         {
 

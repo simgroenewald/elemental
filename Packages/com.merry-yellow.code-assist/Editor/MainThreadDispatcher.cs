@@ -27,9 +27,6 @@ namespace Meryel.UnityCodeAssist.Editor
             EditorApplication.update += Update;
         }
 
-        /// <summary>
-        /// Empty method for invoking static class ctor
-        /// </summary>
         public static void Bump() {}
 
         static void Update()

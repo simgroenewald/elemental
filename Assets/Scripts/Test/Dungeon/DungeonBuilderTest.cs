@@ -40,9 +40,6 @@ public class DungeonBuilderTest : SingletonMonobehaviour<DungeonBuilderTest>
     List<DungeonRoom> dungeonRooms;
     List<Connector> connectors;
 
-    /// <summary>
-    /// Generate random dungeon, returns true if dungeon built, false if failed
-    /// </summary>
     public void GenerateDungeon()
     {
         //int seed = UnityEngine.Random.Range(2000, 10000);

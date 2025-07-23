@@ -24,8 +24,6 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
     {
         UnityEngine.Random.InitState(seed);
 
-        Dungeon dungeon = new Dungeon();
-
         DungeonLayoutGenerator dungeonLayoutGenerator = new DungeonLayoutGenerator(roomSizePresets);
 
         List<DungeonRoom> dungeonRooms = dungeonLayoutGenerator.GenerateDungeonLayout(level);
@@ -39,12 +37,9 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
 
         DrawDungeonTemplateTiles(dungeonTemplateInstance, dungeonRooms, connectors);
 
-        HideCollisionLayer();
+        //HideCollisionLayer();
 
-        dungeon.dungeonRooms = dungeonRooms;
-        dungeon.connectors = connectors;
-        dungeon.seed = seed;
-        dungeon.dungeonLayers = dungeonLayers;
+        Dungeon dungeon = new Dungeon(dungeonRooms, connectors, dungeonLayers, seed);
         return dungeon;
     }
 

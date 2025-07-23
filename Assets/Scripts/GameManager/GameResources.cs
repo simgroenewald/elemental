@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class GameResources : MonoBehaviour
 {
@@ -16,5 +17,9 @@ public class GameResources : MonoBehaviour
         }
     }
 
+    public Dungeon dungeon;
     public PlayerSO player;
+    public TileBase[] enemyUnwalkableCollisionTilesArray;
+    public TileBase preferredEnemyPathTile;
+    public CameraController cameraController;
 }
