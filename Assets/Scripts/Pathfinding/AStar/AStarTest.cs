@@ -136,7 +136,7 @@ public class AStarTest : MonoBehaviour
     {
         if (startGridPosition == noValue || endGridPosition == noValue) return;
 
-        pathStack = AStar.BuildPath(dungeon, dungeon.dungeonFloorPositions, dungeon.bounds, startGridPosition, endGridPosition, 0);
+        pathStack = AStar.BuildPath(dungeon, dungeon.dungeonFloorPositions, dungeon.bounds, startGridPosition, endGridPosition, 0, 0.1f);
 
         if (pathStack == null) return;
 

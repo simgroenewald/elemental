@@ -41,7 +41,7 @@ public class PlayerControl : MonoBehaviour
         //Vector3 newPosition = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.fixedDeltaTime);
         GameEventManager.Instance.movementEvents.RaiseMoveByPosition(targetPosition, transform.position, moveSpeed);
 
-        if (Vector3.Distance(transform.position, targetPosition) < 0.1f)
+        if (Vector3.Distance(transform.position, targetPosition) < 0.15f)
         {
             transform.position = targetPosition;
 
@@ -88,13 +88,21 @@ public class PlayerControl : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1)) // Right click
         {
-            Dungeon dungeon = GameResources.Instance.dungeon;
-            Grid grid = dungeon.dungeonLayers.grid;
-            Vector3Int mousePosition = grid.WorldToCell(HelperUtilities.GetMouseWorldPosition());
-            Vector3Int playerPosition = grid.WorldToCell(player.transform.position);
+            Camera mainCamera = null;
+            if (!mainCamera) mainCamera = Camera.main;
+            Vector3 worldPosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+            worldPosition.z = 0f; // Ensure z = 0 for 2D
+            player.playerAgent.SetDestination(worldPosition);
+            
+/*            Vector3Int playerPosition = grid.WorldToCell(player.transform.position);
 
-            path = AStar.BuildPath(dungeon, dungeon.dungeonFloorPositions, dungeon.bounds, playerPosition, mousePosition, collisionLayermask);
-            targetPosition = path.Pop();
+            BoxCollider2D boxCollider = GetComponent<BoxCollider2D>();
+
+            Vector2 size = boxCollider.size;
+            float radius = 1f;
+
+            path = AStar.BuildPath(dungeon, dungeon.dungeonFloorPositions, dungeon.bounds, playerPosition, mousePosition, collisionLayermask, radius);
+            targetPosition = path.Pop();*/
         }
     }
 }

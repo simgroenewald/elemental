@@ -6,7 +6,7 @@ using UnityEngine;
 
 public static class AStar
 {
-    public static Stack<Vector3> BuildPath(Dungeon dungeon, HashSet<Vector2Int> validPositions, BoundsInt bounds, Vector3Int startGridPosition, Vector3Int endGridPosition, LayerMask obstacleMask)
+    public static Stack<Vector3> BuildPath(Dungeon dungeon, HashSet<Vector2Int> validPositions, BoundsInt bounds, Vector3Int startGridPosition, Vector3Int endGridPosition, LayerMask obstacleMask, float radius)
     {
 
         // Create open list and closed hashset
@@ -28,13 +28,48 @@ public static class AStar
             {
                 return pathStack;
             }
-            return SimplifyPath(pathStack, obstacleMask);
+            return SimplifyPath(pathStack, obstacleMask, radius);
         }
 
         return null;
     }
 
-    public static Stack<Vector3> SimplifyPath(Stack<Vector3> pathStack, LayerMask obstacleMask)
+    public static Stack<Vector3> SimplifyPath(Stack<Vector3> pathStack, LayerMask obstacleMask, float radius)
+    {
+        if (pathStack.Count < 3) return new Stack<Vector3>(pathStack); // Too short to simplify
+
+        List<Vector3> path = pathStack.Reverse().ToList(); // Start to end
+        List<Vector3> simplified = new List<Vector3> { path[0] };
+
+        int lastIndex = 0;
+
+        for (int i = 1; i < path.Count; i++)
+        {
+            Vector3 start = path[lastIndex];
+            Vector3 end = path[i];
+            Vector2 direction = (end - start).normalized;
+            float distance = Vector2.Distance(start, end);
+
+            // CircleCast to check if a straight line is obstructed
+            RaycastHit2D hit = Physics2D.CircleCast(start, radius, direction, distance, obstacleMask);
+
+            if (hit.collider)
+            {
+                // Obstacle hit — add the previous point
+                simplified.Add(path[i - 1]);
+                lastIndex = i - 1;
+            }
+            else if (i == path.Count - 1)
+            {
+                // Last point is directly reachable
+                simplified.Add(path[i]);
+            }
+        }
+
+        return new Stack<Vector3>(simplified); // Already in correct order for popping
+    }
+
+    public static Stack<Vector3> SimplifyPath2(Stack<Vector3> pathStack, LayerMask obstacleMask)
     {
         if (pathStack.Count < 3) return new Stack<Vector3>(pathStack); // Not enough to simplify
 

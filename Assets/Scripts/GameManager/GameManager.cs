@@ -1,13 +1,16 @@
+using NavMeshPlus.Components;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 [DisallowMultipleComponent]
 public class GameManager : SingletonMonobehaviour<GameManager>
 {
     [SerializeField] List<LevelSettingSO> levels;
     [SerializeField] DungeonBuilder dungeonBuilder;
+    [SerializeField] NavMeshSurface navMeshSurface;
     [SerializeField] int currentLevelIndex = 0;
     private Dungeon dungeon;
     private DungeonRoom previousDungeonRoom;
@@ -80,6 +83,8 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         currentDungeonRoom = startRoom;
         previousDungeonRoom = startRoom;
         player.SetPlayerStartPosition(startRoom, dungeon.dungeonLayers.grid);
+        navMeshSurface.BuildNavMesh();
+        //PlacePlayerOnNavMesh(player.transform);
         cameraController.SetupCamera(player.transform.position);
 
         state = GameState.playing;
@@ -88,6 +93,20 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     internal Player GetPlayer()
     {
         return player;
+    }
+
+    public void PlacePlayerOnNavMesh(Transform player)
+    {
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(player.position, out hit, 1f, NavMesh.AllAreas))
+        {
+            player.position = hit.position; // Snap to nearest navmesh point
+            Debug.Log("Player snapped to NavMesh at: " + hit.position);
+        }
+        else
+        {
+            Debug.LogError("Could not find NavMesh position for player!");
+        }
     }
 
 

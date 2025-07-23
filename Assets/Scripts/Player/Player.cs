@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Rendering;
 
 [RequireComponent(typeof(Health))]
@@ -22,6 +23,7 @@ public class Player : MonoBehaviour
     [HideInInspector] public Health health;
     [HideInInspector] public SpriteRenderer spriteRenderer;
     [HideInInspector] public Animator animator;
+    [HideInInspector] public NavMeshAgent playerAgent;
 
     private void Awake()
     {
@@ -29,6 +31,9 @@ public class Player : MonoBehaviour
         health = GetComponent<Health>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+        playerAgent = GetComponent<NavMeshAgent>();
+        playerAgent.updateRotation = false;
+        playerAgent.updateUpAxis = false;
     }
 
     public void Initialise(CharacterDetailSO characterDetails)

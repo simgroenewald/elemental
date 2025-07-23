@@ -37,7 +37,7 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
 
         DrawDungeonTemplateTiles(dungeonTemplateInstance, dungeonRooms, connectors);
 
-        //HideCollisionLayer();
+        HideCollisionLayer();
 
         Dungeon dungeon = new Dungeon(dungeonRooms, connectors, dungeonLayers, seed);
         return dungeon;
