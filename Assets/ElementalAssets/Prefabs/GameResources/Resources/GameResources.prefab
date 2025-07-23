@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 5239493931247314383}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.8509994, y: 0.3563339, z: 0.005609278}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -45,3 +45,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 11400000, guid: cbff6fd43ac89424b80e2c05aab40476, type: 2}
+  enemyUnwalkableCollisionTilesArray:
+  - {fileID: 11400000, guid: 0e53b785ce08c6f4c97720e1b7b50fa8, type: 2}
+  - {fileID: 11400000, guid: bfdb243d712d5aa4e9388fe4e4096e0d, type: 2}
+  - {fileID: 11400000, guid: 9a4bccacaa16b7849bdf55d1aa5ddd8a, type: 2}
+  - {fileID: 11400000, guid: e11f25d590f1d1e4eaa6de0c8e0458b5, type: 2}
+  - {fileID: 11400000, guid: a69c4b7120d3d564c991e154414cf349, type: 2}
+  - {fileID: 11400000, guid: 5cd83f36fd898c349acb9441e532ad11, type: 2}
+  - {fileID: 11400000, guid: e467885f444665341b5a8142fcfa776b, type: 2}
+  - {fileID: 11400000, guid: 48ff157d2cc0c4d44b963be92526f01b, type: 2}
+  - {fileID: 11400000, guid: 485bed4b5eab89f4ab510a4add7c669c, type: 2}
+  - {fileID: 11400000, guid: 761687d581490314d8c081cf7bf8827f, type: 2}
+  - {fileID: 11400000, guid: d60cf5c18ac441745b59a7e64a8827e7, type: 2}
+  - {fileID: 11400000, guid: bbb6f39761cd37d4aa3bdc1ae775945f, type: 2}
+  preferredEnemyPathTile: {fileID: 11400000, guid: 639e354fdc58ed74cb577ddfc653666b, type: 2}
