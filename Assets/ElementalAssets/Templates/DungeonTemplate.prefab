@@ -1249,7 +1249,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9809bf1345abc5648af68b3a82653f08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_OverrideArea: 1
+  m_OverrideArea: 0
   m_Area: 1
   m_IgnoreFromBuild: 0
   m_AffectedAgents: ffffffff
@@ -1267,48 +1267,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_AffectedAgents: ffffffff
   m_TileModifiers:
-  - tile: {fileID: 11400000, guid: 0e53b785ce08c6f4c97720e1b7b50fa8, type: 2}
-    overrideArea: 1
-    area: 1
-  - tile: {fileID: 11400000, guid: bfdb243d712d5aa4e9388fe4e4096e0d, type: 2}
-    overrideArea: 1
-    area: 1
-  - tile: {fileID: 11400000, guid: 9a4bccacaa16b7849bdf55d1aa5ddd8a, type: 2}
-    overrideArea: 1
-    area: 1
-  - tile: {fileID: 11400000, guid: 98ee1088bc369c248b990962b441533b, type: 2}
-    overrideArea: 1
-    area: 1
-  - tile: {fileID: 11400000, guid: a69c4b7120d3d564c991e154414cf349, type: 2}
-    overrideArea: 1
-    area: 1
-  - tile: {fileID: 11400000, guid: 5cd83f36fd898c349acb9441e532ad11, type: 2}
-    overrideArea: 1
-    area: 1
-  - tile: {fileID: 11400000, guid: e467885f444665341b5a8142fcfa776b, type: 2}
-    overrideArea: 1
-    area: 1
-  - tile: {fileID: 11400000, guid: 48ff157d2cc0c4d44b963be92526f01b, type: 2}
-    overrideArea: 1
-    area: 1
-  - tile: {fileID: 11400000, guid: 485bed4b5eab89f4ab510a4add7c669c, type: 2}
-    overrideArea: 1
-    area: 1
-  - tile: {fileID: 11400000, guid: 761687d581490314d8c081cf7bf8827f, type: 2}
-    overrideArea: 1
-    area: 1
-  - tile: {fileID: 11400000, guid: d60cf5c18ac441745b59a7e64a8827e7, type: 2}
-    overrideArea: 1
-    area: 1
-  - tile: {fileID: 11400000, guid: bbb6f39761cd37d4aa3bdc1ae775945f, type: 2}
-    overrideArea: 1
-    area: 1
   - tile: {fileID: 11400000, guid: 639e354fdc58ed74cb577ddfc653666b, type: 2}
     overrideArea: 1
     area: 0
-  - tile: {fileID: 0}
-    overrideArea: 1
-    area: 1
 --- !u!1 &5356131054235280794
 GameObject:
   m_ObjectHideFlags: 0
