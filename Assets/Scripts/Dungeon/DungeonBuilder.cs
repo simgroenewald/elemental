@@ -44,11 +44,12 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
         return dungeon;
     }
 
-    private void CreateDungeonContainer(GameObject parent, List<DungeonRoom> dungeonRooms, List<Connector> connectors) {
+    public void CreateDungeonContainer(GameObject parent, List<DungeonRoom> dungeonRooms, List<Connector> connectors) {
 
         foreach (var dungeonRoom in dungeonRooms)
         {
             dungeonRoom.CreateStructureContainer(parent);
+            dungeonRoom.structureTilemap.tilemapLayers.collisionTilemap.gameObject.layer = LayerMask.NameToLayer("Enemy");
         }
 
         foreach (var connector in connectors)
@@ -57,7 +58,7 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
         }
     }
 
-    private void CreateDungeonCollisionLayer(GameObject parent, List<DungeonRoom> dungeonRooms, List<Connector> connectors)
+    public void CreateDungeonCollisionLayer(GameObject parent, List<DungeonRoom> dungeonRooms, List<Connector> connectors)
     {
         GameObject dungeonTemplateInstance = Instantiate(dungeonTemplate, parent.transform);
         dungeonLayers = dungeonTemplateInstance.GetComponent<TilemapLayers>();
@@ -97,6 +98,7 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
                 }
             }
         }
+        dungeonLayers.collisionTilemap.gameObject.layer = LayerMask.NameToLayer("Player");
     }
 
 

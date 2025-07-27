@@ -15,6 +15,7 @@ public class DungeonBuilderTest : SingletonMonobehaviour<DungeonBuilderTest>
     [SerializeField] int seed;
 
     [Header("Generators")]
+    [SerializeField] DungeonBuilder dungeonBuilder;
     [SerializeField] DungeonLayoutGenerator dungeonLayoutGenerator;
     [SerializeField] RoomGenerator roomGenerator;
     [SerializeField] ConnectorGenerator connectorGenerator;
@@ -25,20 +26,11 @@ public class DungeonBuilderTest : SingletonMonobehaviour<DungeonBuilderTest>
 
     [Header("Tilemaps")]
     [SerializeField] Tilemap structureTilemap;
-    [SerializeField] Tilemap baseTilemap;
-    [SerializeField] Tilemap baseDecorationTilemap;
-    [SerializeField] Tilemap environmentDecorationTilemap;
-    [SerializeField] Tilemap platformTilemap;
-    [SerializeField] Tilemap platformDecorationTilemap;
-    [SerializeField] Tilemap bridgeTilemap;
-    [SerializeField] Tilemap instancesTilemap;
-    [SerializeField] Tilemap frontTilemap;
-    [SerializeField] Tilemap frontDecorationTilemap;
     [SerializeField] Tilemap tileTypeTilemap;
-    [SerializeField] Tilemap collisionTilemap;
 
     List<DungeonRoom> dungeonRooms;
     List<Connector> connectors;
+    GameObject dungeonParent;
 
     public void GenerateDungeon()
     {
@@ -53,91 +45,7 @@ public class DungeonBuilderTest : SingletonMonobehaviour<DungeonBuilderTest>
 
     public void GenerateRooms()
     {
-        foreach (var dungeonRoom in dungeonRooms)
-        {
-                roomGenerator.GenerateStructuredRoom(dungeonRoom);
-        }
-    }
-
-    public void PopulateRoomTiles()
-    {
-        structureToGridMapper.structureTypeToGridDict = structureToGridMapper.GetStructureTypeToGridDict();
-        Grid grid = structureToGridMapper.structureTypeToGridDict[StructureType.WaterRoom];
-        TilemapProperties properties = TilemapAnalyser.GenerateProperties(grid);
-        //DungeonRoom dungeonRoom = dungeonRooms[1];
-        foreach (var dungeonRoom in dungeonRooms)
-        {
-            if (dungeonRoom.theme == ElementTheme.Water || dungeonRoom.theme == ElementTheme.Earth)
-            {
-                WaveFunctionCollapse2 wfc = new WaveFunctionCollapse2(dungeonRoom.structureTiles, properties, 1);
-                wfc.PopulateOutputCells();
-            }
-            if (dungeonRoom.theme == ElementTheme.Fire || dungeonRoom.theme == ElementTheme.Air)
-            {
-                WaveFunctionCollapse2 wfc = new WaveFunctionCollapse2(dungeonRoom.structureTiles, properties, 1);
-                wfc.PopulateOutputCells();
-            }
-        }
-    }
-
-    public void GenerateCorridors()
-    {
-        // Determines width of whole connector including 'walls'
-        connectors = connectorGenerator.GenerateConnectors(dungeonRooms, 3);
-    }
-
-    public void PopulateConnectorTiles()
-    {
-
-        structureToGridMapper.structureTypeToGridDict = structureToGridMapper.GetStructureTypeToGridDict();
-
-        Grid verticalBridgeGrid = structureToGridMapper.structureTypeToGridDict[StructureType.VerticalWoodenBridge];
-        TilemapProperties verticalBridgeProperties = TilemapAnalyser.GenerateProperties(verticalBridgeGrid);
-
-        Grid horizontalBridgeGrid = structureToGridMapper.structureTypeToGridDict[StructureType.HorizontalWoodenBridge];
-        TilemapProperties horizontalBridgeProperties = TilemapAnalyser.GenerateProperties(horizontalBridgeGrid);
-
-        Grid platformGrid = structureToGridMapper.structureTypeToGridDict[StructureType.Platform];
-        TilemapProperties platformProperties = TilemapAnalyser.GenerateProperties(platformGrid);
-        foreach (var connector in connectors)
-        {
-
-            if (connector.orientation == ConnectorOrientation.Horizontal)
-            {
-                if (connector.isStraight)
-                {
-                    WaveFunctionCollapse2 wfc = new WaveFunctionCollapse2(connector.bridgeMain.structureTiles, horizontalBridgeProperties, 1);
-                    wfc.PopulateOutputCells();
-                }
-                else
-                {
-                    WaveFunctionCollapse2 bridgeStartWFC = new WaveFunctionCollapse2(connector.bridgeStart.structureTiles, horizontalBridgeProperties, 1);
-                    bridgeStartWFC.PopulateOutputCells();
-                    WaveFunctionCollapse2 bridgeEndWFC = new WaveFunctionCollapse2(connector.bridgeEnd.structureTiles, horizontalBridgeProperties, 1);
-                    bridgeEndWFC.PopulateOutputCells();
-                    WaveFunctionCollapse2 platformWFC = new WaveFunctionCollapse2(connector.bridgeEnd.structureTiles, platformProperties, 1);
-                    platformWFC.PopulateOutputCells();
-                }
-            }
-            else
-            {
-                if (connector.isStraight)
-                {
-                    WaveFunctionCollapse2 wfc = new WaveFunctionCollapse2(connector.bridgeMain.structureTiles, verticalBridgeProperties, 1);
-                    wfc.PopulateOutputCells();
-                }
-                else
-                {
-                    WaveFunctionCollapse2 platformWFC = new WaveFunctionCollapse2(connector.platform.structureTiles, platformProperties, 1);
-                    platformWFC.PopulateOutputCells();
-                    WaveFunctionCollapse2 bridgeStartWFC = new WaveFunctionCollapse2(connector.bridgeStart.structureTiles, verticalBridgeProperties, 1);
-                    bridgeStartWFC.PopulateOutputCells();
-                    WaveFunctionCollapse2 bridgeEndWFC = new WaveFunctionCollapse2(connector.bridgeEnd.structureTiles, verticalBridgeProperties, 1);
-                    bridgeEndWFC.PopulateOutputCells();
-                }
-            }
-
-        }
+        dungeonBuilder.GenerateStructuredRooms(dungeonRooms);
     }
 
     public void DrawRoomLayouts()
@@ -153,6 +61,53 @@ public class DungeonBuilderTest : SingletonMonobehaviour<DungeonBuilderTest>
                 DrawRooms(dungeonRoom.subRooms);
             }
         }
+    }
+
+    public void GenerateConnectors()
+    {
+        connectors = dungeonBuilder.GenerateConnectors(dungeonRooms);
+    }
+
+
+    public void GenerateContainers()
+    {
+
+        if (dungeonParent != null)
+        {
+            Debug.Log("Containers already built");
+        }
+        else
+        {
+            dungeonParent = new GameObject("DungeonContainer");
+
+            dungeonBuilder.CreateDungeonContainer(dungeonParent, dungeonRooms, connectors);
+        }
+
+    }
+
+    public void CreateDungeonCollisionLayer()
+    {
+        if (dungeonParent != null)
+        {
+            Debug.Log("Containers already built");
+        }
+        else
+        {
+            dungeonParent = new GameObject("DungeonContainer");
+        }
+
+        dungeonBuilder.CreateDungeonCollisionLayer(dungeonParent, dungeonRooms, connectors);
+    }
+
+    public void PopulateRoomTiles()
+    {
+        dungeonBuilder.PopulateRoomTiles(dungeonRooms, structureToGridMapper);
+    }
+
+    public void PopulateConnectorTiles()
+    {
+
+        dungeonBuilder.PopulateConnectorTiles(connectors, structureToGridMapper);
     }
 
     // Debug Gizmos
@@ -224,52 +179,12 @@ public class DungeonBuilderTest : SingletonMonobehaviour<DungeonBuilderTest>
 
     public void DrawRoomTiles()
     {
-        foreach (var room in dungeonRooms)
-        {
-            foreach (var tile in room.structureTiles)
-            {
-                baseTilemap.SetTile((Vector3Int)tile.position, tile.baseTile);
-                frontTilemap.SetTile((Vector3Int)tile.position, tile.frontTile);
-                collisionTilemap.SetTile((Vector3Int)tile.position, tile.collisionTile);
-            }
-        }
+        dungeonBuilder.DrawRoomTiles(dungeonRooms);
     }
 
     public void DrawConnectorTiles()
     {
-        foreach (var connector in connectors)
-        {
-            if (connector.isStraight)
-            {
-                foreach (var tile in connector.bridgeMain.structureTiles)
-                {
-                    bridgeTilemap.SetTile((Vector3Int)tile.position, tile.baseTile);
-                    frontTilemap.SetTile((Vector3Int)tile.position, tile.frontTile);
-                    collisionTilemap.SetTile((Vector3Int)tile.position, tile.collisionTile);
-                }
-            }
-            if (!connector.isStraight)
-            {
-                foreach (var tile in connector.platform.structureTiles)
-                {
-                    platformTilemap.SetTile((Vector3Int)tile.position, tile.baseTile);
-                    frontTilemap.SetTile((Vector3Int)tile.position, tile.frontTile);
-                    collisionTilemap.SetTile((Vector3Int)tile.position, tile.collisionTile);
-                }
-                foreach (var tile in connector.bridgeStart.structureTiles)
-                {
-                    bridgeTilemap.SetTile((Vector3Int)tile.position, tile.baseTile);
-                    frontTilemap.SetTile((Vector3Int)tile.position, tile.frontTile);
-                    collisionTilemap.SetTile((Vector3Int)tile.position, tile.collisionTile);
-                }
-                foreach (var tile in connector.bridgeEnd.structureTiles)
-                {
-                    bridgeTilemap.SetTile((Vector3Int)tile.position, tile.baseTile);
-                    frontTilemap.SetTile((Vector3Int)tile.position, tile.frontTile);
-                    collisionTilemap.SetTile((Vector3Int)tile.position, tile.collisionTile);
-                }
-            }
-        }
+        dungeonBuilder.DrawConnectorTiles(connectors);
     }
 
     private void DrawRoomDoorways(List<Doorway> doorways, UnityEngine.Tilemaps.Tile tile)
@@ -371,9 +286,15 @@ public class DungeonBuilderTest : SingletonMonobehaviour<DungeonBuilderTest>
 
     public void ClearAllRooms()
     {
+        GameObject dungeonParent = GameObject.Find("DungeonContainer");
+        if (dungeonParent != null)
+        {
+            DestroyImmediate(dungeonParent);
+        }
         ClearRooms();
         ClearOldTiles();
         ClearTilemap();
+
     }
 
     public void ClearRooms()
@@ -396,17 +317,7 @@ public class DungeonBuilderTest : SingletonMonobehaviour<DungeonBuilderTest>
     public void ClearTilemap()
     {
         structureTilemap.ClearAllTiles();
-        baseTilemap.ClearAllTiles();
-        baseDecorationTilemap.ClearAllTiles();
-        environmentDecorationTilemap.ClearAllTiles();
-        platformTilemap.ClearAllTiles();
-        platformDecorationTilemap.ClearAllTiles();
-        bridgeTilemap.ClearAllTiles();
-        instancesTilemap.ClearAllTiles();
-        frontTilemap.ClearAllTiles();
-        frontDecorationTilemap.ClearAllTiles();
         tileTypeTilemap.ClearAllTiles();
-        collisionTilemap.ClearAllTiles();
     }
 
     public void DrawRoomTiles(Tilemap tilemap, HashSet<StructureTile> roomTiles, Dictionary<TileType, UnityEngine.Tilemaps.Tile> tileTypeToTileDict)
