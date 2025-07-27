@@ -44,6 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cb22466adbe2e748820eb4f0eb78084, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dungeon:
+    dungeonLayers: {fileID: 0}
+    bounds:
+      m_Position: {x: 0, y: 0, z: 0}
+      m_Size: {x: 0, y: 0, z: 0}
+    seed: 0
   player: {fileID: 11400000, guid: cbff6fd43ac89424b80e2c05aab40476, type: 2}
   enemyUnwalkableCollisionTilesArray:
   - {fileID: 11400000, guid: 0e53b785ce08c6f4c97720e1b7b50fa8, type: 2}
@@ -59,3 +65,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d60cf5c18ac441745b59a7e64a8827e7, type: 2}
   - {fileID: 11400000, guid: bbb6f39761cd37d4aa3bdc1ae775945f, type: 2}
   preferredEnemyPathTile: {fileID: 11400000, guid: 639e354fdc58ed74cb577ddfc653666b, type: 2}
+  cameraController: {fileID: 0}
+  structureTemplatePrefab: {fileID: 2761768881728766154, guid: 105e34c90d3c6fc4f8c08e7c9f4bcf45, type: 3}

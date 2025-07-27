@@ -10,7 +10,8 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 {
     [SerializeField] List<LevelSettingSO> levels;
     [SerializeField] DungeonBuilder dungeonBuilder;
-    [SerializeField] NavMeshSurface navMeshSurface;
+    [SerializeField] NavMeshSurface playerNavMeshSurface;
+    [SerializeField] NavMeshSurface enemyNavMeshSurface;
     [SerializeField] int currentLevelIndex = 0;
     private Dungeon dungeon;
     private DungeonRoom previousDungeonRoom;
@@ -83,7 +84,8 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         currentDungeonRoom = startRoom;
         previousDungeonRoom = startRoom;
         player.SetPlayerStartPosition(startRoom, startRoom.structureTilemap.tilemapLayers.grid);
-        navMeshSurface.BuildNavMesh();
+        playerNavMeshSurface.BuildNavMesh();
+        enemyNavMeshSurface.BuildNavMesh();
         //PlacePlayerOnNavMesh(player.transform);
         cameraController.SetupCamera(player.transform.position, startRoom.structureTilemap.tilemapLayers.baseTilemap);
 
