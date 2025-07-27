@@ -5,6 +5,9 @@ MonoImporter:
   serializedVersion: 2
   defaultReferences:
   - player: {fileID: 11400000, guid: cbff6fd43ac89424b80e2c05aab40476, type: 2}
+  - preferredEnemyPathTile: {instanceID: 0}
+  - cameraController: {instanceID: 0}
+  - structureTemplatePrefab: {fileID: 2761768881728766154, guid: 105e34c90d3c6fc4f8c08e7c9f4bcf45, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

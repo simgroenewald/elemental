@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class DungeonLayers : MonoBehaviour
+public class TilemapLayers : MonoBehaviour
 {
     public Grid grid;
 

@@ -22,4 +22,5 @@ public class GameResources : MonoBehaviour
     public TileBase[] enemyUnwalkableCollisionTilesArray;
     public TileBase preferredEnemyPathTile;
     public CameraController cameraController;
+    public GameObject structureTemplatePrefab;
 }

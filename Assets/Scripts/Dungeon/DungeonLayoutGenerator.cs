@@ -79,14 +79,7 @@ public class DungeonLayoutGenerator : MonoBehaviour
 
     DungeonRoom CreateRoom(RoomType type, Vector2 pos)
     {
-        return new DungeonRoom
-        {
-            roomType = type,
-            theme = (ElementTheme)Random.Range(0, 4),
-            nodeGraphPosition = pos,
-            parent = null,
-            children = new()
-        };
+        return new DungeonRoom(type, pos);
     }
 
     DungeonRoom FindValidParent()

@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using static UnityEditor.PlayerSettings;
 
-public class DungeonRoom : Structure
+public class DungeonRoom : Structure 
 {
     public RoomType roomType;
     public ElementTheme theme;
@@ -31,10 +32,41 @@ public class DungeonRoom : Structure
     public bool IsLeaf => children.Count == 0;
     public bool CanHaveMoreChildren => children.Count < 3;
 
+    public DungeonRoom(RoomType type, Vector2 pos)
+    {
+        roomType = type;
+        theme = (ElementTheme)UnityEngine.Random.Range(0, 4);
+        nodeGraphPosition = pos;
+        parent = null;
+        children = new();
+        SetName();
+    }
+
+    private void SetName()
+    {
+        name = roomType + " " + theme;
+    }
+
+
     public void AddDoorway(Vector2Int midpoint, int width, ConnectorOrientation orientation)
     {
         Doorway doorway = new Doorway(midpoint, width, orientation);
         doorways.Add(doorway);
+    }
+
+    public void DrawRoomTiles()
+    {
+        Tilemap baseTilemap = structureTilemap.tilemapLayers.baseTilemap;
+        Tilemap frontTilemap = structureTilemap.tilemapLayers.frontTilemap;
+        Tilemap collisionTilemap = structureTilemap.tilemapLayers.collisionTilemap;
+
+        foreach (var tile in structureTiles)
+        {
+            baseTilemap.SetTile((Vector3Int)tile.position, tile.baseTile);
+            frontTilemap.SetTile((Vector3Int)tile.position, tile.frontTile);
+            collisionTilemap.SetTile((Vector3Int)tile.position, tile.collisionTile);
+        }
+
     }
 
     public void displayInfo()

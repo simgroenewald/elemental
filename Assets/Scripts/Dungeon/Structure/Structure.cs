@@ -2,9 +2,13 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.UIElements;
 
 public class Structure
 {
+    public String name;
+    public StructureTilemap structureTilemap;
+
     public HashSet<Vector2Int> floorPositions;
     public HashSet<Vector2Int> backWallPositions;
     public HashSet<Vector2Int> frontWallPositions;
@@ -30,6 +34,24 @@ public class Structure
         decorMap = new Tilemap();
         collisionMap = new Tilemap();
         tileTypeMap = new Tilemap();
+    }
+
+    public void CreateStructureContainer(GameObject parent)
+    {
+
+        GameObject structureObject = new GameObject(name);
+
+        if (parent)
+        {
+            structureObject.transform.SetParent(parent.transform);
+        }
+
+
+        // Add StructureTilemap to the structure GameObject
+        structureTilemap = structureObject.AddComponent<StructureTilemap>();
+
+        // Instantiate the prefab under the structure object
+        structureTilemap.InitializeStructureTemplate(structureObject.transform);
     }
 
     public void GenerateStructureTilesOld(BoundsInt bounds, HashSet<Vector2Int> positions, Boolean extendFrontWalls, int extentionLength = 0)

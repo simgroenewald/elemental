@@ -9,12 +9,12 @@ public class Dungeon
 {
     public List<DungeonRoom> dungeonRooms;
     public List<Connector> connectors;
-    public DungeonLayers dungeonLayers;
+    public TilemapLayers dungeonLayers;
     public HashSet<Vector2Int> dungeonFloorPositions;
     public BoundsInt bounds;
     public int seed;
 
-    public Dungeon (List<DungeonRoom> dungeonRooms, List<Connector> connectors, DungeonLayers dungeonLayers, int seed)
+    public Dungeon (List<DungeonRoom> dungeonRooms, List<Connector> connectors, TilemapLayers dungeonLayers, int seed)
     {
         this.dungeonRooms = dungeonRooms;
         this.connectors = connectors;

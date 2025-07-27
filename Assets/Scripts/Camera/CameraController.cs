@@ -16,11 +16,10 @@ public class CameraController : MonoBehaviour
         GameResources.Instance.cameraController = this;
     }
 
-    public void SetupCamera(Vector3 startPosition)
+    public void SetupCamera(Vector3 startPosition, Tilemap tilemap)
     {
-        dungeon = GameResources.Instance.dungeon;
         //cameraBounds = new Bounds(dungeon.bounds.center, dungeon.bounds.size);
-        ClampCamera(dungeon.dungeonLayers.baseTilemap);
+        ClampCamera(tilemap);
         cameraTarget.position = new Vector3(startPosition.x, startPosition.y, cameraTarget.position.z);
         isCameraSet = true;
     }
