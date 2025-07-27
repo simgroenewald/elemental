@@ -19,7 +19,6 @@ public class MovementHandler : MonoBehaviour
     {
         // Subscribe to movement event
         GameEventManager.Instance.movementEvents.OnMoveByVelocity += HandleMovebyVelocity;
-        GameEventManager.Instance.movementEvents.OnMoveByPosition += HandleMovebyPostion;
         GameEventManager.Instance.movementEvents.OnIdle += HandleIdle;
     }
 
@@ -27,19 +26,12 @@ public class MovementHandler : MonoBehaviour
     {
         // Unsubscribe from movement event
         GameEventManager.Instance.movementEvents.OnMoveByVelocity -= HandleMovebyVelocity;
-        GameEventManager.Instance.movementEvents.OnMoveByPosition -= HandleMovebyPostion;
         GameEventManager.Instance.movementEvents.OnIdle -= HandleIdle;
     }
 
     private void HandleMovebyVelocity(Vector2 direction, float speed)
     {
         rigidBody2D.linearVelocity = direction * speed;
-    }
-
-    private void HandleMovebyPostion(Vector3 target, Vector3 currentPosition, float moveSpeed)
-    {
-        Vector2 unitVector = Vector3.Normalize(target - currentPosition);
-        rigidBody2D.MovePosition(rigidBody2D.position + (unitVector * moveSpeed * Time.fixedDeltaTime));
     }
 
     private void HandleIdle()

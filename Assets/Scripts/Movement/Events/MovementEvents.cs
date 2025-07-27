@@ -5,7 +5,7 @@ using UnityEngine;
 public class MovementEvents : ScriptableObject
 {
     public event Action<Vector2, float> OnMoveByVelocity;
-    public event Action<Vector3, Vector3, float> OnMoveByPosition;
+    public event Action<Vector3> OnMoveByPosition;
     public event Action OnIdle;
 
     public void RaiseMoveByVelocity(Vector2 direction, float speed)
@@ -13,9 +13,9 @@ public class MovementEvents : ScriptableObject
         OnMoveByVelocity?.Invoke(direction, speed);
     }
 
-    public void RaiseMoveByPosition(Vector3 target, Vector3 currentPosition, float speed)
+    public void RaiseMoveByPosition(Vector3 target)
     {
-        OnMoveByPosition?.Invoke(target, currentPosition, speed);
+        OnMoveByPosition?.Invoke(target);
     }
 
     public void RaiseIdle()

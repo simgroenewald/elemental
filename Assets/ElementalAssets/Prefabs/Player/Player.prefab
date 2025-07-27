@@ -283,6 +283,7 @@ MonoBehaviour:
   health: {fileID: 0}
   spriteRenderer: {fileID: 0}
   animator: {fileID: 0}
+  playerAgent: {fileID: 0}
 --- !u!114 &2090834104267613397
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -323,6 +324,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5186dce04fa1fa94388edef78985d8ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  directionThreshold: 0.05
 --- !u!114 &635509132678744631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -344,7 +346,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 5919330583086702471}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.7488001
+  m_Radius: 0.5
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -354,6 +356,6 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 1.4784
-  m_BaseOffset: 0.7392
+  m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4

@@ -10,12 +10,9 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] private MovementDetailSO movementDetails;
     [SerializeField] private LayerMask collisionLayermask;
 
-
     private Player player;
     private float moveSpeed;
-    private Stack<Vector3> path;
-    private Vector3 targetPosition;
-    private bool targetReached = false;
+    private int selectedControl;
 
     private void Awake()
     {
@@ -29,31 +26,6 @@ public class PlayerControl : MonoBehaviour
     {
         MovementInput();
         MouseMovementInput();
-        MoveOnPath();
-    }
-
-    private void MoveOnPath()
-    {
-        if (path == null) return;
-
-        //Vector3 direction = (targetPosition - transform.position).normalized;
-        //player.movementByVelocityEvent.CallMovementByVelocityEvent(direction, moveSpeed);
-        //Vector3 newPosition = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.fixedDeltaTime);
-        GameEventManager.Instance.movementEvents.RaiseMoveByPosition(targetPosition, transform.position, moveSpeed);
-
-        if (Vector3.Distance(transform.position, targetPosition) < 0.15f)
-        {
-            transform.position = targetPosition;
-
-            if (path.Count > 0)
-            {
-                targetPosition = path.Pop();
-            }
-            else
-            {
-                GameEventManager.Instance.movementEvents.RaiseIdle();
-            }
-        }
     }
 
     private void MovementInput()
@@ -76,9 +48,10 @@ public class PlayerControl : MonoBehaviour
         {
             // trigger movement event
             GameEventManager.Instance.movementEvents.RaiseMoveByVelocity(direction, moveSpeed);
+            selectedControl = 1;
         }
         // else trigger idle event
-        else
+        else if (selectedControl == 1)
         {
             GameEventManager.Instance.movementEvents.RaiseIdle();
         }
@@ -88,10 +61,13 @@ public class PlayerControl : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1)) // Right click
         {
+            selectedControl = 0;
             Camera mainCamera = null;
             if (!mainCamera) mainCamera = Camera.main;
             Vector3 worldPosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
             worldPosition.z = 0f; // Ensure z = 0 for 2D
+            Vector3 direction = (worldPosition - player.transform.position).normalized;
+            GameEventManager.Instance.movementEvents.RaiseMoveByPosition(direction);
             player.playerAgent.SetDestination(worldPosition);
             
 /*            Vector3Int playerPosition = grid.WorldToCell(player.transform.position);
@@ -104,5 +80,17 @@ public class PlayerControl : MonoBehaviour
             path = AStar.BuildPath(dungeon, dungeon.dungeonFloorPositions, dungeon.bounds, playerPosition, mousePosition, collisionLayermask, radius);
             targetPosition = path.Pop();*/
         }
+    }
+
+    private void CheckPlayerDestination()
+    {
+        if (!player.playerAgent.hasPath && selectedControl == 0)
+        {
+
+            // Player has reached the destination
+            GameEventManager.Instance.movementEvents.RaiseIdle();
+            Debug.Log("Destination reached!");
+        }
+
     }
 }

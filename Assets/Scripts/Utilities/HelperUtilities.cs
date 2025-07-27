@@ -37,45 +37,21 @@ public static class HelperUtilities
 
     public static TargetDirection GetTargetDirection(float angleDegrees)
     {
-        TargetDirection aimDirection;
+        TargetDirection direction = TargetDirection.Right;
 
         // Set player direction
-        //Up Right
-        if (angleDegrees >= 22f && angleDegrees <= 67f)
+        //Right
+        if ((angleDegrees >= 0f && angleDegrees <= 90f) || (angleDegrees >= -90f && angleDegrees <= 0f))
         {
-            aimDirection = TargetDirection.UpRight;
+            direction = TargetDirection.Right;
         }
-        // Up
-        else if (angleDegrees > 67f && angleDegrees <= 112f)
+        //Left
+        if ((angleDegrees > 90f && angleDegrees <= 180f) || (angleDegrees >= -180f && angleDegrees < -90f))
         {
-            aimDirection = TargetDirection.Up;
-        }
-        // Up Left
-        else if (angleDegrees > 112f && angleDegrees <= 158f)
-        {
-            aimDirection = TargetDirection.UpLeft;
-        }
-        // Left
-        else if ((angleDegrees <= 180f && angleDegrees > 158f) || (angleDegrees > -180 && angleDegrees <= -135f))
-        {
-            aimDirection = TargetDirection.Left;
-        }
-        // Down
-        else if ((angleDegrees > -135f && angleDegrees <= -45f))
-        {
-            aimDirection = TargetDirection.Down;
-        }
-        // Right
-        else if ((angleDegrees > -45f && angleDegrees <= 0f) || (angleDegrees > 0 && angleDegrees < 22f))
-        {
-            aimDirection = TargetDirection.Right;
-        }
-        else
-        {
-            aimDirection = TargetDirection.Right;
+            direction = TargetDirection.Left;
         }
 
-        return aimDirection;
+        return direction;
 
     }
 
