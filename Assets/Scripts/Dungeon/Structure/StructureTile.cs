@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -8,6 +9,8 @@ public class StructureTile
     public TileType tileType;
     public TileBase baseTile;
     public TileBase frontTile;
+    public TileBase frontDecorTile;
+    public TileBase baseDecorTile;
     public TileBase collisionTile;
 
     public StructureTile(Vector2Int position, TileType tileType)

@@ -411,4 +411,26 @@ public class Structure
             }
         }
     }
+
+    public StructureTile RemoveTileAtPosition(Vector2Int targetPos)
+    {
+        StructureTile removedTile = null;
+
+        foreach (var tile in this.structureTiles)
+        {
+            if (tile.position == targetPos)
+            {
+                removedTile = tile;
+                break;
+            }
+        }
+
+        if (removedTile != null)
+        {
+            this.structureTiles.Remove(removedTile);
+            return removedTile;
+        }
+
+        return removedTile;
+    }
 }

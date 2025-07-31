@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEditor.MemoryProfiler;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UIElements;
@@ -46,6 +47,11 @@ public class DungeonBuilderTest : SingletonMonobehaviour<DungeonBuilderTest>
     public void GenerateRooms()
     {
         dungeonBuilder.GenerateStructuredRooms(dungeonRooms);
+    }
+
+    public void GenerateDoors()
+    {
+        dungeonBuilder.GenerateStructuredDoors(dungeonRooms);
     }
 
     public void DrawRoomLayouts()
@@ -110,6 +116,11 @@ public class DungeonBuilderTest : SingletonMonobehaviour<DungeonBuilderTest>
         dungeonBuilder.PopulateConnectorTiles(connectors, structureToGridMapper);
     }
 
+    public void PopulateDoorTiles()
+    {
+        dungeonBuilder.PopulateOpenDoorTiles(dungeonRooms, structureToGridMapper);
+    }
+
     // Debug Gizmos
     private void OnDrawGizmos()
     {
@@ -149,31 +160,30 @@ public class DungeonBuilderTest : SingletonMonobehaviour<DungeonBuilderTest>
 
     public void DrawMap()
     {
-        tileTypeToTileMapper.tileTypeToTileDict = tileTypeToTileMapper.GetTileTypeToTileDict();
         foreach (var room in dungeonRooms)
         {
             //DrawBoundArea(room.outerBounds, tileTypeToTileMapper.tileTypeToTileDict[TileType.Bou]);
             //DrawBoundArea(room.bounds, tileTypeToTileMapper.tileTypeToTileDict[TileType.Bou]);
-            DrawRoomTiles(tileTypeTilemap, room.structureTiles, tileTypeToTileMapper.tileTypeToTileDict);
+            DrawTypeTiles(room.structureTiles);
         }
 
         foreach (var connector in connectors)
         {
             if (connector.isStraight)
             {
-                DrawRoomTiles(tileTypeTilemap, connector.bridgeMain.structureTiles, tileTypeToTileMapper.tileTypeToTileDict);
+                DrawTypeTiles(connector.bridgeMain.structureTiles);
             }
             else
             {
-                DrawRoomTiles(tileTypeTilemap, connector.platform.structureTiles, tileTypeToTileMapper.tileTypeToTileDict);
-                DrawRoomTiles(tileTypeTilemap, connector.bridgeStart.structureTiles, tileTypeToTileMapper.tileTypeToTileDict);
-                DrawRoomTiles(tileTypeTilemap, connector.bridgeEnd.structureTiles, tileTypeToTileMapper.tileTypeToTileDict);
+                DrawTypeTiles(connector.platform.structureTiles);
+                DrawTypeTiles(connector.bridgeStart.structureTiles);
+                DrawTypeTiles(connector.bridgeEnd.structureTiles);
             }
         }
 
         foreach (var room in dungeonRooms)
         {
-            DrawRoomDoorways(room.doorways, tileTypeToTileMapper.tileTypeToTileDict[TileType.Door]);
+            DrawRoomDoorways(room.doorways);
         }
     }
 
@@ -187,15 +197,16 @@ public class DungeonBuilderTest : SingletonMonobehaviour<DungeonBuilderTest>
         dungeonBuilder.DrawConnectorTiles(connectors);
     }
 
-    private void DrawRoomDoorways(List<Doorway> doorways, UnityEngine.Tilemaps.Tile tile)
+    public void DrawDoorTiles()
+    {
+        dungeonBuilder.DrawRoomDoorTiles(dungeonRooms);
+    }
+
+    private void DrawRoomDoorways(List<Doorway> doorways)
     {
         foreach (var doorway in doorways)
         {
-            foreach (var tilePos in doorway.positions)
-            {
-                Vector3Int tilePosition = new Vector3Int(tilePos.x, tilePos.y, 0);
-                tileTypeTilemap.SetTile(tilePosition, tile);
-            }
+            DrawTypeTiles(doorway.structureTiles);
         }
     }
 
@@ -320,13 +331,13 @@ public class DungeonBuilderTest : SingletonMonobehaviour<DungeonBuilderTest>
         tileTypeTilemap.ClearAllTiles();
     }
 
-    public void DrawRoomTiles(Tilemap tilemap, HashSet<StructureTile> roomTiles, Dictionary<TileType, UnityEngine.Tilemaps.Tile> tileTypeToTileDict)
+    public void DrawTypeTiles(HashSet<StructureTile> roomTiles)
     {
+        Dictionary<TileType, UnityEngine.Tilemaps.Tile> tileTypeToTileDict = tileTypeToTileMapper.GetTileTypeToTileDict();
         foreach (var roomTile in roomTiles)
         {
             Vector3Int tilePosition = new Vector3Int(roomTile.position.x, roomTile.position.y, 0);
-            tilemap.SetTile(tilePosition, tileTypeToTileDict[roomTile.tileType]);
+            tileTypeTilemap.SetTile(tilePosition, tileTypeToTileDict[roomTile.tileType]);
         }
     }
-
 }

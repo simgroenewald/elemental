@@ -50,18 +50,19 @@ public class WaveFunctionCollapse2
                     solved = true;
                     break;
                 }
-                if (waveCell.Position.Equals(new Vector2Int(121, 26)))
+                if (waveCell.Position.Equals(new Vector2Int(27, 42)))
                 {
                     Debug.Log("Gotcha");
                 }
                 propagator.CollapseCellNew(waveCell);
-/*                if (propagator.hasConflict) {
+                if (propagator.hasConflict)
+                {
                     break;
-                }*/
+                }
                 propagator.Propagate(waveCell);
                 propagator.propagationSet.Clear();
             }
-/*            if (propagator.hasConflict && iteration < this.maxIterations-1)
+/*            if (propagator.hasConflict && iteration < this.maxIterations - 1)
             {
                 Reset();
             }*/
@@ -78,7 +79,7 @@ public class WaveFunctionCollapse2
             Debug.Log("Couldn't solve the tilemap");
         }
         
-        PopulateOutputTiles();
+        PopulateStructureTiles();
     }
 
     public void Reset()
@@ -88,7 +89,7 @@ public class WaveFunctionCollapse2
         this.propagator.PopulateLowEntropySet(outputCells);
     }
 
-    public void PopulateOutputTiles()
+    public void PopulateStructureTiles()
     {
         int index = 0;
         foreach (var tile in structureTiles)
@@ -105,6 +106,8 @@ public class WaveFunctionCollapse2
             Cell cell = tilemapProperties.IndexToCell[waveCell.CollapsedIndex];
             tile.baseTile = cell.BaseTile;
             tile.frontTile = cell.FrontTile;
+            tile.baseDecorTile = cell.BaseDecorTile;
+            tile.frontDecorTile = cell.FrontDecorTile;
             tile.collisionTile = cell.CollisionTile;
 
             index++;

@@ -8,6 +8,8 @@ public class Cell
     public int TileIndex { get; private set; }
     public TileBase BaseTile { get; private set; }
     public TileBase FrontTile { get; set; }
+    public TileBase BaseDecorTile { get; set; }
+    public TileBase FrontDecorTile { get; set; }
     public TileBase CollisionTile { get; set; }
     public TileBase TypeTile { get; set; }
 
@@ -24,10 +26,12 @@ public class Cell
 
     public Vector2Int Position { get; set; }
 
-    public Cell(TileBase tileBase, TileBase frontTile, TileBase collisionTile, TileBase typeTile, int tileIndex, Vector2Int position)
+    public Cell(TileBase tileBase, TileBase frontTile, TileBase baseDecorTile, TileBase frontDecorTile, TileBase collisionTile, TileBase typeTile, int tileIndex, Vector2Int position)
     {
         BaseTile = tileBase;
         FrontTile = frontTile;
+        BaseDecorTile = baseDecorTile;
+        FrontDecorTile = frontDecorTile;
         TypeTile = typeTile;
         CollisionTile = collisionTile;
         TileIndex = tileIndex;

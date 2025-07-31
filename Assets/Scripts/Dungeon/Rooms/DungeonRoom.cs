@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using static UnityEditor.PlayerSettings;
@@ -48,14 +49,16 @@ public class DungeonRoom : Structure
     }
 
 
-    public void AddDoorway(Vector2Int midpoint, int width, ConnectorOrientation orientation)
+    public void AddDoorway(Vector2Int midpoint, int width, WallType wallType)
     {
-        Doorway doorway = new Doorway(midpoint, width, orientation);
+        Doorway doorway = new Doorway(midpoint, width, wallType);
         doorways.Add(doorway);
     }
 
     public void DrawRoomTiles()
     {
+        SetRoomDoorClosedTiles();
+
         Tilemap baseTilemap = structureTilemap.tilemapLayers.baseTilemap;
         Tilemap frontTilemap = structureTilemap.tilemapLayers.frontTilemap;
         Tilemap collisionTilemap = structureTilemap.tilemapLayers.collisionTilemap;
@@ -67,6 +70,42 @@ public class DungeonRoom : Structure
             collisionTilemap.SetTile((Vector3Int)tile.position, tile.collisionTile);
         }
 
+    }
+
+    private void SetRoomDoorOpenTiles()
+    {
+        foreach (var door in doorways)
+        {
+            door.SetOpenDoorTiles();
+        }
+    }
+
+    public void DrawOpenRoomDoorwayTiles()
+    {
+        foreach (var door in doorways)
+        {
+            door.DrawOpenDoorTiles(structureTilemap);
+        }
+    }
+
+    public void DrawClosedRoomDoorwayTiles()
+    {
+        foreach (var door in doorways)
+        {
+            door.DrawClosedDoorTiles(structureTilemap);
+        }
+    }
+
+    private void SetRoomDoorClosedTiles()
+    {
+        foreach (var door in doorways)
+        {
+            foreach (var tile in door.structureTiles)
+            {
+                StructureTile removedTile = RemoveTileAtPosition(tile.position);
+                door.AppendClosedDoorTiles(removedTile);
+            }
+        }
     }
 
     public void displayInfo()

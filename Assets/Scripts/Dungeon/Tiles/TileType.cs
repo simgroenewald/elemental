@@ -28,6 +28,7 @@ public enum TileType
     Platform,
     // Other
     Door,
+    DoorEdge,
     Liquid,
     Pit
 }

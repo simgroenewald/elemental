@@ -28,7 +28,13 @@ public class DungeonBuilderEditor : Editor
 
         }
 
-        if (GUILayout.Button("Draw Rooms"))
+        if (GUILayout.Button("Generate Doors"))
+        {
+            dungeonBuilder.GenerateDoors();
+
+        }
+
+        if (GUILayout.Button("Draw Map Tile Types"))
         {
             dungeonBuilder.DrawMap();
 
@@ -42,6 +48,12 @@ public class DungeonBuilderEditor : Editor
         if (GUILayout.Button("Populate Room Tiles"))
         {
             dungeonBuilder.PopulateRoomTiles();
+
+        }
+
+        if (GUILayout.Button("Populate Door Tiles"))
+        {
+            dungeonBuilder.PopulateDoorTiles();
 
         }
 
@@ -60,6 +72,12 @@ public class DungeonBuilderEditor : Editor
         if (GUILayout.Button("Draw Connector Tiles"))
         {
             dungeonBuilder.DrawConnectorTiles();
+
+        }
+
+        if (GUILayout.Button("Draw Door Tiles"))
+        {
+            dungeonBuilder.DrawDoorTiles();
 
         }
 

@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 8479949905208940033}
   - component: {fileID: 635509132678744631}
   - component: {fileID: -973754093991526888}
-  m_Layer: 10
+  m_Layer: 15
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -311,7 +311,7 @@ MonoBehaviour:
   movementDetails: {fileID: 11400000, guid: 5ae1df6ea36633546a64a2c1186352c1, type: 2}
   collisionLayermask:
     serializedVersion: 2
-    m_Bits: 8192
+    m_Bits: 1024
 --- !u!114 &8479949905208940033
 MonoBehaviour:
   m_ObjectHideFlags: 0

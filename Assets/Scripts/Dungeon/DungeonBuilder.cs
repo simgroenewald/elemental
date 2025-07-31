@@ -29,7 +29,9 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
         List<DungeonRoom> dungeonRooms = dungeonLayoutGenerator.GenerateDungeonLayout(level);
         GenerateStructuredRooms(dungeonRooms);
         List<Connector> connectors = GenerateConnectors(dungeonRooms);
+        GenerateStructuredDoors(dungeonRooms);
         PopulateRoomTiles(dungeonRooms, structureToGridMapper);
+        PopulateOpenDoorTiles(dungeonRooms, structureToGridMapper);
         PopulateConnectorTiles(connectors, structureToGridMapper);
 
         GameObject dungeonParent = new GameObject("Dungeon");
@@ -44,7 +46,8 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
         return dungeon;
     }
 
-    public void CreateDungeonContainer(GameObject parent, List<DungeonRoom> dungeonRooms, List<Connector> connectors) {
+    public void CreateDungeonContainer(GameObject parent, List<DungeonRoom> dungeonRooms, List<Connector> connectors)
+    {
 
         foreach (var dungeonRoom in dungeonRooms)
         {
@@ -70,6 +73,17 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
             foreach (var tile in dungeonRoom.structureTiles)
             {
                 dungeonLayers.collisionTilemap.SetTile((Vector3Int)tile.position, tile.collisionTile);
+            }
+        }
+
+        foreach (var dungeonRoom in dungeonRooms)
+        {
+            foreach (var door in dungeonRoom.doorways)
+            {
+                foreach (var tile in door.structureTiles)
+                {
+                    dungeonLayers.collisionTilemap.SetTile((Vector3Int)tile.position, tile.collisionTile);
+                }
             }
         }
 
@@ -111,6 +125,17 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
         }
     }
 
+    public void GenerateStructuredDoors(List<DungeonRoom> dungeonRooms)
+    {
+        foreach (var dungeonRoom in dungeonRooms)
+        {
+            foreach (var door in dungeonRoom.doorways)
+            {
+                door.GenerateStructureTiles();
+            }
+        }
+    }
+
     public List<Connector> GenerateConnectors(List<DungeonRoom> dungeonRooms)
     {
         ConnectorGenerator connectorGenerator = new ConnectorGenerator();
@@ -126,8 +151,25 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
 
         foreach (var dungeonRoom in dungeonRooms)
         {
-            WaveFunctionCollapse2 wfc = new WaveFunctionCollapse2(dungeonRoom.structureTiles, properties, 1);
+            WaveFunctionCollapse2 wfc = new WaveFunctionCollapse2(dungeonRoom.structureTiles, properties, 10);
             wfc.PopulateOutputCells();
+        }
+    }
+
+    public void PopulateOpenDoorTiles(List<DungeonRoom> dungeonRooms, StructureTypeToGridMapperSO structureToGridMapper)
+    {
+        structureToGridMapper.structureTypeToGridDict = structureToGridMapper.GetStructureTypeToGridDict();
+        Grid grid = structureToGridMapper.structureTypeToGridDict[StructureType.WaterDoor];
+        TilemapProperties properties = TilemapAnalyser.GenerateProperties(grid);
+
+        foreach (var dungeonRoom in dungeonRooms)
+        {
+            foreach (var door in dungeonRoom.doorways)
+            {
+                WaveFunctionCollapse2 wfc = new WaveFunctionCollapse2(door.structureTiles, properties, 1);
+                wfc.PopulateOutputCells();
+                door.SetOpenDoorTiles();
+            }
         }
     }
 
@@ -189,7 +231,7 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
     {
         DrawRoomTiles(dungeonRooms);
         DrawConnectorTiles(connectors);
-
+        DrawRoomDoorTiles(dungeonRooms);
     }
 
     public void DrawRoomTiles(List<DungeonRoom> dungeonRooms)
@@ -205,6 +247,14 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
         foreach (var connector in connectors)
         {
             connector.DrawConnectorTiles();
+        }
+    }
+
+    public void DrawRoomDoorTiles(List<DungeonRoom> dungeonRooms)
+    {
+        foreach (var room in dungeonRooms)
+        {
+            room.DrawOpenRoomDoorwayTiles();
         }
     }
 }

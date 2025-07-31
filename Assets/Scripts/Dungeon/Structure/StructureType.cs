@@ -10,5 +10,7 @@ public enum StructureType
     //Connectors
     VerticalWoodenBridge,
     HorizontalWoodenBridge,
-    Platform
+    Platform,
+    //Doors
+    WaterDoor
 }
