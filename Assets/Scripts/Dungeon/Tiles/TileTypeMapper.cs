@@ -27,6 +27,7 @@ public static class TileTypeMapper
         if (tileName.Contains("connectorStart")) return TileType.ConnectorStart;
         if (tileName.Contains("connectorEnd")) return TileType.ConnectorEnd;
         if (tileName.Contains("platform")) return TileType.Platform;
+        if (tileName.Contains("dooredge")) return TileType.DoorEdge;
         if (tileName.Contains("door")) return TileType.Door;
         if (tileName.Contains("liquid")) return TileType.Liquid;
         if (tileName.Contains("pit")) return TileType.Pit;

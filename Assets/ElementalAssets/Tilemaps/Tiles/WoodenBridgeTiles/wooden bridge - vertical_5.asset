@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: wooden bridge - vertical_5
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 583155636, guid: 4f7700059d137d345a4a64645e2df56b, type: 3}
+  m_Sprite: {fileID: -795749073, guid: 87bc42c4e0fac374b8c001a6ae212a06, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1

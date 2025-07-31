@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using static UnityEditor.PlayerSettings;
 
-public class DungeonRoom : Structure
+public class DungeonRoom : Structure 
 {
     public RoomType roomType;
     public ElementTheme theme;
@@ -31,10 +33,79 @@ public class DungeonRoom : Structure
     public bool IsLeaf => children.Count == 0;
     public bool CanHaveMoreChildren => children.Count < 3;
 
-    public void AddDoorway(Vector2Int midpoint, int width, ConnectorOrientation orientation)
+    public DungeonRoom(RoomType type, Vector2 pos)
     {
-        Doorway doorway = new Doorway(midpoint, width, orientation);
+        roomType = type;
+        theme = (ElementTheme)UnityEngine.Random.Range(0, 4);
+        nodeGraphPosition = pos;
+        parent = null;
+        children = new();
+        SetName();
+    }
+
+    private void SetName()
+    {
+        name = roomType + " " + theme;
+    }
+
+
+    public void AddDoorway(Vector2Int midpoint, int width, WallType wallType)
+    {
+        Doorway doorway = new Doorway(midpoint, width, wallType);
         doorways.Add(doorway);
+    }
+
+    public void DrawRoomTiles()
+    {
+        SetRoomDoorClosedTiles();
+
+        Tilemap baseTilemap = structureTilemap.tilemapLayers.baseTilemap;
+        Tilemap frontTilemap = structureTilemap.tilemapLayers.frontTilemap;
+        Tilemap collisionTilemap = structureTilemap.tilemapLayers.collisionTilemap;
+
+        foreach (var tile in structureTiles)
+        {
+            baseTilemap.SetTile((Vector3Int)tile.position, tile.baseTile);
+            frontTilemap.SetTile((Vector3Int)tile.position, tile.frontTile);
+            collisionTilemap.SetTile((Vector3Int)tile.position, tile.collisionTile);
+        }
+
+    }
+
+    private void SetRoomDoorOpenTiles()
+    {
+        foreach (var door in doorways)
+        {
+            door.SetOpenDoorTiles();
+        }
+    }
+
+    public void DrawOpenRoomDoorwayTiles()
+    {
+        foreach (var door in doorways)
+        {
+            door.DrawOpenDoorTiles(structureTilemap);
+        }
+    }
+
+    public void DrawClosedRoomDoorwayTiles()
+    {
+        foreach (var door in doorways)
+        {
+            door.DrawClosedDoorTiles(structureTilemap);
+        }
+    }
+
+    private void SetRoomDoorClosedTiles()
+    {
+        foreach (var door in doorways)
+        {
+            foreach (var tile in door.structureTiles)
+            {
+                StructureTile removedTile = RemoveTileAtPosition(tile.position);
+                door.AppendClosedDoorTiles(removedTile);
+            }
+        }
     }
 
     public void displayInfo()

@@ -1,0 +1,69 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5239493931247314383
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2753972029313433140}
+  - component: {fileID: 5405720834662125319}
+  m_Layer: 0
+  m_Name: GameResources
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2753972029313433140
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5239493931247314383}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5405720834662125319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5239493931247314383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cb22466adbe2e748820eb4f0eb78084, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dungeon:
+    dungeonLayers: {fileID: 0}
+    bounds:
+      m_Position: {x: 0, y: 0, z: 0}
+      m_Size: {x: 0, y: 0, z: 0}
+    seed: 0
+  player: {fileID: 11400000, guid: cbff6fd43ac89424b80e2c05aab40476, type: 2}
+  enemyUnwalkableCollisionTilesArray:
+  - {fileID: 11400000, guid: 0e53b785ce08c6f4c97720e1b7b50fa8, type: 2}
+  - {fileID: 11400000, guid: bfdb243d712d5aa4e9388fe4e4096e0d, type: 2}
+  - {fileID: 11400000, guid: 9a4bccacaa16b7849bdf55d1aa5ddd8a, type: 2}
+  - {fileID: 11400000, guid: e11f25d590f1d1e4eaa6de0c8e0458b5, type: 2}
+  - {fileID: 11400000, guid: a69c4b7120d3d564c991e154414cf349, type: 2}
+  - {fileID: 11400000, guid: 5cd83f36fd898c349acb9441e532ad11, type: 2}
+  - {fileID: 11400000, guid: e467885f444665341b5a8142fcfa776b, type: 2}
+  - {fileID: 11400000, guid: 48ff157d2cc0c4d44b963be92526f01b, type: 2}
+  - {fileID: 11400000, guid: 485bed4b5eab89f4ab510a4add7c669c, type: 2}
+  - {fileID: 11400000, guid: 761687d581490314d8c081cf7bf8827f, type: 2}
+  - {fileID: 11400000, guid: d60cf5c18ac441745b59a7e64a8827e7, type: 2}
+  - {fileID: 11400000, guid: bbb6f39761cd37d4aa3bdc1ae775945f, type: 2}
+  preferredEnemyPathTile: {fileID: 11400000, guid: 639e354fdc58ed74cb577ddfc653666b, type: 2}
+  cameraController: {fileID: 0}
+  structureTemplatePrefab: {fileID: 2761768881728766154, guid: 105e34c90d3c6fc4f8c08e7c9f4bcf45, type: 3}

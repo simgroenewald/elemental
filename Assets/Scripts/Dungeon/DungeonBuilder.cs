@@ -13,13 +13,14 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
 
     [Header("Templates")]
     [SerializeField] GameObject dungeonTemplate;
+    TilemapLayers dungeonLayers;
 
     [Header("Scriptable Objects")]
     [SerializeField] RoomSizePresetsSO roomSizePresets;
     [SerializeField] StructureTypeToGridMapperSO structureToGridMapper;
 
 
-    public void GenerateDungeon(int seed, LevelSettingSO level)
+    public Dungeon GenerateDungeon(int seed, LevelSettingSO level)
     {
         UnityEngine.Random.InitState(seed);
 
@@ -28,19 +29,92 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
         List<DungeonRoom> dungeonRooms = dungeonLayoutGenerator.GenerateDungeonLayout(level);
         GenerateStructuredRooms(dungeonRooms);
         List<Connector> connectors = GenerateConnectors(dungeonRooms);
+        GenerateStructuredDoors(dungeonRooms);
         PopulateRoomTiles(dungeonRooms, structureToGridMapper);
+        PopulateOpenDoorTiles(dungeonRooms, structureToGridMapper);
         PopulateConnectorTiles(connectors, structureToGridMapper);
 
-        GameObject dungeonTemplateInstance = Instantiate(dungeonTemplate);
-        DrawDungeonTemplateTiles(dungeonTemplateInstance, dungeonRooms, connectors);
+        GameObject dungeonParent = new GameObject("Dungeon");
 
-        HideCollisionLayer(dungeonTemplateInstance);
+        CreateDungeonContainer(dungeonParent, dungeonRooms, connectors);
+
+        CreateDungeonCollisionLayer(dungeonParent, dungeonRooms, connectors);
+
+        DrawDungeonTemplateTiles(dungeonRooms, connectors);
+
+        Dungeon dungeon = new Dungeon(dungeonRooms, connectors, dungeonLayers, seed);
+        return dungeon;
     }
 
-    private void HideCollisionLayer(GameObject dungeonTemplateInstance)
+    public void CreateDungeonContainer(GameObject parent, List<DungeonRoom> dungeonRooms, List<Connector> connectors)
     {
-        dungeonTemplateInstance.transform.Find("Grid/CollisionTilemap").GetComponent<TilemapRenderer>().enabled = false;
+
+        foreach (var dungeonRoom in dungeonRooms)
+        {
+            dungeonRoom.CreateStructureContainer(parent);
+            dungeonRoom.structureTilemap.tilemapLayers.collisionTilemap.gameObject.layer = LayerMask.NameToLayer("Enemy");
+        }
+
+        foreach (var connector in connectors)
+        {
+            connector.CreateStructureContainer(parent);
+        }
     }
+
+    public void CreateDungeonCollisionLayer(GameObject parent, List<DungeonRoom> dungeonRooms, List<Connector> connectors)
+    {
+        GameObject dungeonTemplateInstance = Instantiate(dungeonTemplate, parent.transform);
+        dungeonLayers = dungeonTemplateInstance.GetComponent<TilemapLayers>();
+        dungeonLayers.collisionTilemap.GetComponent<TilemapRenderer>().enabled = false;
+
+
+        foreach (var dungeonRoom in dungeonRooms)
+        {
+            foreach (var tile in dungeonRoom.structureTiles)
+            {
+                dungeonLayers.collisionTilemap.SetTile((Vector3Int)tile.position, tile.collisionTile);
+            }
+        }
+
+        foreach (var dungeonRoom in dungeonRooms)
+        {
+            foreach (var door in dungeonRoom.doorways)
+            {
+                foreach (var tile in door.structureTiles)
+                {
+                    dungeonLayers.collisionTilemap.SetTile((Vector3Int)tile.position, tile.collisionTile);
+                }
+            }
+        }
+
+        foreach (var connector in connectors)
+        {
+            if (connector.isStraight)
+            {
+                foreach (var tile in connector.bridgeMain.structureTiles)
+                {
+                    dungeonLayers.collisionTilemap.SetTile((Vector3Int)tile.position, tile.collisionTile);
+                }
+            }
+            if (!connector.isStraight)
+            {
+                foreach (var tile in connector.platform.structureTiles)
+                {
+                    dungeonLayers.collisionTilemap.SetTile((Vector3Int)tile.position, tile.collisionTile);
+                }
+                foreach (var tile in connector.bridgeStart.structureTiles)
+                {
+                    dungeonLayers.collisionTilemap.SetTile((Vector3Int)tile.position, tile.collisionTile);
+                }
+                foreach (var tile in connector.bridgeEnd.structureTiles)
+                {
+                    dungeonLayers.collisionTilemap.SetTile((Vector3Int)tile.position, tile.collisionTile);
+                }
+            }
+        }
+        dungeonLayers.collisionTilemap.gameObject.layer = LayerMask.NameToLayer("Player");
+    }
+
 
     public void GenerateStructuredRooms(List<DungeonRoom> dungeonRooms)
     {
@@ -48,6 +122,17 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
         foreach (var dungeonRoom in dungeonRooms)
         {
             roomGenerator.GenerateStructuredRoom(dungeonRoom);
+        }
+    }
+
+    public void GenerateStructuredDoors(List<DungeonRoom> dungeonRooms)
+    {
+        foreach (var dungeonRoom in dungeonRooms)
+        {
+            foreach (var door in dungeonRoom.doorways)
+            {
+                door.GenerateStructureTiles();
+            }
         }
     }
 
@@ -66,8 +151,25 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
 
         foreach (var dungeonRoom in dungeonRooms)
         {
-            WaveFunctionCollapse2 wfc = new WaveFunctionCollapse2(dungeonRoom.structureTiles, properties, 1);
+            WaveFunctionCollapse2 wfc = new WaveFunctionCollapse2(dungeonRoom.structureTiles, properties, 10);
             wfc.PopulateOutputCells();
+        }
+    }
+
+    public void PopulateOpenDoorTiles(List<DungeonRoom> dungeonRooms, StructureTypeToGridMapperSO structureToGridMapper)
+    {
+        structureToGridMapper.structureTypeToGridDict = structureToGridMapper.GetStructureTypeToGridDict();
+        Grid grid = structureToGridMapper.structureTypeToGridDict[StructureType.WaterDoor];
+        TilemapProperties properties = TilemapAnalyser.GenerateProperties(grid);
+
+        foreach (var dungeonRoom in dungeonRooms)
+        {
+            foreach (var door in dungeonRoom.doorways)
+            {
+                WaveFunctionCollapse2 wfc = new WaveFunctionCollapse2(door.structureTiles, properties, 1);
+                wfc.PopulateOutputCells();
+                door.SetOpenDoorTiles();
+            }
         }
     }
 
@@ -125,66 +227,34 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
         }
     }
 
-    public void DrawDungeonTemplateTiles(GameObject dungeonTemplateInstance, List<DungeonRoom> dungeonRooms, List<Connector> connectors)
+    public void DrawDungeonTemplateTiles(List<DungeonRoom> dungeonRooms, List<Connector> connectors)
     {
-        Tilemap baseTilemap = dungeonTemplateInstance.transform.Find("Grid/BaseTilemap").GetComponent<Tilemap>();
-        Tilemap frontTilemap = dungeonTemplateInstance.transform.Find("Grid/FrontTilemap").GetComponent<Tilemap>();
-        Tilemap collisionTilemap = dungeonTemplateInstance.transform.Find("Grid/CollisionTilemap").GetComponent<Tilemap>();
-        Tilemap platformTilemap = dungeonTemplateInstance.transform.Find("Grid/PlatformTilemap").GetComponent<Tilemap>();
-        Tilemap bridgeTilemap = dungeonTemplateInstance.transform.Find("Grid/BridgeTilemap").GetComponent<Tilemap>();
-
-        DrawRoomTiles(dungeonRooms, baseTilemap, frontTilemap, collisionTilemap);
-        DrawConnectorTiles(connectors, platformTilemap, bridgeTilemap, frontTilemap, collisionTilemap);
-
+        DrawRoomTiles(dungeonRooms);
+        DrawConnectorTiles(connectors);
+        DrawRoomDoorTiles(dungeonRooms);
     }
 
-    public void DrawRoomTiles(List<DungeonRoom> dungeonRooms, Tilemap baseTilemap, Tilemap frontTilemap, Tilemap collisionTilemap)
+    public void DrawRoomTiles(List<DungeonRoom> dungeonRooms)
     {
         foreach (var room in dungeonRooms)
         {
-            foreach (var tile in room.structureTiles)
-            {
-                baseTilemap.SetTile((Vector3Int)tile.position, tile.baseTile);
-                frontTilemap.SetTile((Vector3Int)tile.position, tile.frontTile);
-                collisionTilemap.SetTile((Vector3Int)tile.position, tile.collisionTile);
-            }
+            room.DrawRoomTiles();
         }
     }
 
-    public void DrawConnectorTiles(List<Connector> connectors, Tilemap platformTilemap, Tilemap bridgeTilemap, Tilemap frontTilemap, Tilemap collisionTilemap)
+    public void DrawConnectorTiles(List<Connector> connectors)
     {
         foreach (var connector in connectors)
         {
-            if (connector.isStraight)
-            {
-                foreach (var tile in connector.bridgeMain.structureTiles)
-                {
-                    bridgeTilemap.SetTile((Vector3Int)tile.position, tile.baseTile);
-                    frontTilemap.SetTile((Vector3Int)tile.position, tile.frontTile);
-                    collisionTilemap.SetTile((Vector3Int)tile.position, tile.collisionTile);
-                }
-            }
-            if (!connector.isStraight)
-            {
-                foreach (var tile in connector.platform.structureTiles)
-                {
-                    platformTilemap.SetTile((Vector3Int)tile.position, tile.baseTile);
-                    frontTilemap.SetTile((Vector3Int)tile.position, tile.frontTile);
-                    collisionTilemap.SetTile((Vector3Int)tile.position, tile.collisionTile);
-                }
-                foreach (var tile in connector.bridgeStart.structureTiles)
-                {
-                    bridgeTilemap.SetTile((Vector3Int)tile.position, tile.baseTile);
-                    frontTilemap.SetTile((Vector3Int)tile.position, tile.frontTile);
-                    collisionTilemap.SetTile((Vector3Int)tile.position, tile.collisionTile);
-                }
-                foreach (var tile in connector.bridgeEnd.structureTiles)
-                {
-                    bridgeTilemap.SetTile((Vector3Int)tile.position, tile.baseTile);
-                    frontTilemap.SetTile((Vector3Int)tile.position, tile.frontTile);
-                    collisionTilemap.SetTile((Vector3Int)tile.position, tile.collisionTile);
-                }
-            }
+            connector.DrawConnectorTiles();
+        }
+    }
+
+    public void DrawRoomDoorTiles(List<DungeonRoom> dungeonRooms)
+    {
+        foreach (var room in dungeonRooms)
+        {
+            room.DrawOpenRoomDoorwayTiles();
         }
     }
 }

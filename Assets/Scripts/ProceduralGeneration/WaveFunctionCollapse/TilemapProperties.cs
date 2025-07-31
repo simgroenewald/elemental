@@ -34,18 +34,12 @@ public class TilemapProperties
         }
     }
 
-    /// <summary>
-    /// Returns the flat index in row-major order given (x, y) grid coordinates.
-    /// </summary>
     public int GetIndexFromCoords(int x, int y)
     {
         int index = (y - mapBounds.yMin) * Width + (x - mapBounds.xMin);
         return index;
     }
 
-    /// <summary>
-    /// Returns (x, y) grid coordinates from a flat index.
-    /// </summary>
     public Vector2Int GetCoordsFromIndex(int index)
     {
         int y = index / Width;

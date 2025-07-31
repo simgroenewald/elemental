@@ -13,11 +13,16 @@ public class TilemapAnalyser
 
         Tilemap baseMap = grid.transform.Find("Base")?.GetComponent<Tilemap>();
         Tilemap frontMap = grid.transform.Find("Front")?.GetComponent<Tilemap>();
+        Tilemap baseDecorMap = grid.transform.Find("BaseDecor")?.GetComponent<Tilemap>();
+        Tilemap frontDecorMap = grid.transform.Find("FrontDecor")?.GetComponent<Tilemap>();
         Tilemap collisionMap = grid.transform.Find("Collision")?.GetComponent<Tilemap>();
         Tilemap typeMap = grid.transform.Find("TileType")?.GetComponent<Tilemap>();
 
         baseMap.CompressBounds();
-        BoundsInt bounds = baseMap.cellBounds;
+        BoundsInt bounds;
+
+        bounds = typeMap.cellBounds;
+        
         int width = bounds.size.x;
         int height = bounds.size.y;
 
@@ -28,30 +33,62 @@ public class TilemapAnalyser
 
         for (int y = bounds.yMin; y < bounds.yMax; y++)
         {
-            //Debug.Log("Looping y");
             for (int x = bounds.xMin; x < bounds.xMax; x++)
             {
                 if (x == -35 && y == 13)
                 {
                     Debug.Log("Gotcha");
                 }
-                //Debug.Log("Looping x");
+
                 Vector3Int pos = new Vector3Int(x, y, 0);
-                TileBase tilebase = baseMap.GetTile(pos);
+
+                TileBase tilebase = null;
+                TileBase collisionTile = null;
+                TileBase baseDecorTile = null;
+                TileBase frontDecorTile = null;
+                TileBase frontTile = null;
+                TileBase typeTile = null;
+                if (baseMap)
+                {
+                    tilebase = baseMap.GetTile(pos);
+                }
+
+                if (collisionMap)
+                {
+                    collisionTile = collisionMap.GetTile(pos);
+                }
+
+                if (baseDecorMap)
+                {
+                    baseDecorTile = baseDecorMap.GetTile(pos);
+                }
+
+                if (frontMap)
+                {
+                    frontTile = frontMap.GetTile(pos);
+                }
+
+                if (frontDecorMap)
+                {
+                    frontDecorTile = frontDecorMap.GetTile(pos);
+                }
+
+                if (typeMap)
+                {
+                    typeTile = typeMap.GetTile(pos);
+                }
+
                 //Debug.Log($"Base: {tilebase}");
-                TileBase collisionTile = collisionMap.GetTile(pos);
                 //Debug.Log($"Collision: {collisionTile}");
-                TileBase frontTile = frontMap.GetTile(pos);
                 //Debug.Log($"Decor: {decorTile}");
-                TileBase typeTile = typeMap.GetTile(pos);
                 //Debug.Log($"Type: {typeTile}");
 
-                if (tilebase == null && collisionTile == null && frontTile == null && typeTile == null)
+                if (tilebase == null && baseDecorTile == null && collisionTile == null && frontTile == null && typeTile == null && frontDecorTile == null)
                 {
                     continue;
                 }
 
-                List<TileBase> layerTiles = new List<TileBase> { tilebase, frontTile, typeTile };
+                List<TileBase> layerTiles = new List<TileBase> { tilebase, baseDecorTile, frontTile, frontDecorTile, typeTile };
                 int key = GetKey(layerTiles);
                 //Debug.Log("Key: " + key);
 
@@ -59,7 +96,7 @@ public class TilemapAnalyser
                 if (!indexToCell.ContainsKey(key))
                 {
                     //Debug.Log("Adding cell");
-                    indexToCell[key] = new Cell(tilebase, frontTile, collisionTile, typeTile, key, new Vector2Int(x, y));
+                    indexToCell[key] = new Cell(tilebase, frontTile, baseDecorTile, frontDecorTile, collisionTile, typeTile, key, new Vector2Int(x, y));
                 }
 
                 // Store tile index in flattened array (row-major order)

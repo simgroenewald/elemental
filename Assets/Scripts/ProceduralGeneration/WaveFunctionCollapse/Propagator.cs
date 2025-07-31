@@ -328,7 +328,14 @@ public class Propagator
                     Debug.Log($"Position: {neighbourPos.x}: {neighbourPos.y}");
                     foreach (var hash in waveCell.PossibleTiles)
                     {
-                        Debug.Log($"Possible Tile: {tilemapProperties.IndexToCell[hash].BaseTile.name}");
+                        if (tilemapProperties.IndexToCell[hash].BaseTile)
+                        {
+                            Debug.Log($"Possible Tile: {tilemapProperties.IndexToCell[hash].BaseTile.name}");
+                        } else if (tilemapProperties.IndexToCell[hash].BaseDecorTile)
+                        {
+                            Debug.Log($"Possible Tile: {tilemapProperties.IndexToCell[hash].BaseDecorTile.name}");
+                        }
+
                     }
                 }
             }

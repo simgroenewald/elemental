@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf268f606f448b24583b5969cff9c687, type: 3}
+  m_Name: WarriorCharacterDetails
+  m_EditorClassIdentifier: 
+  characterName: Warrior
+  playerPrefab: {fileID: 3710606535953622119, guid: bd4ee892fd70fa34b802852629e50c7f, type: 3}
+  runtimeAnimatorController: {fileID: 9100000, guid: 322e6ab2bb65ada499a9a2e20c069e52, type: 2}
+  health: 100
+  miniMapIcon: {fileID: 0}

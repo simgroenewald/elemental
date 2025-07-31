@@ -22,22 +22,38 @@ public class DungeonBuilderEditor : Editor
 
         }
 
-
-        if (GUILayout.Button("Generate Corridors"))
+        if (GUILayout.Button("Generate Connectors"))
         {
-            dungeonBuilder.GenerateCorridors();
+            dungeonBuilder.GenerateConnectors();
 
         }
 
-        if (GUILayout.Button("Draw Rooms"))
+        if (GUILayout.Button("Generate Doors"))
+        {
+            dungeonBuilder.GenerateDoors();
+
+        }
+
+        if (GUILayout.Button("Draw Map Tile Types"))
         {
             dungeonBuilder.DrawMap();
 
         }
 
+        if (GUILayout.Button("Generate Containers"))
+        {
+            dungeonBuilder.GenerateContainers();
+        }
+
         if (GUILayout.Button("Populate Room Tiles"))
         {
             dungeonBuilder.PopulateRoomTiles();
+
+        }
+
+        if (GUILayout.Button("Populate Door Tiles"))
+        {
+            dungeonBuilder.PopulateDoorTiles();
 
         }
 
@@ -57,6 +73,17 @@ public class DungeonBuilderEditor : Editor
         {
             dungeonBuilder.DrawConnectorTiles();
 
+        }
+
+        if (GUILayout.Button("Draw Door Tiles"))
+        {
+            dungeonBuilder.DrawDoorTiles();
+
+        }
+
+        if (GUILayout.Button("Populate Dungeon Collision Layer"))
+        {
+            dungeonBuilder.CreateDungeonCollisionLayer();
         }
 
         if (GUILayout.Button("Clear All Rooms"))
