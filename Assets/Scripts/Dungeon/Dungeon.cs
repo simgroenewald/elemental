@@ -31,7 +31,7 @@ public class Dungeon
 
         foreach (var dungeonRoom in dungeonRooms)
         {
-            allFloorPositions.UnionWith(dungeonRoom.floorPositions);
+            allFloorPositions.UnionWith(dungeonRoom.structure.floorPositions);
         }
 
         foreach (var connector in connectors)
@@ -39,16 +39,16 @@ public class Dungeon
             if (connector.isStraight)
             {
                 if (connector.bridgeMain != null)
-                    allFloorPositions.UnionWith(connector.bridgeMain.floorPositions);
+                    allFloorPositions.UnionWith(connector.bridgeMain.structure.floorPositions);
             }
             else
             {
                 if (connector.bridgeStart != null)
-                    allFloorPositions.UnionWith(connector.bridgeStart.floorPositions);
+                    allFloorPositions.UnionWith(connector.bridgeStart.structure.floorPositions);
                 if (connector.platform != null)
-                    allFloorPositions.UnionWith(connector.platform.floorPositions);
+                    allFloorPositions.UnionWith(connector.platform.structure.floorPositions);
                 if (connector.bridgeEnd != null)
-                    allFloorPositions.UnionWith(connector.bridgeEnd.floorPositions);
+                    allFloorPositions.UnionWith(connector.bridgeEnd.structure.floorPositions);
             }
         }
 

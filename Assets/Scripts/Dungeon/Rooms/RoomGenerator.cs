@@ -28,7 +28,7 @@ using UnityEngine.Tilemaps;
             //Debug.Log($"Generating natural room at {position} with size {width}x{length}");
             int[,] tiles = GenerateCellularAutomataLayout(dungeonRoom.bounds.size.x, dungeonRoom.bounds.size.y);
             HashSet<Vector2Int> floorPositions = GenerateCellularAutomataFloor(tiles, dungeonRoom.bounds);
-            dungeonRoom.floorPositions = floorPositions;
+            dungeonRoom.structure.floorPositions = floorPositions;
             GetEdgePositions(dungeonRoom);
             GetNaturalEdgePositions(dungeonRoom);
         }
@@ -41,7 +41,7 @@ using UnityEngine.Tilemaps;
             //HashSet<Vector2Int> corridors = new HashSet<Vector2Int>();
             HashSet<Vector2Int> floorPositions = GenerateBSPFloor(roomAreas, corridors);
             CleanUpRoomTiles(dungeonRoom.bounds, floorPositions);
-            dungeonRoom.GenerateStructureTiles(dungeonRoom.bounds, floorPositions, true, 3);
+            dungeonRoom.structure.GenerateStructureTiles(dungeonRoom.bounds, floorPositions, true, 3);
             dungeonRoom.roomAreas = roomAreas;
             GetNaturalEdgePositions(dungeonRoom);
         }
@@ -171,12 +171,12 @@ using UnityEngine.Tilemaps;
             dungeonRoom.edgeLists[Direction.East] = new List<Vector2Int>();
             dungeonRoom.edgeLists[Direction.West] = new List<Vector2Int>();
 
-            int maxY = dungeonRoom.floorPositions.Max(pos => pos.y);
-            int minY = dungeonRoom.floorPositions.Min(pos => pos.y);
-            int maxX = dungeonRoom.floorPositions.Max(pos => pos.x);
-            int minX = dungeonRoom.floorPositions.Min(pos => pos.x);
+            int maxY = dungeonRoom.structure.floorPositions.Max(pos => pos.y);
+            int minY = dungeonRoom.structure.floorPositions.Min(pos => pos.y);
+            int maxX = dungeonRoom.structure.floorPositions.Max(pos => pos.x);
+            int minX = dungeonRoom.structure.floorPositions.Min(pos => pos.x);
 
-            foreach (Vector2Int pos in dungeonRoom.floorPositions)
+            foreach (Vector2Int pos in dungeonRoom.structure.floorPositions)
             {
                 Vector2Int up = pos + Vector2Int.up;
                 Vector2Int down = pos + Vector2Int.down;
@@ -246,26 +246,26 @@ using UnityEngine.Tilemaps;
                 for (var x = dungeonRoom.bounds.position.x + 1; x < dungeonRoom.bounds.position.x + dungeonRoom.bounds.size.x - 1; x++)
                 {
                     Vector2Int tile = new Vector2Int(x, y);
-                    if (dungeonRoom.floorPositions.Contains(tile))
+                    if (dungeonRoom.structure.floorPositions.Contains(tile))
                     {
                         Vector2Int up = tile + Vector2Int.up;
                         Vector2Int down = tile + Vector2Int.down;
                         Vector2Int left = tile + Vector2Int.left;
                         Vector2Int right = tile + Vector2Int.right;
 
-                        if (!dungeonRoom.floorPositions.Contains(up) && dungeonRoom.floorPositions.Contains(down))
+                        if (!dungeonRoom.structure.floorPositions.Contains(up) && dungeonRoom.structure.floorPositions.Contains(down))
                         {
                             dungeonRoom.edgeLists[Direction.North].Add(up);
                         }
-                        if (!dungeonRoom.floorPositions.Contains(down) && dungeonRoom.floorPositions.Contains(up))
+                        if (!dungeonRoom.structure.floorPositions.Contains(down) && dungeonRoom.structure.floorPositions.Contains(up))
                         {
                             dungeonRoom.edgeLists[Direction.South].Add(down);
                         }
-                        if (!dungeonRoom.floorPositions.Contains(left) && dungeonRoom.floorPositions.Contains(right))
+                        if (!dungeonRoom.structure.floorPositions.Contains(left) && dungeonRoom.structure.floorPositions.Contains(right))
                         {
                             dungeonRoom.edgeLists[Direction.West].Add(left);
                         }
-                        if (!dungeonRoom.floorPositions.Contains(right) && dungeonRoom.floorPositions.Contains(left))
+                        if (!dungeonRoom.structure.floorPositions.Contains(right) && dungeonRoom.structure.floorPositions.Contains(left))
                         {
                             dungeonRoom.edgeLists[Direction.East].Add(right);
                         }

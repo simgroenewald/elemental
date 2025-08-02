@@ -2,32 +2,38 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class ConnectorGenerator : MonoBehaviour
 {
+
+    [SerializeField] private ConnectorFactory connectorFactory;
+    [SerializeField] private DoorwayFactory doorwayFactory;
+    [SerializeField] private Transform objectParent;
     public List<Connector> GenerateConnectors(List<DungeonRoom> rooms, int connectorWidth)
     {
         List<Connector> connectors = new List<Connector>();
 
         foreach (var parent in rooms)
         {
-            Debug.Log($"Child count: {parent.children.Count} ");
+            //Debug.Log($"Child count: {parent.children.Count} ");
             foreach (var child in parent.children)
             {
-                Debug.Log($"Connecting {parent.roomType} {parent.theme} to {child.roomType} {child.theme}");
+                //Debug.Log($"Connecting {parent.roomType} {parent.theme} to {child.roomType} {child.theme}");
                 // Get direction from parent to child
                 Direction direction = GetDirectionToChild(parent, child);
                 ConnectorOrientation orientation = GetCorridorOrientaion(direction);
 
                 // Get best edge tile pair (closest across given direction)
                 (Vector2Int start, Vector2Int end) = GetClosestEdgeTiles(parent, child, direction, connectorWidth, orientation);
-                Debug.Log($"Connecting {parent.roomType} {parent.theme} to {child.roomType} {child.theme} in direction: {direction} - corridor orientation {orientation}");
-                Connector connector = new Connector(start, end, orientation);
+                //Debug.Log($"Connecting {parent.roomType} {parent.theme} to {child.roomType} {child.theme} in direction: {direction} - corridor orientation {orientation}");
+                Connector connector = connectorFactory.CreateConnector(start, end, orientation, objectParent);
+                GenerateConnectorSections(connector);
 
-                Debug.Log($"Start ({start.x}, {start.y}) - end ({end.x}, {end.y})");
+                //Debug.Log($"Start ({start.x}, {start.y}) - end ({end.x}, {end.y})");
 
                 // Generate L-shaped corridor path
                 GenerateWideCorridorPath(start, end, connector, connectorWidth);
@@ -39,8 +45,39 @@ public class ConnectorGenerator : MonoBehaviour
                 connectors.Add(connector);
             }
         }
-        Debug.Log($"Corridor Count: {connectors.Count}");
+        //Debug.Log($"Corridor Count: {connectors.Count}");
         return connectors;
+    }
+
+    private void GenerateConnectorSections(Connector connector)
+    {
+        if (connector.isStraight)
+        {
+            if (connector.orientation == ConnectorOrientation.Vertical)
+            {
+                connector.bridgeMain = connectorFactory.CreateBridge(ConnectorOrientation.Vertical, objectParent);
+            }
+            else
+            {
+                connector.bridgeMain = connectorFactory.CreateBridge(ConnectorOrientation.Horizontal, objectParent);
+
+            }
+        }
+        else
+        {
+            if (connector.orientation == ConnectorOrientation.Vertical)
+            {
+                connector.bridgeStart = connectorFactory.CreateBridge(ConnectorOrientation.Vertical, objectParent);
+                connector.bridgeEnd = connectorFactory.CreateBridge(ConnectorOrientation.Vertical, objectParent);
+                connector.platform = connectorFactory.CreatePlatform(ConnectorOrientation.Horizontal, objectParent);
+            }
+            else
+            {
+                connector.bridgeStart = connectorFactory.CreateBridge(ConnectorOrientation.Horizontal, objectParent);
+                connector.bridgeEnd = connectorFactory.CreateBridge(ConnectorOrientation.Horizontal, objectParent);
+                connector.platform = connectorFactory.CreatePlatform(ConnectorOrientation.Vertical, objectParent);
+            }
+        }
     }
 
     private Direction GetDirectionToChild(DungeonRoom parent, DungeonRoom child)
@@ -103,20 +140,32 @@ public class ConnectorGenerator : MonoBehaviour
         // Allow wider doorways so that bridge ropes dont overlap + 2 (1 tile for each side)
         if (direction == Direction.North)
         {
-            parent.AddDoorway(bestStart, corridorWidth + 2, WallType.WallBack);
-            child.AddDoorway(bestEnd, corridorWidth + 2, WallType.WallFront);
+            Doorway parentDoorway = doorwayFactory.CreateDoorway(bestStart, corridorWidth + 2, DoorType.BackDoor, parent.transform, parent.structure.tilemapLayers.grid);
+            parent.AddDoorway(parentDoorway);
+
+            Doorway childDoorway = doorwayFactory.CreateDoorway(bestEnd, corridorWidth + 2, DoorType.FrontDoor, child.transform, child.structure.tilemapLayers.grid);
+            child.AddDoorway(childDoorway);
         } else if (direction == Direction.South)
         {
-            parent.AddDoorway(bestStart, corridorWidth + 2, WallType.WallFront);
-            child.AddDoorway(bestEnd, corridorWidth + 2, WallType.WallBack);
+            Doorway parentDoorway = doorwayFactory.CreateDoorway(bestStart, corridorWidth + 2, DoorType.FrontDoor, parent.transform, parent.structure.tilemapLayers.grid);
+            parent.AddDoorway(parentDoorway);
+
+            Doorway childDoorway = doorwayFactory.CreateDoorway(bestEnd, corridorWidth + 2, DoorType.BackDoor, child.transform, child.structure.tilemapLayers.grid);
+            child.AddDoorway(childDoorway);
         } else if (direction == Direction.East)
         {
-            parent.AddDoorway(bestStart, corridorWidth + 2, WallType.WallRight);
-            child.AddDoorway(bestEnd, corridorWidth + 2, WallType.WallLeft);
+            Doorway parentDoorway = doorwayFactory.CreateDoorway(bestStart, corridorWidth + 2, DoorType.RightDoor, parent.transform, parent.structure.tilemapLayers.grid);
+            parent.AddDoorway(parentDoorway);
+
+            Doorway childDoorway = doorwayFactory.CreateDoorway(bestEnd, corridorWidth + 2, DoorType.LeftDoor, child.transform, child.structure.tilemapLayers.grid);
+            child.AddDoorway(childDoorway);
         } else if (direction == Direction.West)
         {
-            parent.AddDoorway(bestStart, corridorWidth + 2, WallType.WallLeft);
-            child.AddDoorway(bestEnd, corridorWidth + 2, WallType.WallRight);
+            Doorway parentDoorway = doorwayFactory.CreateDoorway(bestStart, corridorWidth + 2, DoorType.LeftDoor, parent.transform, parent.structure.tilemapLayers.grid);
+            parent.AddDoorway(parentDoorway);
+
+            Doorway childDoorway = doorwayFactory.CreateDoorway(bestEnd, corridorWidth + 2, DoorType.RightDoor, child.transform, child.structure.tilemapLayers.grid);
+            child.AddDoorway(childDoorway);
         }
 
         return (bestStart, bestEnd);
@@ -292,11 +341,11 @@ public class ConnectorGenerator : MonoBehaviour
         {
             if (currentPos < endPos - offset)
             {
-                connector.bridgeStart.floorPositions.Add(pos);
+                connector.bridgeStart.structure.floorPositions.Add(pos);
             }
             else if (currentPos > endPos - offset)
             {
-                connector.platform.floorPositions.Add(pos);
+                connector.platform.structure.floorPositions.Add(pos);
             }
 
         }
@@ -304,22 +353,22 @@ public class ConnectorGenerator : MonoBehaviour
         {
             if (currentPos > startPos + offset)
             {
-                connector.bridgeEnd.floorPositions.Add(pos);
+                connector.bridgeEnd.structure.floorPositions.Add(pos);
             }
             else if (currentPos < startPos - offset)
             {
-                connector.platform.floorPositions.Add(pos);
+                connector.platform.structure.floorPositions.Add(pos);
             }
         }
         else
         {
             if (platform)
             {
-                connector.platform.floorPositions.Add(pos);
+                connector.platform.structure.floorPositions.Add(pos);
             }
             else
             {
-                connector.bridgeMain.floorPositions.Add(pos);
+                connector.bridgeMain.structure.floorPositions.Add(pos);
             }
 
         }

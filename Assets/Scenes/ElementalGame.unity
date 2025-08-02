@@ -119,6 +119,93 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &3155191 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6911760078779659748, guid: 452071372d955194ea495723c315f62d, type: 3}
+  m_PrefabInstance: {fileID: 56919465}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac854238f31f4624d93e4afda69b1175, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1001 &56919465
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 212039855390775792, guid: 452071372d955194ea495723c315f62d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3571426750705355574, guid: 452071372d955194ea495723c315f62d, type: 3}
+      propertyPath: dungeonLayers
+      value: 
+      objectReference: {fileID: 3155191}
+    - target: {fileID: 6932876762171775539, guid: 452071372d955194ea495723c315f62d, type: 3}
+      propertyPath: m_Name
+      value: DungeonBuilder
+      objectReference: {fileID: 0}
+    - target: {fileID: 8312135913581291605, guid: 452071372d955194ea495723c315f62d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 9.752735
+      objectReference: {fileID: 0}
+    - target: {fileID: 8312135913581291605, guid: 452071372d955194ea495723c315f62d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 61.324123
+      objectReference: {fileID: 0}
+    - target: {fileID: 8312135913581291605, guid: 452071372d955194ea495723c315f62d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.9227313
+      objectReference: {fileID: 0}
+    - target: {fileID: 8312135913581291605, guid: 452071372d955194ea495723c315f62d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8312135913581291605, guid: 452071372d955194ea495723c315f62d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8312135913581291605, guid: 452071372d955194ea495723c315f62d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8312135913581291605, guid: 452071372d955194ea495723c315f62d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8312135913581291605, guid: 452071372d955194ea495723c315f62d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8312135913581291605, guid: 452071372d955194ea495723c315f62d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8312135913581291605, guid: 452071372d955194ea495723c315f62d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 452071372d955194ea495723c315f62d, type: 3}
+--- !u!114 &72430345 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3571426750705355574, guid: 452071372d955194ea495723c315f62d, type: 3}
+  m_PrefabInstance: {fileID: 56919465}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24d034a3f08ba094f82e70d229dfe6cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &170293768 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3268277285761170058, guid: 867c9848b1140974d96350a2b2857406, type: 3}
@@ -128,66 +215,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e04976799df50f54ba128eff723155a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!1 &806233035
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 806233037}
-  - component: {fileID: 806233036}
-  - component: {fileID: 806233038}
-  m_Layer: 0
-  m_Name: DungeonBuilder
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &806233036
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 806233035}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24d034a3f08ba094f82e70d229dfe6cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dungeonTemplate: {fileID: 2761768881728766154, guid: 105e34c90d3c6fc4f8c08e7c9f4bcf45, type: 3}
-  roomSizePresets: {fileID: 11400000, guid: c34094cb6506e4143a1a424c1d4e9b5a, type: 2}
-  structureToGridMapper: {fileID: 11400000, guid: c86ed394dba437a4c9d5ae3bae3cc1d7, type: 2}
---- !u!4 &806233037
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 806233035}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.36862, y: 28.186272, z: 0.073315725}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &806233038
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 806233035}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1991e64e9d3a20944ab32fe62aaf7bb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &884658100
@@ -819,7 +846,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b2fdaf0700bb053498f929e1ede1c973, type: 2}
   - {fileID: 11400000, guid: c30a8d4214e32a2429f8b68e8c522df5, type: 2}
   - {fileID: 11400000, guid: 659db66286f45c948ad0ef3fd23b0be2, type: 2}
-  dungeonBuilder: {fileID: 806233036}
+  dungeonBuilder: {fileID: 72430345}
   playerNavMeshSurface: {fileID: 170293768}
   enemyNavMeshSurface: {fileID: 1442070498}
   currentLevelIndex: 0
@@ -833,7 +860,7 @@ Transform:
   m_GameObject: {fileID: 1962718394}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.36862, y: 28.186272, z: 0.073315725}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -976,7 +1003,7 @@ SceneRoots:
   - {fileID: 884658102}
   - {fileID: 1478569163}
   - {fileID: 1962718396}
-  - {fileID: 806233037}
   - {fileID: 1163551854}
   - {fileID: 580194731281925095}
   - {fileID: 4997896594410273715}
+  - {fileID: 56919465}

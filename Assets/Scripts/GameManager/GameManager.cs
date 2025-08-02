@@ -83,11 +83,11 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         DungeonRoom startRoom = dungeon.GetStartRoom();
         currentDungeonRoom = startRoom;
         previousDungeonRoom = startRoom;
-        player.SetPlayerStartPosition(startRoom, startRoom.structureTilemap.tilemapLayers.grid);
+        player.SetPlayerStartPosition(startRoom, startRoom.structure.tilemapLayers.grid);
         playerNavMeshSurface.BuildNavMesh();
         enemyNavMeshSurface.BuildNavMesh();
         //PlacePlayerOnNavMesh(player.transform);
-        cameraController.SetupCamera(player.transform.position, startRoom.structureTilemap.tilemapLayers.baseTilemap);
+        cameraController.SetupCamera(player.transform.position, startRoom.structure.tilemapLayers.baseTilemap);
 
         state = GameState.playing;
     }

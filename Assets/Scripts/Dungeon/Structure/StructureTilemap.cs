@@ -22,7 +22,7 @@ public class StructureTilemap : MonoBehaviour
         }
 
         GameObject structureTemplateInstance = Instantiate(structureTemplate, parent);
-        tilemapLayers = structureTemplateInstance.GetComponent<TilemapLayers>();
+        
         HideCollisionLayer();
 
         if (tilemapLayers == null)

@@ -1,27 +1,30 @@
 using System.Collections.Generic;
+using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UIElements;
 
-public class Doorway : Structure
+public class Doorway: Structure
 {
-    WallType wallType;
+    public DoorType doortype;
+    public Vector2Int midPosition;
     public HashSet<StructureTile> closedTiles = new HashSet<StructureTile>();
     public HashSet<StructureTile> openTiles = new HashSet<StructureTile>();
 
-    public Doorway(Vector2Int midPositon, int width, WallType wallType)
+    public Doorway Initialise(Vector2Int midPositon, int width, DoorType doortype, Grid grid)
     {
         floorPositions = new HashSet<Vector2Int>();
         int sideTileCount = width / 2;
 
-        this.wallType = wallType;
+        this.doortype = doortype;
+        this.midPosition = midPositon;
         floorPositions.Add(midPositon);
         for (int i = 1; i < sideTileCount + 1; i++)
         {
             Vector2Int doorwayTileA = new Vector2Int();
             Vector2Int doorwayTileB = new Vector2Int();
 
-            if (wallType == WallType.WallBack || wallType == WallType.WallFront)
+            if (doortype == DoorType.BackDoor || doortype == DoorType.FrontDoor)
             {
                 doorwayTileA = new Vector2Int(midPositon.x - i, midPositon.y);
                 doorwayTileB = new Vector2Int(midPositon.x + i, midPositon.y);
@@ -35,6 +38,28 @@ public class Doorway : Structure
             floorPositions.Add(doorwayTileA);
             floorPositions.Add(doorwayTileB);
         }
+
+        // === Convert tile position to world position ===
+        Vector3 worldPosition = grid.CellToWorld((Vector3Int)midPositon) + grid.cellSize / 2f;
+        transform.position = worldPosition;
+
+        // === Adjust collider size based on orientation ===
+        BoxCollider2D collider = GetComponent<BoxCollider2D>();
+        if (collider != null)
+        {
+            if (doortype == DoorType.LeftDoor || doortype == DoorType.RightDoor)
+            {
+                collider.size = new Vector2(0.2f, width);  // vertical
+                collider.offset = Vector2.zero;
+            }
+            else
+            {
+                collider.size = new Vector2(width, 0.2f);  // horizontal
+                collider.offset = Vector2.zero;
+            }
+        }
+
+        return this;
     }
 
     public void GenerateStructureTiles()
@@ -46,7 +71,7 @@ public class Doorway : Structure
 
         foreach (var pos in floorPositions)
         {
-            if (wallType == WallType.WallFront || wallType == WallType.WallBack)
+            if (doortype == DoorType.FrontDoor || doortype == DoorType.BackDoor)
             {
                 if (pos.x < min.x) min = pos;
                 if (pos.x > max.x) max = pos;
@@ -60,12 +85,12 @@ public class Doorway : Structure
 
         foreach (var pos in floorPositions)
         {
-            TileType tileType = wallType switch
+            TileType tileType = doortype switch
             {
-                WallType.WallFront => TileType.WallFront,
-                WallType.WallBack => TileType.WallBack,
-                WallType.WallLeft => TileType.WallLeft,
-                WallType.WallRight => TileType.WallRight,
+                DoorType.FrontDoor => TileType.WallFront,
+                DoorType.BackDoor => TileType.WallBack,
+                DoorType.LeftDoor => TileType.WallLeft,
+                DoorType.RightDoor => TileType.WallRight,
                 _ => TileType.None
             };
 
@@ -89,13 +114,13 @@ public class Doorway : Structure
         closedTiles.Add(tile);
     }
 
-    public void DrawOpenDoorTiles(StructureTilemap structureTilemap)
+    public void DrawOpenDoorTiles(TilemapLayers tilemapLayers)
     {
-        Tilemap baseTilemap = structureTilemap.tilemapLayers.baseTilemap;
-        Tilemap baseDecorTilemap = structureTilemap.tilemapLayers.baseDecorationTilemap;
-        Tilemap frontTilemap = structureTilemap.tilemapLayers.frontTilemap;
-        Tilemap frontDecorationTilemap = structureTilemap.tilemapLayers.frontDecorationTilemap;
-        Tilemap collisionTilemap = structureTilemap.tilemapLayers.collisionTilemap;
+        Tilemap baseTilemap = tilemapLayers.baseTilemap;
+        Tilemap baseDecorTilemap = tilemapLayers.baseDecorationTilemap;
+        Tilemap frontTilemap = tilemapLayers.frontTilemap;
+        Tilemap frontDecorationTilemap = tilemapLayers.frontDecorationTilemap;
+        Tilemap collisionTilemap = tilemapLayers.collisionTilemap;
 
         foreach (var tile in openTiles)
         {
@@ -107,13 +132,13 @@ public class Doorway : Structure
         }
     }
 
-    public void DrawClosedDoorTiles(StructureTilemap structureTilemap)
+    public void DrawClosedDoorTiles(TilemapLayers tilemapLayers)
     {
-        Tilemap baseTilemap = structureTilemap.tilemapLayers.baseTilemap;
-        Tilemap baseDecorTilemap = structureTilemap.tilemapLayers.baseDecorationTilemap;
-        Tilemap frontTilemap = structureTilemap.tilemapLayers.frontTilemap;
-        Tilemap frontDecorationTilemap = structureTilemap.tilemapLayers.frontDecorationTilemap;
-        Tilemap collisionTilemap = structureTilemap.tilemapLayers.collisionTilemap;
+        Tilemap baseTilemap = tilemapLayers.baseTilemap;
+        Tilemap baseDecorTilemap = tilemapLayers.baseDecorationTilemap;
+        Tilemap frontTilemap = tilemapLayers.frontTilemap;
+        Tilemap frontDecorationTilemap = tilemapLayers.frontDecorationTilemap;
+        Tilemap collisionTilemap = tilemapLayers.collisionTilemap;
 
         foreach (var tile in closedTiles)
         {

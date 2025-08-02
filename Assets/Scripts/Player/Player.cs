@@ -49,7 +49,7 @@ public class Player : MonoBehaviour
 
     public void SetPlayerStartPosition(DungeonRoom room, Grid grid)
     {
-        Vector2Int randomPos = room.floorPositions.ElementAt(UnityEngine.Random.Range(0, room.floorPositions.Count));
+        Vector2Int randomPos = room.structure.floorPositions.ElementAt(UnityEngine.Random.Range(0, room.structure.floorPositions.Count));
         SetPlayerPosition(randomPos, grid);
     }
 
