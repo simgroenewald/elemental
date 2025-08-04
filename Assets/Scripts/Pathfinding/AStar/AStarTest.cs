@@ -4,14 +4,14 @@ using UnityEngine.Tilemaps;
 
 public class AStarTest : MonoBehaviour
 {
-    private Dungeon dungeon;
-    private Grid grid;
-    private Tilemap frontTilemap;
-    private Tilemap pathTilemap;
+    public Dungeon dungeon;
+    public Grid grid;
+    public Tilemap frontTilemap;
+    public Tilemap pathTilemap;
     private Vector3Int startGridPosition;
     private Vector3Int endGridPosition;
-    private TileBase startPathTile;
-    private TileBase finishPathTile;
+    public TileBase startPathTile;
+    public TileBase finishPathTile;
 
     private Vector3Int noValue = new Vector3Int(9999, 9999, 9999);
     private Stack<Vector3> pathStack;

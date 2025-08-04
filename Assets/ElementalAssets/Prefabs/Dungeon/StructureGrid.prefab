@@ -94,7 +94,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -876546973899608171, guid: 9c220819835725747b8db5dee9d71a76, type: 3}
+  - {fileID: 2100000, guid: 6bb7bd03f1d62b74591475475ea344fc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -248,7 +248,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -876546973899608171, guid: 9c220819835725747b8db5dee9d71a76, type: 3}
+  - {fileID: 2100000, guid: 6bb7bd03f1d62b74591475475ea344fc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -491,7 +491,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -876546973899608171, guid: 9c220819835725747b8db5dee9d71a76, type: 3}
+  - {fileID: 2100000, guid: 6bb7bd03f1d62b74591475475ea344fc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -614,7 +614,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -876546973899608171, guid: 9c220819835725747b8db5dee9d71a76, type: 3}
+  - {fileID: 2100000, guid: 6bb7bd03f1d62b74591475475ea344fc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -737,7 +737,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -876546973899608171, guid: 9c220819835725747b8db5dee9d71a76, type: 3}
+  - {fileID: 2100000, guid: 6bb7bd03f1d62b74591475475ea344fc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -860,7 +860,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -876546973899608171, guid: 9c220819835725747b8db5dee9d71a76, type: 3}
+  - {fileID: 2100000, guid: 6bb7bd03f1d62b74591475475ea344fc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -983,7 +983,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -876546973899608171, guid: 9c220819835725747b8db5dee9d71a76, type: 3}
+  - {fileID: 2100000, guid: 6bb7bd03f1d62b74591475475ea344fc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1433,7 +1433,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -876546973899608171, guid: 9c220819835725747b8db5dee9d71a76, type: 3}
+  - {fileID: 2100000, guid: 6bb7bd03f1d62b74591475475ea344fc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1556,7 +1556,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -876546973899608171, guid: 9c220819835725747b8db5dee9d71a76, type: 3}
+  - {fileID: 2100000, guid: 6bb7bd03f1d62b74591475475ea344fc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

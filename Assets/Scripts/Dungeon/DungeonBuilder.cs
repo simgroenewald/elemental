@@ -64,7 +64,7 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
         {
             foreach (var door in dungeonRoom.doorways)
             {
-                foreach (var tile in door.structureTiles)
+                foreach (var tile in door.structure.structureTiles)
                 {
                     dungeonLayers.collisionTilemap.SetTile((Vector3Int)tile.position, tile.collisionTile);
                 }
@@ -148,7 +148,7 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
         {
             foreach (var door in dungeonRoom.doorways)
             {
-                WaveFunctionCollapse2 wfc = new WaveFunctionCollapse2(door.structureTiles, properties, 1);
+                WaveFunctionCollapse2 wfc = new WaveFunctionCollapse2(door.structure.structureTiles, properties, 1);
                 wfc.PopulateOutputCells();
                 door.SetOpenDoorTiles();
             }
@@ -236,7 +236,7 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
     {
         foreach (var room in dungeonRooms)
         {
-            room.DrawOpenRoomDoorwayTiles();
+            StaticEventHandler.CallOpenRoomDoors(room);
         }
     }
 }

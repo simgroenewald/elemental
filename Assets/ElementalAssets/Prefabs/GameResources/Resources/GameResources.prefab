@@ -45,11 +45,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dungeon:
+    dungeonRooms:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    connectors:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
     dungeonLayers: {fileID: 0}
     bounds:
-      m_Position: {x: 0, y: 0, z: 0}
-      m_Size: {x: 0, y: 0, z: 0}
-    seed: 0
+      m_Position: {x: -87, y: 0, z: 0}
+      m_Size: {x: 254, y: 167, z: 1}
+    seed: 6776
   player: {fileID: 11400000, guid: cbff6fd43ac89424b80e2c05aab40476, type: 2}
   enemyUnwalkableCollisionTilesArray:
   - {fileID: 11400000, guid: 0e53b785ce08c6f4c97720e1b7b50fa8, type: 2}
@@ -67,3 +78,6 @@ MonoBehaviour:
   preferredEnemyPathTile: {fileID: 11400000, guid: 639e354fdc58ed74cb577ddfc653666b, type: 2}
   cameraController: {fileID: 0}
   structureTemplatePrefab: {fileID: 2761768881728766154, guid: 105e34c90d3c6fc4f8c08e7c9f4bcf45, type: 3}
+  dimmedMaterial: {fileID: 2100000, guid: 6bb7bd03f1d62b74591475475ea344fc, type: 2}
+  litMaterial: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  variableLitShader: {fileID: -6465566751694194690, guid: 5849265a5eb365c46b72c3c2e3835a84, type: 3}

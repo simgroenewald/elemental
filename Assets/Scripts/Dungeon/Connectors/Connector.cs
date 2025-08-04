@@ -7,8 +7,8 @@ public class Connector : MonoBehaviour
 {
     public Structure structure = new Structure();
 
-    public DungeonRoom roomA;
-    public DungeonRoom roomB;
+    public DungeonRoom parentRoom;
+    public DungeonRoom childRoom;
     public Vector2Int start;
     public Vector2Int end;
     public ConnectorOrientation orientation;
@@ -20,10 +20,12 @@ public class Connector : MonoBehaviour
 
     public Boolean isStraight;
 
-    public Connector Initialise(Vector2Int _start, Vector2Int _end, ConnectorOrientation _orientation)
+    public Connector Initialise(Vector2Int _start, Vector2Int _end, DungeonRoom _partentRoom, DungeonRoom _childRoom, ConnectorOrientation _orientation)
     {
         start = _start;
         end = _end;
+        parentRoom = _partentRoom;
+        childRoom = _childRoom;
         orientation = _orientation;
 
         if (orientation == ConnectorOrientation.Vertical)

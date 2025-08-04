@@ -1,24 +1,29 @@
 using System.Collections.Generic;
 using UnityEditorInternal;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Tilemaps;
 using UnityEngine.UIElements;
 
-public class Doorway: Structure
+public class Doorway: MonoBehaviour
 {
+    public Structure structure;
     public DoorType doortype;
     public Vector2Int midPosition;
     public HashSet<StructureTile> closedTiles = new HashSet<StructureTile>();
     public HashSet<StructureTile> openTiles = new HashSet<StructureTile>();
+    public NavMeshObstacle obstacle;
+    public DungeonRoom room;
 
-    public Doorway Initialise(Vector2Int midPositon, int width, DoorType doortype, Grid grid)
+    public Doorway Initialise(Vector2Int midPositon, int width, DoorType doortype, DungeonRoom room, Grid grid)
     {
-        floorPositions = new HashSet<Vector2Int>();
+        this.room = room;
+        structure.floorPositions = new HashSet<Vector2Int>();
         int sideTileCount = width / 2;
 
         this.doortype = doortype;
         this.midPosition = midPositon;
-        floorPositions.Add(midPositon);
+        structure.floorPositions.Add(midPositon);
         for (int i = 1; i < sideTileCount + 1; i++)
         {
             Vector2Int doorwayTileA = new Vector2Int();
@@ -35,8 +40,8 @@ public class Doorway: Structure
                 doorwayTileB = new Vector2Int(midPositon.x, midPositon.y + i);
 
             }
-            floorPositions.Add(doorwayTileA);
-            floorPositions.Add(doorwayTileB);
+            structure.floorPositions.Add(doorwayTileA);
+            structure.floorPositions.Add(doorwayTileB);
         }
 
         // === Convert tile position to world position ===
@@ -47,19 +52,50 @@ public class Doorway: Structure
         BoxCollider2D collider = GetComponent<BoxCollider2D>();
         if (collider != null)
         {
+            if (doortype == DoorType.LeftDoor)
+            {
+                collider.size = new Vector2(0.2f, width);  
+                collider.offset = new Vector2(0.5f, 0);
+            }
+            else if (doortype == DoorType.RightDoor)
+            {
+                collider.size = new Vector2(0.2f, width);
+                collider.offset = new Vector2(-0.5f, 0);
+            }
+            else if (doortype == DoorType.FrontDoor)
+            {
+                collider.size = new Vector2(width, 0.2f);
+                collider.offset = new Vector2(0, 0.5f);
+            }
+            else if (doortype == DoorType.BackDoor)
+            {
+                collider.size = new Vector2(width, 0.2f);
+                collider.offset = new Vector2(0, -0.5f);
+            }
+        }
+
+        obstacle = GetComponent<NavMeshObstacle>();
+        if (obstacle != null)
+        {
             if (doortype == DoorType.LeftDoor || doortype == DoorType.RightDoor)
             {
-                collider.size = new Vector2(0.2f, width);  // vertical
-                collider.offset = Vector2.zero;
+                obstacle.size = new Vector3(0.5f, width, 2);
             }
             else
             {
-                collider.size = new Vector2(width, 0.2f);  // horizontal
-                collider.offset = Vector2.zero;
+                obstacle.size = new Vector3(width, 0.5f, 2);
             }
         }
 
         return this;
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            StaticEventHandler.CallRoomChangedEvent(this.room);
+        }
     }
 
     public void GenerateStructureTiles()
@@ -69,7 +105,7 @@ public class Doorway: Structure
         Vector2Int min = new Vector2Int(int.MaxValue, int.MaxValue);
         Vector2Int max = new Vector2Int(int.MinValue, int.MinValue);
 
-        foreach (var pos in floorPositions)
+        foreach (var pos in structure.floorPositions)
         {
             if (doortype == DoorType.FrontDoor || doortype == DoorType.BackDoor)
             {
@@ -83,7 +119,7 @@ public class Doorway: Structure
             }
         }
 
-        foreach (var pos in floorPositions)
+        foreach (var pos in structure.floorPositions)
         {
             TileType tileType = doortype switch
             {
@@ -97,13 +133,13 @@ public class Doorway: Structure
             if (pos == min || pos == max)
                 tileType = TileType.DoorEdge;
 
-            structureTiles.Add(new StructureTile(pos, tileType));
+            structure.structureTiles.Add(new StructureTile(pos, tileType));
         }
     }
 
     public void SetOpenDoorTiles()
     {
-        foreach (var tile in structureTiles)
+        foreach (var tile in structure.structureTiles)
         {
             openTiles.Add(tile);
         }
@@ -114,7 +150,7 @@ public class Doorway: Structure
         closedTiles.Add(tile);
     }
 
-    public void DrawOpenDoorTiles(TilemapLayers tilemapLayers)
+    public void Open(TilemapLayers tilemapLayers)
     {
         Tilemap baseTilemap = tilemapLayers.baseTilemap;
         Tilemap baseDecorTilemap = tilemapLayers.baseDecorationTilemap;
@@ -130,9 +166,10 @@ public class Doorway: Structure
             frontDecorationTilemap.SetTile((Vector3Int)tile.position, tile.frontDecorTile);
             collisionTilemap.SetTile((Vector3Int)tile.position, tile.collisionTile);
         }
+        obstacle.enabled = false;
     }
 
-    public void DrawClosedDoorTiles(TilemapLayers tilemapLayers)
+    public void Close(TilemapLayers tilemapLayers)
     {
         Tilemap baseTilemap = tilemapLayers.baseTilemap;
         Tilemap baseDecorTilemap = tilemapLayers.baseDecorationTilemap;
@@ -148,5 +185,6 @@ public class Doorway: Structure
             frontDecorationTilemap.SetTile((Vector3Int)tile.position, tile.frontDecorTile);
             collisionTilemap.SetTile((Vector3Int)tile.position, tile.collisionTile);
         }
+        obstacle.enabled = true;
     }
 }

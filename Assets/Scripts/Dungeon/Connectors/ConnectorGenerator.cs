@@ -30,7 +30,7 @@ public class ConnectorGenerator : MonoBehaviour
                 // Get best edge tile pair (closest across given direction)
                 (Vector2Int start, Vector2Int end) = GetClosestEdgeTiles(parent, child, direction, connectorWidth, orientation);
                 //Debug.Log($"Connecting {parent.roomType} {parent.theme} to {child.roomType} {child.theme} in direction: {direction} - corridor orientation {orientation}");
-                Connector connector = connectorFactory.CreateConnector(start, end, orientation, objectParent);
+                Connector connector = connectorFactory.CreateConnector(start, end, parent, child, orientation, objectParent);
                 GenerateConnectorSections(connector);
 
                 //Debug.Log($"Start ({start.x}, {start.y}) - end ({end.x}, {end.y})");
@@ -140,31 +140,35 @@ public class ConnectorGenerator : MonoBehaviour
         // Allow wider doorways so that bridge ropes dont overlap + 2 (1 tile for each side)
         if (direction == Direction.North)
         {
-            Doorway parentDoorway = doorwayFactory.CreateDoorway(bestStart, corridorWidth + 2, DoorType.BackDoor, parent.transform, parent.structure.tilemapLayers.grid);
+            Doorway parentDoorway = doorwayFactory.CreateDoorway(bestStart, corridorWidth + 2, DoorType.BackDoor, parent);
             parent.AddDoorway(parentDoorway);
+            parent.AddExitDoorway(parentDoorway);
 
-            Doorway childDoorway = doorwayFactory.CreateDoorway(bestEnd, corridorWidth + 2, DoorType.FrontDoor, child.transform, child.structure.tilemapLayers.grid);
+            Doorway childDoorway = doorwayFactory.CreateDoorway(bestEnd, corridorWidth + 2, DoorType.FrontDoor, child);
             child.AddDoorway(childDoorway);
         } else if (direction == Direction.South)
         {
-            Doorway parentDoorway = doorwayFactory.CreateDoorway(bestStart, corridorWidth + 2, DoorType.FrontDoor, parent.transform, parent.structure.tilemapLayers.grid);
+            Doorway parentDoorway = doorwayFactory.CreateDoorway(bestStart, corridorWidth + 2, DoorType.FrontDoor, parent);
             parent.AddDoorway(parentDoorway);
+            parent.AddExitDoorway(parentDoorway);
 
-            Doorway childDoorway = doorwayFactory.CreateDoorway(bestEnd, corridorWidth + 2, DoorType.BackDoor, child.transform, child.structure.tilemapLayers.grid);
+            Doorway childDoorway = doorwayFactory.CreateDoorway(bestEnd, corridorWidth + 2, DoorType.BackDoor, child);
             child.AddDoorway(childDoorway);
         } else if (direction == Direction.East)
         {
-            Doorway parentDoorway = doorwayFactory.CreateDoorway(bestStart, corridorWidth + 2, DoorType.RightDoor, parent.transform, parent.structure.tilemapLayers.grid);
+            Doorway parentDoorway = doorwayFactory.CreateDoorway(bestStart, corridorWidth + 2, DoorType.RightDoor, parent);
             parent.AddDoorway(parentDoorway);
+            parent.AddExitDoorway(parentDoorway);
 
-            Doorway childDoorway = doorwayFactory.CreateDoorway(bestEnd, corridorWidth + 2, DoorType.LeftDoor, child.transform, child.structure.tilemapLayers.grid);
+            Doorway childDoorway = doorwayFactory.CreateDoorway(bestEnd, corridorWidth + 2, DoorType.LeftDoor, child);
             child.AddDoorway(childDoorway);
         } else if (direction == Direction.West)
         {
-            Doorway parentDoorway = doorwayFactory.CreateDoorway(bestStart, corridorWidth + 2, DoorType.LeftDoor, parent.transform, parent.structure.tilemapLayers.grid);
+            Doorway parentDoorway = doorwayFactory.CreateDoorway(bestStart, corridorWidth + 2, DoorType.LeftDoor, parent);
             parent.AddDoorway(parentDoorway);
+            parent.AddExitDoorway(parentDoorway);
 
-            Doorway childDoorway = doorwayFactory.CreateDoorway(bestEnd, corridorWidth + 2, DoorType.RightDoor, child.transform, child.structure.tilemapLayers.grid);
+            Doorway childDoorway = doorwayFactory.CreateDoorway(bestEnd, corridorWidth + 2, DoorType.RightDoor, child);
             child.AddDoorway(childDoorway);
         }
 

@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 5755843137775701627}
   - component: {fileID: 7792050950917807097}
   - component: {fileID: 1847865571171618188}
+  - component: {fileID: 2229662434307417461}
+  - component: {fileID: 1736822584942541153}
   m_Layer: 0
   m_Name: Doorway
   m_TagString: Untagged
@@ -91,6 +93,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a520645cec89dea4daa4051b5201b7d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  structure: {fileID: 7843641927796834229, guid: 105e34c90d3c6fc4f8c08e7c9f4bcf45, type: 3}
+  structure: {fileID: 2229662434307417461}
   doortype: 0
   midPosition: {x: 0, y: 0}
+  doorObstacle: {fileID: 0}
+  room: {fileID: 0}
+--- !u!114 &2229662434307417461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1404798190373273452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcd9f17294889e9429d65d45fbf6f6d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: 
+  tilemapLayers: {fileID: 0}
+--- !u!208 &1736822584942541153
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1404798190373273452}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 0
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5

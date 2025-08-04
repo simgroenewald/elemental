@@ -28,6 +28,7 @@ public class DungeonRoom : MonoBehaviour
     public int[,] tiles;
 
     public List<Doorway> doorways = new List<Doorway>();
+    public List<Doorway> exitDoorways = new List<Doorway>();
     public GameObject doorPrefab;
 
     public bool isEntered = false;
@@ -59,6 +60,30 @@ public class DungeonRoom : MonoBehaviour
         doorways.Add(doorway);
     }
 
+    public void AddExitDoorway(Doorway doorway)
+    {
+        exitDoorways.Add(doorway);
+    }
+
+    public void EnterRoom()
+    {
+        isEntered = true;
+    }
+
+    public void ExitRoom()
+    {
+        if (isComplete)
+        {
+            isEntered = false;
+            previouslyEntered = true;
+        }
+    }
+
+    public void CompleteRoom()
+    {
+        isComplete = true;
+    }
+
     public void DrawRoomTiles()
     {
         SetRoomDoorClosedTiles();
@@ -84,27 +109,13 @@ public class DungeonRoom : MonoBehaviour
         }
     }
 
-    public void DrawOpenRoomDoorwayTiles()
-    {
-        foreach (var door in doorways)
-        {
-            door.DrawOpenDoorTiles(structure.tilemapLayers);
-        }
-    }
 
-    public void DrawClosedRoomDoorwayTiles()
-    {
-        foreach (var door in doorways)
-        {
-            door.DrawClosedDoorTiles(structure.tilemapLayers);
-        }
-    }
 
     private void SetRoomDoorClosedTiles()
     {
         foreach (var door in doorways)
         {
-            foreach (var tile in door.structureTiles)
+            foreach (var tile in door.structure.structureTiles)
             {
                 StructureTile removedTile = structure.RemoveTileAtPosition(tile.position);
                 door.AppendClosedDoorTiles(removedTile);

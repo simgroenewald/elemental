@@ -124,7 +124,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6911760078779659748, guid: 452071372d955194ea495723c315f62d, type: 3}
   m_PrefabInstance: {fileID: 56919465}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 56919466}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac854238f31f4624d93e4afda69b1175, type: 3}
@@ -193,8 +193,28 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1990159484799803152, guid: 452071372d955194ea495723c315f62d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 56919467}
   m_SourcePrefab: {fileID: 100100000, guid: 452071372d955194ea495723c315f62d, type: 3}
+--- !u!1 &56919466 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1990159484799803152, guid: 452071372d955194ea495723c315f62d, type: 3}
+  m_PrefabInstance: {fileID: 56919465}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &56919467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 56919466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33382ff4b6ee89f409fe87b0def3cd9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &72430345 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3571426750705355574, guid: 452071372d955194ea495723c315f62d, type: 3}
@@ -822,6 +842,7 @@ GameObject:
   - component: {fileID: 1962718396}
   - component: {fileID: 1962718395}
   - component: {fileID: 1962718397}
+  - component: {fileID: 1962718398}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -849,6 +870,7 @@ MonoBehaviour:
   dungeonBuilder: {fileID: 72430345}
   playerNavMeshSurface: {fileID: 170293768}
   enemyNavMeshSurface: {fileID: 1442070498}
+  dungeonNavigationDisplay: {fileID: 56919467}
   currentLevelIndex: 0
   state: 0
 --- !u!4 &1962718396
@@ -879,6 +901,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementEvents: {fileID: 11400000, guid: 712027d1fd7110d47a2121fb20f3cdd7, type: 2}
+--- !u!114 &1962718398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1962718394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1991e64e9d3a20944ab32fe62aaf7bb2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &580194731281925095
 PrefabInstance:
   m_ObjectHideFlags: 0

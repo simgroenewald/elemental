@@ -192,7 +192,7 @@ public class DungeonBuilderTest : SingletonMonobehaviour<DungeonBuilderTest>
     {
         foreach (var doorway in doorways)
         {
-            DrawTypeTiles(doorway.structureTiles);
+            DrawTypeTiles(doorway.structure.structureTiles);
         }
     }
 
