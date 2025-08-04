@@ -9,10 +9,10 @@ public class CameraController : MonoBehaviour
     public CinemachineCamera virtualCamera;
 
     [Header("Zoom Settings")]
-    public float zoomSpeed = 3f;
+    public float zoomSpeed = 5f;
     public float minZoom = 1f;
-    public float maxZoom = 5f;
-    public float targetZoom = 2f;
+    public float maxZoom = 4f;
+    public float targetZoom = 1f;
 
     [Header("Edge Scroll Settings")]
     public float scrollSpeed = 5f;
@@ -63,11 +63,11 @@ public class CameraController : MonoBehaviour
 
         if (Input.mouseScrollDelta.y > 0)
         {
-            targetZoom += zoomChange;
+            targetZoom -= zoomChange;
         }
         if (Input.mouseScrollDelta.y < 0)
         {
-            targetZoom -= zoomChange;
+            targetZoom += zoomChange;
         }
 
         targetZoom = Mathf.Clamp(targetZoom, minZoom, maxZoom);
