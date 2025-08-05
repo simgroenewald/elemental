@@ -86,23 +86,9 @@ public class DungeonBuilderTest : SingletonMonobehaviour<DungeonBuilderTest>
         {
             dungeonParent = new GameObject("DungeonContainer");
 
-            dungeonBuilder.CreateDungeonContainer(dungeonParent, dungeonRooms, connectors);
+            //dungeonBuilder.CreateDungeonContainer(dungeonParent, dungeonRooms, connectors);
         }
 
-    }
-
-    public void CreateDungeonCollisionLayer()
-    {
-        if (dungeonParent != null)
-        {
-            Debug.Log("Containers already built");
-        }
-        else
-        {
-            dungeonParent = new GameObject("DungeonContainer");
-        }
-
-        dungeonBuilder.CreateDungeonCollisionLayer(dungeonParent, dungeonRooms, connectors);
     }
 
     public void PopulateRoomTiles()
@@ -164,20 +150,20 @@ public class DungeonBuilderTest : SingletonMonobehaviour<DungeonBuilderTest>
         {
             //DrawBoundArea(room.outerBounds, tileTypeToTileMapper.tileTypeToTileDict[TileType.Bou]);
             //DrawBoundArea(room.bounds, tileTypeToTileMapper.tileTypeToTileDict[TileType.Bou]);
-            DrawTypeTiles(room.structureTiles);
+            DrawTypeTiles(room.structure.structureTiles);
         }
 
         foreach (var connector in connectors)
         {
             if (connector.isStraight)
             {
-                DrawTypeTiles(connector.bridgeMain.structureTiles);
+                DrawTypeTiles(connector.bridgeMain.structure.structureTiles);
             }
             else
             {
-                DrawTypeTiles(connector.platform.structureTiles);
-                DrawTypeTiles(connector.bridgeStart.structureTiles);
-                DrawTypeTiles(connector.bridgeEnd.structureTiles);
+                DrawTypeTiles(connector.platform.structure.structureTiles);
+                DrawTypeTiles(connector.bridgeStart.structure.structureTiles);
+                DrawTypeTiles(connector.bridgeEnd.structure.structureTiles);
             }
         }
 
@@ -206,7 +192,7 @@ public class DungeonBuilderTest : SingletonMonobehaviour<DungeonBuilderTest>
     {
         foreach (var doorway in doorways)
         {
-            DrawTypeTiles(doorway.structureTiles);
+            DrawTypeTiles(doorway.structure.structureTiles);
         }
     }
 
@@ -226,7 +212,7 @@ public class DungeonBuilderTest : SingletonMonobehaviour<DungeonBuilderTest>
     {
         foreach (var room in dungeonRooms)
         {
-            DrawFloorTiles(room.floorPositions, tileTypeToTileMapper.tileTypeToTileDict[TileType.Floor]);
+            DrawFloorTiles(room.structure.floorPositions, tileTypeToTileMapper.tileTypeToTileDict[TileType.Floor]);
         }
     }
 
@@ -297,15 +283,15 @@ public class DungeonBuilderTest : SingletonMonobehaviour<DungeonBuilderTest>
 
     public void ClearAllRooms()
     {
-        GameObject dungeonParent = GameObject.Find("DungeonContainer");
+/*        GameObject dungeonParent = GameObject.Find("Dungeon");
         if (dungeonParent != null)
         {
             DestroyImmediate(dungeonParent);
         }
-        ClearRooms();
-        ClearOldTiles();
+        //ClearRooms();*/
+        //ClearOldTiles();
         ClearTilemap();
-
+        dungeonRooms = null;
     }
 
     public void ClearRooms()
@@ -316,7 +302,6 @@ public class DungeonBuilderTest : SingletonMonobehaviour<DungeonBuilderTest>
             DestroyImmediate(transform.GetChild(i).gameObject);
         }
     }
-
     private void ClearOldTiles()
     {
         for (int i = transform.childCount - 1; i >= 0; i--)

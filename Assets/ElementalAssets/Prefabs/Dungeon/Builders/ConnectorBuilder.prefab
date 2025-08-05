@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3351688573100557366
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4094486355147296756}
+  - component: {fileID: 8874790910882444654}
+  - component: {fileID: 8897901450877608426}
+  m_Layer: 0
+  m_Name: ConnectorBuilder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4094486355147296756
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3351688573100557366}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8874790910882444654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3351688573100557366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5dd51c8fa9c141e459b6c4a40f0e6bf6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  connectorPrefab: {fileID: 6996455073190841002, guid: 6d227e79ecf576f45a2cf57e3545dd57, type: 3}
+  bridgePrefab: {fileID: 1533745291960774675, guid: c4b667ebb029e6a4590c67b8e2d88316, type: 3}
+  plaftormPrefab: {fileID: 5608739767851626420, guid: 5740a8bec7dcfbf4f8ac46624f8214d8, type: 3}
+--- !u!114 &8897901450877608426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3351688573100557366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9b56a14418732e4a8b56aabc2de3c7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  connectorFactory: {fileID: 8874790910882444654}
+  doorwayFactory: {fileID: 0}
+  objectParent: {fileID: 0}

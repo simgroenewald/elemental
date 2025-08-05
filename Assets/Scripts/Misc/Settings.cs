@@ -4,7 +4,11 @@ using UnityEngine;
 
 public static class Settings
 {
+    // Room settings
+    public const float fadeInTime = 0.5f;
 
+
+    // Player Animator parameters
     public static int posTargetUp = Animator.StringToHash("posTargetUp");
     public static int posTargetLeft = Animator.StringToHash("posTargetLeft");
     public static int posTargetRight = Animator.StringToHash("posTargetRight");
@@ -15,5 +19,7 @@ public static class Settings
     public static int isRunning = Animator.StringToHash("isRunning");
 
     public static float baseSpeedForPlayerAnimations = 8f;
+
+    public const string playerTag = "Player";
 
 }

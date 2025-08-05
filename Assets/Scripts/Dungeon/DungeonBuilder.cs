@@ -10,23 +10,27 @@ using static UnityEditor.PlayerSettings;
 [DisallowMultipleComponent]
 public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
 {
+    [Header("Generators")]
+    [SerializeField] DungeonLayoutGenerator dungeonLayoutGenerator;
+    [SerializeField] RoomGenerator roomGenerator;
+    [SerializeField] ConnectorGenerator connectorGenerator;
 
-    [Header("Templates")]
-    [SerializeField] GameObject dungeonTemplate;
-    TilemapLayers dungeonLayers;
+    [Header("Dungeon Parent")]
+    [SerializeField] GameObject dungeonParent;
+
+    [Header("Tilemaps")]
+    [SerializeField] TilemapLayers dungeonLayers;
 
     [Header("Scriptable Objects")]
-    [SerializeField] RoomSizePresetsSO roomSizePresets;
     [SerializeField] StructureTypeToGridMapperSO structureToGridMapper;
 
 
     public Dungeon GenerateDungeon(int seed, LevelSettingSO level)
     {
         UnityEngine.Random.InitState(seed);
-
-        DungeonLayoutGenerator dungeonLayoutGenerator = new DungeonLayoutGenerator(roomSizePresets);
-
+        // Generated dungeon overall layout
         List<DungeonRoom> dungeonRooms = dungeonLayoutGenerator.GenerateDungeonLayout(level);
+
         GenerateStructuredRooms(dungeonRooms);
         List<Connector> connectors = GenerateConnectors(dungeonRooms);
         GenerateStructuredDoors(dungeonRooms);
@@ -34,11 +38,9 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
         PopulateOpenDoorTiles(dungeonRooms, structureToGridMapper);
         PopulateConnectorTiles(connectors, structureToGridMapper);
 
-        GameObject dungeonParent = new GameObject("Dungeon");
+        //GameObject dungeonParent = new GameObject("Dungeon");
 
-        CreateDungeonContainer(dungeonParent, dungeonRooms, connectors);
-
-        CreateDungeonCollisionLayer(dungeonParent, dungeonRooms, connectors);
+        CreateDungeonCollisionLayer(dungeonRooms, connectors);
 
         DrawDungeonTemplateTiles(dungeonRooms, connectors);
 
@@ -46,31 +48,13 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
         return dungeon;
     }
 
-    public void CreateDungeonContainer(GameObject parent, List<DungeonRoom> dungeonRooms, List<Connector> connectors)
+    public void CreateDungeonCollisionLayer(List<DungeonRoom> dungeonRooms, List<Connector> connectors)
     {
-
-        foreach (var dungeonRoom in dungeonRooms)
-        {
-            dungeonRoom.CreateStructureContainer(parent);
-            dungeonRoom.structureTilemap.tilemapLayers.collisionTilemap.gameObject.layer = LayerMask.NameToLayer("Enemy");
-        }
-
-        foreach (var connector in connectors)
-        {
-            connector.CreateStructureContainer(parent);
-        }
-    }
-
-    public void CreateDungeonCollisionLayer(GameObject parent, List<DungeonRoom> dungeonRooms, List<Connector> connectors)
-    {
-        GameObject dungeonTemplateInstance = Instantiate(dungeonTemplate, parent.transform);
-        dungeonLayers = dungeonTemplateInstance.GetComponent<TilemapLayers>();
-        dungeonLayers.collisionTilemap.GetComponent<TilemapRenderer>().enabled = false;
 
 
         foreach (var dungeonRoom in dungeonRooms)
         {
-            foreach (var tile in dungeonRoom.structureTiles)
+            foreach (var tile in dungeonRoom.structure.structureTiles)
             {
                 dungeonLayers.collisionTilemap.SetTile((Vector3Int)tile.position, tile.collisionTile);
             }
@@ -80,7 +64,7 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
         {
             foreach (var door in dungeonRoom.doorways)
             {
-                foreach (var tile in door.structureTiles)
+                foreach (var tile in door.structure.structureTiles)
                 {
                     dungeonLayers.collisionTilemap.SetTile((Vector3Int)tile.position, tile.collisionTile);
                 }
@@ -91,22 +75,22 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
         {
             if (connector.isStraight)
             {
-                foreach (var tile in connector.bridgeMain.structureTiles)
+                foreach (var tile in connector.bridgeMain.structure.structureTiles)
                 {
                     dungeonLayers.collisionTilemap.SetTile((Vector3Int)tile.position, tile.collisionTile);
                 }
             }
             if (!connector.isStraight)
             {
-                foreach (var tile in connector.platform.structureTiles)
+                foreach (var tile in connector.platform.structure.structureTiles)
                 {
                     dungeonLayers.collisionTilemap.SetTile((Vector3Int)tile.position, tile.collisionTile);
                 }
-                foreach (var tile in connector.bridgeStart.structureTiles)
+                foreach (var tile in connector.bridgeStart.structure.structureTiles)
                 {
                     dungeonLayers.collisionTilemap.SetTile((Vector3Int)tile.position, tile.collisionTile);
                 }
-                foreach (var tile in connector.bridgeEnd.structureTiles)
+                foreach (var tile in connector.bridgeEnd.structure.structureTiles)
                 {
                     dungeonLayers.collisionTilemap.SetTile((Vector3Int)tile.position, tile.collisionTile);
                 }
@@ -118,7 +102,6 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
 
     public void GenerateStructuredRooms(List<DungeonRoom> dungeonRooms)
     {
-        RoomGenerator roomGenerator = new RoomGenerator();
         foreach (var dungeonRoom in dungeonRooms)
         {
             roomGenerator.GenerateStructuredRoom(dungeonRoom);
@@ -138,7 +121,6 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
 
     public List<Connector> GenerateConnectors(List<DungeonRoom> dungeonRooms)
     {
-        ConnectorGenerator connectorGenerator = new ConnectorGenerator();
         // Determines width of whole connector including 'walls'
         return connectorGenerator.GenerateConnectors(dungeonRooms, 3); ;
     }
@@ -151,7 +133,7 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
 
         foreach (var dungeonRoom in dungeonRooms)
         {
-            WaveFunctionCollapse2 wfc = new WaveFunctionCollapse2(dungeonRoom.structureTiles, properties, 10);
+            WaveFunctionCollapse2 wfc = new WaveFunctionCollapse2(dungeonRoom.structure.structureTiles, properties, 10);
             wfc.PopulateOutputCells();
         }
     }
@@ -166,7 +148,7 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
         {
             foreach (var door in dungeonRoom.doorways)
             {
-                WaveFunctionCollapse2 wfc = new WaveFunctionCollapse2(door.structureTiles, properties, 1);
+                WaveFunctionCollapse2 wfc = new WaveFunctionCollapse2(door.structure.structureTiles, properties, 1);
                 wfc.PopulateOutputCells();
                 door.SetOpenDoorTiles();
             }
@@ -193,16 +175,16 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
             {
                 if (connector.isStraight)
                 {
-                    WaveFunctionCollapse2 wfc = new WaveFunctionCollapse2(connector.bridgeMain.structureTiles, horizontalBridgeProperties, 1);
+                    WaveFunctionCollapse2 wfc = new WaveFunctionCollapse2(connector.bridgeMain.structure.structureTiles, horizontalBridgeProperties, 1);
                     wfc.PopulateOutputCells();
                 }
                 else
                 {
-                    WaveFunctionCollapse2 bridgeStartWFC = new WaveFunctionCollapse2(connector.bridgeStart.structureTiles, horizontalBridgeProperties, 1);
+                    WaveFunctionCollapse2 bridgeStartWFC = new WaveFunctionCollapse2(connector.bridgeStart.structure.structureTiles, horizontalBridgeProperties, 1);
                     bridgeStartWFC.PopulateOutputCells();
-                    WaveFunctionCollapse2 bridgeEndWFC = new WaveFunctionCollapse2(connector.bridgeEnd.structureTiles, horizontalBridgeProperties, 1);
+                    WaveFunctionCollapse2 bridgeEndWFC = new WaveFunctionCollapse2(connector.bridgeEnd.structure.structureTiles, horizontalBridgeProperties, 1);
                     bridgeEndWFC.PopulateOutputCells();
-                    WaveFunctionCollapse2 platformWFC = new WaveFunctionCollapse2(connector.bridgeEnd.structureTiles, platformProperties, 1);
+                    WaveFunctionCollapse2 platformWFC = new WaveFunctionCollapse2(connector.bridgeEnd.structure.structureTiles, platformProperties, 1);
                     platformWFC.PopulateOutputCells();
                 }
             }
@@ -210,16 +192,16 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
             {
                 if (connector.isStraight)
                 {
-                    WaveFunctionCollapse2 wfc = new WaveFunctionCollapse2(connector.bridgeMain.structureTiles, verticalBridgeProperties, 1);
+                    WaveFunctionCollapse2 wfc = new WaveFunctionCollapse2(connector.bridgeMain.structure.structureTiles, verticalBridgeProperties, 1);
                     wfc.PopulateOutputCells();
                 }
                 else
                 {
-                    WaveFunctionCollapse2 platformWFC = new WaveFunctionCollapse2(connector.platform.structureTiles, platformProperties, 1);
+                    WaveFunctionCollapse2 platformWFC = new WaveFunctionCollapse2(connector.platform.structure.structureTiles, platformProperties, 1);
                     platformWFC.PopulateOutputCells();
-                    WaveFunctionCollapse2 bridgeStartWFC = new WaveFunctionCollapse2(connector.bridgeStart.structureTiles, verticalBridgeProperties, 1);
+                    WaveFunctionCollapse2 bridgeStartWFC = new WaveFunctionCollapse2(connector.bridgeStart.structure.structureTiles, verticalBridgeProperties, 1);
                     bridgeStartWFC.PopulateOutputCells();
-                    WaveFunctionCollapse2 bridgeEndWFC = new WaveFunctionCollapse2(connector.bridgeEnd.structureTiles, verticalBridgeProperties, 1);
+                    WaveFunctionCollapse2 bridgeEndWFC = new WaveFunctionCollapse2(connector.bridgeEnd.structure.structureTiles, verticalBridgeProperties, 1);
                     bridgeEndWFC.PopulateOutputCells();
                 }
             }
@@ -254,7 +236,7 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
     {
         foreach (var room in dungeonRooms)
         {
-            room.DrawOpenRoomDoorwayTiles();
+            StaticEventHandler.CallOpenRoomDoors(room);
         }
     }
 }

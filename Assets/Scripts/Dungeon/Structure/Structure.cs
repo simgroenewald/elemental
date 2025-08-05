@@ -4,10 +4,9 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UIElements;
 
-public class Structure
+public class Structure: MonoBehaviour
 {
     public String name;
-    public StructureTilemap structureTilemap;
 
     public HashSet<Vector2Int> floorPositions;
     public HashSet<Vector2Int> backWallPositions;
@@ -16,10 +15,7 @@ public class Structure
     public HashSet<Vector2Int> rightWallPositions;
     public HashSet<StructureTile> structureTiles;
 
-    public Tilemap baseMap;
-    public Tilemap decorMap;
-    public Tilemap collisionMap;
-    public Tilemap tileTypeMap;
+    public TilemapLayers tilemapLayers;
 
     public Structure()
     {
@@ -29,29 +25,6 @@ public class Structure
         leftWallPositions = new HashSet<Vector2Int>();
         rightWallPositions = new HashSet<Vector2Int>();
         structureTiles = new HashSet<StructureTile>();
-
-        baseMap = new Tilemap();
-        decorMap = new Tilemap();
-        collisionMap = new Tilemap();
-        tileTypeMap = new Tilemap();
-    }
-
-    public void CreateStructureContainer(GameObject parent)
-    {
-
-        GameObject structureObject = new GameObject(name);
-
-        if (parent)
-        {
-            structureObject.transform.SetParent(parent.transform);
-        }
-
-
-        // Add StructureTilemap to the structure GameObject
-        structureTilemap = structureObject.AddComponent<StructureTilemap>();
-
-        // Instantiate the prefab under the structure object
-        structureTilemap.InitializeStructureTemplate(structureObject.transform);
     }
 
     public void GenerateStructureTilesOld(BoundsInt bounds, HashSet<Vector2Int> positions, Boolean extendFrontWalls, int extentionLength = 0)

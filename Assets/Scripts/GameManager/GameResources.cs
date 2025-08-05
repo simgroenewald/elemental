@@ -23,4 +23,9 @@ public class GameResources : MonoBehaviour
     public TileBase preferredEnemyPathTile;
     public CameraController cameraController;
     public GameObject structureTemplatePrefab;
+
+    // Materials - Fading rooms
+    public Material dimmedMaterial;
+    public Material litMaterial;
+    public Shader variableLitShader;
 }

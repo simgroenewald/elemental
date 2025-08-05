@@ -12,19 +12,36 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     [SerializeField] DungeonBuilder dungeonBuilder;
     [SerializeField] NavMeshSurface playerNavMeshSurface;
     [SerializeField] NavMeshSurface enemyNavMeshSurface;
+    [SerializeField] DungeonNavigationDisplayController dungeonNavigationDisplay;
     [SerializeField] int currentLevelIndex = 0;
     private Dungeon dungeon;
     private DungeonRoom previousDungeonRoom;
     private DungeonRoom currentDungeonRoom;
+    private List<DungeonRoom> completeDungeonRooms;
     private CharacterDetailSO characterDetail;
     private Player player;
     private CameraController cameraController;
 
     public GameState state;
 
+    private void OnEnable()
+    {
+        // Set dimmed material to off
+        GameResources.Instance.dimmedMaterial.SetFloat("Alpha_Slider", 0f);
+    }
+
+    private void OnDisable()
+    {
+        // Set dimmed material to fully visible
+        GameResources.Instance.dimmedMaterial.SetFloat("Alpha_Slider", 1f);
+    }
+
     protected override void Awake()
     {
+
         base.Awake();
+
+        completeDungeonRooms = new List<DungeonRoom>();
 
         GameResources gameResources = GameResources.Instance;
 
@@ -67,7 +84,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
     private void HandleGameState()
     {
-        switch(state)
+        switch (state)
         {
             case GameState.start:
                 StartGameLevel();
@@ -79,15 +96,19 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     private void StartGameLevel()
     {
         dungeon = dungeonBuilder.GenerateDungeon(6776, levels[currentLevelIndex]);
+        dungeonNavigationDisplay.Initialise(dungeon.dungeonRooms, dungeon.connectors);
         GameResources.Instance.dungeon = dungeon;
+
         DungeonRoom startRoom = dungeon.GetStartRoom();
-        currentDungeonRoom = startRoom;
-        previousDungeonRoom = startRoom;
-        player.SetPlayerStartPosition(startRoom, startRoom.structureTilemap.tilemapLayers.grid);
+        dungeonNavigationDisplay.CompleteRoom(startRoom);
+        StaticEventHandler.CallRoomChangedEvent(startRoom);
+
+
+        player.SetPlayerStartPosition(startRoom, startRoom.structure.tilemapLayers.grid);
         playerNavMeshSurface.BuildNavMesh();
         enemyNavMeshSurface.BuildNavMesh();
-        //PlacePlayerOnNavMesh(player.transform);
-        cameraController.SetupCamera(player.transform.position, startRoom.structureTilemap.tilemapLayers.baseTilemap);
+
+        cameraController.SetupCamera(player.transform.position, dungeon.dungeonLayers.collisionTilemap);
 
         state = GameState.playing;
     }
@@ -97,19 +118,33 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         return player;
     }
 
-    public void PlacePlayerOnNavMesh(Transform player)
+    public DungeonRoom GetCurrentRoom()
     {
-        NavMeshHit hit;
-        if (NavMesh.SamplePosition(player.position, out hit, 1f, NavMesh.AllAreas))
-        {
-            player.position = hit.position; // Snap to nearest navmesh point
-            Debug.Log("Player snapped to NavMesh at: " + hit.position);
-        }
-        else
-        {
-            Debug.LogError("Could not find NavMesh position for player!");
-        }
+        return currentDungeonRoom;
     }
 
+    public void SetCurrentRoom(DungeonRoom room)
+    {
+        currentDungeonRoom = room;
+    }
 
+    public DungeonRoom GetPreviousRoom()
+    {
+        return currentDungeonRoom;
+    }
+
+    public void SetPreviousRoom(DungeonRoom room)
+    {
+        currentDungeonRoom = room;
+    }
+
+    public List<DungeonRoom> GetCompletedDungeonRooms( )
+    {
+        return completeDungeonRooms;
+    }
+
+    public void AppendCompletedDungeonRooms(DungeonRoom room)
+    {
+        completeDungeonRooms.Add(room);
+    }
 }

@@ -3,24 +3,29 @@ using System;
 using UnityEngine.Tilemaps;
 using UnityEngine.InputSystem.Controls;
 
-public class Connector : Structure
+public class Connector : MonoBehaviour
 {
-    public DungeonRoom roomA;
-    public DungeonRoom roomB;
+    public Structure structure = new Structure();
+
+    public DungeonRoom parentRoom;
+    public DungeonRoom childRoom;
     public Vector2Int start;
     public Vector2Int end;
     public ConnectorOrientation orientation;
-    public Boolean isStraight;
 
     public Bridge bridgeMain;
     public Bridge bridgeStart;
     public Bridge bridgeEnd;
     public Platform platform;
 
-    public Connector(Vector2Int _start, Vector2Int _end, ConnectorOrientation _orientation)
+    public Boolean isStraight;
+
+    public Connector Initialise(Vector2Int _start, Vector2Int _end, DungeonRoom _partentRoom, DungeonRoom _childRoom, ConnectorOrientation _orientation)
     {
         start = _start;
         end = _end;
+        parentRoom = _partentRoom;
+        childRoom = _childRoom;
         orientation = _orientation;
 
         if (orientation == ConnectorOrientation.Vertical)
@@ -46,35 +51,9 @@ public class Connector : Structure
             }
         }
 
-        if (isStraight)
-        {
-            if (orientation == ConnectorOrientation.Vertical)
-            {
-                bridgeMain = new Bridge(ConnectorOrientation.Vertical);
-            }
-            else
-            {
-                bridgeMain = new Bridge(ConnectorOrientation.Horizontal);
-
-            }
-        }
-        else
-        {
-            if (orientation == ConnectorOrientation.Vertical)
-            {
-                bridgeStart = new Bridge(ConnectorOrientation.Vertical);
-                bridgeEnd = new Bridge(ConnectorOrientation.Vertical);
-                platform = new Platform(ConnectorOrientation.Horizontal);
-            }
-            else
-            {
-                bridgeStart = new Bridge(ConnectorOrientation.Horizontal);
-                bridgeEnd = new Bridge(ConnectorOrientation.Horizontal);
-                platform = new Platform(ConnectorOrientation.Vertical);
-            }
-        }
-
         SetName();
+
+        return this;
     }
     private void SetName()
     {
@@ -92,15 +71,15 @@ public class Connector : Structure
 
     public void DrawConnectorTiles()
     {
-        Tilemap frontTilemap = structureTilemap.tilemapLayers.frontTilemap;
-        Tilemap collisionTilemap = structureTilemap.tilemapLayers.collisionTilemap;
-        Tilemap platformTilemap = structureTilemap.tilemapLayers.platformTilemap;
-        Tilemap bridgeTilemap = structureTilemap.tilemapLayers.bridgeTilemap;
+        Tilemap frontTilemap = structure.tilemapLayers.frontTilemap;
+        Tilemap collisionTilemap = structure.tilemapLayers.collisionTilemap;
+        Tilemap platformTilemap = structure.tilemapLayers.platformTilemap;
+        Tilemap bridgeTilemap = structure.tilemapLayers.bridgeTilemap;
 
 
         if (isStraight)
         {
-            foreach (var tile in bridgeMain.structureTiles)
+            foreach (var tile in bridgeMain.structure.structureTiles)
             {
                 bridgeTilemap.SetTile((Vector3Int)tile.position, tile.baseTile);
                 frontTilemap.SetTile((Vector3Int)tile.position, tile.frontTile);
@@ -109,19 +88,19 @@ public class Connector : Structure
         }
         if (!isStraight)
         {
-            foreach (var tile in platform.structureTiles)
+            foreach (var tile in platform.structure.structureTiles)
             {
                 platformTilemap.SetTile((Vector3Int)tile.position, tile.baseTile);
                 frontTilemap.SetTile((Vector3Int)tile.position, tile.frontTile);
                 collisionTilemap.SetTile((Vector3Int)tile.position, tile.collisionTile);
             }
-            foreach (var tile in bridgeStart.structureTiles)
+            foreach (var tile in bridgeStart.structure.structureTiles)
             {
                 bridgeTilemap.SetTile((Vector3Int)tile.position, tile.baseTile);
                 frontTilemap.SetTile((Vector3Int)tile.position, tile.frontTile);
                 collisionTilemap.SetTile((Vector3Int)tile.position, tile.collisionTile);
             }
-            foreach (var tile in bridgeEnd.structureTiles)
+            foreach (var tile in bridgeEnd.structure.structureTiles)
             {
                 bridgeTilemap.SetTile((Vector3Int)tile.position, tile.baseTile);
                 frontTilemap.SetTile((Vector3Int)tile.position, tile.frontTile);
@@ -135,13 +114,13 @@ public class Connector : Structure
     {
         if (isStraight)
         {
-            bridgeMain.GenerateStructureTiles(bridgeMain.bounds, bridgeMain.floorPositions, false);
+            bridgeMain.structure.GenerateStructureTiles(bridgeMain.bounds, bridgeMain.structure.floorPositions, false);
         }
         else
         {
-            bridgeStart.GenerateStructureTiles(bridgeStart.bounds, bridgeStart.floorPositions, false);
-            bridgeEnd.GenerateStructureTiles(bridgeEnd.bounds, bridgeEnd.floorPositions, false);
-            platform.GenerateStructureTiles(platform.bounds, platform.floorPositions, true, 2);
+            bridgeStart.structure.GenerateStructureTiles(bridgeStart.bounds, bridgeStart.structure.floorPositions, false);
+            bridgeEnd.structure.GenerateStructureTiles(bridgeEnd.bounds, bridgeEnd.structure.floorPositions, false);
+            platform.structure.GenerateStructureTiles(platform.bounds, platform.structure.floorPositions, true, 2);
         }
     }
 }

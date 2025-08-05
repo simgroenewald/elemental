@@ -6,13 +6,14 @@ public class DungeonLayoutGenerator : MonoBehaviour
 {
     public float spacing = 5f;
     public List<DungeonRoom> allRooms = new();
-    [SerializeField]
-    private RoomSizePresetsSO roomSizePresets;
+    [SerializeField] private RoomSizePresetsSO roomSizePresets;
+    [SerializeField] private DungeonRoomFactory roomFactory;
+    [SerializeField] private Transform objectParent;
 
     public DungeonLayoutGenerator(RoomSizePresetsSO roomSizePresets)
     {
         this.roomSizePresets = roomSizePresets;
-    }
+}
 
     public List<DungeonRoom> GenerateDungeonLayout(LevelSettingSO level)
     {
@@ -79,7 +80,7 @@ public class DungeonLayoutGenerator : MonoBehaviour
 
     DungeonRoom CreateRoom(RoomType type, Vector2 pos)
     {
-        return new DungeonRoom(type, pos);
+        return roomFactory.CreateRoom(type, pos, objectParent);
     }
 
     DungeonRoom FindValidParent()
@@ -106,7 +107,7 @@ public class DungeonLayoutGenerator : MonoBehaviour
             foreach (var dir in available)
             {
                 Vector2 offset = DirectionToOffset(dir);
-                Vector2 candidatePosition = parent.nodeGraphPosition + offset * spacing;
+                Vector2 candidatePosition = parent.nodeGraphPosition + offset * 5f;
 
                 if (!IsPositionOccupied(candidatePosition))
                 {
