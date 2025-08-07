@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 609fa1f9b66b0544196f4f77e751f80f, type: 3}
+  m_Name: WitchfireVolleyAbility
+  m_EditorClassIdentifier: 
+  abilityName: Witchfire Volley
+  icon: {fileID: 0}
+  isTrigger: 0
+  isEnemyTargetable: 0
+  isDirectionTargetable: 0
+  isGroundTargetable: 0
+  isPassive: 0
+  isMelee: 0
+  isDamageOverTime: 0
+  isCritical: 1
+  isAreaOfEffect: 0
+  isHurt: 1
+  abilityCastPosition: {x: -0.54, y: 0.248, z: 0}
+  abilityProjectileDetails: {fileID: 11400000, guid: a441b82159785a642b509ab9bfb94cc3, type: 2}
+  coolDownTime: 10
+  manaCost: 30
+  magicalDamage: 30
+  range: 40

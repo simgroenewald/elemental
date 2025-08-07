@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 8d4ca7b2618572040a101301f35cc48e
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 143580
+  packageName: RPG 2D pack
+  packageVersion: 1.0
+  assetPath: Assets/RPG 2D pack/Animations/rod_walk_0048.controller
+  uploadId: 304056

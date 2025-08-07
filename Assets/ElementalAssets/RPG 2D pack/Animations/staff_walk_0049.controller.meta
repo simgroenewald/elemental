@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: cadf0126e130c2340b219eca12720b89
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 143580
+  packageName: RPG 2D pack
+  packageVersion: 1.0
+  assetPath: Assets/RPG 2D pack/Animations/staff_walk_0049.controller
+  uploadId: 304056

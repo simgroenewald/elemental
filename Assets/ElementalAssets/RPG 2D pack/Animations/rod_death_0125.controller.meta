@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 18fd503c7def3414693c3621308265d2
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 143580
+  packageName: RPG 2D pack
+  packageVersion: 1.0
+  assetPath: Assets/RPG 2D pack/Animations/rod_death_0125.controller
+  uploadId: 304056

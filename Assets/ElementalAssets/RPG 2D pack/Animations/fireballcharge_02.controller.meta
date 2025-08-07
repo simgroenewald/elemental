@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: a7c97bb4bec78b2439b09a33eba65c6b
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 143580
+  packageName: RPG 2D pack
+  packageVersion: 1.0
+  assetPath: Assets/RPG 2D pack/Animations/fireballcharge_02.controller
+  uploadId: 304056

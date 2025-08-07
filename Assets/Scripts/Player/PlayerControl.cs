@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
+[RequireComponent(typeof(Player))]
 public class PlayerControl : MonoBehaviour
 {
 
@@ -11,6 +13,7 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] private LayerMask collisionLayermask;
 
     private Player player;
+    private int currentAbilityIndex = 1;
     private float moveSpeed;
     private int selectedControl;
 
@@ -20,6 +23,40 @@ public class PlayerControl : MonoBehaviour
         player = GetComponent<Player>();
 
         moveSpeed = movementDetails.GetMoveSpeed();
+    }
+
+    private void Start()
+    {
+        SetPlayerAnimationspeed();
+        SetPlayerStartAbility();
+    }
+
+    private void SetPlayerStartAbility()
+    {
+        int index = 1;
+        foreach (Ability ability in player.abilityList)
+        {
+            if (ability.abilityDetails == player.characterDetails.startingAbility)
+            {
+                SetAbilityByIndex(index);
+                break;
+            }
+            index++;
+        }
+    }
+
+    private void SetAbilityByIndex(int abilityIndex)
+    {
+        if (abilityIndex - 1 < player.abilityList.Count)
+        {
+            currentAbilityIndex = abilityIndex;
+            player.setActiveAbilityEvent.CallSetActiveAbilityEvent(player.abilityList[abilityIndex - 1]);
+        }
+    }
+
+    private void SetPlayerAnimationspeed()
+    {
+        player.animator.speed = moveSpeed / Settings.baseSpeedForPlayerAnimations;
     }
 
     private void Update()

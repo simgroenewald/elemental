@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: d61f6a8a0a91c5842894966d4afcecc6
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 143580
+  packageName: RPG 2D pack
+  packageVersion: 1.0
+  assetPath: Assets/RPG 2D pack/Animations/scepter_attackcrouch.anim
+  uploadId: 304056

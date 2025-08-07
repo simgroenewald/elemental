@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 1ee216e97117b7b439e189fae252111f
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 143580
+  packageName: RPG 2D pack
+  packageVersion: 1.0
+  assetPath: Assets/RPG 2D pack/Animations/rod_attackcrouch_0108.controller
+  uploadId: 304056

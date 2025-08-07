@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: d360c1a0b771aef45be32c025064d9bd
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 143580
+  packageName: RPG 2D pack
+  packageVersion: 1.0
+  assetPath: Assets/RPG 2D pack/Animations/staff_hit.anim
+  uploadId: 304056

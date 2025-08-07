@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: c31cf79312fc8fe4d82ba92c491a067c
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 143580
+  packageName: RPG 2D pack
+  packageVersion: 1.0
+  assetPath: Assets/RPG 2D pack/Animations/sorcerer_walkcrouch_0097.controller
+  uploadId: 304056

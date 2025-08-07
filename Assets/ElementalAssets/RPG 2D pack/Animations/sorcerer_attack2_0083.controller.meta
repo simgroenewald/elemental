@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 41e7fac64dd1c044ab4cc2c0bd39e216
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 143580
+  packageName: RPG 2D pack
+  packageVersion: 1.0
+  assetPath: Assets/RPG 2D pack/Animations/sorcerer_attack2_0083.controller
+  uploadId: 304056

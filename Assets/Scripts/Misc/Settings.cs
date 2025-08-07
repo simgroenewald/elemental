@@ -18,8 +18,10 @@ public static class Settings
     public static int isIdle = Animator.StringToHash("isIdle");
     public static int isRunning = Animator.StringToHash("isRunning");
 
-    public static float baseSpeedForPlayerAnimations = 8f;
+    public static float baseSpeedForPlayerAnimations = 12f;
 
     public const string playerTag = "Player";
+
+    public const float useTargetAngleDistance = 3.5f;
 
 }

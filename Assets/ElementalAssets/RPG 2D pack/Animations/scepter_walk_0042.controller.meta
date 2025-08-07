@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: d6e064122304a294bba57ce5a6a8f7a2
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 143580
+  packageName: RPG 2D pack
+  packageVersion: 1.0
+  assetPath: Assets/RPG 2D pack/Animations/scepter_walk_0042.controller
+  uploadId: 304056

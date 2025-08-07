@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 5fe0a077a8938854c89220f83f381274
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 143580
+  packageName: RPG 2D pack
+  packageVersion: 1.0
+  assetPath: Assets/RPG 2D pack/Animations/sorcerer_hit_0117.controller
+  uploadId: 304056
