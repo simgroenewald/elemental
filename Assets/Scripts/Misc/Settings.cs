@@ -9,12 +9,8 @@ public static class Settings
 
 
     // Player Animator parameters
-    public static int posTargetUp = Animator.StringToHash("posTargetUp");
     public static int posTargetLeft = Animator.StringToHash("posTargetLeft");
     public static int posTargetRight = Animator.StringToHash("posTargetRight");
-    public static int posTargetDown = Animator.StringToHash("posTargetDown");
-    public static int posTargetUpLeft = Animator.StringToHash("posTargetUpLeft");
-    public static int posTargetUpRight = Animator.StringToHash("posTargetUpRight");
     public static int isIdle = Animator.StringToHash("isIdle");
     public static int isRunning = Animator.StringToHash("isRunning");
 

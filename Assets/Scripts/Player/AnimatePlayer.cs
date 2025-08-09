@@ -52,14 +52,10 @@ public class AnimatePlayer : MonoBehaviour
         SetIdleAnimationParameters();
     }
 
-    private void InitializeDirectionParameters()
+    private void InitialiseDirectionParameters()
     {
-        player.animator.SetBool(Settings.posTargetUp, false);
-        player.animator.SetBool(Settings.posTargetDown, false);
         player.animator.SetBool(Settings.posTargetRight, false);
         player.animator.SetBool(Settings.posTargetLeft, false);
-        player.animator.SetBool(Settings.posTargetUpLeft, false);
-        player.animator.SetBool(Settings.posTargetUpRight, false);
     }
 
     private void SetMovementAnimationParameters()
