@@ -11,5 +11,7 @@ public interface ICastable
         bool overrideProjectileMovement = false
         );
 
+    void Cast();
+
     GameObject GetGameObject();
 }

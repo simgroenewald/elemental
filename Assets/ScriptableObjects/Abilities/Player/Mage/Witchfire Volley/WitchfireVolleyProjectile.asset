@@ -23,9 +23,9 @@ MonoBehaviour:
   chargeTime: 0
   chargeMaterial: {fileID: 0}
   projectileDamage: 6
-  projectileSpeed: 15
-  projectileSpeedMin: 15
-  projectileSpeedMax: 15
+  projectileSpeed: 1
+  projectileSpeedMin: 1
+  projectileSpeedMax: 1
   projectileRange: 12
   projectileRotationSpeed: 1
   isProjectileTrail: 0

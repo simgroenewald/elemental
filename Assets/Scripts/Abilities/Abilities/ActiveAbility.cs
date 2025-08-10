@@ -6,7 +6,8 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class ActiveAbility: MonoBehaviour
 {
-    [SerializeField] private Transform abilityCastPositionTransform;
+    [SerializeField] private Transform abilityCastPositionLeftTransform;
+    [SerializeField] private Transform abilityCastPositionRightTransform;
     [SerializeField] private Transform abilityEffectPositionTransform;
 
     private SetActiveAbilityEvent setAbilityEvent;
@@ -35,7 +36,8 @@ public class ActiveAbility: MonoBehaviour
     {
         currentAbility = ability;
 
-        abilityCastPositionTransform.localPosition = currentAbility.abilityDetails.abilityCastPosition;
+        abilityCastPositionLeftTransform.localPosition = currentAbility.abilityDetails.abilityCastPositionLeft;
+        abilityCastPositionRightTransform.localPosition = currentAbility.abilityDetails.abilityCastPositionRight;
     }
 
     public ProjectileDetailsSO GetCurrentProjectile()
@@ -48,9 +50,15 @@ public class ActiveAbility: MonoBehaviour
         return currentAbility;
     }
 
-    public Vector3 GetCastPosition()
+    public Vector3 GetCastPosition(TargetDirection direction)
     {
-        return abilityCastPositionTransform.position;
+        if (direction == TargetDirection.Left)
+        {
+            return abilityCastPositionLeftTransform.position;
+        } else
+        {
+            return abilityCastPositionRightTransform.position;
+        }
     }
 
     public Vector3 GetCastEffectPosition()

@@ -19,7 +19,8 @@ public class AbilityDetailsSO : ScriptableObject
     public bool isHurt;
     public bool isCoolingDown;
 
-    public Vector3 abilityCastPosition;
+    public Vector3 abilityCastPositionLeft;
+    public Vector3 abilityCastPositionRight;
     public ProjectileDetailsSO abilityProjectileDetails;
 
     public float coolDownTime;

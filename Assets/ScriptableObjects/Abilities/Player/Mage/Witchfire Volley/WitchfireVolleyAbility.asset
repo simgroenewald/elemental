@@ -24,7 +24,9 @@ MonoBehaviour:
   isCritical: 1
   isAreaOfEffect: 0
   isHurt: 1
-  abilityCastPosition: {x: -0.54, y: 0.248, z: 0}
+  isCoolingDown: 0
+  abilityCastPositionLeft: {x: -0.155, y: 0.222, z: 0}
+  abilityCastPositionRight: {x: 0.155, y: 0.222, z: 0}
   abilityProjectileDetails: {fileID: 11400000, guid: a441b82159785a642b509ab9bfb94cc3, type: 2}
   coolDownTime: 10
   manaCost: 30

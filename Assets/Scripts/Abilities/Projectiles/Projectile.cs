@@ -69,15 +69,13 @@ public class Projectile : MonoBehaviour, ICastable
         } else
         {
             projectileChargeTimer = 0f;
-            SetProjectileMaterial(projectileDetails.projectileMaterial);
+            //SetProjectileMaterial(projectileDetails.projectileMaterial);
             isProjectileMaterialSet = true;
         }
 
         projectileRange = projectileDetails.projectileRange;
         this.projectileSpeed = projectileSpeed;
         this.overrideProjectileMovement = overrideProjectileMovement;
-
-        gameObject.SetActive(true);
 
         // InitialiseTrail
         if (projectileDetails.isProjectileTrail)
@@ -94,6 +92,11 @@ public class Projectile : MonoBehaviour, ICastable
             trailRenderer.emitting = false;
             trailRenderer.gameObject.SetActive(false);
         }
+    }
+
+    public void Cast()
+    {
+        gameObject.SetActive(true);
     }
 
     private void SetCastDirection(ProjectileDetailsSO projectileDetails, float castAngle, float castPointAngle, Vector3 targetDirectionVector)

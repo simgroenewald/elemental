@@ -18,4 +18,5 @@ MonoBehaviour:
   health: 100
   miniMapIcon: {fileID: 0}
   startingAbility: {fileID: 11400000, guid: c24beabdad3521442ae606c4848076c3, type: 2}
-  abilityList: []
+  abilityList:
+  - {fileID: 11400000, guid: c24beabdad3521442ae606c4848076c3, type: 2}

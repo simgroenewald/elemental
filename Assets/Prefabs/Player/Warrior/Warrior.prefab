@@ -8,6 +8,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 288259923795912762, guid: f12c9e2f2a28e7b4f828e4230d51bcc2, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3061618135847866242, guid: f12c9e2f2a28e7b4f828e4230d51bcc2, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 4084375577826455659, guid: f12c9e2f2a28e7b4f828e4230d51bcc2, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -60,9 +68,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Warrior
       objectReference: {fileID: 0}
+    - target: {fileID: 5919330583086702471, guid: f12c9e2f2a28e7b4f828e4230d51bcc2, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 6956750248866094596, guid: f12c9e2f2a28e7b4f828e4230d51bcc2, type: 3}
       propertyPath: m_Mass
-      value: 0.19409013
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 6956750248866094596, guid: f12c9e2f2a28e7b4f828e4230d51bcc2, type: 3}
       propertyPath: m_BodyType
@@ -70,6 +82,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2574819348521448569, guid: f12c9e2f2a28e7b4f828e4230d51bcc2, type: 3}
+    - {fileID: 4584293976386069759, guid: f12c9e2f2a28e7b4f828e4230d51bcc2, type: 3}
+    - {fileID: -3013116779972059984, guid: f12c9e2f2a28e7b4f828e4230d51bcc2, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

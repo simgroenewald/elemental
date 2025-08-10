@@ -11,6 +11,8 @@ using UnityEngine.Rendering;
 [RequireComponent(typeof(MovementHandler))]
 [RequireComponent(typeof(SetActiveAbilityEvent))]
 [RequireComponent(typeof(ActiveAbility))]
+[RequireComponent(typeof(CastAbility))]
+[RequireComponent(typeof(AbilityEvents))]
 [RequireComponent(typeof(AnimatePlayer))]
 [RequireComponent(typeof(SortingGroup))]
 [RequireComponent(typeof(SpriteRenderer))]
@@ -26,6 +28,8 @@ public class Player : MonoBehaviour
     [HideInInspector] public Health health;
     [HideInInspector] public SetActiveAbilityEvent setActiveAbilityEvent;
     [HideInInspector] public ActiveAbility activeAbility;
+    [HideInInspector] public CastAbility castAbility;
+    [HideInInspector] public AbilityEvents abilityEvents;
     [HideInInspector] public SpriteRenderer spriteRenderer;
     [HideInInspector] public Animator animator;
     [HideInInspector] public NavMeshAgent playerAgent;
@@ -38,6 +42,8 @@ public class Player : MonoBehaviour
         health = GetComponent<Health>();
         setActiveAbilityEvent = GetComponent<SetActiveAbilityEvent>();
         activeAbility = GetComponent<ActiveAbility>();
+        castAbility = GetComponent<CastAbility>();
+        abilityEvents = GetComponent<AbilityEvents>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         playerAgent = GetComponent<NavMeshAgent>();

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4434213564202782193}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: AbilityCastPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2442322500857349959}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: AbilityEffectPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,7 +86,9 @@ GameObject:
   - component: {fileID: -973754093991526888}
   - component: {fileID: 15017593591672526}
   - component: {fileID: 1191963682839442734}
-  m_Layer: 15
+  - component: {fileID: 5547859721608900105}
+  - component: {fileID: 8541612729861354702}
+  m_Layer: 10
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -251,7 +253,7 @@ PolygonCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5919330583086702471}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
@@ -348,6 +350,9 @@ MonoBehaviour:
   characterDetails: {fileID: 0}
   health: {fileID: 0}
   setActiveAbilityEvent: {fileID: 0}
+  activeAbility: {fileID: 0}
+  castAbility: {fileID: 0}
+  abilityEvents: {fileID: 0}
   spriteRenderer: {fileID: 0}
   animator: {fileID: 0}
   playerAgent: {fileID: 0}
@@ -379,6 +384,11 @@ MonoBehaviour:
   collisionLayermask:
     serializedVersion: 2
     m_Bits: 1024
+  isMoving: 0
+  isAttacking: 0
+  isIdle: 0
+  posTargetLeft: 0
+  posTargetRight: 0
 --- !u!114 &8479949905208940033
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -450,5 +460,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e81464ca38bfe242b06098231914e26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  abilityCastPositionTransform: {fileID: 4434213564202782193}
+  abilityCastPositionLeftTransform: {fileID: 0}
+  abilityCastPositionRightTransform: {fileID: 0}
   abilityEffectPositionTransform: {fileID: 2442322500857349959}
+--- !u!114 &5547859721608900105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5919330583086702471}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ab84706a14956b4b827c9bb9fd3ec67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8541612729861354702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5919330583086702471}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c2eb975029afdd4cb362dfc69007f68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
