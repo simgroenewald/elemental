@@ -71,6 +71,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -973754093991526888, guid: f12c9e2f2a28e7b4f828e4230d51bcc2, type: 3}
+      propertyPath: m_Radius
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 288259923795912762, guid: f12c9e2f2a28e7b4f828e4230d51bcc2, type: 3}
       propertyPath: m_Name
       value: AbilityCastPositionLeft
@@ -103,6 +107,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 1935791125, guid: ac36c2ebc8f0c0d47b25c368a51e4496, type: 3}
+    - target: {fileID: 3175993449239557789, guid: f12c9e2f2a28e7b4f828e4230d51bcc2, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
     - target: {fileID: 4084375577826455659, guid: f12c9e2f2a28e7b4f828e4230d51bcc2, type: 3}
       propertyPath: m_Enabled
       value: 0

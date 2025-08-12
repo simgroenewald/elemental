@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Rendering;
 
 [RequireComponent (typeof(SortingGroup))]
@@ -7,6 +8,7 @@ using UnityEngine.Rendering;
 [RequireComponent (typeof(Rigidbody2D))]
 [RequireComponent (typeof(CircleCollider2D))]
 [RequireComponent (typeof(PolygonCollider2D))]
+[RequireComponent(typeof(PolygonCollider2D))]
 
 [DisallowMultipleComponent]
 public class Enemy : MonoBehaviour
@@ -16,6 +18,7 @@ public class Enemy : MonoBehaviour
     private PolygonCollider2D polygonCollider;
     [HideInInspector] public SpriteRenderer[] spriteRendererArray;
     [HideInInspector] public Animator animator;
+    [HideInInspector] public NavMeshAgent enemyAgent;
 
     private void Awake()
     {
@@ -23,6 +26,9 @@ public class Enemy : MonoBehaviour
         polygonCollider = GetComponent<PolygonCollider2D>();    
         spriteRendererArray = GetComponentsInChildren<SpriteRenderer>();
         animator = GetComponent<Animator>();
+        enemyAgent = GetComponent<NavMeshAgent>();
+        enemyAgent.updateRotation = false;
+        enemyAgent.updateUpAxis = false;
     }
 
 }
