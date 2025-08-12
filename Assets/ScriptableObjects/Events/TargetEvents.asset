@@ -9,9 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08ac6898a606cd44d96bf7ee78c53741, type: 3}
-  m_Name: MovementDetails
+  m_Script: {fileID: 11500000, guid: 8aa0f654a41d8114bac23f5eb5b1a107, type: 3}
+  m_Name: TargetEvents
   m_EditorClassIdentifier: 
-  minMovementSpeed: 2
-  maxMovementSpeed: 2
-  currentMovementSpeed: 2

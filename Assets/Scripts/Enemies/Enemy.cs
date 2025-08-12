@@ -4,11 +4,11 @@ using UnityEngine.Rendering;
 
 [RequireComponent (typeof(SortingGroup))]
 [RequireComponent (typeof(SpriteRenderer))]
-[RequireComponent(typeof(Animator))]
+[RequireComponent (typeof(Animator))]
 [RequireComponent (typeof(Rigidbody2D))]
 [RequireComponent (typeof(CircleCollider2D))]
 [RequireComponent (typeof(PolygonCollider2D))]
-[RequireComponent(typeof(PolygonCollider2D))]
+[RequireComponent (typeof(AbilityEvents))]
 
 [DisallowMultipleComponent]
 public class Enemy : MonoBehaviour
@@ -19,6 +19,7 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public SpriteRenderer[] spriteRendererArray;
     [HideInInspector] public Animator animator;
     [HideInInspector] public NavMeshAgent enemyAgent;
+    [HideInInspector] public AbilityEvents abilityEvents;
 
     private void Awake()
     {
@@ -26,6 +27,7 @@ public class Enemy : MonoBehaviour
         polygonCollider = GetComponent<PolygonCollider2D>();    
         spriteRendererArray = GetComponentsInChildren<SpriteRenderer>();
         animator = GetComponent<Animator>();
+        abilityEvents = GetComponent<AbilityEvents>();
         enemyAgent = GetComponent<NavMeshAgent>();
         enemyAgent.updateRotation = false;
         enemyAgent.updateUpAxis = false;

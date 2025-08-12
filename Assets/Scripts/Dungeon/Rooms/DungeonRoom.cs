@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using static UnityEditor.PlayerSettings;
@@ -31,6 +33,8 @@ public class DungeonRoom : MonoBehaviour
     public List<Doorway> exitDoorways = new List<Doorway>();
     public GameObject doorPrefab;
 
+    public List<Enemy> enemies = new List<Enemy>();
+
     public bool isEntered = false;
     public bool isComplete = false;
     public bool previouslyEntered = false;
@@ -47,6 +51,40 @@ public class DungeonRoom : MonoBehaviour
         children = new();
         SetName();
         return this;
+    }
+
+    public void SpawnRoomEnemies(int enemyCount)
+    {
+        SimpleEnemyInitializer enemyInitializer = GetComponent<SimpleEnemyInitializer>();
+        Transform roomTransform = GetComponent<Transform>();
+        GameObject enemyPrefab = enemyInitializer.GetEnemyPrefab();
+
+        for (int i = 0; i < enemyCount; i++)
+        {
+
+            Vector2Int spawnPosition2D = GetEnemyStartPosition();
+
+            // Convert tile position to world position
+            Vector3 worldPosition = this.structure.tilemapLayers.grid.CellToWorld((Vector3Int)spawnPosition2D);
+            // Center the position in the tile
+            worldPosition += this.structure.tilemapLayers.grid.cellSize * 0.16f;
+
+            // Instantiate enemy
+            GameObject enemyGO = Instantiate(enemyPrefab, worldPosition, Quaternion.identity, roomTransform);
+            enemyGO.name = $"Enemy_{i + 1}";
+
+            // Ensure proper 2D rotation (no X or Y rotation)
+            enemyGO.transform.rotation = Quaternion.identity;
+
+            Debug.Log($"Spawned enemy at floor position: {spawnPosition2D}");
+        }
+
+    }
+
+
+    public Vector2Int GetEnemyStartPosition()
+    {
+        return structure.floorPositions.ElementAt(UnityEngine.Random.Range(0, structure.floorPositions.Count));
     }
 
     private void SetName()

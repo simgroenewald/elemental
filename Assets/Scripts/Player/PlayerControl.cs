@@ -23,6 +23,9 @@ public class PlayerControl : MonoBehaviour
     public bool posTargetLeft = false;
     public bool posTargetRight = false;
 
+    public TargetEnemy targetEnemy;
+    public bool isAiming = false;
+
     private void Awake()
     {
         // Load components
@@ -36,6 +39,40 @@ public class PlayerControl : MonoBehaviour
         SetPlayerAnimationspeed();
         SetPlayerStartAbility();
         player.abilityEvents.OnAbilityCasted += HandleIdleState;
+        GameEventManager.Instance.targetEvents.OnAimEnemy += HandleOnAimEnemy;
+        GameEventManager.Instance.targetEvents.OnRemoveAim += HandleOnRemoveAim;
+        GameEventManager.Instance.targetEvents.OnTargetEnemy += HandleOnTargetEnemy;
+    }
+
+    private void OnDisable()
+    {
+        player.abilityEvents.OnAbilityCasted -= HandleIdleState;
+        GameEventManager.Instance.targetEvents.OnAimEnemy -= HandleOnAimEnemy;
+        GameEventManager.Instance.targetEvents.OnRemoveAim -= HandleOnRemoveAim;
+        GameEventManager.Instance.targetEvents.OnTargetEnemy -= HandleOnTargetEnemy;
+    }
+
+    private void HandleOnTargetEnemy(TargetEnemy newTargetEnemy)
+    {
+        // Check if an enemy is targeted and its not the same target
+        if (targetEnemy && targetEnemy != newTargetEnemy)
+        {
+            targetEnemy.DeselectTarget();
+        }
+        targetEnemy = newTargetEnemy;
+        AttackEnemy();
+    }
+
+    private void HandleOnRemoveAim()
+    {
+        Debug.Log("No aiming");
+        isAiming = false;
+    }
+
+    private void HandleOnAimEnemy()
+    {
+        Debug.Log("Aiming");
+        isAiming = true;
     }
 
     private void SetPlayerStartAbility()
@@ -68,7 +105,7 @@ public class PlayerControl : MonoBehaviour
 
     private void Update()
     {
-        MouseMovementInput();
+        MouseInput();
         CastAbility();
         if (isMoving)
         {
@@ -83,7 +120,7 @@ public class PlayerControl : MonoBehaviour
         isIdle = false;
     }
 
-    private void SetToidle()
+    private void SetToIdle()
     {
         ResetStates();
         isIdle = true;
@@ -101,16 +138,65 @@ public class PlayerControl : MonoBehaviour
         isAttacking = true;
     }
 
-    private void MouseMovementInput()
+    private void MouseInput()
     {
-        if (Input.GetMouseButtonDown(1)) // Right click
+        if (Input.GetMouseButtonDown(1))
         {
-            Vector3 worldPosition = GetClickPosition();
-            player.playerAgent.SetDestination(worldPosition);
-            SetToMoving();
-            GameEventManager.Instance.movementEvents.RaiseMoveByPosition(moveSpeed);
-            StartTracking();
+            if (!isAiming) // Right click
+            {
+                if (targetEnemy)
+                {
+                    targetEnemy.DeselectTarget();
+                }
+                MoveToClickPosition();
+            }
+            // Clicked on an already selected enemy
+            else
+            {
+                Ability currentAbility = player.activeAbility.GetCurrentAbility();
+                if (currentAbility.abilityDetails.isEnemyTargetable && targetEnemy)
+                {
+                    AttackEnemy();
+                }
+            }
         }
+        
+    }
+
+    private void MoveToClickPosition()
+    {
+        Vector3 worldPosition = GetClickPosition();
+        player.playerAgent.SetDestination(worldPosition);
+        SetToMoving();
+        GameEventManager.Instance.movementEvents.RaiseMoveByPosition(moveSpeed);
+        StartTracking();
+    }
+
+    private void AttackEnemy()
+    {
+        StopMovement();
+        SetToAttacking();
+
+        GameEventManager.Instance.movementEvents.RaiseAttack();
+        Vector3 enemyPosition = targetEnemy.target.position;
+
+
+        Vector3 playerDirection = (enemyPosition - player.transform.position);
+        float playerAngle = HelperUtilities.GetAngleFromVector(playerDirection);
+        TargetDirection aimDirection = HelperUtilities.GetTargetDirection(playerAngle);
+
+        Vector3 castPosition = player.activeAbility.GetCastPosition(aimDirection);
+        // Ensure we're working in 2D by setting Z to 0 for both positions
+        Vector3 castPosition2D = new Vector3(castPosition.x, castPosition.y, 0f);
+        Vector3 worldPosition2D = new Vector3(enemyPosition.x, enemyPosition.y, 0f);
+
+        Vector3 castPointDirection = (worldPosition2D - castPosition2D);
+        float castPointAngle = HelperUtilities.GetAngleFromVector(castPointDirection);
+
+        UpdatePlayerDirection(aimDirection);
+
+        player.abilityEvents.RaiseAbilitySetupEvent(true, aimDirection, playerAngle, castPointAngle, castPointDirection);
+        player.abilityEvents.RaiseCastAbilityEvent();
     }
 
     private void StopMovement()
@@ -185,7 +271,7 @@ public class PlayerControl : MonoBehaviour
 
     private void HandleIdleState()
     {
-        SetToidle();
+        SetToIdle();
         GameEventManager.Instance.movementEvents.RaiseIdle();
     }
 

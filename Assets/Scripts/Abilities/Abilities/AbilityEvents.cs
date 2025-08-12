@@ -7,7 +7,6 @@ public class AbilityEvents : MonoBehaviour
     public event Action OnCastAbility;
     public event Action OnAbilityCasted;
 
-
     public void RaiseAbilitySetupEvent(
         bool cast,
         TargetDirection direction,

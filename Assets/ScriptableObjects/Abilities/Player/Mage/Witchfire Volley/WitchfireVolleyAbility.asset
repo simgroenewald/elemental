@@ -15,7 +15,7 @@ MonoBehaviour:
   abilityName: Witchfire Volley
   icon: {fileID: 0}
   isTrigger: 0
-  isEnemyTargetable: 0
+  isEnemyTargetable: 1
   isDirectionTargetable: 0
   isGroundTargetable: 0
   isPassive: 0

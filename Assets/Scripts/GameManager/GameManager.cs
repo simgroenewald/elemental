@@ -107,7 +107,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         player.SetPlayerStartPosition(startRoom, startRoom.structure.tilemapLayers.grid);
         
         // Initialize enemies BEFORE NavMesh baking so they're included as obstacles
-        InitializeEnemies();
+        startRoom.SpawnRoomEnemies(3);
         
         // Now bake NavMesh with all agents present
         playerNavMeshSurface.BuildNavMesh();
@@ -116,22 +116,6 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         cameraController.SetupCamera(player.transform.position, dungeon.dungeonLayers.collisionTilemap);
 
         state = GameState.playing;
-    }
-
-    private void InitializeEnemies()
-    {
-        // Get the SimpleEnemyInitializer component and spawn enemies in start room
-        SimpleEnemyInitializer enemyInitializer = GetComponent<SimpleEnemyInitializer>();
-        if (enemyInitializer != null)
-        {
-            DungeonRoom startRoom = dungeon.GetStartRoom();
-            enemyInitializer.InitializeEnemiesInStartRoom(startRoom, startRoom.structure.tilemapLayers.grid);
-            Debug.Log("Enemies initialized in start room before NavMesh baking");
-        }
-        else
-        {
-            Debug.LogWarning("SimpleEnemyInitializer not found on GameManager");
-        }
     }
 
     internal Player GetPlayer()
