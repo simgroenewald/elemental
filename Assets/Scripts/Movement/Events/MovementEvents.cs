@@ -4,18 +4,30 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "MovementEvents", menuName = "Events/MovementEvents")]
 public class MovementEvents : ScriptableObject
 {
-    public event Action<Vector2, float> OnMoveByVelocity;
-    public event Action<Vector3> OnMoveByPosition;
+    public event Action OnFaceLeft;
+    public event Action OnFaceRight;
+    public event Action<float> OnMoveByPosition;
     public event Action OnIdle;
+    public event Action OnAttack;
 
-    public void RaiseMoveByVelocity(Vector2 direction, float speed)
+    public void RaiseFaceLeft()
     {
-        OnMoveByVelocity?.Invoke(direction, speed);
+        OnFaceLeft?.Invoke();
     }
 
-    public void RaiseMoveByPosition(Vector3 target)
+    public void RaiseFaceRight()
     {
-        OnMoveByPosition?.Invoke(target);
+        OnFaceRight?.Invoke();
+    }
+
+    public void RaiseMoveByPosition(float speed)
+    {
+        OnMoveByPosition?.Invoke(speed);
+    }
+
+    public void RaiseAttack()
+    {
+        OnAttack?.Invoke();
     }
 
     public void RaiseIdle()

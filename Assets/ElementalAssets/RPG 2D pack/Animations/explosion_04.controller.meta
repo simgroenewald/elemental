@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: fc8025e1c8d1bbe439549c21d43141c8
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 143580
+  packageName: RPG 2D pack
+  packageVersion: 1.0
+  assetPath: Assets/RPG 2D pack/Animations/explosion_04.controller
+  uploadId: 304056

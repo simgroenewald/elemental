@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: f832a660d59df44458162cef21911b82
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 143580
+  packageName: RPG 2D pack
+  packageVersion: 1.0
+  assetPath: Assets/RPG 2D pack/Animations/rod_crouch.anim
+  uploadId: 304056

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: f0ce3f2f26bc3c94a933ee943eb95321
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 143580
+  packageName: RPG 2D pack
+  packageVersion: 1.0
+  assetPath: Assets/RPG 2D pack/Animations/scepter_idle.anim
+  uploadId: 304056

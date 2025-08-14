@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 38a5f628bd83b044b90dfe1c55364dd6
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 143580
+  packageName: RPG 2D pack
+  packageVersion: 1.0
+  assetPath: Assets/RPG 2D pack/Animations/scepter_attackcrouch_0113.controller
+  uploadId: 304056

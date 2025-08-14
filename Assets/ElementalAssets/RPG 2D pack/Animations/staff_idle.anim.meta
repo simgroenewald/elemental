@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 91a18597306a36b4eb064462f2400986
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 143580
+  packageName: RPG 2D pack
+  packageVersion: 1.0
+  assetPath: Assets/RPG 2D pack/Animations/staff_idle.anim
+  uploadId: 304056

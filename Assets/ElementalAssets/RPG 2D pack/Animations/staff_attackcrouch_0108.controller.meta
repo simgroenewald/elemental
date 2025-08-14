@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 6198904fd095f1c48a328b902d211484
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 143580
+  packageName: RPG 2D pack
+  packageVersion: 1.0
+  assetPath: Assets/RPG 2D pack/Animations/staff_attackcrouch_0108.controller
+  uploadId: 304056

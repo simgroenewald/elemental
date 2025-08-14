@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 7242863911af13545a6cde90d9c5a31e
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 143580
+  packageName: RPG 2D pack
+  packageVersion: 1.0
+  assetPath: Assets/RPG 2D pack/Animations/bowgoblin_attack_0043.controller
+  uploadId: 304056

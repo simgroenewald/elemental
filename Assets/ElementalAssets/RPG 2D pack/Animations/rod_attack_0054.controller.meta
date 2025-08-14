@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 7ab36d8b3fa75b84a8e7cd05da04951f
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 143580
+  packageName: RPG 2D pack
+  packageVersion: 1.0
+  assetPath: Assets/RPG 2D pack/Animations/rod_attack_0054.controller
+  uploadId: 304056

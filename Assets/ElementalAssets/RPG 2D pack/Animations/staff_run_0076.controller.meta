@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 7b919d5c4b248684d809de4125f4b1f6
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 143580
+  packageName: RPG 2D pack
+  packageVersion: 1.0
+  assetPath: Assets/RPG 2D pack/Animations/staff_run_0076.controller
+  uploadId: 304056

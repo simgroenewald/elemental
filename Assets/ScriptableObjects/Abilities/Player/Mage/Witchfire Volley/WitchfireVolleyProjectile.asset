@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b1676e888e655846a9eb85aa7a764ec, type: 3}
+  m_Name: WitchfireVolleyProjectile
+  m_EditorClassIdentifier: 
+  projectileName: Witchfire Volley Projectile
+  isPlayerProjectile: 1
+  isAnimated: 1
+  followsTarget: 0
+  projectileSprite: {fileID: -14110601, guid: b81550b463513b7449b4a892e4418745, type: 3}
+  projectilePrefabArray:
+  - {fileID: 2304328725818675034, guid: d0f5cd44b7e89f24a84052c310cd9202, type: 3}
+  projectileMaterial: {fileID: 0}
+  chargeTime: 0
+  chargeMaterial: {fileID: 0}
+  projectileDamage: 6
+  projectileSpeed: 1.5
+  projectileSpeedMin: 1.5
+  projectileSpeedMax: 1.5
+  projectileRange: 12
+  projectileRotationSpeed: 1
+  isProjectileTrail: 0
+  projectileTrailTime: 0
+  projectileTrailMaterial: {fileID: 0}
+  projectileTrailStartWidth: 0
+  projectileTrailEndWidth: 0

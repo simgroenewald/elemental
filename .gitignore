@@ -98,7 +98,11 @@ InitTestScene*.unity*
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
 
-/Assets/RafaelMatos
-/Assets/RafaelMatos.meta
-/Assets/RPG 2D pack
-/Assets/RPG 2D pack.meta
+/[Aa]ssets/RafaelMatos
+/[Aa]ssets/RafaelMatos.meta
+/[Aa]ssets/RPG 2D pack
+/[Aa]ssets/RPG 2D pack.meta
+
+/Packages
+/Packages/manifest.json
+/Packages/packages-lock.json

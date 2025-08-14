@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 5154ead834269014daa8c73d233faaf6
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 143580
+  packageName: RPG 2D pack
+  packageVersion: 1.0
+  assetPath: Assets/RPG 2D pack/Animations/bowgoblin_run.anim
+  uploadId: 304056

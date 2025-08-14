@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 195ed697856e56a43ab1dfed2f265e8b
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 143580
+  packageName: RPG 2D pack
+  packageVersion: 1.0
+  assetPath: Assets/RPG 2D pack/Animations/staff_death_0124.controller
+  uploadId: 304056

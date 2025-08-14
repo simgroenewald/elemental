@@ -18,23 +18,23 @@ public class MovementHandler : MonoBehaviour
     private void Start()
     {
         // Subscribe to movement event
-        GameEventManager.Instance.movementEvents.OnMoveByVelocity += HandleMovebyVelocity;
         GameEventManager.Instance.movementEvents.OnIdle += HandleIdle;
+        GameEventManager.Instance.movementEvents.OnAttack += HandleAttack;
     }
 
     private void OnDisable()
     {
         // Unsubscribe from movement event
-        GameEventManager.Instance.movementEvents.OnMoveByVelocity -= HandleMovebyVelocity;
         GameEventManager.Instance.movementEvents.OnIdle -= HandleIdle;
-    }
-
-    private void HandleMovebyVelocity(Vector2 direction, float speed)
-    {
-        rigidBody2D.linearVelocity = direction * speed;
+        GameEventManager.Instance.movementEvents.OnAttack -= HandleAttack;
     }
 
     private void HandleIdle()
+    {
+        rigidBody2D.linearVelocity = Vector2.zero;
+    }
+
+    private void HandleAttack()
     {
         rigidBody2D.linearVelocity = Vector2.zero;
     }

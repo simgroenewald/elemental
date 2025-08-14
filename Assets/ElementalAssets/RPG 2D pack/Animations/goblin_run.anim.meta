@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 326712d7f8c1f424ca64dc82d0af508a
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 143580
+  packageName: RPG 2D pack
+  packageVersion: 1.0
+  assetPath: Assets/RPG 2D pack/Animations/goblin_run.anim
+  uploadId: 304056
