@@ -12,6 +12,7 @@ using UnityEngine.Rendering;
 [RequireComponent(typeof(SetActiveAbilityEvent))]
 [RequireComponent(typeof(ActiveAbility))]
 [RequireComponent(typeof(CastAbility))]
+[RequireComponent(typeof(MeleeAbility))]
 [RequireComponent(typeof(AbilityEvents))]
 [RequireComponent(typeof(AnimatePlayer))]
 [RequireComponent(typeof(SortingGroup))]
@@ -29,6 +30,7 @@ public class Player : MonoBehaviour
     [HideInInspector] public SetActiveAbilityEvent setActiveAbilityEvent;
     [HideInInspector] public ActiveAbility activeAbility;
     [HideInInspector] public CastAbility castAbility;
+    [HideInInspector] public MeleeAbility meleeAbility;
     [HideInInspector] public AbilityEvents abilityEvents;
     [HideInInspector] public SpriteRenderer spriteRenderer;
     [HideInInspector] public Animator animator;
@@ -43,6 +45,7 @@ public class Player : MonoBehaviour
         setActiveAbilityEvent = GetComponent<SetActiveAbilityEvent>();
         activeAbility = GetComponent<ActiveAbility>();
         castAbility = GetComponent<CastAbility>();
+        meleeAbility = GetComponent<MeleeAbility>();
         abilityEvents = GetComponent<AbilityEvents>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();

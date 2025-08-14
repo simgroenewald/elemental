@@ -27,6 +27,7 @@ public class AnimatePlayer : MonoBehaviour
         GameEventManager.Instance.movementEvents.OnMoveByPosition += HandleMovementAnimation;
         GameEventManager.Instance.movementEvents.OnIdle += HandleIdleAnimation;
         player.abilityEvents.OnCastAbility += HandleAbilityCastAnimation;
+        player.abilityEvents.OnMeleeAttack += HandleMeleeAttackAnimation;
     }
 
     private void OnDisable()
@@ -36,6 +37,7 @@ public class AnimatePlayer : MonoBehaviour
         GameEventManager.Instance.movementEvents.OnMoveByPosition -= HandleMovementAnimation;
         GameEventManager.Instance.movementEvents.OnIdle -= HandleIdleAnimation;
         player.abilityEvents.OnCastAbility -= HandleAbilityCastAnimation;
+        player.abilityEvents.OnMeleeAttack -= HandleMeleeAttackAnimation;
     }
 
     private void ResetAnimationBools()
@@ -71,6 +73,12 @@ public class AnimatePlayer : MonoBehaviour
     }
 
     private void HandleAbilityCastAnimation()
+    {
+        ResetAnimationBools();
+        player.animator.SetBool(Settings.isAttacking, true);
+    }
+
+    private void HandleMeleeAttackAnimation()
     {
         ResetAnimationBools();
         player.animator.SetBool(Settings.isAttacking, true);

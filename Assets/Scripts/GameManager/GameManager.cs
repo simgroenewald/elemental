@@ -19,7 +19,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     private DungeonRoom currentDungeonRoom;
     private List<DungeonRoom> completeDungeonRooms;
     private CharacterDetailSO characterDetail;
-    private Player player;
+    public Player player;
     private CameraController cameraController;
 
     public GameState state;
