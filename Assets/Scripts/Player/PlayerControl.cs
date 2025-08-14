@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UIElements;
 
 [RequireComponent(typeof(Player))]
@@ -25,6 +26,7 @@ public class PlayerControl : MonoBehaviour
 
     public TargetEnemy targetEnemy;
     public bool isAiming = false;
+    public float maxMoveSelectDistance = 30f;
 
     private void Awake()
     {
@@ -39,6 +41,7 @@ public class PlayerControl : MonoBehaviour
         SetPlayerAnimationspeed();
         SetPlayerStartAbility();
         player.abilityEvents.OnAbilityCasted += HandleIdleState;
+        player.abilityEvents.OnMeleeEndAttack += HandleIdleState;
         GameEventManager.Instance.targetEvents.OnAimEnemy += HandleOnAimEnemy;
         GameEventManager.Instance.targetEvents.OnRemoveAim += HandleOnRemoveAim;
         GameEventManager.Instance.targetEvents.OnTargetEnemy += HandleOnTargetEnemy;
@@ -47,6 +50,7 @@ public class PlayerControl : MonoBehaviour
     private void OnDisable()
     {
         player.abilityEvents.OnAbilityCasted -= HandleIdleState;
+        player.abilityEvents.OnMeleeEndAttack -= HandleIdleState;
         GameEventManager.Instance.targetEvents.OnAimEnemy -= HandleOnAimEnemy;
         GameEventManager.Instance.targetEvents.OnRemoveAim -= HandleOnRemoveAim;
         GameEventManager.Instance.targetEvents.OnTargetEnemy -= HandleOnTargetEnemy;
@@ -166,7 +170,14 @@ public class PlayerControl : MonoBehaviour
     private void MoveToClickPosition()
     {
         Vector3 worldPosition = GetClickPosition();
+
+        int areaMask = NavMesh.AllAreas;
+        // Project to navmesh if the click is off-mesh
+        if (NavMesh.SamplePosition(worldPosition, out var hit, maxMoveSelectDistance, areaMask))
+            worldPosition = hit.position;
+
         player.playerAgent.SetDestination(worldPosition);
+
         SetToMoving();
         GameEventManager.Instance.movementEvents.RaiseMoveByPosition(moveSpeed);
         StartTracking();

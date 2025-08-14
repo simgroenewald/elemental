@@ -88,6 +88,7 @@ GameObject:
   - component: {fileID: 1191963682839442734}
   - component: {fileID: 5547859721608900105}
   - component: {fileID: 8541612729861354702}
+  - component: {fileID: 4130299001389601540}
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
@@ -352,6 +353,7 @@ MonoBehaviour:
   setActiveAbilityEvent: {fileID: 0}
   activeAbility: {fileID: 0}
   castAbility: {fileID: 0}
+  meleeAbility: {fileID: 0}
   abilityEvents: {fileID: 0}
   spriteRenderer: {fileID: 0}
   animator: {fileID: 0}
@@ -389,6 +391,9 @@ MonoBehaviour:
   isIdle: 0
   posTargetLeft: 0
   posTargetRight: 0
+  targetEnemy: {fileID: 0}
+  isAiming: 0
+  maxMoveSelectDistance: 30
 --- !u!114 &8479949905208940033
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -431,7 +436,7 @@ NavMeshAgent:
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
-  m_AutoRepath: 1
+  m_AutoRepath: 0
   m_Height: 1.4784
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
@@ -485,5 +490,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9c2eb975029afdd4cb362dfc69007f68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4130299001389601540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5919330583086702471}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b11ef37bf4a9ce143bc4c32b7877b5d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

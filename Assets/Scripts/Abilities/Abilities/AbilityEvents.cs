@@ -5,6 +5,8 @@ public class AbilityEvents : MonoBehaviour
 {
     public event Action<bool, TargetDirection, float, float, Vector3> OnAbilitySetup;
     public event Action OnCastAbility;
+    public event Action OnMeleeAttack;
+    public event Action OnMeleeEndAttack;
     public event Action OnAbilityCasted;
 
     public void RaiseAbilitySetupEvent(
@@ -21,8 +23,19 @@ public class AbilityEvents : MonoBehaviour
     {
         OnCastAbility?.Invoke();
     }
+
+    public void RaiseMeleeAttackEvent()
+    {
+        OnMeleeAttack?.Invoke();
+    }
+
     public void RaiseAbilityCastedEvent()
     {
         OnAbilityCasted?.Invoke();
+    }
+
+    public void RaiseMeleeEndAttackEvent()
+    {
+        OnMeleeEndAttack?.Invoke();
     }
 }
