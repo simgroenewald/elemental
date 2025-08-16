@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 330070278416944620}
   - component: {fileID: 8419137772768685779}
   m_Layer: 14
-  m_Name: WitchfireProjectile
+  m_Name: Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

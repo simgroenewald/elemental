@@ -6,13 +6,13 @@ public class AbilityDetailsSO : ScriptableObject
     public string abilityName;
     public Sprite icon;
 
-    public bool isTrigger;
+    public bool isAutoAttack;
     public bool isEnemyTargetable;
     public bool isDirectionTargetable;
     public bool isGroundTargetable;
 
     public bool isPassive;
-    public bool isMelee;
+    public bool isRanged;
     public bool isDamageOverTime;
     public bool isCritical;
     public bool isAreaOfEffect;
@@ -22,6 +22,8 @@ public class AbilityDetailsSO : ScriptableObject
     public Vector3 abilityCastPositionLeft;
     public Vector3 abilityCastPositionRight;
     public ProjectileDetailsSO abilityProjectileDetails;
+
+    public float slowDownBuffer;
 
     public float coolDownTime;
     public float manaCost;

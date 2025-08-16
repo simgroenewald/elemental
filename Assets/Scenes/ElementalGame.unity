@@ -281,13 +281,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3d2ed32b794f0d4dbf794ef864413b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectableMask:
-    m_Bits: 32768
-  selectableTag: Selectable
-  highlight: {fileID: 0}
-  highlightOutline: {fileID: 0}
-  selection: {fileID: 0}
-  selectionOutline: {fileID: 0}
 --- !u!1 &884658100
 GameObject:
   m_ObjectHideFlags: 0
@@ -665,7 +658,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   poolArray:
   - poolSize: 30
-    prefab: {fileID: 2304328725818675034, guid: d0f5cd44b7e89f24a84052c310cd9202, type: 3}
+    prefab: {fileID: 1025246606280818693, guid: 0cd22f3b1c511674187a27718fbcc190, type: 3}
+    componentType: ICastable
+  - poolSize: 30
+    prefab: {fileID: 9012860769523257624, guid: 067dc9dba83946e4f88e8c62e562621e, type: 3}
     componentType: ICastable
 --- !u!1 &1163551853
 GameObject:
@@ -976,6 +972,7 @@ MonoBehaviour:
   enemyNavMeshSurface: {fileID: 1442070498}
   dungeonNavigationDisplay: {fileID: 56919467}
   currentLevelIndex: 0
+  player: {fileID: 0}
   state: 0
 --- !u!4 &1962718396
 Transform:

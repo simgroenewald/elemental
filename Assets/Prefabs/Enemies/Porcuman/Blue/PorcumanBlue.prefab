@@ -100,6 +100,18 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0.206
       objectReference: {fileID: 0}
+    - target: {fileID: 6164343815551774762, guid: c71c5ca299148ec4298772eea3b9d173, type: 3}
+      propertyPath: m_Mass
+      value: 0.7853982
+      objectReference: {fileID: 0}
+    - target: {fileID: 6164343815551774762, guid: c71c5ca299148ec4298772eea3b9d173, type: 3}
+      propertyPath: m_BodyType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6425614892003368111, guid: c71c5ca299148ec4298772eea3b9d173, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 4992894489056459962}
     - target: {fileID: 6679265744597564549, guid: c71c5ca299148ec4298772eea3b9d173, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -292,6 +304,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7777646420514657467, guid: c71c5ca299148ec4298772eea3b9d173, type: 3}
+      propertyPath: enemyDetails
+      value: 
+      objectReference: {fileID: 11400000, guid: 60b5a05914116b643bb09a266c6d36e9, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

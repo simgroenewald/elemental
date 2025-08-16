@@ -14,3 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: MageSkeleton
   enemyPrefab: {fileID: 4167889123300124595, guid: 8044614bd42b89947a08e6fb5e571ee4, type: 3}
+  moveSpeed: 1.5
+  startingAbility: {fileID: 11400000, guid: d0b3b46bfdd58414ea104ed4e3519fdf, type: 2}
+  abilityList:
+  - {fileID: 11400000, guid: d0b3b46bfdd58414ea104ed4e3519fdf, type: 2}

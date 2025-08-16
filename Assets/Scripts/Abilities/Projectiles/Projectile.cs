@@ -46,7 +46,7 @@ public class Projectile : MonoBehaviour, ICastable
         }
     }
 
-    private void OnTrggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         DisableProjectile();
     }

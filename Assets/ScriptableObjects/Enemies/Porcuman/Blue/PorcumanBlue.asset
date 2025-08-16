@@ -14,3 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: PorcumanBlue
   enemyPrefab: {fileID: 3741971743796395161, guid: 752c760e8c6ddfa468b8fb040420d086, type: 3}
+  moveSpeed: 3
+  startingAbility: {fileID: 11400000, guid: 9706090b4f022344c8bc205fe9f5ece7, type: 2}
+  abilityList:
+  - {fileID: 11400000, guid: 9706090b4f022344c8bc205fe9f5ece7, type: 2}

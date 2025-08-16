@@ -38,7 +38,7 @@ AnimatorStateTransition:
     m_ConditionEvent: posTargetRight
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: isAttack1
+    m_ConditionEvent: isAttacking
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 7989919064816146641}
@@ -145,7 +145,7 @@ AnimatorStateTransition:
     m_ConditionEvent: posTargetLeft
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: isRunning
+    m_ConditionEvent: isMoving
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -1901532936182677176}
@@ -414,7 +414,7 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: isRunning
+  - m_Name: isMoving
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -426,7 +426,7 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: isAttack1
+  - m_Name: isAttacking
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -475,7 +475,7 @@ AnimatorStateTransition:
     m_ConditionEvent: posTargetLeft
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: isAttack1
+    m_ConditionEvent: isAttacking
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -3011688400452109351}
@@ -819,7 +819,7 @@ AnimatorStateTransition:
     m_ConditionEvent: posTargetRight
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: isRunning
+    m_ConditionEvent: isMoving
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -856145209300794713}

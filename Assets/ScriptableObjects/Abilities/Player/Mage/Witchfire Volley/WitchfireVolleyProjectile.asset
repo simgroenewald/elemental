@@ -18,7 +18,7 @@ MonoBehaviour:
   followsTarget: 0
   projectileSprite: {fileID: -14110601, guid: b81550b463513b7449b4a892e4418745, type: 3}
   projectilePrefabArray:
-  - {fileID: 2304328725818675034, guid: d0f5cd44b7e89f24a84052c310cd9202, type: 3}
+  - {fileID: 1025246606280818693, guid: 0cd22f3b1c511674187a27718fbcc190, type: 3}
   projectileMaterial: {fileID: 0}
   chargeTime: 0
   chargeMaterial: {fileID: 0}

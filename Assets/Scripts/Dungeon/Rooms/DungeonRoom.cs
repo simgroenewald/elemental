@@ -57,28 +57,30 @@ public class DungeonRoom : MonoBehaviour
     {
         SimpleEnemyInitializer enemyInitializer = GetComponent<SimpleEnemyInitializer>();
         Transform roomTransform = GetComponent<Transform>();
-        GameObject enemyPrefab = enemyInitializer.GetEnemyPrefab();
+        List<GameObject> enemyPrefabs = enemyInitializer.GetEnemyPrefabs();
 
-        for (int i = 0; i < enemyCount; i++)
+        foreach (var enemyPrefab in enemyPrefabs)
         {
+            for (int i = 0; i < enemyCount; i++)
+            {
 
-            Vector2Int spawnPosition2D = GetEnemyStartPosition();
+                Vector2Int spawnPosition2D = GetEnemyStartPosition();
 
-            // Convert tile position to world position
-            Vector3 worldPosition = this.structure.tilemapLayers.grid.CellToWorld((Vector3Int)spawnPosition2D);
-            // Center the position in the tile
-            worldPosition += this.structure.tilemapLayers.grid.cellSize * 0.16f;
+                // Convert tile position to world position
+                Vector3 worldPosition = this.structure.tilemapLayers.grid.CellToWorld((Vector3Int)spawnPosition2D);
+                // Center the position in the tile
+                worldPosition += this.structure.tilemapLayers.grid.cellSize * 0.16f;
 
-            // Instantiate enemy
-            GameObject enemyGO = Instantiate(enemyPrefab, worldPosition, Quaternion.identity, roomTransform);
-            enemyGO.name = $"Enemy_{i + 1}";
+                // Instantiate enemy
+                GameObject enemyGO = Instantiate(enemyPrefab, worldPosition, Quaternion.identity, roomTransform);
+                enemyGO.name = $"Enemy_{i + 1}";
 
-            // Ensure proper 2D rotation (no X or Y rotation)
-            enemyGO.transform.rotation = Quaternion.identity;
+                // Ensure proper 2D rotation (no X or Y rotation)
+                enemyGO.transform.rotation = Quaternion.identity;
 
-            Debug.Log($"Spawned enemy at floor position: {spawnPosition2D}");
+                Debug.Log($"Spawned enemy at floor position: {spawnPosition2D}");
+            }
         }
-
     }
 
 

@@ -35,6 +35,7 @@ public class Player : MonoBehaviour
     [HideInInspector] public SpriteRenderer spriteRenderer;
     [HideInInspector] public Animator animator;
     [HideInInspector] public NavMeshAgent playerAgent;
+    [SerializeField] public Transform target;
 
     public List<Ability> abilityList = new List<Ability>();
 

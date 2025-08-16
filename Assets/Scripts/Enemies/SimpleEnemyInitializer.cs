@@ -6,11 +6,11 @@ using UnityEngine.UIElements;
 public class SimpleEnemyInitializer : MonoBehaviour
 {
     [Header("Enemy Initialization")]
-    [SerializeField] private GameObject porcumanBluePrefab;
+    [SerializeField] private List<GameObject> enemies;
 
-    public GameObject GetEnemyPrefab()
+    public List<GameObject> GetEnemyPrefabs()
     {
 
-        return porcumanBluePrefab;
+        return enemies;
     }
 }
