@@ -148,11 +148,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3773162088757810693, guid: c71c5ca299148ec4298772eea3b9d173, type: 3}
       propertyPath: attackRange
-      value: 1.5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3773162088757810693, guid: c71c5ca299148ec4298772eea3b9d173, type: 3}
       propertyPath: lineOfSight
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4254274592593245156, guid: c71c5ca299148ec4298772eea3b9d173, type: 3}
       propertyPath: m_Name
@@ -412,7 +412,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.21
-  m_Speed: 1.5
+  m_Speed: 1
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120

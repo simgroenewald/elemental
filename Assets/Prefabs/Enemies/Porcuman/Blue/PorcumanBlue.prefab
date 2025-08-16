@@ -88,6 +88,14 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3773162088757810693, guid: c71c5ca299148ec4298772eea3b9d173, type: 3}
+      propertyPath: attackRange
+      value: 0.94
+      objectReference: {fileID: 0}
+    - target: {fileID: 3773162088757810693, guid: c71c5ca299148ec4298772eea3b9d173, type: 3}
+      propertyPath: lineOfSight
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 4254274592593245156, guid: c71c5ca299148ec4298772eea3b9d173, type: 3}
       propertyPath: m_Name
       value: PorcumanBlue

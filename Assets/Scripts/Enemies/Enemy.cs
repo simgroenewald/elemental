@@ -12,6 +12,7 @@ using UnityEngine.Rendering;
 [RequireComponent (typeof(AbilityEvents))]
 [RequireComponent(typeof(EnemyMovementEvents))]
 [RequireComponent(typeof(ActiveAbility))]
+[RequireComponent(typeof(AbilitySetupEvent))]
 [RequireComponent(typeof(SetActiveAbilityEvent))]
 
 [DisallowMultipleComponent]
@@ -24,6 +25,7 @@ public class Enemy : MonoBehaviour
     [HideInInspector] public Animator animator;
     [HideInInspector] public NavMeshAgent enemyAgent;
     [HideInInspector] public AbilityEvents abilityEvents;
+    [HideInInspector] public AbilitySetupEvent abilitySetupEvent;
     [HideInInspector] public EnemyMovementEvents movementEvents;
     [HideInInspector] public ActiveAbility activeAbility;
     [HideInInspector] public SetActiveAbilityEvent setActiveAbilityEvent;
@@ -43,6 +45,7 @@ public class Enemy : MonoBehaviour
         enemyAgent.updateUpAxis = false;
         activeAbility = GetComponent<ActiveAbility>();
         setActiveAbilityEvent = GetComponent<SetActiveAbilityEvent>();
+        abilitySetupEvent = GetComponent<AbilitySetupEvent>();
     }
 
     private void Start()
@@ -71,5 +74,6 @@ public class Enemy : MonoBehaviour
 
         return ability;
     }
+
 
 }

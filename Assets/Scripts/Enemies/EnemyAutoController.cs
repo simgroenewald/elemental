@@ -38,11 +38,13 @@ public class EnemyAutoController : MonoBehaviour
         enemy.abilityEvents.OnAbilityCasted += HandleIdleState;
         enemy.abilityEvents.OnMeleeEndAttack += HandleIdleState;
 
-/*        moveSpeed = enemy.enemyDetails.moveSpeed;
+        moveSpeed = enemy.enemyDetails.moveSpeed;
+        lineOfSight = enemy.enemyDetails.lineOfSight;
 
         currentAbility = enemy.activeAbility.GetCurrentAbility();
         attackRange = currentAbility.abilityDetails.range;
-        slowDownBuffer = currentAbility.abilityDetails.slowDownBuffer;*/
+        slowDownBuffer = currentAbility.abilityDetails.slowDownBuffer;
+
     }
 
     private void OnDisable()
@@ -77,7 +79,7 @@ public class EnemyAutoController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-/*        float distanceFromPlayer = Vector2.Distance(player.transform.position, enemy.transform.position);
+        float distanceFromPlayer = Vector2.Distance(player.transform.position, enemy.transform.position);
         if (distanceFromPlayer < attackRange && !isAttacking)
         {
             Attack();
@@ -96,7 +98,7 @@ public class EnemyAutoController : MonoBehaviour
         if (isMoving)
         {
             UpdateEnemyMovement();
-        }*/
+        }
 
     }
 
@@ -200,8 +202,17 @@ public class EnemyAutoController : MonoBehaviour
         Vector3 castPointDirection = (worldPosition2D - castPosition2D);
         float castPointAngle = HelperUtilities.GetAngleFromVector(castPointDirection);
 
-        enemy.abilityEvents.RaiseAbilitySetupEvent(true, aimDirection, enemyAngle, castPointAngle, castPointDirection);
+
+        if (currentAbility.abilityDetails.isEnemyTargetable)
+        {
+            enemy.abilitySetupEvent.RaiseAbilitySetupEvent(true, aimDirection, enemyAngle, castPointAngle, castPointDirection, player);
+        }
+        else
+        {
+            enemy.abilitySetupEvent.RaiseAbilitySetupEvent(true, aimDirection, enemyAngle, castPointAngle, castPointDirection, null);
+        }
         enemy.abilityEvents.RaiseCastAbilityEvent();
+
     }
 
     private void UpdateEnemyDirection(TargetDirection direction)

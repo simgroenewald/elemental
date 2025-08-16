@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(Collider2D))]
 [RequireComponent(typeof(AbilityEvents))]
-public class TargetEnemy : MonoBehaviour
+public class TargetEnemy : MonoBehaviour, ITargetable
 {
     [SerializeField] SpriteRenderer[] renderers;
     [SerializeField] Material normalMat;
@@ -80,5 +80,15 @@ public class TargetEnemy : MonoBehaviour
         var mat = outlined ? outlinedMat : normalMat;
         foreach (var sr in renderers)
             if (sr) sr.sharedMaterial = mat;
+    }
+
+    public GameObject GetGameObject()
+    {
+        return gameObject;
+    }
+
+    public Transform GetTargetTransform()
+    {
+        return target;
     }
 }

@@ -28,7 +28,8 @@ MonoBehaviour:
   abilityCastPositionLeft: {x: -0.4, y: 0.161, z: 0}
   abilityCastPositionRight: {x: 0.4, y: 0.161, z: 0}
   abilityProjectileDetails: {fileID: 11400000, guid: e51e4b9cc6bc69e4f966efb41d760fc0, type: 2}
+  slowDownBuffer: 0
   coolDownTime: 0
   manaCost: 0
   magicalDamage: 0
-  range: 40
+  range: 3

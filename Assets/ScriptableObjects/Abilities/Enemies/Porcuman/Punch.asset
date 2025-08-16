@@ -32,4 +32,4 @@ MonoBehaviour:
   coolDownTime: 0
   manaCost: 0
   magicalDamage: 0
-  range: 1
+  range: 0.5

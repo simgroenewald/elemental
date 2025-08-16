@@ -3,6 +3,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(ActiveAbility))]
 [RequireComponent(typeof(AbilityEvents))]
+[RequireComponent(typeof(AbilitySetupEvent))]
 
 [DisallowMultipleComponent]
 public class CastAbility : MonoBehaviour
@@ -10,22 +11,24 @@ public class CastAbility : MonoBehaviour
     private float coolDownTimer = 0f;
     private ActiveAbility activeAbility;
     private AbilityEvents abilityEvents;
+    private AbilitySetupEvent abilitySetupEvent;
     private ICastable projectile;
 
     private void Awake()
     {
         activeAbility = GetComponent<ActiveAbility>();
         abilityEvents = GetComponent<AbilityEvents>();
+        abilitySetupEvent = GetComponent<AbilitySetupEvent>();
     }
 
     private void OnEnable()
     {
-        abilityEvents.OnAbilitySetup += OnAbilitySetup;
+        abilitySetupEvent.OnAbilitySetup += OnAbilitySetup;
     }
 
     private void OnDisable()
     {
-        abilityEvents.OnAbilitySetup -= OnAbilitySetup;
+        abilitySetupEvent.OnAbilitySetup -= OnAbilitySetup;
     }
 
     private void Update()
@@ -33,13 +36,18 @@ public class CastAbility : MonoBehaviour
         coolDownTimer -= Time.deltaTime;
     }
 
-    private void OnAbilitySetup(bool cast, TargetDirection direction, float aimAngle, float abilityAimAngle, Vector3 abilityAimDirectionVector)
+    private void OnAbilitySetup(AbilitySetupEvent abilitySetupEvent, OnAbilitySetupEventArgs onAbilitySetupEventArgs)
     {
-        if (cast)
+        if (onAbilitySetupEventArgs.cast)
         {
             if (IsAbilityReadyToCast())
             {
-                SetCastProjectile(aimAngle, abilityAimAngle, abilityAimDirectionVector, direction);
+                SetCastProjectile(
+                    onAbilitySetupEventArgs.aimAngle, 
+                    onAbilitySetupEventArgs.abilityAimAngle, 
+                    onAbilitySetupEventArgs.abilityAimDirectionVector,
+                    onAbilitySetupEventArgs.direction,
+                    onAbilitySetupEventArgs.target);
 
                 ResetCoolDownTimer();
             }
@@ -58,7 +66,7 @@ public class CastAbility : MonoBehaviour
 
     }
 
-    private void SetCastProjectile(float aimAngle, float abilityAimAngle, Vector3 weaponAimDirectionVector, TargetDirection direction)
+    private void SetCastProjectile(float aimAngle, float abilityAimAngle, Vector3 abilityAimDirectionVector, TargetDirection direction, ITargetable target)
     {
         ProjectileDetailsSO currentProjectile = activeAbility.GetCurrentProjectile();
         
@@ -75,12 +83,12 @@ public class CastAbility : MonoBehaviour
             
             projectile = (ICastable)PoolManager.Instance.ReuseComponent(projectilePrefab, spawnPosition, Quaternion.identity);
 
-            projectile.InitialiseProjectile(currentProjectile, aimAngle, abilityAimAngle, projectileSpeed, weaponAimDirectionVector);
+            projectile.InitialiseProjectile(currentProjectile, aimAngle, abilityAimAngle, projectileSpeed, abilityAimDirectionVector, target);
 
         }
     }
 
-    public void OnCastAbility()
+    public void OnCastAbility(GameObject target)
     {
         projectile.Cast();
     }

@@ -298,8 +298,17 @@ public class PlayerControl : MonoBehaviour
         Vector3 castPointDirection = (worldPosition2D - castPosition2D);
         float castPointAngle = HelperUtilities.GetAngleFromVector(castPointDirection);
 
-        player.abilityEvents.RaiseAbilitySetupEvent(true, aimDirection, playerAngle, castPointAngle, castPointDirection);
+
+        if (currentAbility.abilityDetails.isEnemyTargetable)
+        {
+            player.abilitySetupEvent.RaiseAbilitySetupEvent(true, aimDirection, playerAngle, castPointAngle, castPointDirection, targetEnemy);
+        }
+        else
+        {
+            player.abilitySetupEvent.RaiseAbilitySetupEvent(true, aimDirection, playerAngle, castPointAngle, castPointDirection, null);
+        }
         player.abilityEvents.RaiseCastAbilityEvent();
+
     }
 
     private void StopMovement()
@@ -341,9 +350,15 @@ public class PlayerControl : MonoBehaviour
 
                 UpdatePlayerDirection(aimDirection);
 
-            player.abilityEvents.RaiseAbilitySetupEvent(true, aimDirection, playerAngle, castPointAngle, castPointDirection);
-                player.abilityEvents.RaiseCastAbilityEvent();
-            //}
+            if (currentAbility.abilityDetails.isEnemyTargetable)
+            {
+                player.abilitySetupEvent.RaiseAbilitySetupEvent(true, aimDirection, playerAngle, castPointAngle, castPointDirection, targetEnemy);
+            }
+            else
+            {
+                player.abilitySetupEvent.RaiseAbilitySetupEvent(true, aimDirection, playerAngle, castPointAngle, castPointDirection, null);
+            }
+            player.abilityEvents.RaiseCastAbilityEvent();
         }
     }
 

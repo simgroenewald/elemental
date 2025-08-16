@@ -8,6 +8,7 @@ public class EnemyDetailsSO : ScriptableObject
     public GameObject enemyPrefab;
 
     public float moveSpeed;
+    public float lineOfSight;
 
     [Header("Enemy Abilities")]
     public AbilityDetailsSO startingAbility;

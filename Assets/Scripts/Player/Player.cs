@@ -14,6 +14,7 @@ using UnityEngine.Rendering;
 [RequireComponent(typeof(CastAbility))]
 [RequireComponent(typeof(MeleeAbility))]
 [RequireComponent(typeof(AbilityEvents))]
+[RequireComponent(typeof(AbilitySetupEvent))]
 [RequireComponent(typeof(AnimatePlayer))]
 [RequireComponent(typeof(SortingGroup))]
 [RequireComponent(typeof(SpriteRenderer))]
@@ -23,7 +24,7 @@ using UnityEngine.Rendering;
 [RequireComponent(typeof(Rigidbody2D))]
 
 [DisallowMultipleComponent]
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, ITargetable
 {
     [HideInInspector] public CharacterDetailSO characterDetails;
     [HideInInspector] public Health health;
@@ -32,6 +33,7 @@ public class Player : MonoBehaviour
     [HideInInspector] public CastAbility castAbility;
     [HideInInspector] public MeleeAbility meleeAbility;
     [HideInInspector] public AbilityEvents abilityEvents;
+    [HideInInspector] public AbilitySetupEvent abilitySetupEvent;
     [HideInInspector] public SpriteRenderer spriteRenderer;
     [HideInInspector] public Animator animator;
     [HideInInspector] public NavMeshAgent playerAgent;
@@ -51,6 +53,7 @@ public class Player : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         playerAgent = GetComponent<NavMeshAgent>();
+        abilitySetupEvent = GetComponent<AbilitySetupEvent>();
         playerAgent.updateRotation = false;
         playerAgent.updateUpAxis = false;
     }
@@ -98,6 +101,16 @@ public class Player : MonoBehaviour
     public void SetPlayerPosition(Vector2Int position, Grid grid)
     {
         this.gameObject.transform.position = grid.CellToWorld((Vector3Int)position);
+    }
+
+    public GameObject GetGameObject()
+    {
+        return gameObject;
+    }
+
+    public Transform GetTargetTransform()
+    {
+        return target;
     }
 
 }

@@ -26,7 +26,7 @@ MonoBehaviour:
   projectileSpeed: 1.5
   projectileSpeedMin: 1.5
   projectileSpeedMax: 1.5
-  projectileRange: 10
+  projectileRange: 3
   projectileRotationSpeed: 1
   isProjectileTrail: 0
   projectileTrailTime: 3

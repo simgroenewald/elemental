@@ -51,6 +51,12 @@ GameObject:
   - component: {fileID: -8288058668211941726}
   - component: {fileID: 335232693875703222}
   - component: {fileID: 3773162088757810693}
+  - component: {fileID: 4516662604457447156}
+  - component: {fileID: 6367710729246970968}
+  - component: {fileID: 670275197044998980}
+  - component: {fileID: -6674960830216039165}
+  - component: {fileID: -1093643776184663197}
+  - component: {fileID: 4683000902025959156}
   m_Layer: 15
   m_Name: Enemy
   m_TagString: Untagged
@@ -91,6 +97,9 @@ MonoBehaviour:
   animator: {fileID: 0}
   enemyAgent: {fileID: 0}
   abilityEvents: {fileID: 0}
+  movementEvents: {fileID: 0}
+  activeAbility: {fileID: 0}
+  setActiveAbilityEvent: {fileID: 0}
 --- !u!210 &6679265744597564549
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -369,5 +378,88 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ca905828188015448b5d8b8af890fe6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lineOfSight: 15
+  attackRange: 10
+  isMoving: 0
+  isAttacking: 0
+  isIdle: 0
+  posTargetLeft: 0
+  posTargetRight: 0
+--- !u!114 &4516662604457447156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4254274592593245156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75a03042964ae7a4985b5a8096a60f36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6367710729246970968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4254274592593245156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e39d1f00b607b3841a44645b2505624f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &670275197044998980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4254274592593245156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e81464ca38bfe242b06098231914e26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  abilityCastPositionLeftTransform: {fileID: 0}
+  abilityCastPositionRightTransform: {fileID: 0}
+  abilityEffectPositionTransform: {fileID: 0}
+--- !u!114 &-6674960830216039165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4254274592593245156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b11ef37bf4a9ce143bc4c32b7877b5d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-1093643776184663197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4254274592593245156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a8d0491820afe648967857847e901d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  directionThreshold: 0.05
+--- !u!114 &4683000902025959156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4254274592593245156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ab84706a14956b4b827c9bb9fd3ec67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
