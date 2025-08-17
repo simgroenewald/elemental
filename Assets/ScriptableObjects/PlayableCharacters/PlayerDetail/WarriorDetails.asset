@@ -9,14 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf268f606f448b24583b5969cff9c687, type: 3}
-  m_Name: WarriorCharacterDetails
+  m_Script: {fileID: 11500000, guid: 3fb833ebed19e9a48b45f021d5139d36, type: 3}
+  m_Name: WarriorDetails
   m_EditorClassIdentifier: 
   characterName: Warrior
-  playerPrefab: {fileID: 3710606535953622119, guid: bd4ee892fd70fa34b802852629e50c7f, type: 3}
+  characterPrefab: {fileID: 3710606535953622119, guid: bd4ee892fd70fa34b802852629e50c7f, type: 3}
   runtimeAnimatorController: {fileID: 9100000, guid: 322e6ab2bb65ada499a9a2e20c069e52, type: 2}
-  health: 100
   miniMapIcon: {fileID: 0}
+  health: 100
   startingAbility: {fileID: 11400000, guid: cdc149861e9bb724e8db68eaef4c954b, type: 2}
   abilityList:
   - {fileID: 11400000, guid: cdc149861e9bb724e8db68eaef4c954b, type: 2}

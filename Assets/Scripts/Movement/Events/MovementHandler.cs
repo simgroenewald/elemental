@@ -8,25 +8,27 @@ using UnityEngine.EventSystems;
 public class MovementHandler : MonoBehaviour
 {
     private Rigidbody2D rigidBody2D;
+    private Character character;
 
     private void Awake()
     {
         // Load components
         rigidBody2D = GetComponent<Rigidbody2D>();
+        character = GetComponent<Character>();
     }
 
     private void Start()
     {
         // Subscribe to movement event
-        GameEventManager.Instance.movementEvents.OnIdle += HandleIdle;
-        GameEventManager.Instance.movementEvents.OnAttack += HandleAttack;
+        character.movementEvents.OnIdle += HandleIdle;
+        character.movementEvents.OnAttack += HandleAttack;
     }
 
     private void OnDisable()
     {
         // Unsubscribe from movement event
-        GameEventManager.Instance.movementEvents.OnIdle -= HandleIdle;
-        GameEventManager.Instance.movementEvents.OnAttack -= HandleAttack;
+        character.movementEvents.OnIdle -= HandleIdle;
+        character.movementEvents.OnAttack -= HandleAttack;
     }
 
     private void HandleIdle()

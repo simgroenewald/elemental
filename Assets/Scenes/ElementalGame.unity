@@ -1001,7 +1001,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eaff8769a1e9e04449bf0a3ebf180cc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementEvents: {fileID: 11400000, guid: 712027d1fd7110d47a2121fb20f3cdd7, type: 2}
   targetEvents: {fileID: 11400000, guid: cd282362849d556489ff814bc992a7c3, type: 2}
 --- !u!114 &1962718398
 MonoBehaviour:

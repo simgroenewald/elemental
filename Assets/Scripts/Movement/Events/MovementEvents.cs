@@ -1,8 +1,7 @@
 using System;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "MovementEvents", menuName = "Events/MovementEvents")]
-public class MovementEvents : ScriptableObject
+public class MovementEvents : MonoBehaviour
 {
     public event Action OnFaceLeft;
     public event Action OnFaceRight;

@@ -73,6 +73,7 @@ public class DungeonRoom : MonoBehaviour
 
                 // Instantiate enemy
                 GameObject enemyGO = Instantiate(enemyPrefab, worldPosition, Quaternion.identity, roomTransform);
+
                 enemyGO.name = $"Enemy_{i + 1}";
 
                 // Ensure proper 2D rotation (no X or Y rotation)

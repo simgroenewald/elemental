@@ -4,7 +4,6 @@ public class GameEventManager : MonoBehaviour
 {
     public static GameEventManager Instance { get; private set; }
 
-    public MovementEvents movementEvents;
     public TargetEvents targetEvents;
 
     private void Awake()

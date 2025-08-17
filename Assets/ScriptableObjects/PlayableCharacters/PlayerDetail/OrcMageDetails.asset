@@ -9,14 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf268f606f448b24583b5969cff9c687, type: 3}
-  m_Name: MageCharacterDetails
+  m_Script: {fileID: 11500000, guid: 3fb833ebed19e9a48b45f021d5139d36, type: 3}
+  m_Name: OrcMageDetails
   m_EditorClassIdentifier: 
-  characterName: Mage
-  playerPrefab: {fileID: 3343493735705289243, guid: 2c7dcb6299343684ea960f68543cfa42, type: 3}
+  characterName: Orc mage
+  characterPrefab: {fileID: 3343493735705289243, guid: 2c7dcb6299343684ea960f68543cfa42, type: 3}
   runtimeAnimatorController: {fileID: 9100000, guid: ea9659ed465a49a44a5c9256e96a6704, type: 2}
-  health: 100
   miniMapIcon: {fileID: 0}
+  health: 100
   startingAbility: {fileID: 11400000, guid: c24beabdad3521442ae606c4848076c3, type: 2}
   abilityList:
   - {fileID: 11400000, guid: c24beabdad3521442ae606c4848076c3, type: 2}

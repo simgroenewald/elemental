@@ -10,8 +10,6 @@ using UnityEngine.UIElements;
 public class AnimatePlayer : MonoBehaviour
 {
     private Player player;
-    private bool isMoving = false;
-    private Vector3 lastPosition;
     [SerializeField] private float directionThreshold = 0.05f;
 
     private void Awake()
@@ -22,20 +20,20 @@ public class AnimatePlayer : MonoBehaviour
 
     private void Start()
     {
-        GameEventManager.Instance.movementEvents.OnFaceLeft += HandleFaceLeftAnimation;
-        GameEventManager.Instance.movementEvents.OnFaceRight += HandleFaceRightAnimation;
-        GameEventManager.Instance.movementEvents.OnMoveByPosition += HandleMovementAnimation;
-        GameEventManager.Instance.movementEvents.OnIdle += HandleIdleAnimation;
+        player.movementEvents.OnFaceLeft += HandleFaceLeftAnimation;
+        player.movementEvents.OnFaceRight += HandleFaceRightAnimation;
+        player.movementEvents.OnMoveByPosition += HandleMovementAnimation;
+        player.movementEvents.OnIdle += HandleIdleAnimation;
         player.abilityEvents.OnCastAbility += HandleAbilityCastAnimation;
         player.abilityEvents.OnMeleeAttack += HandleMeleeAttackAnimation;
     }
 
     private void OnDisable()
     {
-        GameEventManager.Instance.movementEvents.OnFaceLeft -= HandleFaceLeftAnimation;
-        GameEventManager.Instance.movementEvents.OnFaceRight -= HandleFaceRightAnimation;
-        GameEventManager.Instance.movementEvents.OnMoveByPosition -= HandleMovementAnimation;
-        GameEventManager.Instance.movementEvents.OnIdle -= HandleIdleAnimation;
+        player.movementEvents.OnFaceLeft -= HandleFaceLeftAnimation;
+        player.movementEvents.OnFaceRight -= HandleFaceRightAnimation;
+        player.movementEvents.OnMoveByPosition -= HandleMovementAnimation;
+        player.movementEvents.OnIdle -= HandleIdleAnimation;
         player.abilityEvents.OnCastAbility -= HandleAbilityCastAnimation;
         player.abilityEvents.OnMeleeAttack -= HandleMeleeAttackAnimation;
     }

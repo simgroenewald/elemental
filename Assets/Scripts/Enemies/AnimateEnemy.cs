@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 
 [RequireComponent(typeof(Enemy))]
 [DisallowMultipleComponent]
-public class AnimateEnemy : MonoBehaviour
+public class AnimateEnemy2 : MonoBehaviour
 {
     private Enemy enemy;
     [SerializeField] private float directionThreshold = 0.05f;

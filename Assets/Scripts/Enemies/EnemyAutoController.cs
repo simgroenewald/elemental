@@ -129,7 +129,7 @@ public class EnemyAutoController : MonoBehaviour
     private void UpdateEnemyMovement()
     {
         {
-            if (!isMoving || enemy.enemyAgent.pathPending) return;
+            if (!isMoving || enemy.agent.pathPending) return;
 
             Vector3 currentPosition = enemy.transform.position;
             Vector3 delta = currentPosition - lastPosition;
@@ -150,7 +150,7 @@ public class EnemyAutoController : MonoBehaviour
             lastPosition = currentPosition;
 
             // Optional: Stop animation early if somehow movement stops unexpectedly
-            if (enemy.enemyAgent.remainingDistance <= enemy.enemyAgent.stoppingDistance && enemy.enemyAgent.velocity.sqrMagnitude < 0.01f)
+            if (enemy.agent.remainingDistance <= enemy.agent.stoppingDistance && enemy.agent.velocity.sqrMagnitude < 0.01f)
             {
                 StopTracking();
             }

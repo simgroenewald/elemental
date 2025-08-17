@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -9,8 +10,9 @@ public class TargetEnemy : MonoBehaviour, ITargetable
     [SerializeField] SpriteRenderer[] renderers;
     [SerializeField] Material normalMat;
     [SerializeField] Material outlinedMat;
+    public Enemy enemy;
+    public Transform target;
 
-    [SerializeField] public Transform target;
     bool isSelected;
     bool mouseOver;
 
@@ -20,6 +22,7 @@ public class TargetEnemy : MonoBehaviour, ITargetable
             renderers = GetComponentsInChildren<SpriteRenderer>(true);
 
         // start normal
+        enemy = GetComponent<Enemy>();
         SetOutlined(false);
     }
 

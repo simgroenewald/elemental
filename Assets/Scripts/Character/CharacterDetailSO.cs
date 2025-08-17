@@ -7,13 +7,14 @@ public class CharacterDetailSO : ScriptableObject
 {
     [Header("Character Details")]
     [SerializeField] public string characterName;
-    [SerializeField] public GameObject playerPrefab;
+    [SerializeField] public GameObject characterPrefab;
     [SerializeField] public RuntimeAnimatorController runtimeAnimatorController;
-    [SerializeField] public int health;
     [SerializeField] public Sprite miniMapIcon;
+
+    [Header("Character Stats")]
+    [SerializeField] public int health;
 
     [Header("Character Abilities")]
     public AbilityDetailsSO startingAbility;
-
     public List<AbilityDetailsSO> abilityList;
 }
