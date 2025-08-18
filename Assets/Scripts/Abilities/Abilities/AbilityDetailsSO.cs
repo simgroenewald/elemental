@@ -29,4 +29,5 @@ public class AbilityDetailsSO : ScriptableObject
     public float manaCost;
     public float magicalDamage;
     public float range;
+    public float physicalDamage;
 }

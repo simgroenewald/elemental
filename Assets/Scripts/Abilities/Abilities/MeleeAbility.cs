@@ -4,20 +4,24 @@ using static UnityEngine.EventSystems.EventTrigger;
 
 public class MeleeAbility : MonoBehaviour
 {
+    private Character character;
     private AbilityEvents abilityEvents;
+    private CharacterCombat characterCombat;
 
     private void Awake()
     {
+        character = GetComponent<Character>();
         abilityEvents = GetComponent<AbilityEvents>();
+        characterCombat = GetComponent<CharacterCombat>();
     }
 
     private void MeleeAttack()
     {
-        //float distanceFromPlayer = Vector2.Distance(player.transform.position, enemy.transform.position);
-/*        if (distanceFromPlayer < attackRange && isAttacking)
+        float distanceFromTarget = Vector2.Distance(characterCombat.currentTarget.transform.position, transform.position);
+        if (distanceFromTarget <= characterCombat.attackRange)
         {
-            player.healthEvents.RaiseMelee
-        }*/
+            characterCombat.currentTarget.healthEvents.RaiseReduceHealthEvent(characterCombat.currentAbility.abilityDetails.physicalDamage);
+        }
     }
 
     private void EndAttack()
