@@ -4,6 +4,5 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "EnemyDetailsSO", menuName = "Scriptable Objects/EnemyDetailsSO")]
 public class EnemyDetailsSO : CharacterDetailSO
 {
-    public float moveSpeed;
     public float lineOfSight;
 }

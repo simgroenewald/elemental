@@ -13,6 +13,7 @@ public class CharacterDetailSO : ScriptableObject
 
     [Header("Character Stats")]
     [SerializeField] public int health;
+    [SerializeField] public float movementSpeed;
 
     [Header("Character Abilities")]
     public AbilityDetailsSO startingAbility;

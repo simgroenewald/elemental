@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class MeleeAbility : MonoBehaviour
 {
@@ -12,11 +13,11 @@ public class MeleeAbility : MonoBehaviour
 
     private void MeleeAttack()
     {
-        // Play an attack animation
-
-        // Detect enemies in range of the attack
-
-        // Damage enemy
+        //float distanceFromPlayer = Vector2.Distance(player.transform.position, enemy.transform.position);
+/*        if (distanceFromPlayer < attackRange && isAttacking)
+        {
+            player.healthEvents.RaiseMelee
+        }*/
     }
 
     private void EndAttack()

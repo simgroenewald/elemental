@@ -151,6 +151,10 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 3263494322401817723}
+    - target: {fileID: 7082850648229560361, guid: f12c9e2f2a28e7b4f828e4230d51bcc2, type: 3}
+      propertyPath: playerDetails
+      value: 
+      objectReference: {fileID: 11400000, guid: 79bca5e24c0f8aa49af809e85db70d94, type: 2}
     - target: {fileID: 7780548944108981246, guid: f12c9e2f2a28e7b4f828e4230d51bcc2, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0

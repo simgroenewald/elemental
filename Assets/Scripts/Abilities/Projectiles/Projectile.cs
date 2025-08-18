@@ -37,7 +37,7 @@ public class Projectile : MonoBehaviour, ICastable
         // Follow target
         if (characterTarget != null)
         {
-            transform.position = Vector2.MoveTowards(transform.position, characterTarget.transform.position, projectileSpeed * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, characterTarget.target.position, projectileSpeed * Time.deltaTime);
         } else
         // Cast for set distance
         {
@@ -61,7 +61,7 @@ public class Projectile : MonoBehaviour, ICastable
         {
             if (collision.gameObject == characterTarget.GetGameObject())
             {
-                DisableProjectile();
+                //DisableProjectile();
                 characterTarget.healthEvents.RaiseReduceHealthEvent(projectileDetails.projectileDamage);
             }
             // Check if the projectile reached the target

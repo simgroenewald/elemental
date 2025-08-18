@@ -9,6 +9,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -8288058668211941726, guid: c71c5ca299148ec4298772eea3b9d173, type: 3}
+      propertyPath: enemy
+      value: 
+      objectReference: {fileID: 7137043759168510918}
+    - target: {fileID: -8288058668211941726, guid: c71c5ca299148ec4298772eea3b9d173, type: 3}
       propertyPath: target
       value: 
       objectReference: {fileID: 4992894489056459962}
@@ -23,6 +27,22 @@ PrefabInstance:
     - target: {fileID: -71032134596749655, guid: c71c5ca299148ec4298772eea3b9d173, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 86143885323429481, guid: c71c5ca299148ec4298772eea3b9d173, type: 3}
+      propertyPath: m_SpriteTilingProperty.pivot.x
+      value: 0.42
+      objectReference: {fileID: 0}
+    - target: {fileID: 86143885323429481, guid: c71c5ca299148ec4298772eea3b9d173, type: 3}
+      propertyPath: m_SpriteTilingProperty.pivot.y
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 86143885323429481, guid: c71c5ca299148ec4298772eea3b9d173, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 1.92
+      objectReference: {fileID: 0}
+    - target: {fileID: 86143885323429481, guid: c71c5ca299148ec4298772eea3b9d173, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 1.28
       objectReference: {fileID: 0}
     - target: {fileID: 688862256297629065, guid: c71c5ca299148ec4298772eea3b9d173, type: 3}
       propertyPath: m_Sprite
@@ -309,6 +329,10 @@ PrefabInstance:
       value: 0.27967435
       objectReference: {fileID: 0}
     - target: {fileID: 7777646420514657467, guid: c71c5ca299148ec4298772eea3b9d173, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 4992894489056459962}
+    - target: {fileID: 7777646420514657467, guid: c71c5ca299148ec4298772eea3b9d173, type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
@@ -326,3 +350,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5597495360420459463, guid: c71c5ca299148ec4298772eea3b9d173, type: 3}
   m_PrefabInstance: {fileID: 640671449831772029}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7137043759168510918 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7777646420514657467, guid: c71c5ca299148ec4298772eea3b9d173, type: 3}
+  m_PrefabInstance: {fileID: 640671449831772029}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 958be3bebad664b448e867203ae45bd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

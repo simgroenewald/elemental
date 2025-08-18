@@ -22,7 +22,7 @@ MonoBehaviour:
   projectileMaterial: {fileID: 0}
   chargeTime: 0
   chargeMaterial: {fileID: 0}
-  projectileDamage: 20
+  projectileDamage: 5
   projectileSpeed: 1.5
   projectileSpeedMin: 1.5
   projectileSpeedMax: 1.5

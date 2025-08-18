@@ -17,6 +17,7 @@ MonoBehaviour:
   runtimeAnimatorController: {fileID: 9100000, guid: ea9659ed465a49a44a5c9256e96a6704, type: 2}
   miniMapIcon: {fileID: 0}
   health: 100
+  movementSpeed: 2
   startingAbility: {fileID: 11400000, guid: c24beabdad3521442ae606c4848076c3, type: 2}
   abilityList:
   - {fileID: 11400000, guid: c24beabdad3521442ae606c4848076c3, type: 2}
