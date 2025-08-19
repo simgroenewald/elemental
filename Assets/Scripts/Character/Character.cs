@@ -23,6 +23,9 @@ using UnityEngine.Rendering;
 [RequireComponent(typeof(BoxCollider2D))]
 [RequireComponent(typeof(PolygonCollider2D))]
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(CharacterCombat))]
+[RequireComponent(typeof(CharacterState))]
+[RequireComponent(typeof(CharacterMovement))]
 
 [DisallowMultipleComponent]
 public class Character : MonoBehaviour, ITargetable
@@ -40,6 +43,9 @@ public class Character : MonoBehaviour, ITargetable
     [HideInInspector] public SpriteRenderer spriteRenderer;
     [HideInInspector] public AnimateCharacter animateCharacter;
     [HideInInspector] public Animator animator;
+    [HideInInspector] public CharacterCombat characterCombat;
+    [HideInInspector] public CharacterState characterState;
+    [HideInInspector] public CharacterMovement characterMovement;
     [HideInInspector] public NavMeshAgent agent;
     [SerializeField] public Transform target;
 
@@ -60,6 +66,9 @@ public class Character : MonoBehaviour, ITargetable
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         abilitySetupEvent = GetComponent<AbilitySetupEvent>();
+        characterCombat = GetComponent<CharacterCombat>();
+        characterState = GetComponent<CharacterState>();
+        characterMovement = GetComponent<CharacterMovement>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
     }

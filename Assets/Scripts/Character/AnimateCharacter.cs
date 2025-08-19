@@ -25,6 +25,7 @@ public class AnimateCharacter : MonoBehaviour
         character.movementEvents.OnFaceRight += HandleFaceRightAnimation;
         character.movementEvents.OnMoveByPosition += HandleMovementAnimation;
         character.movementEvents.OnIdle += HandleIdleAnimation;
+        character.movementEvents.OnDying += HandleDyingAnimation;
         character.abilityEvents.OnCastAbility += HandleAbilityCastAnimation;
         character.abilityEvents.OnMeleeAttack += HandleMeleeAttackAnimation;
     }
@@ -35,6 +36,7 @@ public class AnimateCharacter : MonoBehaviour
         character.movementEvents.OnFaceRight -= HandleFaceRightAnimation;
         character.movementEvents.OnMoveByPosition -= HandleMovementAnimation;
         character.movementEvents.OnIdle -= HandleIdleAnimation;
+        character.movementEvents.OnDying -= HandleDyingAnimation;
         character.abilityEvents.OnCastAbility -= HandleAbilityCastAnimation;
         character.abilityEvents.OnMeleeAttack -= HandleMeleeAttackAnimation;
     }
@@ -81,6 +83,12 @@ public class AnimateCharacter : MonoBehaviour
     {
         ResetAnimationBools();
         character.animator.SetBool(Settings.isAttacking, true);
+    }
+
+    private void HandleDyingAnimation()
+    {
+        ResetAnimationBools();
+        character.animator.SetBool(Settings.isDying, true);
     }
 
 }

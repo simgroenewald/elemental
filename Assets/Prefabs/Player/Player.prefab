@@ -656,6 +656,9 @@ MonoBehaviour:
   spriteRenderer: {fileID: 0}
   animateCharacter: {fileID: 0}
   animator: {fileID: 0}
+  characterCombat: {fileID: 0}
+  characterState: {fileID: 0}
+  characterMovement: {fileID: 0}
   agent: {fileID: 0}
   target: {fileID: 0}
   playerDetails: {fileID: 0}
@@ -671,6 +674,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1db5a08bb8db30b478234c1393e0d9c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fillArea: {fileID: 954797879490224099}
 --- !u!114 &635509132678744631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -832,7 +836,7 @@ MonoBehaviour:
   isMoving: 0
   isIdle: 0
   isAttacking: 0
-  isDyeing: 0
+  isDying: 0
   isDead: 0
   isHurt: 0
   posTargetRight: 0
@@ -862,6 +866,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 562219d959d24ce478746e22723ebc6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackRange: 0
+  currentTarget: {fileID: 0}
 --- !u!114 &5172446786497358768
 MonoBehaviour:
   m_ObjectHideFlags: 0

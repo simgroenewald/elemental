@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.TextCore.Text;
 
 [RequireComponent(typeof(Enemy))]
 [RequireComponent(typeof(CharacterMovement))]
@@ -29,6 +30,16 @@ public class EnemyAutoController : MonoBehaviour
 
     }
 
+    private void OnEnable()
+    {
+        enemy.healthEvents.OnReduceHealth += OnReduceHealth;
+    }
+
+    private void OnDisable()
+    {
+        enemy.healthEvents.OnReduceHealth -= OnReduceHealth;
+    }
+
     private void Start()
     {
         lineOfSight = enemy.enemyDetails.lineOfSight;
@@ -36,22 +47,57 @@ public class EnemyAutoController : MonoBehaviour
 
     void FixedUpdate()
     {
-        float distanceFromPlayer = Vector2.Distance(player.transform.position, enemy.transform.position);
-        Player characterTarget = null;
-        if (distanceFromPlayer < enemy.activeAbility.GetCurrentAbility().abilityDetails.range)
+        if (!enemy.characterState.isDying && !enemy.characterState.isDead)
         {
-            characterTarget = player;
+            float distanceFromPlayer = Vector2.Distance(player.transform.position, enemy.transform.position);
+            Player characterTarget = null;
+            if (distanceFromPlayer < enemy.activeAbility.GetCurrentAbility().abilityDetails.range)
+            {
+                characterTarget = player;
+            } 
+            characterMovement.UpdateSpeed(characterTarget);
         }
-        characterMovement.UpdateSpeed(characterTarget);
     }
 
     // Update is called once per frame
     void Update()
     {
-        characterCombat.AttemptAttack(player, true, lineOfSight);
-        if (characterState.isMoving)
+        if (!enemy.characterState.isDying && !enemy.characterState.isDead)
         {
-            characterMovement.UpdateCharacterMovement();
+            characterCombat.AttemptAttack(player, true, lineOfSight);
+            if (characterState.isMoving)
+            {
+                characterMovement.UpdateCharacterMovement();
+            }
+        }
+        float distanceFromPlayer = Vector2.Distance(player.transform.position, enemy.transform.position);
+        if (distanceFromPlayer < lineOfSight)
+        {
+            if (characterCombat.attackTriggered)
+            {
+                characterCombat.normalAdvance = true;
+                characterCombat.attackTriggered = false;
+            }
+        }
+    }
+
+    private void OnReduceHealth(float health)
+    {
+        // If the enemy is idle and has taken damage
+        if (enemy.characterState.isIdle)
+        {
+            TriggerAutoAttack();
+        }
+    }
+
+    private void TriggerAutoAttack()
+    {
+        float distanceFromPlayer = Vector2.Distance(player.transform.position, enemy.transform.position);
+        if (distanceFromPlayer > lineOfSight && !characterCombat.attackTriggered)
+        {
+            characterCombat.normalAdvance = false;
+            characterCombat.attackTriggered = true;
+            characterMovement.MoveToPosition(player.transform.position);
         }
     }
 

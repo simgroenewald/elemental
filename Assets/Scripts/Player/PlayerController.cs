@@ -43,13 +43,14 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        Enemy characterTarget = null;
-        if (targetEnemy)
-        {
-            characterTarget = targetEnemy.enemy;
-        } 
-        characterMovement.UpdateSpeed(characterTarget);
-
+        if (!player.characterState.isDying && !player.characterState.isDead) {
+            Enemy characterTarget = null;
+            if (targetEnemy)
+            {
+                characterTarget = targetEnemy.enemy;
+            }
+            characterMovement.UpdateSpeed(characterTarget);
+        }
     }
 
     private void HandleOnTargetEnemy(TargetEnemy newTargetEnemy)
@@ -75,17 +76,19 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        MouseInput();
-        //CastAbility();
+        if (!player.characterState.isDying && !player.characterState.isDead){
+            MouseInput();
+            //CastAbility();
 
-        if (targetEnemy != null)
-        {
-            characterCombat.AttemptAttack(targetEnemy.enemy, false, 0);
-        }
+            if (targetEnemy != null)
+            {
+                characterCombat.AttemptAttack(targetEnemy.enemy, false, 0);
+            }
 
-        if (characterState.isMoving)
-        {
-            characterMovement.UpdateCharacterMovement();
+            if (characterState.isMoving)
+            {
+                characterMovement.UpdateCharacterMovement();
+            }
         }
     }
 

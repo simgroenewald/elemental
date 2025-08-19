@@ -7,6 +7,7 @@ public class Health: MonoBehaviour
     private Character character;
     private float maxHealth;
     private float currentHealth;
+    [SerializeField] private GameObject fillArea;
 
     private void Awake()
     {
@@ -23,6 +24,18 @@ public class Health: MonoBehaviour
     {
         character.healthEvents.OnReduceHealth -= OnReduceHealth;
         character.healthEvents.OnIncreaseHealth -= OnIncreaseHealth;
+    }
+
+    private void Update()
+    {
+        if (character.characterDetails.healthRegenRate != 0 && Time.frameCount % character.characterDetails.healthRegenRate == 0)
+        {
+            if (currentHealth < maxHealth)
+            {
+                OnIncreaseHealth(1);
+            }
+        }
+
     }
 
     public void SetHealth(float maxHealth)
@@ -47,7 +60,10 @@ public class Health: MonoBehaviour
         if (newHealth <= 0)
         {
             currentHealth = 0;
+            Destroy(fillArea);
             // Death
+            character.characterState.SetToDying();
+            character.movementEvents.RaiseOnDying();
         }
         else
         {

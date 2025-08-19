@@ -8,6 +8,7 @@ public class MovementEvents : MonoBehaviour
     public event Action<float> OnMoveByPosition;
     public event Action OnIdle;
     public event Action OnAttack;
+    public event Action OnDying;
 
     public void RaiseFaceLeft()
     {
@@ -32,5 +33,10 @@ public class MovementEvents : MonoBehaviour
     public void RaiseIdle()
     {
         OnIdle?.Invoke();
+    }
+
+    public void RaiseOnDying()
+    {
+        OnDying?.Invoke();
     }
 }

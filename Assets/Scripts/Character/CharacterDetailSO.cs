@@ -12,6 +12,7 @@ public class CharacterDetailSO : ScriptableObject
     [SerializeField] public Sprite miniMapIcon;
 
     [Header("Character Stats")]
+    [SerializeField] public int healthRegenRate;
     [SerializeField] public int health;
     [SerializeField] public float movementSpeed;
 

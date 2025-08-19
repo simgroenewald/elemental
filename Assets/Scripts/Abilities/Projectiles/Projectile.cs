@@ -61,8 +61,8 @@ public class Projectile : MonoBehaviour, ICastable
         {
             if (collision.gameObject == characterTarget.GetGameObject())
             {
-                //DisableProjectile();
                 characterTarget.healthEvents.RaiseReduceHealthEvent(projectileDetails.projectileDamage);
+                DisableProjectile();
             }
             // Check if the projectile reached the target
         } else

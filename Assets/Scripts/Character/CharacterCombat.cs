@@ -15,6 +15,10 @@ public class CharacterCombat : MonoBehaviour
     public float attackRange;
     public Character currentTarget;
 
+    // Used for enemy auto attack if attacked by player
+    public bool attackTriggered = false;
+    public bool normalAdvance = false;
+
     private void Awake()
     {
         // Load components
