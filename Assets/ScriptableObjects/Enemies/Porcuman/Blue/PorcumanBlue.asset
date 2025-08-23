@@ -12,5 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02fcef62324c14e40a4163a9c9ea0b81, type: 3}
   m_Name: PorcumanBlue
   m_EditorClassIdentifier: 
-  enemyName: PorcumanBlue
-  enemyPrefab: {fileID: 3741971743796395161, guid: 752c760e8c6ddfa468b8fb040420d086, type: 3}
+  characterName: Porcuman Blue
+  characterPrefab: {fileID: 3741971743796395161, guid: 752c760e8c6ddfa468b8fb040420d086, type: 3}
+  runtimeAnimatorController: {fileID: 9100000, guid: 9ef5c12897a16dc4fb4eb3f70655b75a, type: 2}
+  miniMapIcon: {fileID: 0}
+  health: 100
+  movementSpeed: 2.2
+  startingAbility: {fileID: 11400000, guid: 9706090b4f022344c8bc205fe9f5ece7, type: 2}
+  abilityList:
+  - {fileID: 11400000, guid: 9706090b4f022344c8bc205fe9f5ece7, type: 2}
+  lineOfSight: 1.5

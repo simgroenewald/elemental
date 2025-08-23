@@ -8,6 +8,7 @@ public interface ICastable
         float castPointAngle,
         float projectileSpeed,
         Vector3 targetDirectionVector,
+        Character characterTarget,
         bool overrideProjectileMovement = false
         );
 

@@ -1,16 +1,18 @@
+using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(Collider2D))]
 [RequireComponent(typeof(AbilityEvents))]
-public class TargetEnemy : MonoBehaviour
+public class TargetEnemy : MonoBehaviour, ITargetable
 {
     [SerializeField] SpriteRenderer[] renderers;
     [SerializeField] Material normalMat;
     [SerializeField] Material outlinedMat;
+    public Enemy enemy;
+    public Transform target;
 
-    [SerializeField] public Transform target;
     bool isSelected;
     bool mouseOver;
 
@@ -20,6 +22,7 @@ public class TargetEnemy : MonoBehaviour
             renderers = GetComponentsInChildren<SpriteRenderer>(true);
 
         // start normal
+        enemy = GetComponent<Enemy>();
         SetOutlined(false);
     }
 
@@ -80,5 +83,15 @@ public class TargetEnemy : MonoBehaviour
         var mat = outlined ? outlinedMat : normalMat;
         foreach (var sr in renderers)
             if (sr) sr.sharedMaterial = mat;
+    }
+
+    public GameObject GetGameObject()
+    {
+        return gameObject;
+    }
+
+    public Transform GetTargetTransform()
+    {
+        return target;
     }
 }

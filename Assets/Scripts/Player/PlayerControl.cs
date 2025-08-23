@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UIElements;
+using static UnityEngine.EventSystems.EventTrigger;
 
 [RequireComponent(typeof(Player))]
 public class PlayerControl : MonoBehaviour
@@ -15,6 +17,8 @@ public class PlayerControl : MonoBehaviour
     private Player player;
     private int currentAbilityIndex = 1;
     private float moveSpeed;
+    private Ability currentAbility;
+    private float slowDownBuffer;
 
     private Vector3 lastPosition;
     public bool isMoving = false;
@@ -25,6 +29,9 @@ public class PlayerControl : MonoBehaviour
 
     public TargetEnemy targetEnemy;
     public bool isAiming = false;
+    public float maxMoveSelectDistance = 30f;
+     // normal run speed
+    [SerializeField] float minApproachSpeed = 0.5f;
 
     private void Awake()
     {
@@ -32,6 +39,7 @@ public class PlayerControl : MonoBehaviour
         player = GetComponent<Player>();
 
         moveSpeed = movementDetails.GetMoveSpeed();
+        player.agent.speed = moveSpeed;
     }
 
     private void Start()
@@ -39,6 +47,7 @@ public class PlayerControl : MonoBehaviour
         SetPlayerAnimationspeed();
         SetPlayerStartAbility();
         player.abilityEvents.OnAbilityCasted += HandleIdleState;
+        player.abilityEvents.OnMeleeEndAttack += HandleIdleState;
         GameEventManager.Instance.targetEvents.OnAimEnemy += HandleOnAimEnemy;
         GameEventManager.Instance.targetEvents.OnRemoveAim += HandleOnRemoveAim;
         GameEventManager.Instance.targetEvents.OnTargetEnemy += HandleOnTargetEnemy;
@@ -47,9 +56,32 @@ public class PlayerControl : MonoBehaviour
     private void OnDisable()
     {
         player.abilityEvents.OnAbilityCasted -= HandleIdleState;
+        player.abilityEvents.OnMeleeEndAttack -= HandleIdleState;
         GameEventManager.Instance.targetEvents.OnAimEnemy -= HandleOnAimEnemy;
         GameEventManager.Instance.targetEvents.OnRemoveAim -= HandleOnRemoveAim;
         GameEventManager.Instance.targetEvents.OnTargetEnemy -= HandleOnTargetEnemy;
+    }
+
+    void FixedUpdate()
+    {
+        // If the ability requires slow down time
+        if (slowDownBuffer != 0 && targetEnemy != null)
+        {
+            float dist = Vector3.Distance(transform.position, targetEnemy.transform.position);
+            // Slow down at buffer distance
+            if (dist < currentAbility.abilityDetails.range + slowDownBuffer)
+            {
+                player.agent.speed = 1f;
+            }
+            else
+            {
+                player.agent.speed = moveSpeed;
+            }
+        // Reset speed if not reset
+        } else if (player.agent.speed != moveSpeed)
+        {
+            player.agent.speed = moveSpeed;
+        }
     }
 
     private void HandleOnTargetEnemy(TargetEnemy newTargetEnemy)
@@ -58,9 +90,9 @@ public class PlayerControl : MonoBehaviour
         if (targetEnemy && targetEnemy != newTargetEnemy)
         {
             targetEnemy.DeselectTarget();
+            targetEnemy = null;
         }
         targetEnemy = newTargetEnemy;
-        AttackEnemy();
     }
 
     private void HandleOnRemoveAim()
@@ -96,6 +128,8 @@ public class PlayerControl : MonoBehaviour
             currentAbilityIndex = abilityIndex;
             player.setActiveAbilityEvent.CallSetActiveAbilityEvent(player.abilityList[abilityIndex - 1]);
         }
+        currentAbility = player.activeAbility.GetCurrentAbility();
+        slowDownBuffer = currentAbility.abilityDetails.slowDownBuffer;
     }
 
     private void SetPlayerAnimationspeed()
@@ -106,7 +140,30 @@ public class PlayerControl : MonoBehaviour
     private void Update()
     {
         MouseInput();
-        CastAbility();
+        //CastAbility();
+
+        if (targetEnemy != null)
+        {
+            float distanceFromTarget = Vector2.Distance(targetEnemy.transform.position, player.transform.position);
+            // If player is in range and target is selected
+            if (distanceFromTarget < currentAbility.abilityDetails.range && targetEnemy != null && !isAttacking)
+            {
+                AttackEnemy();
+            }
+            // If player is not in range and target is selected
+            else if (distanceFromTarget >= currentAbility.abilityDetails.range && targetEnemy != null && !isAttacking)
+            {
+                player.agent.SetDestination(targetEnemy.transform.position);
+
+                if (!isMoving)
+                {
+                    SetToMoving();
+                    player.movementEvents.RaiseMoveByPosition(moveSpeed);
+                    StartTracking();
+                }
+            }
+        }
+
         if (isMoving)
         {
             UpdatePlayerMovement();
@@ -147,13 +204,13 @@ public class PlayerControl : MonoBehaviour
                 if (targetEnemy)
                 {
                     targetEnemy.DeselectTarget();
+                    targetEnemy = null;
                 }
                 MoveToClickPosition();
             }
             // Clicked on an already selected enemy
             else
             {
-                Ability currentAbility = player.activeAbility.GetCurrentAbility();
                 if (currentAbility.abilityDetails.isEnemyTargetable && targetEnemy)
                 {
                     AttackEnemy();
@@ -166,13 +223,20 @@ public class PlayerControl : MonoBehaviour
     private void MoveToClickPosition()
     {
         Vector3 worldPosition = GetClickPosition();
-        player.playerAgent.SetDestination(worldPosition);
+
+        int areaMask = NavMesh.AllAreas;
+        // Project to navmesh if the click is off-mesh
+        if (NavMesh.SamplePosition(worldPosition, out var hit, maxMoveSelectDistance, areaMask))
+            worldPosition = hit.position;
+
+        player.agent.SetDestination(worldPosition);
+
         SetToMoving();
-        GameEventManager.Instance.movementEvents.RaiseMoveByPosition(moveSpeed);
+        player.movementEvents.RaiseMoveByPosition(moveSpeed);
         StartTracking();
     }
 
-    private void AttackEnemy()
+/*    private void AttackEnemy()
     {
         StopMovement();
         SetToAttacking();
@@ -197,11 +261,59 @@ public class PlayerControl : MonoBehaviour
 
         player.abilityEvents.RaiseAbilitySetupEvent(true, aimDirection, playerAngle, castPointAngle, castPointDirection);
         player.abilityEvents.RaiseCastAbilityEvent();
+    }*/
+
+    private void AttackEnemy()
+    {
+        // Future work - first check range
+        StopMovement();
+        SetToAttacking();
+
+        player.movementEvents.RaiseAttack();
+        Vector3 enemyPosition = targetEnemy.target.position;
+
+
+        Vector3 playerDirection = (enemyPosition - player.transform.position);
+        float playerAngle = HelperUtilities.GetAngleFromVector(playerDirection);
+        TargetDirection aimDirection = HelperUtilities.GetTargetDirection(playerAngle);
+
+        UpdatePlayerDirection(aimDirection);
+        if (currentAbility.abilityDetails.isRanged)
+        {
+            RangedAttack(aimDirection, enemyPosition, playerAngle);
+        }
+        else
+        {
+            player.abilityEvents.RaiseMeleeAttackEvent();
+        }
+    }
+
+    private void RangedAttack(TargetDirection aimDirection, Vector3 enemyPosition, float playerAngle)
+    {
+        Vector3 castPosition = player.activeAbility.GetCastPosition(aimDirection);
+        // Ensure we're working in 2D by setting Z to 0 for both positions
+        Vector3 castPosition2D = new Vector3(castPosition.x, castPosition.y, 0f);
+        Vector3 worldPosition2D = new Vector3(enemyPosition.x, enemyPosition.y, 0f);
+
+        Vector3 castPointDirection = (worldPosition2D - castPosition2D);
+        float castPointAngle = HelperUtilities.GetAngleFromVector(castPointDirection);
+
+
+        if (currentAbility.abilityDetails.isEnemyTargetable)
+        {
+            player.abilitySetupEvent.RaiseAbilitySetupEvent(true, aimDirection, playerAngle, castPointAngle, castPointDirection, targetEnemy.enemy);
+        }
+        else
+        {
+            player.abilitySetupEvent.RaiseAbilitySetupEvent(true, aimDirection, playerAngle, castPointAngle, castPointDirection, null);
+        }
+        player.abilityEvents.RaiseCastAbilityEvent();
+
     }
 
     private void StopMovement()
     {
-        player.playerAgent.ResetPath();                     
+        player.agent.ResetPath();                     
         StopTracking();                  
     }
 
@@ -221,7 +333,7 @@ public class PlayerControl : MonoBehaviour
             //if (player.activeAbility.isCooledDown()) {
             StopMovement();
             SetToAttacking();
-            GameEventManager.Instance.movementEvents.RaiseAttack();
+            player.movementEvents.RaiseAttack();
             Vector3 worldPosition = GetClickPosition();
 
                 Vector3 playerDirection = (worldPosition - player.transform.position);
@@ -238,9 +350,15 @@ public class PlayerControl : MonoBehaviour
 
                 UpdatePlayerDirection(aimDirection);
 
-            player.abilityEvents.RaiseAbilitySetupEvent(true, aimDirection, playerAngle, castPointAngle, castPointDirection);
-                player.abilityEvents.RaiseCastAbilityEvent();
-            //}
+            if (currentAbility.abilityDetails.isEnemyTargetable)
+            {
+                player.abilitySetupEvent.RaiseAbilitySetupEvent(true, aimDirection, playerAngle, castPointAngle, castPointDirection, targetEnemy.enemy);
+            }
+            else
+            {
+                player.abilitySetupEvent.RaiseAbilitySetupEvent(true, aimDirection, playerAngle, castPointAngle, castPointDirection, null);
+            }
+            player.abilityEvents.RaiseCastAbilityEvent();
         }
     }
 
@@ -248,12 +366,12 @@ public class PlayerControl : MonoBehaviour
     {
         if (direction == TargetDirection.Left)
         {
-            GameEventManager.Instance.movementEvents.RaiseFaceLeft();
+            player.movementEvents.RaiseFaceLeft();
             posTargetRight = false;
             posTargetLeft = true;
         } else
         {
-            GameEventManager.Instance.movementEvents.RaiseFaceRight();
+            player.movementEvents.RaiseFaceRight();
             posTargetRight = true;
             posTargetLeft = false;
         }
@@ -261,7 +379,7 @@ public class PlayerControl : MonoBehaviour
 
     private void StartTracking()
     {
-        lastPosition = transform.position;
+        lastPosition = player.transform.position;
     }
 
     private void StopTracking()
@@ -272,26 +390,26 @@ public class PlayerControl : MonoBehaviour
     private void HandleIdleState()
     {
         SetToIdle();
-        GameEventManager.Instance.movementEvents.RaiseIdle();
+        player.movementEvents.RaiseIdle();
     }
 
     private void UpdatePlayerMovement()
     {
         {
-            if (!isMoving || player.playerAgent.pathPending) return;
+            if (!isMoving || player.agent.pathPending) return;
 
-            Vector3 currentPosition = transform.position;
+            Vector3 currentPosition = player.transform.position;
             Vector3 delta = currentPosition - lastPosition;
 
             if (currentPosition.x >= lastPosition.x && !posTargetRight)
             {
-                GameEventManager.Instance.movementEvents.RaiseFaceRight();
+                player.movementEvents.RaiseFaceRight();
                 posTargetRight = true;
                 posTargetLeft = false;
             }
             else if (currentPosition.x < lastPosition.x && !posTargetLeft)
             {
-                GameEventManager.Instance.movementEvents.RaiseFaceLeft();
+                player.movementEvents.RaiseFaceLeft();
                 posTargetRight = false;
                 posTargetLeft = true;
             }
@@ -299,7 +417,7 @@ public class PlayerControl : MonoBehaviour
             lastPosition = currentPosition;
 
             // Optional: Stop animation early if somehow movement stops unexpectedly
-            if (player.playerAgent.remainingDistance <= player.playerAgent.stoppingDistance && player.playerAgent.velocity.sqrMagnitude < 0.01f)
+            if (player.agent.remainingDistance <= player.agent.stoppingDistance && player.agent.velocity.sqrMagnitude < 0.01f)
             {
                 StopTracking();
             }

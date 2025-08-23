@@ -1,14 +1,14 @@
 using System;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "MovementEvents", menuName = "Events/MovementEvents")]
-public class MovementEvents : ScriptableObject
+public class MovementEvents : MonoBehaviour
 {
     public event Action OnFaceLeft;
     public event Action OnFaceRight;
     public event Action<float> OnMoveByPosition;
     public event Action OnIdle;
     public event Action OnAttack;
+    public event Action OnDying;
 
     public void RaiseFaceLeft()
     {
@@ -33,5 +33,10 @@ public class MovementEvents : ScriptableObject
     public void RaiseIdle()
     {
         OnIdle?.Invoke();
+    }
+
+    public void RaiseOnDying()
+    {
+        OnDying?.Invoke();
     }
 }

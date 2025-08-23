@@ -14,6 +14,7 @@ public static class Settings
     public static int isIdle = Animator.StringToHash("isIdle");
     public static int isMoving = Animator.StringToHash("isMoving");
     public static int isAttacking = Animator.StringToHash("isAttacking");
+    public static int isDying = Animator.StringToHash("isDying");
 
     public static float baseSpeedForPlayerAnimations = 2f;
 

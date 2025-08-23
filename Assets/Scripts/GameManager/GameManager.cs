@@ -18,8 +18,8 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     private DungeonRoom previousDungeonRoom;
     private DungeonRoom currentDungeonRoom;
     private List<DungeonRoom> completeDungeonRooms;
-    private CharacterDetailSO characterDetail;
-    private Player player;
+    private PlayerDetailsSO playerDetails;
+    public Player player;
     private CameraController cameraController;
 
     public GameState state;
@@ -46,7 +46,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         GameResources gameResources = GameResources.Instance;
 
         PlayerSO playerSO = gameResources.player;
-        characterDetail = playerSO.characterDetails;
+        playerDetails = playerSO.playerDetails;
 
         cameraController = gameResources.cameraController;
 
@@ -56,11 +56,11 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     // TODO: Maybe refactor so charachter doest get the player which then uses character to instantiate - loopy
     private void InstantiatePlayer()
     {
-        GameObject playerGameObject = Instantiate(characterDetail.playerPrefab);
+        GameObject playerGameObject = Instantiate(playerDetails.characterPrefab);
 
         player = playerGameObject.GetComponent<Player>();
 
-        player.Initialise(characterDetail);
+        player.Initialise(playerDetails);
     }
 
 

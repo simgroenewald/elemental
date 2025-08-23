@@ -3,26 +3,28 @@ using UnityEngine;
 
 public class AbilityEvents : MonoBehaviour
 {
-    public event Action<bool, TargetDirection, float, float, Vector3> OnAbilitySetup;
     public event Action OnCastAbility;
+    public event Action OnMeleeAttack;
+    public event Action OnMeleeEndAttack;
     public event Action OnAbilityCasted;
-
-    public void RaiseAbilitySetupEvent(
-        bool cast,
-        TargetDirection direction,
-        float aimAngle,
-        float abilityAimAngle,
-        Vector3 abilityAimDirectionVector)
-    {
-        OnAbilitySetup?.Invoke(cast, direction, aimAngle, abilityAimAngle, abilityAimDirectionVector);
-    }
 
     public void RaiseCastAbilityEvent()
     {
         OnCastAbility?.Invoke();
     }
+
+    public void RaiseMeleeAttackEvent()
+    {
+        OnMeleeAttack?.Invoke();
+    }
+
     public void RaiseAbilityCastedEvent()
     {
         OnAbilityCasted?.Invoke();
+    }
+
+    public void RaiseMeleeEndAttackEvent()
+    {
+        OnMeleeEndAttack?.Invoke();
     }
 }

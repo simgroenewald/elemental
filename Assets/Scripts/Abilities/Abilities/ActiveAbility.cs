@@ -27,7 +27,7 @@ public class ActiveAbility: MonoBehaviour
     {
         setAbilityEvent.OnSetActiveAbility -= OnSetActiveAbility;
     }
-    private void OnSetActiveAbility(SetActiveAbilityEvent setActiveWeaponEvent, SetActiveAbilityEventArgs setActiveAbilityEventArgs)
+    private void OnSetActiveAbility(SetActiveAbilityEvent setActiveAbilityEvent, SetActiveAbilityEventArgs setActiveAbilityEventArgs)
     {
         SetAbility(setActiveAbilityEventArgs.ability);
     }
@@ -35,9 +35,11 @@ public class ActiveAbility: MonoBehaviour
     private void SetAbility(Ability ability)
     {
         currentAbility = ability;
-
-        abilityCastPositionLeftTransform.localPosition = currentAbility.abilityDetails.abilityCastPositionLeft;
-        abilityCastPositionRightTransform.localPosition = currentAbility.abilityDetails.abilityCastPositionRight;
+        if (ability.abilityDetails.isRanged)
+        {
+            abilityCastPositionLeftTransform.localPosition = currentAbility.abilityDetails.abilityCastPositionLeft;
+            abilityCastPositionRightTransform.localPosition = currentAbility.abilityDetails.abilityCastPositionRight;
+        }
     }
 
     public ProjectileDetailsSO GetCurrentProjectile()

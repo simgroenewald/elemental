@@ -14,6 +14,7 @@ public class Projectile : MonoBehaviour, ICastable
     private float projectileChargeTimer;
     private bool isProjectileMaterialSet = false;
     private bool overrideProjectileMovement;
+    private Character characterTarget;
 
     private void Awake()
     {
@@ -33,28 +34,49 @@ public class Projectile : MonoBehaviour, ICastable
             isProjectileMaterialSet= true;
         }
 
-        // Calculate distance vector to move projectile
-        Vector3 distanceVector = castDirectionVector * projectileSpeed * Time.deltaTime;
-
-        transform.position += distanceVector;
-
-        projectileRange -= distanceVector.magnitude;
-
-        if (projectileRange < 0f)
+        // Follow target
+        if (characterTarget != null)
         {
-            DisableProjectile();
+            transform.position = Vector2.MoveTowards(transform.position, characterTarget.target.position, projectileSpeed * Time.deltaTime);
+        } else
+        // Cast for set distance
+        {
+            // Calculate distance vector to move projectile
+            Vector3 distanceVector = castDirectionVector * projectileSpeed * Time.deltaTime;
+
+            transform.position += distanceVector;
+
+            projectileRange -= distanceVector.magnitude;
+
+            if (projectileRange < 0f)
+            {
+                DisableProjectile();
+            }
         }
     }
 
-    private void OnTrggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        DisableProjectile();
+        if (characterTarget != null)
+        {
+            if (collision.gameObject == characterTarget.GetGameObject())
+            {
+                characterTarget.healthEvents.RaiseReduceHealthEvent(projectileDetails.projectileDamage);
+                DisableProjectile();
+            }
+            // Check if the projectile reached the target
+        } else
+        {
+            DisableProjectile();
+        }
+
     }
 
-    public void InitialiseProjectile(ProjectileDetailsSO projectileDetails, float castAngle, float castPointAngle, float projectileSpeed, Vector3 targetDirectionVector, bool overrideProjectileMovement = false)
+    public void InitialiseProjectile(ProjectileDetailsSO projectileDetails, float castAngle, float castPointAngle, float projectileSpeed, Vector3 targetDirectionVector, Character characterTarget, bool overrideProjectileMovement = false)
     {
         // Initialise Projectile
         this.projectileDetails = projectileDetails;
+        this.characterTarget = characterTarget;
 
         // Set cast direction
         SetCastDirection(projectileDetails, castAngle, castPointAngle, targetDirectionVector);

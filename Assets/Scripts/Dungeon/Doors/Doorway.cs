@@ -1,3 +1,4 @@
+using NavMeshPlus.Components;
 using System.Collections.Generic;
 using UnityEditorInternal;
 using UnityEngine;
@@ -13,6 +14,7 @@ public class Doorway: MonoBehaviour
     public HashSet<StructureTile> closedTiles = new HashSet<StructureTile>();
     public HashSet<StructureTile> openTiles = new HashSet<StructureTile>();
     public NavMeshObstacle obstacle;
+    public NavMeshModifierVolume modifierVolume;
     public DungeonRoom room;
 
     public Doorway Initialise(Vector2Int midPositon, int width, DoorType doortype, DungeonRoom room, Grid grid)
@@ -84,6 +86,19 @@ public class Doorway: MonoBehaviour
             else
             {
                 obstacle.size = new Vector3(width, 0.5f, 2);
+            }
+        }
+
+        modifierVolume = GetComponent<NavMeshModifierVolume>();
+        if (modifierVolume != null)
+        {
+            if (doortype == DoorType.LeftDoor || doortype == DoorType.RightDoor)
+            {
+                modifierVolume.size = new Vector3(0.5f, width, 2);
+            }
+            else
+            {
+                modifierVolume.size = new Vector3(width, 0.5f, 2);
             }
         }
 

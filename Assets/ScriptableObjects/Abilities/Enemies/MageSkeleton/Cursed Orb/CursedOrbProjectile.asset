@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b1676e888e655846a9eb85aa7a764ec, type: 3}
+  m_Name: CursedOrbProjectile
+  m_EditorClassIdentifier: 
+  projectileName: Cursed Orb
+  isPlayerProjectile: 0
+  isAnimated: 1
+  followsTarget: 1
+  projectileSprite: {fileID: -1709175380, guid: 043bb196fc0a3314481aa09704da1b13, type: 3}
+  projectilePrefabArray:
+  - {fileID: 9012860769523257624, guid: 067dc9dba83946e4f88e8c62e562621e, type: 3}
+  projectileMaterial: {fileID: 0}
+  chargeTime: 0
+  chargeMaterial: {fileID: 0}
+  projectileDamage: 5
+  projectileSpeed: 1.5
+  projectileSpeedMin: 1.5
+  projectileSpeedMax: 1.5
+  projectileRange: 3
+  projectileRotationSpeed: 1
+  isProjectileTrail: 0
+  projectileTrailTime: 3
+  projectileTrailMaterial: {fileID: 0}
+  projectileTrailStartWidth: 0
+  projectileTrailEndWidth: 0
