@@ -51,6 +51,12 @@ public class BackpackUI : MonoBehaviour
 
     private void HandleShowItemActionMenu(ItemUI itemUI)
     {
+        int index = itemUIList.IndexOf(itemUI);
+        if (index == -1)
+        {
+            return;
+        }
+        OnItemActionRequested?.Invoke(index);
     }
 
     private void HandleEndDrag(ItemUI itemUI)

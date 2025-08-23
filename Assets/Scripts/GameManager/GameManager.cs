@@ -108,7 +108,8 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         
         // Initialize enemies BEFORE NavMesh baking so they're included as obstacles
         startRoom.SpawnRoomEnemies(3);
-        
+        startRoom.SpawnRoomItems(2);
+
         // Now bake NavMesh with all agents present
         playerNavMeshSurface.BuildNavMesh();
         enemyNavMeshSurface.BuildNavMesh();

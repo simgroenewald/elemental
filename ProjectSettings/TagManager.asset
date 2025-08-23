@@ -17,6 +17,9 @@ TagManager:
   - minimapTilemap
   - minimapPlayer
   - playerWeapon
+  - Enemies
+  - Backpack
+  - ItemDetails
   layers:
   - Default
   - TransparentFX

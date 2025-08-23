@@ -9,11 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43703cf5901e4ad4eb2fa0a5856f7340, type: 3}
+  m_Script: {fileID: 11500000, guid: d564c5c853881434fa472ef745fe3a5a, type: 3}
   m_Name: Apple
   m_EditorClassIdentifier: 
   <IsStackable>k__BackingField: 1
-  <MaxStackSize>k__BackingField: 3
+  <MaxStackSize>k__BackingField: 10
   <Name>k__BackingField: Apple
-  <Description>k__BackingField: The magical apple.
+  <Description>k__BackingField: The magical apple
   <ItemImage>k__BackingField: {fileID: 21300000, guid: 5c99ae1e6ada67540bb7da32fb57884d, type: 3}
+  modifiersData:
+  - statModifier: {fileID: 11400000, guid: 99fb6ec66b4e93647a8513f7d404d193, type: 2}
+    value: 10

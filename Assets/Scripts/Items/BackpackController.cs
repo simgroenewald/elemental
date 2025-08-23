@@ -1,3 +1,4 @@
+using DarkPixelRPGUI.Scripts.UI.Equipment;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -6,11 +7,17 @@ using UnityEngine;
 
 public class BackpackController : MonoBehaviour
 {
-    [SerializeField] public BackpackUI backpackUI;
-    [SerializeField] public ItemDetailsUI itemDetails;
+    public BackpackUI backpackUI;
+    public ItemDetailsUI itemDetails;
     [SerializeField] public BackpackSO backpack;
 
     public List<BackpackItem> initialItems = new List<BackpackItem>();
+
+    private void Awake()
+    {
+        backpackUI = GameObject.FindWithTag("Backpack").GetComponent<BackpackUI>();
+        itemDetails = GameObject.FindWithTag("ItemDetails").GetComponent<ItemDetailsUI>();
+    }
 
     private void Start()
     {
@@ -51,6 +58,19 @@ public class BackpackController : MonoBehaviour
 
     private void HandleItemActionRequested(int index)
     {
+        BackpackItem backpackItem = backpack.GetItemAtIndex(index);
+        if (backpackItem.isEmpty)
+            return;
+        IItemAction itemAction = backpackItem.item as IItemAction;
+        if (itemAction != null)
+        {
+            itemAction.PerformAction(gameObject);
+        }
+        IDestroyableItem destroyableItem = backpackItem.item as IDestroyableItem;
+        if (destroyableItem != null)
+        {
+            backpack.RemoveItem(index, 1);
+        }
     }
 
     private void HandleDragging(int index)

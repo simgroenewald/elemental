@@ -2,6 +2,8 @@ using DarkPixelRPGUI.Scripts.UI.Equipment;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using UnityEditorInternal;
 using UnityEngine;
 
@@ -25,20 +27,75 @@ public class BackpackSO : ScriptableObject
         }
     }
 
-    public void AddItem(ItemSO item, int quantity)
+    // UPDATE THIS
+    public int AddItem(ItemSO item, int quantity)
+    {
+        if (item.IsStackable == false)
+        {
+            for (int i = 0; i < backpackItems.Count; i++)
+            {
+                while (quantity > 0 && IsInventoryFull() == false)
+                {
+                    quantity = quantity - AddItemToNewSlot(item, 1);
+                }
+                PublishBackpackUpdated();
+                return quantity;
+            }
+        }
+        quantity = StackItemInExistingSlot(item, quantity);
+        PublishBackpackUpdated();
+        return quantity;
+    }
+
+    private int AddItemToNewSlot(ItemSO item, int quantity)
+    {
+        BackpackItem newBackpackItem = new BackpackItem
+        {
+            item = item,
+            quantity = quantity
+        };
+        for (int i = 0;i < backpackItems.Count;i++)
+        {
+            if (backpackItems[i].isEmpty)
+            {
+                backpackItems[i] = newBackpackItem;
+                return quantity;
+            }
+        }
+        return 0;
+
+    }
+
+    private bool IsInventoryFull() => backpackItems.Where(item => item.isEmpty).Any() == false;
+
+    private int StackItemInExistingSlot(ItemSO item, int quantity)
     {
         for (int i = 0; i < backpackItems.Count; i++)
         {
             if (backpackItems[i].isEmpty)
+                continue;
+            if (backpackItems[i].item.ID == item.ID)
             {
-                backpackItems[i] = new BackpackItem
+                int amountAllowable = backpackItems[i].item.MaxStackSize - backpackItems[i].quantity;
+
+                if (quantity > amountAllowable)
                 {
-                    item = item, 
-                    quantity = quantity
-                };
-                return;
+                    backpackItems[i] = backpackItems[i].UpdateQuantity(backpackItems[i].item.MaxStackSize);
+                    quantity -= amountAllowable;
+                } else
+                {
+                    backpackItems[i] = backpackItems[i].UpdateQuantity(backpackItems[i].quantity + quantity);
+                    return 0;
+                }
             }
         }
+        while (quantity > 0 && IsInventoryFull() == false)
+        {
+            int newQuantity = Mathf.Clamp(quantity, 0, item.MaxStackSize);
+            quantity -= newQuantity;
+            AddItemToNewSlot(item, newQuantity);
+        }
+        return quantity;
     }
 
     public Dictionary<int, BackpackItem> GetCurrentBackpackState()
@@ -70,12 +127,32 @@ public class BackpackSO : ScriptableObject
         BackpackItem item1 = backpackItems[index1];
         backpackItems[index1] = backpackItems[index2];
         backpackItems[index2] = item1;
-        PublicBackpackUpdated();
+        PublishBackpackUpdated();
     }
 
-    private void PublicBackpackUpdated()
+    private void PublishBackpackUpdated()
     {
         OnBackpackUpdated?.Invoke(GetCurrentBackpackState());
+    }
+
+    public void RemoveItem(int index, int quantity)
+    {
+        if (backpackItems.Count > index)
+        {
+            if (backpackItems[index].isEmpty)
+                return;
+            int remainder = backpackItems[index].quantity - quantity;
+            if (remainder <= 0)
+            {
+                backpackItems[index] = BackpackItem.GetEmptyItem();
+            }
+            else
+            {
+                backpackItems[index] = backpackItems[index].UpdateQuantity(remainder);
+            }
+
+            PublishBackpackUpdated();
+        }
     }
 }
 

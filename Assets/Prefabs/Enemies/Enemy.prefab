@@ -40,12 +40,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2930661179988080224}
-  - component: {fileID: 7777646420514657467}
   - component: {fileID: 6679265744597564549}
   - component: {fileID: 688862256297629065}
   - component: {fileID: 6164343815551774762}
   - component: {fileID: 3750961476613335939}
   - component: {fileID: 6863130179545977060}
+  - component: {fileID: 7777646420514657467}
   - component: {fileID: 2232647147469282343}
   - component: {fileID: -71032134596749655}
   - component: {fileID: -8288058668211941726}
@@ -59,7 +59,6 @@ GameObject:
   - component: {fileID: 8169613600479682509}
   - component: {fileID: -8610574578822706024}
   - component: {fileID: 2217144772434141087}
-  - component: {fileID: 2933706589297246695}
   - component: {fileID: 7499494289925132653}
   - component: {fileID: 86143885323429481}
   - component: {fileID: 8042601486979036762}
@@ -89,37 +88,6 @@ Transform:
   - {fileID: 3466367184049907252}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7777646420514657467
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4254274592593245156}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 958be3bebad664b448e867203ae45bd1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  characterDetails: {fileID: 0}
-  health: {fileID: 0}
-  healthEvents: {fileID: 0}
-  setActiveAbilityEvent: {fileID: 0}
-  activeAbility: {fileID: 0}
-  castAbility: {fileID: 0}
-  meleeAbility: {fileID: 0}
-  abilityEvents: {fileID: 0}
-  movementEvents: {fileID: 0}
-  abilitySetupEvent: {fileID: 0}
-  spriteRenderer: {fileID: 0}
-  animateCharacter: {fileID: 0}
-  animator: {fileID: 0}
-  characterCombat: {fileID: 0}
-  characterState: {fileID: 0}
-  characterMovement: {fileID: 0}
-  agent: {fileID: 0}
-  target: {fileID: 0}
-  enemyDetails: {fileID: 0}
 --- !u!210 &6679265744597564549
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -316,6 +284,37 @@ PolygonCollider2D:
       - {x: 0.25376186, y: 0.26378825}
       - {x: 0.12980798, y: 0.36325052}
   m_UseDelaunayMesh: 0
+--- !u!114 &7777646420514657467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4254274592593245156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 958be3bebad664b448e867203ae45bd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterDetails: {fileID: 0}
+  health: {fileID: 0}
+  setActiveAbilityEvent: {fileID: 0}
+  activeAbility: {fileID: 0}
+  castAbility: {fileID: 0}
+  meleeAbility: {fileID: 0}
+  abilityEvents: {fileID: 0}
+  movementEvents: {fileID: 0}
+  abilitySetupEvent: {fileID: 0}
+  spriteRenderer: {fileID: 0}
+  animateCharacter: {fileID: 0}
+  animator: {fileID: 0}
+  characterCombat: {fileID: 0}
+  characterState: {fileID: 0}
+  characterMovement: {fileID: 0}
+  agent: {fileID: 0}
+  target: {fileID: 0}
+  healthEvents: {fileID: 11400000, guid: d03651913f7a123498b0c23b78876e15, type: 2}
+  enemyDetails: {fileID: 0}
 --- !u!95 &2232647147469282343
 Animator:
   serializedVersion: 7
@@ -502,18 +501,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fillArea: {fileID: 1300342884782517001}
---- !u!114 &2933706589297246695
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4254274592593245156}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 238b911ec91bb1c45abb6606d13470e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &7499494289925132653
 MonoBehaviour:
   m_ObjectHideFlags: 0

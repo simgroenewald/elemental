@@ -7,6 +7,7 @@ public class Health: MonoBehaviour
     private Character character;
     private float maxHealth;
     private float currentHealth;
+    float regenBucket;
     [SerializeField] private GameObject fillArea;
 
     private void Awake()
@@ -28,14 +29,23 @@ public class Health: MonoBehaviour
 
     private void Update()
     {
-        if (character.characterDetails.healthRegenRate != 0 && Time.frameCount % character.characterDetails.healthRegenRate == 0)
+/*        if (character.characterDetails.healthRegenRate != 0 && Time.frameCount % character.characterDetails.healthRegenRate == 0)
         {
             if (currentHealth < maxHealth)
             {
                 OnIncreaseHealth(1);
             }
-        }
+        }*/
 
+        if (currentHealth >= maxHealth || character.characterDetails.healthRegenRate == 0) return;
+
+        regenBucket += character.characterDetails.healthRegenRate * Time.deltaTime;
+        int whole = Mathf.FloorToInt(regenBucket);
+        if (whole > 0)
+        {
+            OnIncreaseHealth(whole);
+            regenBucket -= whole;
+        }
     }
 
     public void SetHealth(float maxHealth)

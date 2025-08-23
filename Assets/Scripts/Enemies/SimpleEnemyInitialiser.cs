@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.UIElements;
 
-public class SimpleEnemyInitializer : MonoBehaviour
+public class SimpleEnemyInitialiser : MonoBehaviour
 {
-    [Header("Enemy Initialization")]
+    [Header("Enemy Initialisation")]
     [SerializeField] private List<GameObject> enemies;
 
     public List<GameObject> GetEnemyPrefabs()

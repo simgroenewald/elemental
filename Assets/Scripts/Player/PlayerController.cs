@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(Player))]
 [RequireComponent(typeof(CharacterState))]
@@ -76,6 +77,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+
         if (!player.characterState.isDying && !player.characterState.isDead){
             MouseInput();
             //CastAbility();
@@ -96,6 +98,9 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1))
         {
+            if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+                return; // clicked UI, ignore gameplay
+
             if (!isAiming) // Right click
             {
                 if (targetEnemy)
