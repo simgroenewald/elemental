@@ -619,6 +619,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackRange: 0
   currentTarget: {fileID: 0}
+  attackTriggered: 0
+  normalAdvance: 0
 --- !u!1001 &6228020428719967373
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -722,6 +724,14 @@ PrefabInstance:
     - target: {fileID: 7382909433789508281, guid: d2a11c93226dc5e479c19b646cf1135a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8075030160368983862, guid: d2a11c93226dc5e479c19b646cf1135a, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8075030160368983862, guid: d2a11c93226dc5e479c19b646cf1135a, type: 3}
+      propertyPath: m_VertexColorAlwaysGammaSpace
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
