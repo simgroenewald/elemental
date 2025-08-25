@@ -25,7 +25,9 @@ using UnityEngine.Rendering;
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CharacterCombat))]
 [RequireComponent(typeof(CharacterState))]
+[RequireComponent(typeof(CharacterStatsModifier))]
 [RequireComponent(typeof(CharacterMovement))]
+[RequireComponent(typeof(StatModifierEvents))]
 
 [DisallowMultipleComponent]
 public class Character : MonoBehaviour, ITargetable
@@ -46,6 +48,8 @@ public class Character : MonoBehaviour, ITargetable
     [HideInInspector] public CharacterCombat characterCombat;
     [HideInInspector] public CharacterState characterState;
     [HideInInspector] public CharacterMovement characterMovement;
+    [HideInInspector] public CharacterStatsModifier characterStatsModifier;
+    [HideInInspector] public StatModifierEvents statModifierEvents;
     [HideInInspector] public NavMeshAgent agent;
     [SerializeField] public Transform target;
 
@@ -69,6 +73,8 @@ public class Character : MonoBehaviour, ITargetable
         characterCombat = GetComponent<CharacterCombat>();
         characterState = GetComponent<CharacterState>();
         characterMovement = GetComponent<CharacterMovement>();
+        statModifierEvents = GetComponent<StatModifierEvents>();
+        characterStatsModifier = GetComponent<CharacterStatsModifier>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
     }
@@ -104,7 +110,7 @@ public class Character : MonoBehaviour, ITargetable
 
     private void SetCharacterHealth()
     {
-        health.SetHealth(characterDetails.health);
+        health.SetHealth(characterDetails.health, characterDetails.health);
     }
 
     public void SetCharacterPosition(Vector2Int position, Grid grid)

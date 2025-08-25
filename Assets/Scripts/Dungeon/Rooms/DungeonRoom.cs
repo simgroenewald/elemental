@@ -55,16 +55,16 @@ public class DungeonRoom : MonoBehaviour
 
     public void SpawnRoomEnemies(int enemyCount)
     {
-        SimpleEnemyInitializer enemyInitializer = GetComponent<SimpleEnemyInitializer>();
+        SimpleEnemyInitialiser enemyInitialiser = GetComponent<SimpleEnemyInitialiser>();
         Transform roomTransform = GetComponent<Transform>();
-        List<GameObject> enemyPrefabs = enemyInitializer.GetEnemyPrefabs();
+        List<GameObject> enemyPrefabs = enemyInitialiser.GetEnemyPrefabs();
 
         foreach (var enemyPrefab in enemyPrefabs)
         {
             for (int i = 0; i < enemyCount; i++)
             {
 
-                Vector2Int spawnPosition2D = GetEnemyStartPosition();
+                Vector2Int spawnPosition2D = GetValidSpawnPosition();
 
                 // Convert tile position to world position
                 Vector3 worldPosition = this.structure.tilemapLayers.grid.CellToWorld((Vector3Int)spawnPosition2D);
@@ -78,14 +78,41 @@ public class DungeonRoom : MonoBehaviour
 
                 // Ensure proper 2D rotation (no X or Y rotation)
                 enemyGO.transform.rotation = Quaternion.identity;
+            }
+        }
+    }
 
-                Debug.Log($"Spawned enemy at floor position: {spawnPosition2D}");
+     public void SpawnRoomItems(int itemCount)
+    {
+        SimpleItemInitialiser itemInitialiser = GetComponent<SimpleItemInitialiser>();
+        Transform roomTransform = GetComponent<Transform>();
+        List<GameObject> itemPrefabs = itemInitialiser.GetItemPrefabs();
+
+        foreach (var itemPrefab in itemPrefabs)
+        {
+            for (int i = 0; i < itemCount; i++)
+            {
+
+                Vector2Int spawnPosition2D = GetValidSpawnPosition();
+
+                // Convert tile position to world position
+                Vector3 worldPosition = this.structure.tilemapLayers.grid.CellToWorld((Vector3Int)spawnPosition2D);
+                // Center the position in the tile
+                worldPosition += this.structure.tilemapLayers.grid.cellSize * 0.16f;
+
+                // Instantiate enemy
+                GameObject itemGO = Instantiate(itemPrefab, worldPosition, Quaternion.identity, roomTransform);
+
+                itemGO.name = $"Item_{i + 1}";
+
+                // Ensure proper 2D rotation (no X or Y rotation)
+                itemGO.transform.rotation = Quaternion.identity;
             }
         }
     }
 
 
-    public Vector2Int GetEnemyStartPosition()
+    public Vector2Int GetValidSpawnPosition()
     {
         return structure.floorPositions.ElementAt(UnityEngine.Random.Range(0, structure.floorPositions.Count));
     }

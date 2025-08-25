@@ -17,6 +17,9 @@ TagManager:
   - minimapTilemap
   - minimapPlayer
   - playerWeapon
+  - Enemies
+  - Backpack
+  - ItemDetails
   layers:
   - Default
   - TransparentFX
@@ -89,6 +92,9 @@ TagManager:
     locked: 0
   - name: Minimap
     uniqueID: 1491282665
+    locked: 0
+  - name: UI
+    uniqueID: 3302112991
     locked: 0
   m_RenderingLayers:
   - Default

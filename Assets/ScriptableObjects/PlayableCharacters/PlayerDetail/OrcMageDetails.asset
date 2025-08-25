@@ -16,6 +16,7 @@ MonoBehaviour:
   characterPrefab: {fileID: 3343493735705289243, guid: 2c7dcb6299343684ea960f68543cfa42, type: 3}
   runtimeAnimatorController: {fileID: 9100000, guid: ea9659ed465a49a44a5c9256e96a6704, type: 2}
   miniMapIcon: {fileID: 0}
+  healthRegenRate: 1
   health: 100
   movementSpeed: 2
   startingAbility: {fileID: 11400000, guid: c24beabdad3521442ae606c4848076c3, type: 2}

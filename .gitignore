@@ -102,14 +102,11 @@ InitTestScene*.unity*
 /[Aa]ssets/RafaelMatos.meta
 /[Aa]ssets/RPG 2D pack
 /[Aa]ssets/RPG 2D pack.meta
+/[Aa]ssets/Admurin's Pixel Items
+/[Aa]ssets/Admurin's Pixel Items.meta
+/[Aa]ssets/ClassicPixelRPGUI
+/[Aa]ssets/ClassicPixelRPGUI.meta
 
 /Packages
 /Packages/manifest.json
 /Packages/packages-lock.json
-Assets/Admurin's Pixel Items/
-
-Assets/Admurin's Pixel Items.meta
-
-Assets/ClassicPixelRPGUI/
-
-Assets/ClassicPixelRPGUI.meta

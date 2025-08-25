@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 9206618930786755288}
   - component: {fileID: 2226291265045725375}
   - component: {fileID: -1294400793371953713}
+  - component: {fileID: -2039134324546566713}
   m_Layer: 0
   m_Name: DungeonRoom
   m_TagString: Untagged
@@ -109,6 +110,21 @@ MonoBehaviour:
   enemies:
   - {fileID: 4167889123300124595, guid: 8044614bd42b89947a08e6fb5e571ee4, type: 3}
   - {fileID: 3741971743796395161, guid: 752c760e8c6ddfa468b8fb040420d086, type: 3}
+--- !u!114 &-2039134324546566713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9049902903817534805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e603054a961f0104eb67a13c2fd6d0cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  items:
+  - {fileID: 7104357318301564023, guid: 3d4bd5fef7338964c841b7c9881fd574, type: 3}
+  - {fileID: 3640447467753037221, guid: 7138f967ecf509041b6885845b5d279c, type: 3}
 --- !u!1001 &1961949189306949688
 PrefabInstance:
   m_ObjectHideFlags: 0
