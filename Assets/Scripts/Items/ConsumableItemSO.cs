@@ -13,7 +13,7 @@ public class ConsumableItemSO : ItemSO, IDestroyableItem, IItemAction
 
     public AudioClip actionSFX {get; private set;}
 
-    public bool PerformAction(GameObject player)
+    public bool PerformAction(GameObject player, List<ItemParameter> itemParameters = null)
     {
         foreach (ModifierData data in modifiersData)
         {
@@ -32,7 +32,7 @@ public interface IItemAction
 {
     public string ActionName { get; }
     public AudioClip actionSFX { get; }
-    bool PerformAction(GameObject player);
+    bool PerformAction(GameObject player, List<ItemParameter> itemParameters);
 }
 
 [Serializable]

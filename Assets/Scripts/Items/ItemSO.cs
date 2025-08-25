@@ -1,3 +1,6 @@
+using NUnit.Framework;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class ItemSO : ScriptableObject
@@ -12,10 +15,26 @@ public abstract class ItemSO : ScriptableObject
     [field: SerializeField]
     public string Name { get; set;}
 
-    [field: SerializeField]
     [TextArea]
+    [field: SerializeField]
     public string Description { get; set; }
 
     [field: SerializeField]
     public Sprite ItemImage { get; set; }
+
+    [field: SerializeField]
+    public List<ItemParameter> DefaultParametersList { get; set; }
+}
+
+[Serializable]
+
+public struct ItemParameter: IEquatable<ItemParameter>
+{
+    public ItemParameterSO itemParameterSO;
+    public float value;
+
+    public bool Equals(ItemParameter other)
+    {
+        return other.itemParameterSO == itemParameterSO;
+    }
 }

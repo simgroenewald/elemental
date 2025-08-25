@@ -28,7 +28,7 @@ public class BackpackSO : ScriptableObject
     }
 
     // UPDATE THIS
-    public int AddItem(ItemSO item, int quantity)
+    public int AddItem(ItemSO item, int quantity, List<ItemParameter> itemParameters = null)
     {
         if (item.IsStackable == false)
         {
@@ -36,7 +36,7 @@ public class BackpackSO : ScriptableObject
             {
                 while (quantity > 0 && IsInventoryFull() == false)
                 {
-                    quantity = quantity - AddItemToNewSlot(item, 1);
+                    quantity = quantity - AddItemToNewSlot(item, 1, itemParameters);
                 }
                 PublishBackpackUpdated();
                 return quantity;
@@ -47,12 +47,13 @@ public class BackpackSO : ScriptableObject
         return quantity;
     }
 
-    private int AddItemToNewSlot(ItemSO item, int quantity)
+    private int AddItemToNewSlot(ItemSO item, int quantity, List<ItemParameter> itemParameters = null)
     {
         BackpackItem newBackpackItem = new BackpackItem
         {
             item = item,
-            quantity = quantity
+            quantity = quantity,
+            itemParameters = new List<ItemParameter>(itemParameters == null ? item.DefaultParametersList : itemParameters)
         };
         for (int i = 0;i < backpackItems.Count;i++)
         {
@@ -161,13 +162,15 @@ public struct BackpackItem
 {
     public int quantity;
     public ItemSO item;
+    public List<ItemParameter> itemParameters;
     public bool isEmpty => item == null;
 
     public BackpackItem UpdateQuantity(int newQuantity)
     {
-        return new BackpackItem { 
+        return new BackpackItem {
             item = this.item,
-            quantity = newQuantity 
+            quantity = newQuantity,
+            itemParameters = new List<ItemParameter>(this.itemParameters)
         };
     }
 
@@ -175,5 +178,6 @@ public struct BackpackItem
     {
         item = null,
         quantity = 0,
+        itemParameters = new List<ItemParameter>()
     };
 }

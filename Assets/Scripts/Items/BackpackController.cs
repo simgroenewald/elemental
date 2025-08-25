@@ -2,8 +2,10 @@ using DarkPixelRPGUI.Scripts.UI.Equipment;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Text;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class BackpackController : MonoBehaviour
 {
@@ -53,7 +55,8 @@ public class BackpackController : MonoBehaviour
         this.backpackUI.OnDescriptionRequested += HandleDescriptionRequested;
         this.backpackUI.OnSwapItems += HandleSwapItems;
         this.backpackUI.OnStartDragging += HandleDragging;
-        this.backpackUI.OnItemActionRequested += HandleItemActionRequested;
+        this.backpackUI.OnItemActionsRequested += HandleItemActionRequested;
+        this.backpackUI.OnItemPerformAction += PerformAction;
     }
 
     private void HandleItemActionRequested(int index)
@@ -64,12 +67,38 @@ public class BackpackController : MonoBehaviour
         IItemAction itemAction = backpackItem.item as IItemAction;
         if (itemAction != null)
         {
-            itemAction.PerformAction(gameObject);
+            backpackUI.ShowItemAction(index);
+            backpackUI.AddAction(itemAction.ActionName, () => PerformAction(index));
         }
         IDestroyableItem destroyableItem = backpackItem.item as IDestroyableItem;
         if (destroyableItem != null)
         {
+            backpackUI.AddAction("Drop", () => DropItem(index, backpackItem.quantity));
+        }
+    }
+
+    private void DropItem(int index, int quantity)
+    {
+        backpack.RemoveItem(index, quantity);
+        backpackUI.Unfocus();
+    }
+
+    public void PerformAction(int index)
+    {
+        BackpackItem backpackItem = backpack.GetItemAtIndex(index);
+        if (backpackItem.isEmpty)
+            return;
+        IDestroyableItem destroyableItem = backpackItem.item as IDestroyableItem;
+        if (destroyableItem != null)
+        {
             backpack.RemoveItem(index, 1);
+        }
+        IItemAction itemAction = backpackItem.item as IItemAction;
+        if (itemAction != null)
+        {
+            itemAction.PerformAction(gameObject, backpackItem.itemParameters);
+            if (backpack.GetItemAtIndex(index).isEmpty)
+                backpackUI.Unfocus();
         }
     }
 
@@ -96,9 +125,23 @@ public class BackpackController : MonoBehaviour
             return;
         }
         ItemSO item = backpackItem.item;
-        itemDetails.UpdateItemDetails(item.ItemImage, item.Name, item.Description);
+        string description = SetUpDescription(backpackItem);
+        itemDetails.UpdateItemDetails(item.ItemImage, item.Name, description);
         backpackUI.DeselectAllItems();
         backpackUI.Focus(index);
+    }
+
+    public string SetUpDescription(BackpackItem backpackItem)
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.Append(backpackItem.item.Description);
+        sb.AppendLine();
+        for (int i = 0; i < backpackItem.itemParameters.Count; i++)
+        {
+            sb.Append($"{backpackItem.itemParameters[i].itemParameterSO.ParameterName} : {backpackItem.itemParameters[i].value}/{backpackItem.item.DefaultParametersList[i].value}");
+            sb.AppendLine();
+        }
+        return sb.ToString();
     }
 
     private void UpdateBackpack()

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d564c5c853881434fa472ef745fe3a5a, type: 3}
+  m_Name: RingOfHealth
+  m_EditorClassIdentifier: 
+  <IsStackable>k__BackingField: 0
+  <MaxStackSize>k__BackingField: 1
+  <Name>k__BackingField: Ring of health
+  <Description>k__BackingField: Grants 50% increased health
+  <ItemImage>k__BackingField: {fileID: 21300000, guid: 7f0cf4d1a8d41c747aeb2a77a6ed5b55, type: 3}
+  <DefaultParametersList>k__BackingField: []
+  modifiersData:
+  - statModifier: {fileID: 11400000, guid: 63dd699901fb9c646bda18661cacee1a, type: 2}
+    value: 50

@@ -15,6 +15,7 @@ public class CharacterDetailSO : ScriptableObject
     [SerializeField] public int healthRegenRate;
     [SerializeField] public int health;
     [SerializeField] public float movementSpeed;
+    [SerializeField] public float baseAttackDamage;
 
     [Header("Character Abilities")]
     public AbilityDetailsSO startingAbility;

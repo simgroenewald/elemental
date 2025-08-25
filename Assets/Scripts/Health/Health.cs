@@ -7,6 +7,7 @@ public class Health: MonoBehaviour
     private Character character;
     private float maxHealth;
     private float currentHealth;
+    private float healthRegenRate;
     float regenBucket;
     [SerializeField] private GameObject fillArea;
 
@@ -29,17 +30,17 @@ public class Health: MonoBehaviour
 
     private void Update()
     {
-/*        if (character.characterDetails.healthRegenRate != 0 && Time.frameCount % character.characterDetails.healthRegenRate == 0)
-        {
-            if (currentHealth < maxHealth)
-            {
-                OnIncreaseHealth(1);
-            }
-        }*/
+        /*        if (characterStats.healthRegenRate != 0 && Time.frameCount % characterStats.healthRegenRate == 0)
+                {
+                    if (currentHealth < maxHealth)
+                    {
+                        OnIncreaseHealth(1);
+                    }
+                }*/
 
-        if (currentHealth >= maxHealth || character.characterDetails.healthRegenRate == 0) return;
+        if (currentHealth >= maxHealth || healthRegenRate == 0) return;
 
-        regenBucket += character.characterDetails.healthRegenRate * Time.deltaTime;
+        regenBucket += healthRegenRate * Time.deltaTime;
         int whole = Mathf.FloorToInt(regenBucket);
         if (whole > 0)
         {
@@ -48,11 +49,17 @@ public class Health: MonoBehaviour
         }
     }
 
-    public void SetHealth(float maxHealth)
+    public void SetHealth(float maxHealth, float currentHealth)
     {
         this.maxHealth = maxHealth;
-        currentHealth = maxHealth;
+        this.currentHealth = currentHealth;
         character.healthEvents.RaiseUpdateHealthbarMax(maxHealth);
+        character.healthEvents.RaiseUpdateHealthbar(currentHealth);
+    }
+
+    public void SetHealthRegenRate(float healthRegenRate)
+    {
+        this.healthRegenRate = healthRegenRate;
     }
 
     public float GetMaxHealth() { 
