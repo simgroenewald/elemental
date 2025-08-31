@@ -104,7 +104,23 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
     {
         foreach (var dungeonRoom in dungeonRooms)
         {
-            roomGenerator.GenerateStructuredRoom(dungeonRoom);
+
+            if (dungeonRoom.theme == ElementTheme.Air)
+            {
+                roomGenerator.GenerateStructuredRoom(dungeonRoom, 3);
+            }
+            else if (dungeonRoom.theme == ElementTheme.Earth)
+            {
+                roomGenerator.GenerateStructuredRoom(dungeonRoom, 3);
+            }
+            else if (dungeonRoom.theme == ElementTheme.Fire)
+            {
+                roomGenerator.GenerateStructuredRoom(dungeonRoom, 3);
+            }
+            else
+            {
+                roomGenerator.GenerateStructuredRoom(dungeonRoom, 3);
+            }
         }
     }
 
@@ -128,12 +144,36 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
     public void PopulateRoomTiles(List<DungeonRoom> dungeonRooms, StructureTypeToGridMapperSO structureToGridMapper)
     {
         structureToGridMapper.structureTypeToGridDict = structureToGridMapper.GetStructureTypeToGridDict();
-        Grid grid = structureToGridMapper.structureTypeToGridDict[StructureType.WaterRoom];
-        TilemapProperties properties = TilemapAnalyser.GenerateProperties(grid);
+
+        Grid waterGrid = structureToGridMapper.structureTypeToGridDict[StructureType.WaterRoom];
+        TilemapProperties waterRoomProperties = TilemapAnalyser.GenerateProperties(waterGrid);
+
+        Grid fireGrid = structureToGridMapper.structureTypeToGridDict[StructureType.FireRoom];
+        TilemapProperties fireRoomProperties = TilemapAnalyser.GenerateProperties(fireGrid);
+
+        Grid airGrid = structureToGridMapper.structureTypeToGridDict[StructureType.AirRoom];
+        TilemapProperties airRoomProperties = TilemapAnalyser.GenerateProperties(airGrid);
+
+        Grid earthGrid = structureToGridMapper.structureTypeToGridDict[StructureType.EarthRoom];
+        TilemapProperties earthRoomProperties = TilemapAnalyser.GenerateProperties(earthGrid);
 
         foreach (var dungeonRoom in dungeonRooms)
         {
-            WaveFunctionCollapse2 wfc = new WaveFunctionCollapse2(dungeonRoom.structure.structureTiles, properties, 10);
+            WaveFunctionCollapse2 wfc;
+            if (dungeonRoom.theme == ElementTheme.Air)
+            {
+                wfc = new WaveFunctionCollapse2(dungeonRoom.structure.structureTiles, waterRoomProperties, 10);
+            } else if (dungeonRoom.theme == ElementTheme.Earth) 
+            {
+                wfc = new WaveFunctionCollapse2(dungeonRoom.structure.structureTiles, waterRoomProperties, 10);
+            } else if (dungeonRoom.theme == ElementTheme.Fire)
+            {
+                wfc = new WaveFunctionCollapse2(dungeonRoom.structure.structureTiles, waterRoomProperties, 10);
+            } else
+            {
+                wfc = new WaveFunctionCollapse2(dungeonRoom.structure.structureTiles, waterRoomProperties, 10);
+            }
+
             wfc.PopulateOutputCells();
         }
     }
@@ -141,14 +181,40 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
     public void PopulateOpenDoorTiles(List<DungeonRoom> dungeonRooms, StructureTypeToGridMapperSO structureToGridMapper)
     {
         structureToGridMapper.structureTypeToGridDict = structureToGridMapper.GetStructureTypeToGridDict();
-        Grid grid = structureToGridMapper.structureTypeToGridDict[StructureType.WaterDoor];
-        TilemapProperties properties = TilemapAnalyser.GenerateProperties(grid);
+
+        Grid waterDoorGrid = structureToGridMapper.structureTypeToGridDict[StructureType.WaterDoor];
+        TilemapProperties waterDoorProperties = TilemapAnalyser.GenerateProperties(waterDoorGrid);
+
+        Grid fireDoorGrid = structureToGridMapper.structureTypeToGridDict[StructureType.FireDoor];
+        TilemapProperties fireDoorProperties = TilemapAnalyser.GenerateProperties(fireDoorGrid);
+
+        Grid airDoorGrid = structureToGridMapper.structureTypeToGridDict[StructureType.AirDoor];
+        TilemapProperties airDoorProperties = TilemapAnalyser.GenerateProperties(airDoorGrid);
+
+        Grid earthDoorGrid = structureToGridMapper.structureTypeToGridDict[StructureType.EarthDoor];
+        TilemapProperties earthDoorProperties = TilemapAnalyser.GenerateProperties(earthDoorGrid);
 
         foreach (var dungeonRoom in dungeonRooms)
         {
             foreach (var door in dungeonRoom.doorways)
             {
-                WaveFunctionCollapse2 wfc = new WaveFunctionCollapse2(door.structure.structureTiles, properties, 1);
+                WaveFunctionCollapse2 wfc;
+                if (dungeonRoom.theme == ElementTheme.Air)
+                {
+                    wfc = new WaveFunctionCollapse2(door.structure.structureTiles, waterDoorProperties, 1);
+                }
+                else if (dungeonRoom.theme == ElementTheme.Earth)
+                {
+                    wfc = new WaveFunctionCollapse2(door.structure.structureTiles, waterDoorProperties, 1);
+                }
+                else if (dungeonRoom.theme == ElementTheme.Fire)
+                {
+                    wfc = new WaveFunctionCollapse2(door.structure.structureTiles, waterDoorProperties, 1);
+                }
+                else
+                {
+                    wfc = new WaveFunctionCollapse2(door.structure.structureTiles, waterDoorProperties, 1);
+                }
                 wfc.PopulateOutputCells();
                 door.SetOpenDoorTiles();
             }

@@ -12,5 +12,8 @@ public enum StructureType
     HorizontalWoodenBridge,
     Platform,
     //Doors
-    WaterDoor
+    WaterDoor,
+    FireDoor,
+    AirDoor,
+    EarthDoor
 }

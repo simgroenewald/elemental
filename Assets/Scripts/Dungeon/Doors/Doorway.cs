@@ -17,62 +17,101 @@ public class Doorway: MonoBehaviour
     public NavMeshModifierVolume modifierVolume;
     public DungeonRoom room;
 
-    public Doorway Initialise(Vector2Int midPositon, int width, DoorType doortype, DungeonRoom room, Grid grid)
+    public Doorway Initialise(Vector2Int midPosition, int width, DoorType doortype, DungeonRoom room, Grid grid)
     {
         this.room = room;
         structure.floorPositions = new HashSet<Vector2Int>();
         int sideTileCount = width / 2;
 
         this.doortype = doortype;
-        this.midPosition = midPositon;
-        structure.floorPositions.Add(midPositon);
-        for (int i = 1; i < sideTileCount + 1; i++)
-        {
-            Vector2Int doorwayTileA = new Vector2Int();
-            Vector2Int doorwayTileB = new Vector2Int();
+        this.midPosition = midPosition;
 
+        for (int j = 0; j < room.GetDoorDepth(doortype); j ++)
+        {
             if (doortype == DoorType.BackDoor || doortype == DoorType.FrontDoor)
             {
-                doorwayTileA = new Vector2Int(midPositon.x - i, midPositon.y);
-                doorwayTileB = new Vector2Int(midPositon.x + i, midPositon.y);
-            }
-            else
+                midPosition = new Vector2Int(midPosition.x, midPosition.y + j);
+                structure.floorPositions.Add(midPosition);
+            } else
             {
-                doorwayTileA = new Vector2Int(midPositon.x, midPositon.y - i);
-                doorwayTileB = new Vector2Int(midPositon.x, midPositon.y + i);
-
+                midPosition = new Vector2Int(midPosition.x + j, midPosition.y);
+                structure.floorPositions.Add(midPosition);
             }
-            structure.floorPositions.Add(doorwayTileA);
-            structure.floorPositions.Add(doorwayTileB);
+
+            for (int i = 1; i < sideTileCount + 1; i++)
+            {
+                Vector2Int doorwayTileA;
+                Vector2Int doorwayTileB;
+
+                if (doortype == DoorType.BackDoor || doortype == DoorType.FrontDoor)
+                {
+                    doorwayTileA = new Vector2Int(midPosition.x - i, midPosition.y);
+                    doorwayTileB = new Vector2Int(midPosition.x + i, midPosition.y);
+                }
+                else
+                {
+                    doorwayTileA = new Vector2Int(midPosition.x, midPosition.y - i);
+                    doorwayTileB = new Vector2Int(midPosition.x, midPosition.y + i);
+
+                }
+                structure.floorPositions.Add(doorwayTileA);
+                structure.floorPositions.Add(doorwayTileB);
+            }
         }
 
         // === Convert tile position to world position ===
-        Vector3 worldPosition = grid.CellToWorld((Vector3Int)midPositon) + grid.cellSize / 2f;
+        Vector3 worldPosition = grid.CellToWorld((Vector3Int)midPosition) + grid.cellSize / 2f;
         transform.position = worldPosition;
 
         // === Adjust collider size based on orientation ===
-        BoxCollider2D collider = GetComponent<BoxCollider2D>();
-        if (collider != null)
+        BoxCollider2D entryCollider = transform.Find("EntryCollider").GetComponent<BoxCollider2D>();
+        if (entryCollider != null)
         {
             if (doortype == DoorType.LeftDoor)
             {
-                collider.size = new Vector2(0.2f, width);  
-                collider.offset = new Vector2(0.5f, 0);
+                entryCollider.size = new Vector2(0.2f, width);
+                entryCollider.offset = new Vector2(0.5f, 0);
             }
             else if (doortype == DoorType.RightDoor)
             {
-                collider.size = new Vector2(0.2f, width);
-                collider.offset = new Vector2(-0.5f, 0);
+                entryCollider.size = new Vector2(0.2f, width);
+                entryCollider.offset = new Vector2(-0.5f, 0);
             }
             else if (doortype == DoorType.FrontDoor)
             {
-                collider.size = new Vector2(width, 0.2f);
-                collider.offset = new Vector2(0, 0.5f);
+                entryCollider.size = new Vector2(width, 0.2f);
+                entryCollider.offset = new Vector2(0, 0.5f);
             }
             else if (doortype == DoorType.BackDoor)
             {
-                collider.size = new Vector2(width, 0.2f);
-                collider.offset = new Vector2(0, -0.5f);
+                entryCollider.size = new Vector2(width, 0.2f);
+                entryCollider.offset = new Vector2(0, -0.5f);
+            }
+        }
+
+        // === Adjust collider size based on orientation ===
+        BoxCollider2D exitCollider = transform.Find("ExitCollider").GetComponent<BoxCollider2D>();
+        if (exitCollider != null)
+        {
+            if (doortype == DoorType.LeftDoor)
+            {
+                exitCollider.size = new Vector2(0.2f, width);
+                exitCollider.offset = new Vector2(-0.5f, 0);
+            }
+            else if (doortype == DoorType.RightDoor)
+            {
+                exitCollider.size = new Vector2(0.2f, width);
+                exitCollider.offset = new Vector2(0.5f, 0);
+            }
+            else if (doortype == DoorType.FrontDoor)
+            {
+                exitCollider.size = new Vector2(width, 0.2f);
+                exitCollider.offset = new Vector2(0, -0.5f);
+            }
+            else if (doortype == DoorType.BackDoor)
+            {
+                exitCollider.size = new Vector2(width, 0.2f);
+                exitCollider.offset = new Vector2(0, 0.5f);
             }
         }
 
@@ -116,24 +155,6 @@ public class Doorway: MonoBehaviour
     public void GenerateStructureTiles()
     {
 
-        // Determine min and max based on orientation
-        Vector2Int min = new Vector2Int(int.MaxValue, int.MaxValue);
-        Vector2Int max = new Vector2Int(int.MinValue, int.MinValue);
-
-        foreach (var pos in structure.floorPositions)
-        {
-            if (doortype == DoorType.FrontDoor || doortype == DoorType.BackDoor)
-            {
-                if (pos.x < min.x) min = pos;
-                if (pos.x > max.x) max = pos;
-            }
-            else
-            {
-                if (pos.y < min.y) min = pos;
-                if (pos.y > max.y) max = pos;
-            }
-        }
-
         foreach (var pos in structure.floorPositions)
         {
             TileType tileType = doortype switch
@@ -145,8 +166,20 @@ public class Doorway: MonoBehaviour
                 _ => TileType.None
             };
 
-            if (pos == min || pos == max)
-                tileType = TileType.DoorEdge;
+            if (doortype == DoorType.FrontDoor || doortype == DoorType.BackDoor)
+            {
+                if (!structure.floorPositions.Contains(pos + Vector2Int.left) || !structure.floorPositions.Contains(pos + Vector2Int.right))
+                {
+                    tileType = TileType.DoorEdge;
+                }
+            }
+            else
+            {
+                if (!structure.floorPositions.Contains(pos + Vector2Int.up) || !structure.floorPositions.Contains(pos + Vector2Int.down))
+                {
+                    tileType = TileType.DoorEdge;
+                }
+            }
 
             structure.structureTiles.Add(new StructureTile(pos, tileType));
         }

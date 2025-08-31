@@ -45,8 +45,12 @@ public class RulesGenerator
             TryAddNeighbor(mapProperties, position.x, position.y - 1, hash, WFCDirection.Down);
             TryAddNeighbor(mapProperties, position.x - 1, position.y, hash, WFCDirection.Left);
             TryAddNeighbor(mapProperties, position.x + 1, position.y, hash, WFCDirection.Right);
+/*            TryAddNeighbor(mapProperties, position.x - 1, position.y + 1, hash, WFCDirection.DgUpLeft);
+            TryAddNeighbor(mapProperties, position.x + 1, position.y + 1, hash, WFCDirection.DgUpRight);
+            TryAddNeighbor(mapProperties, position.x - 1, position.y - 1, hash, WFCDirection.DgDownLeft);
+            TryAddNeighbor(mapProperties, position.x + 1, position.y - 1, hash, WFCDirection.DgDownRight);*/
         }
-        GenerateEmptyTileRules();
+        //GenerateEmptyTileRules();
         Debug.Log("Done generating");
     }
 
@@ -54,13 +58,13 @@ public class RulesGenerator
     {
         if (x < mapProperties.mapBounds.xMin || y < mapProperties.mapBounds.yMin || x >= mapProperties.mapBounds.xMax || y >= mapProperties.mapBounds.yMax)
         {
-            AddNeighbor(currentHash, direction, 0); // 0 for missing neighbor
+            //AddNeighbor(currentHash, direction, 0); // 0 for missing neighbor
             return;
         }
 
         if (!mapProperties.PositionToIndex.TryGetValue(new Vector2Int(x, y), out var neighbourHash))
         {
-            AddNeighbor(currentHash, direction, 0);
+            //AddNeighbor(currentHash, direction, 0);
             return;
         }
 
@@ -101,6 +105,10 @@ public class RulesGenerator
             WFCDirection.Down => WFCDirection.Up,
             WFCDirection.Left => WFCDirection.Right,
             WFCDirection.Right => WFCDirection.Left,
+/*            WFCDirection.DgUpLeft => WFCDirection.DgDownRight,
+            WFCDirection.DgUpRight => WFCDirection.DgDownLeft,
+            WFCDirection.DgDownLeft => WFCDirection.DgUpRight,
+            WFCDirection.DgDownRight => WFCDirection.DgUpLeft,*/
             _ => direction
         };
     }

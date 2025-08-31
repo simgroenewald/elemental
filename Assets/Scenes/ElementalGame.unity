@@ -142,6 +142,14 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 212039855390775792, guid: 452071372d955194ea495723c315f62d, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1794260766136911798, guid: 452071372d955194ea495723c315f62d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3571426750705355574, guid: 452071372d955194ea495723c315f62d, type: 3}
       propertyPath: dungeonLayers
       value: 
@@ -684,9 +692,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0
-    width: 1
-    height: 1
+    y: 0.055555556
+    width: 0.33333334
+    height: 0.3333333
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -1512,6 +1520,10 @@ PrefabInstance:
     - target: {fileID: 767087042474169553, guid: 867c9848b1140974d96350a2b2857406, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3268277285761170058, guid: 867c9848b1140974d96350a2b2857406, type: 3}
+      propertyPath: m_TileSize
+      value: 32
       objectReference: {fileID: 0}
     - target: {fileID: 3268277285761170058, guid: 867c9848b1140974d96350a2b2857406, type: 3}
       propertyPath: m_UseGeometry
