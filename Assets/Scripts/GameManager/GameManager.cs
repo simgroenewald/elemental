@@ -107,8 +107,14 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         player.SetPlayerStartPosition(startRoom, startRoom.structure.tilemapLayers.grid);
         
         // Initialize enemies BEFORE NavMesh baking so they're included as obstacles
-        startRoom.SpawnRoomEnemies(3);
-        startRoom.SpawnRoomItems(2);
+        foreach (var room in dungeon.dungeonRooms)
+        {
+            if (room.roomType != RoomType.Start)
+            {
+                room.SpawnRoomEnemies(3);
+                room.SpawnRoomItems(2);
+            }
+        }
 
         // Now bake NavMesh with all agents present
         playerNavMeshSurface.BuildNavMesh();

@@ -53,6 +53,7 @@ MonoBehaviour:
   roomType: 0
   theme: 0
   nodeGraphPosition: {x: 0, y: 0}
+  roomObject: {fileID: 0}
   parent: {fileID: 0}
   children: []
   bounds:
@@ -183,7 +184,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5030896358104097294, guid: 105e34c90d3c6fc4f8c08e7c9f4bcf45, type: 3}
       propertyPath: m_Layer
-      value: 15
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

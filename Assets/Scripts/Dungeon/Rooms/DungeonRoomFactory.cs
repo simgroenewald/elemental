@@ -9,7 +9,8 @@ public class DungeonRoomFactory : MonoBehaviour
     {
         GameObject roomObject = GameObject.Instantiate(dungeonRoomPrefab, objectParent);
         DungeonRoom room = roomObject.GetComponent<DungeonRoom>();
-        room.Initialise(type, position); // Or other setup logic
+        room.Initialise(type, position, roomObject); // Or other setup logic
+        room.UpdateObjectName();
         return room;
     }
 }

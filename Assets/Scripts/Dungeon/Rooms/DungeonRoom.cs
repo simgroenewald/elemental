@@ -1,3 +1,4 @@
+using GLTFast.Schema;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ public class DungeonRoom : MonoBehaviour
     public RoomType roomType;
     public ElementTheme theme;
     public Vector2 nodeGraphPosition;
+    public GameObject roomObject;
 
     public DungeonRoom parent;
     public List<DungeonRoom> children = new();
@@ -42,15 +44,32 @@ public class DungeonRoom : MonoBehaviour
     public bool IsLeaf => children.Count == 0;
     public bool CanHaveMoreChildren => children.Count < 3;
 
-    public DungeonRoom Initialise(RoomType type, Vector2 pos)
+    public DungeonRoom Initialise(RoomType type, Vector2 pos, GameObject roomObject)
     {
         roomType = type;
         theme = (ElementTheme)UnityEngine.Random.Range(0, 4);
         nodeGraphPosition = pos;
+        this.roomObject = roomObject;
         parent = null;
         children = new();
         SetName();
         return this;
+    }
+
+    public void UpdateObjectName()
+    {
+        roomObject.name = $"DungeonRoom_{roomType}_{theme}";
+    }
+
+    public int GetDoorDepth(DoorType doorType)
+    {
+        if (theme == ElementTheme.Air && doorType == DoorType.FrontDoor)
+        {
+            return 1;
+        } else
+        {
+            return 1;
+        }
     }
 
     public void SpawnRoomEnemies(int enemyCount)
@@ -157,13 +176,17 @@ public class DungeonRoom : MonoBehaviour
         SetRoomDoorClosedTiles();
 
         Tilemap baseTilemap = structure.tilemapLayers.baseTilemap;
+        Tilemap baseDecorTilemap = structure.tilemapLayers.baseDecorationTilemap;
         Tilemap frontTilemap = structure.tilemapLayers.frontTilemap;
+        Tilemap frontDecorTilemap = structure.tilemapLayers.frontDecorationTilemap;
         Tilemap collisionTilemap = structure.tilemapLayers.collisionTilemap;
 
         foreach (var tile in structure.structureTiles)
         {
             baseTilemap.SetTile((Vector3Int)tile.position, tile.baseTile);
+            baseDecorTilemap.SetTile((Vector3Int)tile.position, tile.baseDecorTile);
             frontTilemap.SetTile((Vector3Int)tile.position, tile.frontTile);
+            frontDecorTilemap.SetTile((Vector3Int)tile.position, tile.frontDecorTile);
             collisionTilemap.SetTile((Vector3Int)tile.position, tile.collisionTile);
         }
 

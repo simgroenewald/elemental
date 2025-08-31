@@ -33,6 +33,6 @@ public class StructureTilemap : MonoBehaviour
 
     public void HideCollisionLayer()
     {
-        tilemapLayers.collisionTilemap.GetComponent<TilemapRenderer>().enabled = false;
+        //tilemapLayers.collisionTilemap.GetComponent<TilemapRenderer>().enabled = false;
     }
 }

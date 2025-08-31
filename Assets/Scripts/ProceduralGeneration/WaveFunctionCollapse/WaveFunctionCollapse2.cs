@@ -26,8 +26,8 @@ public class WaveFunctionCollapse2
 
     private void InitialiseOutputCells() {
         outputCells.Clear();
-        float entropyNoiseIncrement = 0.0000001f;
-        float entropyNoise = 0.0000001f;
+        float entropyNoiseIncrement = 0.000001f;
+        float entropyNoise = 0.000001f;
         foreach (var tile in structureTiles)
         {
             WaveCell wavecell = new WaveCell(tile.position, tile.tileType, entropyNoise);
@@ -50,7 +50,7 @@ public class WaveFunctionCollapse2
                     solved = true;
                     break;
                 }
-                if (waveCell.Position.Equals(new Vector2Int(27, 42)))
+                if (waveCell.Position.Equals(new Vector2Int(100, 107)))
                 {
                     Debug.Log("Gotcha");
                 }
@@ -98,7 +98,7 @@ public class WaveFunctionCollapse2
 
             if (waveCell.CollapsedIndex == -1)
             {
-                Debug.LogError("Wavecell collapsed index not set.");
+                Debug.LogError($"Wavecell collapsed index not set: {waveCell.Position.x}: {waveCell.Position.y}");
                 index++;
                 continue;
             }

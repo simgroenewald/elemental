@@ -199,6 +199,7 @@ public class DungeonLayoutGenerator : MonoBehaviour
             if (room.IsLeaf && room.roomType == RoomType.Normal)
             {
                 room.roomType = RoomType.MiniBoss;
+                room.UpdateObjectName();
                 return;
             }
         }
@@ -209,6 +210,7 @@ public class DungeonLayoutGenerator : MonoBehaviour
             if (room.roomType == RoomType.Normal && room.parent.roomType != RoomType.Start)
             {
                 room.roomType = RoomType.MiniBoss;
+                room.UpdateObjectName();
                 return;
             }
         }

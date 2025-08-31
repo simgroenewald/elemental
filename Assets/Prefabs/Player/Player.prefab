@@ -386,6 +386,8 @@ GameObject:
   - component: {fileID: 8045889658126868808}
   - component: {fileID: 6747553736844569354}
   - component: {fileID: 502732637409013424}
+  - component: {fileID: 1626952878569184342}
+  - component: {fileID: 1835054726144974775}
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
@@ -662,6 +664,8 @@ MonoBehaviour:
   characterCombat: {fileID: 0}
   characterState: {fileID: 0}
   characterMovement: {fileID: 0}
+  characterStatsModifier: {fileID: 0}
+  statModifierEvents: {fileID: 0}
   agent: {fileID: 0}
   target: {fileID: 0}
   playerDetails: {fileID: 0}
@@ -932,12 +936,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f681b339be6b2f44d889722157211554, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  passiveBuffItemSO: {fileID: 0}
+  activeBuffItem: {fileID: 0}
   backpack: {fileID: 11400000, guid: 9ecb956214851bc418c9982e8d2b043b, type: 2}
   parametersToModify:
   - itemParameterSO: {fileID: 11400000, guid: 34965fdad044db647a0437df4b02ac2b, type: 2}
     value: -10
   itemParameters: []
+--- !u!114 &1626952878569184342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5919330583086702471}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 939b1eddd1f7b8f40967c6122239d780, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1835054726144974775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5919330583086702471}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73d1aceab3a50a045b680f7cf94a38c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8774360104910127703
 GameObject:
   m_ObjectHideFlags: 0

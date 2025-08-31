@@ -32,7 +32,7 @@ using UnityEngine.Tilemaps;
             GetEdgePositions(dungeonRoom);
             GetNaturalEdgePositions(dungeonRoom);
         }
-        public void GenerateStructuredRoom(DungeonRoom dungeonRoom)
+        public void GenerateStructuredRoom(DungeonRoom dungeonRoom, int wallHeight)
         {
             //Debug.Log($"Generating structured room at {position} with size {width}x{length}");
             List<HashSet<BoundsInt>> roomGroupsList = GenerateBSPLayout(dungeonRoom.bounds, dungeonRoom.subRoomMinWidth, dungeonRoom.subRoomMinHeight);
@@ -41,7 +41,7 @@ using UnityEngine.Tilemaps;
             //HashSet<Vector2Int> corridors = new HashSet<Vector2Int>();
             HashSet<Vector2Int> floorPositions = GenerateBSPFloor(roomAreas, corridors);
             CleanUpRoomTiles(dungeonRoom.bounds, floorPositions);
-            dungeonRoom.structure.GenerateStructureTiles(dungeonRoom.bounds, floorPositions, true, 3);
+            dungeonRoom.structure.GenerateStructureTiles(dungeonRoom.bounds, floorPositions, true, wallHeight);
             dungeonRoom.roomAreas = roomAreas;
             GetNaturalEdgePositions(dungeonRoom);
         }
@@ -80,17 +80,44 @@ using UnityEngine.Tilemaps;
                     Vector2Int down = pos + Vector2Int.down;
                     Vector2Int left = pos + Vector2Int.left;
                     Vector2Int right = pos + Vector2Int.right;
+                    Vector2Int dgUpLeft = pos + Vector2Int.up + Vector2Int.left;
+                    Vector2Int dgUpRight = pos + Vector2Int.up + Vector2Int.right;
+                    Vector2Int dgDownLeft = pos + Vector2Int.down + Vector2Int.left;
+                    Vector2Int dgDownRight = pos + Vector2Int.down + Vector2Int.right;
 
-                    if (floorPositions.Contains(up) && floorPositions.Contains(down))
-                    {
-                        floorPositions.Add(pos);
-                    }
-
-                    if (floorPositions.Contains(left) && floorPositions.Contains(right))
-                    {
-                        floorPositions.Add(pos);
-                    }
+                if (floorPositions.Contains(up) && floorPositions.Contains(down))
+                {
+                    floorPositions.Add(pos);
                 }
+
+                if (floorPositions.Contains(left) && floorPositions.Contains(right))
+                {
+                    floorPositions.Add(pos);
+                }
+
+                if (floorPositions.Contains(dgUpLeft) && floorPositions.Contains(dgDownRight) && !floorPositions.Contains(up) && !floorPositions.Contains(down) && !floorPositions.Contains(left) && !floorPositions.Contains(right) && !floorPositions.Contains(dgUpRight) && !floorPositions.Contains(dgDownLeft))
+                {
+                    floorPositions.Add(pos);
+                    floorPositions.Add(up);
+                    floorPositions.Add(down);
+                    floorPositions.Add(left);
+                    floorPositions.Add(right);
+                    floorPositions.Add(dgUpRight);
+                    floorPositions.Add(dgDownLeft);
+                }
+
+                if (floorPositions.Contains(dgUpRight) && floorPositions.Contains(dgDownLeft) && !floorPositions.Contains(up) && !floorPositions.Contains(down) && !floorPositions.Contains(left) && !floorPositions.Contains(right) && !floorPositions.Contains(dgUpLeft) && !floorPositions.Contains(dgDownRight))
+                {
+                    floorPositions.Add(pos);
+                    floorPositions.Add(up);
+                    floorPositions.Add(down);
+                    floorPositions.Add(left);
+                    floorPositions.Add(right);
+                    floorPositions.Add(dgUpLeft);
+                    floorPositions.Add(dgDownRight);
+                }
+
+            }
             }
             /*        foreach(var tile in roomTiles)
                     {

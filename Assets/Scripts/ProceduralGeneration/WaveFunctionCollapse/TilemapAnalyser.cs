@@ -89,7 +89,19 @@ public class TilemapAnalyser
                 }
 
                 List<TileBase> layerTiles = new List<TileBase> { tilebase, baseDecorTile, frontTile, frontDecorTile, typeTile };
-                int key = GetKey(layerTiles);
+                int key;
+                if (typeTile == null)
+                {
+                    Debug.Log("No type tile");
+                }
+                if (typeTile.name == "blank")
+                {
+                    key = 0;
+                } else
+                {
+                    key = GetKey(layerTiles);
+                }
+
                 //Debug.Log("Key: " + key);
 
                 // Assign or retrieve index

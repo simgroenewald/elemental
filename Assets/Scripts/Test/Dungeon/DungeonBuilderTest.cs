@@ -32,13 +32,17 @@ public class DungeonBuilderTest : SingletonMonobehaviour<DungeonBuilderTest>
     List<DungeonRoom> dungeonRooms;
     List<Connector> connectors;
     GameObject dungeonParent;
+    Dungeon dungeon;
 
     public void GenerateDungeon()
     {
-        //int seed = UnityEngine.Random.Range(2000, 10000);
+        seed = UnityEngine.Random.Range(2000, 10000);
         //int seed = 9964;
         //int seed = 6552;
-        int seed = 6776;
+        // seed = 9042
+        seed = 6776;
+        //seed = 6940;
+        //seed = 7691;
         Debug.Log("Seed:" + seed);
         UnityEngine.Random.InitState(seed);
         dungeonRooms = dungeonLayoutGenerator.GenerateDungeonLayout(levelSettings);
@@ -67,6 +71,11 @@ public class DungeonBuilderTest : SingletonMonobehaviour<DungeonBuilderTest>
                 DrawRooms(dungeonRoom.subRooms);
             }
         }
+    }
+
+    public void CreateCollisionLayer()
+    {
+        dungeonBuilder.CreateDungeonCollisionLayer(dungeonRooms, connectors);
     }
 
     public void GenerateConnectors()
@@ -185,7 +194,14 @@ public class DungeonBuilderTest : SingletonMonobehaviour<DungeonBuilderTest>
 
     public void DrawDoorTiles()
     {
-        dungeonBuilder.DrawRoomDoorTiles(dungeonRooms);
+        foreach (var dungeonRoom in dungeonRooms)
+        {
+            foreach (var door in dungeonRoom.doorways)
+            {
+                door.Open(dungeonRoom.structure.tilemapLayers);
+            }
+        }
+
     }
 
     private void DrawRoomDoorways(List<Doorway> doorways)
@@ -291,7 +307,18 @@ public class DungeonBuilderTest : SingletonMonobehaviour<DungeonBuilderTest>
         //ClearRooms();*/
         //ClearOldTiles();
         ClearTilemap();
+        GameObject dungeonParent = GameObject.Find("Dungeon");
+        DeleteChildrenFrom(dungeonParent.transform);
         dungeonRooms = null;
+    }
+
+    public void DeleteChildrenFrom(Transform parent)
+    {
+        for (int i = parent.childCount - 1; i >= 0; i--)
+        {
+            Transform child = parent.GetChild(i);
+                DestroyImmediate(child.gameObject);
+        }
     }
 
     public void ClearRooms()

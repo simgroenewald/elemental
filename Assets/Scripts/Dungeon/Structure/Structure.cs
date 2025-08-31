@@ -177,27 +177,31 @@ public class Structure: MonoBehaviour
 
                 if (tileType == TileType.WallLeft)
                 {
-                    Vector2Int up = pos + Vector2Int.up;
-                    Vector2Int up2 = pos + Vector2Int.up + Vector2Int.up;
-                    Vector2Int dgUpLeft = pos + Vector2Int.up + Vector2Int.left;
-                    Vector2Int dgUpLeft2 = pos + Vector2Int.up + Vector2Int.up + Vector2Int.left;
+                    List<TileType> typesToCheck = new List<TileType> { TileType.BottomRightConcave, TileType.WallFront, TileType.TopRightConvex };
+                    tileType = GetSideWallTileType(extentionLength, pos, tileType, Vector2Int.left, TileType.BottomLeftConcave, typesToCheck);
+                    /*                    Vector2Int up = pos + Vector2Int.up;
+                                        Vector2Int up2 = pos + Vector2Int.up + Vector2Int.up;
+                                        Vector2Int dgUpLeft = pos + Vector2Int.up + Vector2Int.left;
+                                        Vector2Int dgUpLeft2 = pos + Vector2Int.up + Vector2Int.up + Vector2Int.left;
 
-                    TileType upTileType = GetTileType(up, floorPositions);
-                    TileType upTileType2 = GetTileType(up2, floorPositions);
-                    TileType dgUpLeftTileType = GetTileType(dgUpLeft, floorPositions);
-                    TileType dgUpLeftTileType2 = GetTileType(dgUpLeft2, floorPositions);
+                                        TileType upTileType = GetTileType(up, floorPositions);
+                                        TileType upTileType2 = GetTileType(up2, floorPositions);
+                                        TileType dgUpLeftTileType = GetTileType(dgUpLeft, floorPositions);
+                                        TileType dgUpLeftTileType2 = GetTileType(dgUpLeft2, floorPositions);
 
-                    if (upTileType == TileType.BottomLeftConcave && (dgUpLeftTileType == TileType.BottomRightConcave || dgUpLeftTileType == TileType.WallFront || dgUpLeftTileType == TileType.TopRightConvex) ||
-                        upTileType2 == TileType.BottomLeftConcave && (dgUpLeftTileType2 == TileType.BottomRightConcave || dgUpLeftTileType2 == TileType.WallFront || dgUpLeftTileType2 == TileType.TopRightConvex))
-                    {
-                        tileType = TileType.BottomLeftConcave;
-                    }
+                                        if (upTileType == TileType.BottomLeftConcave && (dgUpLeftTileType == TileType.BottomRightConcave || dgUpLeftTileType == TileType.WallFront || dgUpLeftTileType == TileType.TopRightConvex) ||
+                                            upTileType2 == TileType.BottomLeftConcave && (dgUpLeftTileType2 == TileType.BottomRightConcave || dgUpLeftTileType2 == TileType.WallFront || dgUpLeftTileType2 == TileType.TopRightConvex))
+                                        {
+                                            tileType = TileType.BottomLeftConcave;
+                                        }*/
 
                 }
 
                 if (tileType == TileType.WallRight)
                 {
-                    Vector2Int up = pos + Vector2Int.up;
+                    List <TileType> typesToCheck = new List<TileType> { TileType.BottomLeftConcave, TileType.WallFront, TileType.TopLeftConvex };
+                    tileType = GetSideWallTileType(extentionLength, pos, tileType, Vector2Int.right, TileType.BottomRightConcave, typesToCheck);
+/*                    Vector2Int up = pos + Vector2Int.up;
                     Vector2Int up2 = pos + Vector2Int.up + Vector2Int.up;
                     Vector2Int dgUpRight = pos + Vector2Int.up + Vector2Int.right;
                     Vector2Int dgUpRight2 = pos + Vector2Int.up + Vector2Int.up + Vector2Int.right;
@@ -211,7 +215,7 @@ public class Structure: MonoBehaviour
                         upTileType2 == TileType.BottomRightConcave && (dgUpRightTileType2 == TileType.BottomLeftConcave || dgUpRightTileType2 == TileType.WallFront || dgUpRightTileType2 == TileType.TopLeftConvex))
                     {
                         tileType = TileType.BottomRightConcave;
-                    }
+                    }*/
                 }
 
                 structureTiles.Add(new StructureTile(pos, tileType));
@@ -262,6 +266,27 @@ public class Structure: MonoBehaviour
         {
             ExtendFrontWalls(extentionLength);
         }
+    }
+
+    // Determines whether a right or left wall needs to be have a concave corner backgrounds piece due to neighbours
+    private TileType GetSideWallTileType(int extentionLength, Vector2Int pos, TileType tileType, Vector2Int sideOffset, TileType upTileType, List<TileType> dgTypesToCheck)
+    {
+        for (int i = 1; i < extentionLength; i++)
+        {
+            Vector2Int upOffset = pos + new Vector2Int(0, i);
+            Vector2Int dgUpLeftOffset = pos + new Vector2Int(0, i) + sideOffset;
+
+            TileType upOffsetTileType = GetTileType(upOffset, floorPositions);
+            TileType dgUpLeftOffsetTileType = GetTileType(dgUpLeftOffset, floorPositions);
+
+            if (upOffsetTileType == upTileType && dgTypesToCheck.Contains(dgUpLeftOffsetTileType))
+            {
+                tileType = upTileType;
+                break;
+            }
+        }
+
+        return tileType;
     }
 
     private TileType GetTileType(Vector2Int pos, HashSet<Vector2Int> floorPositions)
