@@ -17,6 +17,8 @@ MonoBehaviour:
   <Name>k__BackingField: Apple
   <Description>k__BackingField: The magical apple
   <ItemImage>k__BackingField: {fileID: 21300000, guid: 5c99ae1e6ada67540bb7da32fb57884d, type: 3}
+  <DefaultParametersList>k__BackingField: []
+  <DropChance>k__BackingField: 100
   modifiersData:
   - statModifier: {fileID: 11400000, guid: 99fb6ec66b4e93647a8513f7d404d193, type: 2}
     value: 10

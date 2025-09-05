@@ -20,3 +20,4 @@ MonoBehaviour:
   <DefaultParametersList>k__BackingField:
   - itemParameterSO: {fileID: 11400000, guid: 34965fdad044db647a0437df4b02ac2b, type: 2}
     value: 100
+  <DropChance>k__BackingField: 50
