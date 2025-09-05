@@ -12,5 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02fcef62324c14e40a4163a9c9ea0b81, type: 3}
   m_Name: CorruptMoose
   m_EditorClassIdentifier: 
-  enemyName: CorruptMoose
-  enemyPrefab: {fileID: 5822319915835916726, guid: 7e9339e4dfb0703409217bc219b5b556, type: 3}
+  characterName: Corrupt Moose
+  characterPrefab: {fileID: 5822319915835916726, guid: 7e9339e4dfb0703409217bc219b5b556, type: 3}
+  runtimeAnimatorController: {fileID: 9100000, guid: fa0f573ce4269714990b336c60ac2605, type: 2}
+  miniMapIcon: {fileID: 0}
+  healthRegenRate: 0
+  health: 100
+  movementSpeed: 1.5
+  baseAttackDamage: 0
+  startingAbility: {fileID: 11400000, guid: af9d6bd231f03a24fb8e4262f6ab6673, type: 2}
+  abilityList:
+  - {fileID: 11400000, guid: af9d6bd231f03a24fb8e4262f6ab6673, type: 2}
+  lineOfSight: 1

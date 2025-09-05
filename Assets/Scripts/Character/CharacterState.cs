@@ -53,6 +53,5 @@ public class CharacterState : MonoBehaviour
     {
         ResetStates();
         isDead = true;
-        Destroy(gameObject);
     }
 }

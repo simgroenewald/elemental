@@ -5,12 +5,25 @@ using UnityEngine.UIElements;
 
 public class SimpleEnemyInitialiser : MonoBehaviour
 {
-    [Header("Enemy Initialisation")]
-    [SerializeField] private List<GameObject> enemies;
 
-    public List<GameObject> GetEnemyPrefabs()
+    [SerializeField] private EnemyRoomTypeMapperSO mapper;
+
+
+    public void Awake()
     {
+        mapper.PopulateEnemiesDicts();
+    }
 
+    public List<GameObject> GetEnemyPrefabs(ElementTheme theme)
+    {
+        List<GameObject> enemies = mapper.themeToEnemiesDict[theme];
         return enemies;
     }
+    public GameObject GetMiniBossPrefab(ElementTheme theme)
+    {
+        List<GameObject> miniBosses = mapper.themeToMiniBossesDict[theme];
+        GameObject miniBoss = miniBosses[Random.Range(0, miniBosses.Count)];
+        return miniBoss;
+    }
+
 }

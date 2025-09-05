@@ -12,5 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02fcef62324c14e40a4163a9c9ea0b81, type: 3}
   m_Name: OrcWarrior
   m_EditorClassIdentifier: 
-  enemyName: OrcWarrior
-  enemyPrefab: {fileID: 327954915785254603, guid: f16faa576c1173343bc01c7be47b55a5, type: 3}
+  characterName: Orc Warrior
+  characterPrefab: {fileID: 327954915785254603, guid: f16faa576c1173343bc01c7be47b55a5, type: 3}
+  runtimeAnimatorController: {fileID: 9100000, guid: 634dee606d6bd064693ec82f5bfb989b, type: 2}
+  miniMapIcon: {fileID: 0}
+  healthRegenRate: 0
+  health: 100
+  movementSpeed: 2
+  baseAttackDamage: 0
+  startingAbility: {fileID: 11400000, guid: dc738153c77bff14fa967fe84778a482, type: 2}
+  abilityList:
+  - {fileID: 11400000, guid: dc738153c77bff14fa967fe84778a482, type: 2}
+  lineOfSight: 1.5

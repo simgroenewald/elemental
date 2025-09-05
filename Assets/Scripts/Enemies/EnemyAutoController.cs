@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.TextCore.Text;
@@ -47,7 +48,7 @@ public class EnemyAutoController : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!enemy.characterState.isDying && !enemy.characterState.isDead)
+        if (!enemy.characterState.isDying && !enemy.characterState.isDead && !player.characterState.isDead && enemy.room.isEntered)
         {
             float distanceFromPlayer = Vector2.Distance(player.transform.position, enemy.transform.position);
             Player characterTarget = null;
@@ -62,22 +63,26 @@ public class EnemyAutoController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!enemy.characterState.isDying && !enemy.characterState.isDead)
-        {
+        if (!enemy.characterState.isDying && !enemy.characterState.isDead && !player.characterState.isDead && enemy.room.isEntered) {
             characterCombat.AttemptAttack(player, true, lineOfSight);
             if (characterState.isMoving)
             {
                 characterMovement.UpdateCharacterMovement();
             }
-        }
-        float distanceFromPlayer = Vector2.Distance(player.transform.position, enemy.transform.position);
-        if (distanceFromPlayer < lineOfSight)
-        {
-            if (characterCombat.attackTriggered)
+            
+            float distanceFromPlayer = Vector2.Distance(player.transform.position, enemy.transform.position);
+            if (distanceFromPlayer < lineOfSight)
             {
-                characterCombat.normalAdvance = true;
-                characterCombat.attackTriggered = false;
+                if (characterCombat.attackTriggered)
+                {
+                    characterCombat.normalAdvance = true;
+                    characterCombat.attackTriggered = false;
+                }
             }
+        }
+        if (enemy.characterState.isDead)
+        {
+            OnDeath();
         }
     }
 
@@ -99,6 +104,12 @@ public class EnemyAutoController : MonoBehaviour
             characterCombat.attackTriggered = true;
             characterMovement.MoveToPosition(player.transform.position);
         }
+    }
+
+    private void OnDeath()
+    {
+        GameEventManager.Instance.itemEvents.RaiseDropItemEvent(enemy.room, enemy.characterDetails.health, enemy.transform);
+        Destroy(gameObject);
     }
 
 
