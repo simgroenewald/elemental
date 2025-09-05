@@ -28,9 +28,12 @@ public class TargetEnemy : MonoBehaviour, ITargetable
 
     void OnMouseEnter()
     {
-        HighlightEnemy();
-        mouseOver = true;
-        GameEventManager.Instance.targetEvents.RaiseOnAimEnemy();
+        if (enemy.room.isEntered)
+        {
+            HighlightEnemy();
+            mouseOver = true;
+            GameEventManager.Instance.targetEvents.RaiseOnAimEnemy();
+        }
     }
 
     void HighlightEnemy()
@@ -54,7 +57,7 @@ public class TargetEnemy : MonoBehaviour, ITargetable
     void Update()
     {
         // Only check clicks if mouse is over this enemy and not over UI
-        if (mouseOver && (!EventSystem.current || !EventSystem.current.IsPointerOverGameObject()))
+        if (enemy.room.isEntered && mouseOver && (!EventSystem.current || !EventSystem.current.IsPointerOverGameObject()))
         {
             if (Input.GetMouseButtonDown(1))
             {

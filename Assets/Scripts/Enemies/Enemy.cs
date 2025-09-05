@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Rendering;
@@ -7,6 +8,7 @@ using UnityEngine.Rendering;
 public class Enemy : Character
 {
     public EnemyDetailsSO enemyDetails;
+    public DungeonRoom room;
     protected override void Awake()
     {
         base.Awake();
@@ -23,5 +25,10 @@ public class Enemy : Character
 
         base.Initialise(enemyDetails);
 
+    }
+
+    public void SetRoom(DungeonRoom room)
+    {
+        this.room = room;
     }
 }
