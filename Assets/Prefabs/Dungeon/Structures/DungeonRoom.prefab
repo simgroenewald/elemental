@@ -108,9 +108,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e36589f89fbe8d4481bddab76b18649, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemies:
-  - {fileID: 4167889123300124595, guid: 8044614bd42b89947a08e6fb5e571ee4, type: 3}
-  - {fileID: 3741971743796395161, guid: 752c760e8c6ddfa468b8fb040420d086, type: 3}
+  mapper: {fileID: 11400000, guid: 52798e58c454c5e40abfb5facc60b523, type: 2}
 --- !u!114 &-2039134324546566713
 MonoBehaviour:
   m_ObjectHideFlags: 0

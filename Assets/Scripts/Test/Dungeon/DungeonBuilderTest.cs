@@ -43,6 +43,7 @@ public class DungeonBuilderTest : SingletonMonobehaviour<DungeonBuilderTest>
         seed = 6776;
         //seed = 6940;
         //seed = 7691;
+        //seed = 8543'
         Debug.Log("Seed:" + seed);
         UnityEngine.Random.InitState(seed);
         dungeonRooms = dungeonLayoutGenerator.GenerateDungeonLayout(levelSettings);

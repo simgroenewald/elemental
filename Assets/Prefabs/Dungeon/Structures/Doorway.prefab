@@ -158,6 +158,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2751919805339325773}
   - component: {fileID: 166940437197290085}
+  - component: {fileID: 8542229202041569740}
   m_Layer: 12
   m_Name: ExitCollider
   m_TagString: Untagged
@@ -226,6 +227,19 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &8542229202041569740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2522301337338206461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d54c9d36a0d720a4db200e27ecd056d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  doorway: {fileID: 1847865571171618188}
 --- !u!1 &3488390621213575550
 GameObject:
   m_ObjectHideFlags: 0
@@ -236,6 +250,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1706801788140895528}
   - component: {fileID: 4453937100426816274}
+  - component: {fileID: 8201027152062470242}
   m_Layer: 12
   m_Name: EntryCollider
   m_TagString: Untagged
@@ -304,3 +319,16 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &8201027152062470242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3488390621213575550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfef7b0b234da5d4fbd2a782c15128d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  doorway: {fileID: 1847865571171618188}

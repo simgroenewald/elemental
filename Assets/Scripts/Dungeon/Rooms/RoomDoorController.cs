@@ -30,6 +30,8 @@ public class RoomDoorController : MonoBehaviour
         {
             foreach (var door in dungeonRoom.doorways)
             {
+                if (GameManager.Instance.state != GameState.bossRoom && door.isBossRoomDoorway)
+                    continue;
                 door.Open(dungeonRoom.structure.tilemapLayers);
             }
         }
@@ -52,7 +54,7 @@ public class RoomDoorController : MonoBehaviour
         {
             foreach (var door in dungeonRoom.exitDoorways)
             {
-                door.Open(dungeonRoom.structure.tilemapLayers);
+                door.Close(dungeonRoom.structure.tilemapLayers);
             }
         }
 

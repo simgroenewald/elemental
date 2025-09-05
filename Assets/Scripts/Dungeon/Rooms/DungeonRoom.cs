@@ -40,6 +40,7 @@ public class DungeonRoom : MonoBehaviour
     public bool isEntered = false;
     public bool isComplete = false;
     public bool previouslyEntered = false;
+    private bool allEnemiesDefeated = false;
 
     public bool IsLeaf => children.Count == 0;
     public bool CanHaveMoreChildren => children.Count < 3;
@@ -56,6 +57,26 @@ public class DungeonRoom : MonoBehaviour
         return this;
     }
 
+    public void Update()
+    {
+        allEnemiesDefeated = true;
+        if (isEntered && !isComplete)
+        {
+            foreach (var enemy in enemies)
+            {
+                if (enemy && !enemy.characterState.isDead)
+                {
+                    allEnemiesDefeated = false;
+                    break;
+                }
+            }
+            if (allEnemiesDefeated)
+            {
+                CompleteRoom();
+            }
+        }
+    }
+
     public void UpdateObjectName()
     {
         roomObject.name = $"DungeonRoom_{roomType}_{theme}";
@@ -65,7 +86,7 @@ public class DungeonRoom : MonoBehaviour
     {
         if (theme == ElementTheme.Air && doorType == DoorType.FrontDoor)
         {
-            return 1;
+            return 2;
         } else
         {
             return 1;
@@ -76,7 +97,7 @@ public class DungeonRoom : MonoBehaviour
     {
         SimpleEnemyInitialiser enemyInitialiser = GetComponent<SimpleEnemyInitialiser>();
         Transform roomTransform = GetComponent<Transform>();
-        List<GameObject> enemyPrefabs = enemyInitialiser.GetEnemyPrefabs();
+        List<GameObject> enemyPrefabs = enemyInitialiser.GetEnemyPrefabs(theme);
 
         foreach (var enemyPrefab in enemyPrefabs)
         {
@@ -97,7 +118,34 @@ public class DungeonRoom : MonoBehaviour
 
                 // Ensure proper 2D rotation (no X or Y rotation)
                 enemyGO.transform.rotation = Quaternion.identity;
+
+                Enemy enemy = enemyGO.GetComponent<Enemy>();
+                enemy.SetRoom(this);
+                enemies.Add(enemy);
             }
+        }
+
+        if (roomType == RoomType.MiniBoss)
+        {
+            GameObject miniBossPrefab = enemyInitialiser.GetMiniBossPrefab(theme);
+            Vector2Int spawnPosition2D = GetValidSpawnPosition();
+
+            // Convert tile position to world position
+            Vector3 worldPosition = this.structure.tilemapLayers.grid.CellToWorld((Vector3Int)spawnPosition2D);
+            // Center the position in the tile
+            worldPosition += this.structure.tilemapLayers.grid.cellSize * 0.16f;
+
+            // Instantiate enemy
+            GameObject miniBossGO = Instantiate(miniBossPrefab, worldPosition, Quaternion.identity, roomTransform);
+
+            miniBossGO.name = $"Miniboss";
+
+            // Ensure proper 2D rotation (no X or Y rotation)
+            miniBossGO.transform.rotation = Quaternion.identity;
+
+            Enemy miniBoss = miniBossGO.GetComponent<Enemy>();
+            miniBoss.SetRoom(this);
+            enemies.Add(miniBoss);
         }
     }
 
@@ -169,6 +217,7 @@ public class DungeonRoom : MonoBehaviour
     public void CompleteRoom()
     {
         isComplete = true;
+        StaticEventHandler.CallRoomCompleteEvent(this);
     }
 
     public void DrawRoomTiles()

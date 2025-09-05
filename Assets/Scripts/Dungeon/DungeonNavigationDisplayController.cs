@@ -15,25 +15,23 @@ public class DungeonNavigationDisplayController : MonoBehaviour
 
     private void OnEnable()
     {
-        StaticEventHandler.OnRoomChanged += RoomChanged;
+        StaticEventHandler.OnRoomEntered += RoomEntered;
+        StaticEventHandler.OnRoomExited += RoomExited;
+        StaticEventHandler.OnRoomComplete += CompleteRoom;
     }
 
     private void OnDisable()
     {
-        StaticEventHandler.OnRoomChanged -= RoomChanged;
+        StaticEventHandler.OnRoomEntered -= RoomEntered;
+        StaticEventHandler.OnRoomExited -= RoomExited;
+        StaticEventHandler.OnRoomComplete -= CompleteRoom;
     }
 
-    public void RoomChanged(RoomChangedEventArgs roomChangedEventArgs)
+    public void RoomEntered(RoomChangedEventArgs roomChangedEventArgs)
     {
         DungeonRoom dungeonRoom = roomChangedEventArgs.room;
-        // Player exited room
-        if (GameManager.Instance.GetCurrentRoom() == dungeonRoom)
-        {
-            GameManager.Instance.SetPreviousRoom(dungeonRoom);
-            GameManager.Instance.SetCurrentRoom(null);
-        }
-        // Player entered room
-        else if (GameManager.Instance.GetCurrentRoom() == null)
+
+        if (GameManager.Instance.GetCurrentRoom() == null)
         {
             Debug.Log("Player entered room");
             GameManager.Instance.SetCurrentRoom(dungeonRoom);
@@ -41,8 +39,21 @@ public class DungeonNavigationDisplayController : MonoBehaviour
             if (!dungeonRoom.isComplete)
             {
                 NewRoomEntered(dungeonRoom);
+                Debug.Log("New Room entered");
             }
             dungeonRoom.EnterRoom();
+        }
+    }
+
+    public void RoomExited(RoomChangedEventArgs roomChangedEventArgs)
+    {
+        DungeonRoom dungeonRoom = roomChangedEventArgs.room;
+        // Player exited room
+        if (GameManager.Instance.GetCurrentRoom() == dungeonRoom)
+        {
+            GameManager.Instance.SetPreviousRoom(dungeonRoom);
+            GameManager.Instance.SetCurrentRoom(null);
+            Debug.Log("Player Exit Room");
         }
     }
 
@@ -66,27 +77,26 @@ public class DungeonNavigationDisplayController : MonoBehaviour
         StaticEventHandler.CallCloseRoomDoors(dungeonRoom);
     }
 
-    public void CompleteRoom(DungeonRoom dungeonRoom)
+    public void CompleteRoom(RoomChangedEventArgs roomChangedEventArgs)
     {
-        dungeonRoom.CompleteRoom();
+        DungeonRoom dungeonRoom = roomChangedEventArgs.room;
         GameManager.Instance.AppendCompletedDungeonRooms(dungeonRoom);
         List<DungeonRoom> completedRooms = GameManager.Instance.GetCompletedDungeonRooms();
-        foreach (var room in completedRooms)
+        foreach (var completedRoom in completedRooms)
         {
-            StaticEventHandler.CallRoomFadeInEvent(room);
-            StaticEventHandler.CallOpenRoomDoors(room);
-            foreach (var completedRoom in completedRooms)
+            StaticEventHandler.CallRoomFadeInEvent(completedRoom);
+            StaticEventHandler.CallOpenRoomDoors(completedRoom);
+            foreach (var childRoom in completedRoom.children)
             {
-                foreach (var childRoom in completedRoom.children)
+                // New available rooms - not completed
+                if (!completedRooms.Contains(childRoom))
                 {
-                    // New available rooms - not completed
-                    if (!completedRooms.Contains(childRoom))
-                    {
-                        StaticEventHandler.CallRoomFadeInEvent(childRoom);
-                        StaticEventHandler.CallCloseRoomExitDoors(childRoom);
-                    }
+                    StaticEventHandler.CallRoomFadeInEvent(childRoom);
+                    StaticEventHandler.CallOpenRoomDoors(childRoom);
+                    StaticEventHandler.CallCloseRoomExitDoors(childRoom);
                 }
             }
+            
         }
 
         foreach (var connector in allConnectors)

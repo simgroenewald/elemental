@@ -69,11 +69,6 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     void Start()
     {
         state = GameState.start;
-
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            state = GameState.start;
-        }
     }
 
     // Update is called once per frame
@@ -89,19 +84,26 @@ public class GameManager : SingletonMonobehaviour<GameManager>
             case GameState.start:
                 StartGameLevel();
                 break;
-
+            case GameState.bossRoom:
+                StartBossFight();
+                break;
         }
+    }
+
+    private void StartBossFight()
+    {
     }
 
     private void StartGameLevel()
     {
         dungeon = dungeonBuilder.GenerateDungeon(6776, levels[currentLevelIndex]);
+        //dungeon = dungeonBuilder.GenerateDungeon(8543, levels[currentLevelIndex]);
         dungeonNavigationDisplay.Initialise(dungeon.dungeonRooms, dungeon.connectors);
         GameResources.Instance.dungeon = dungeon;
 
         DungeonRoom startRoom = dungeon.GetStartRoom();
-        dungeonNavigationDisplay.CompleteRoom(startRoom);
-        StaticEventHandler.CallRoomChangedEvent(startRoom);
+        startRoom.CompleteRoom();
+        StaticEventHandler.CallRoomEnteredEvent(startRoom);
 
 
         player.SetPlayerStartPosition(startRoom, startRoom.structure.tilemapLayers.grid);
@@ -111,7 +113,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         {
             if (room.roomType != RoomType.Start)
             {
-                room.SpawnRoomEnemies(3);
+                room.SpawnRoomEnemies(5);
                 room.SpawnRoomItems(2);
             }
         }
@@ -158,5 +160,9 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     public void AppendCompletedDungeonRooms(DungeonRoom room)
     {
         completeDungeonRooms.Add(room);
+        if (completeDungeonRooms.Count >= dungeon.dungeonRooms.Count - 1)
+        {
+            state = GameState.bossRoom;
+        }
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Net;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -30,8 +31,9 @@ public class RoomLightingController : MonoBehaviour
     {
         if (roomDisplayEventArgs.room == dungeonRoom && !isLit)
         {
+            if (GameManager.Instance.state != GameState.bossRoom && dungeonRoom.roomType == RoomType.Boss)
+                return;
             StartCoroutine(FadeInRoom(dungeonRoom));
-
             isLit = true;
         }
     }

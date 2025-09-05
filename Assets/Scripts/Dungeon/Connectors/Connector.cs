@@ -18,15 +18,17 @@ public class Connector : MonoBehaviour
     public Bridge bridgeEnd;
     public Platform platform;
 
-    public Boolean isStraight;
+    public bool isStraight;
+    public bool isBossRoomConnector = false;
 
-    public Connector Initialise(Vector2Int _start, Vector2Int _end, DungeonRoom _partentRoom, DungeonRoom _childRoom, ConnectorOrientation _orientation)
+    public Connector Initialise(Vector2Int _start, Vector2Int _end, DungeonRoom _partentRoom, DungeonRoom _childRoom, ConnectorOrientation _orientation, bool _isBossRoomConnector)
     {
         start = _start;
         end = _end;
         parentRoom = _partentRoom;
         childRoom = _childRoom;
         orientation = _orientation;
+        isBossRoomConnector = _isBossRoomConnector;
 
         if (orientation == ConnectorOrientation.Vertical)
         {
