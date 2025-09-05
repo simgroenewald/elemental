@@ -24,6 +24,9 @@ public abstract class ItemSO : ScriptableObject
 
     [field: SerializeField]
     public List<ItemParameter> DefaultParametersList { get; set; }
+
+    [field: SerializeField]
+    public int DropChance { get; set; }
 }
 
 [Serializable]

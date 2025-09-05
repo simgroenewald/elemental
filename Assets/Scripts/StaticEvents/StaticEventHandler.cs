@@ -5,7 +5,9 @@ using UnityEditor.MemoryProfiler;
 public static class StaticEventHandler
 {
     // Room changed events
-    public static event Action<RoomChangedEventArgs> OnRoomChanged;
+    public static event Action<RoomChangedEventArgs> OnRoomEntered;
+    public static event Action<RoomChangedEventArgs> OnRoomExited;
+    public static event Action<RoomChangedEventArgs> OnRoomComplete;
 
     // Room Light events
     public static event Action<RoomDisplayEventArgs> OnRoomFadeIn;
@@ -19,9 +21,17 @@ public static class StaticEventHandler
     public static event Action<ConnectorDisplayEventArgs> OnConnectorFadeOut;
 
     // Room Changed events
-    internal static void CallRoomChangedEvent(DungeonRoom dungeonRoom)
+    internal static void CallRoomEnteredEvent(DungeonRoom dungeonRoom)
     {
-        OnRoomChanged?.Invoke(new RoomChangedEventArgs() { room = dungeonRoom });
+        OnRoomEntered?.Invoke(new RoomChangedEventArgs() { room = dungeonRoom });
+    }
+    internal static void CallRoomExitedEvent(DungeonRoom dungeonRoom)
+    {
+        OnRoomExited?.Invoke(new RoomChangedEventArgs() { room = dungeonRoom });
+    }
+    internal static void CallRoomCompleteEvent(DungeonRoom dungeonRoom)
+    {
+        OnRoomComplete?.Invoke(new RoomChangedEventArgs() { room = dungeonRoom });
     }
 
     // Room Light events
