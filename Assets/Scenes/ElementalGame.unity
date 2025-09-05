@@ -205,6 +205,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1990159484799803152, guid: 452071372d955194ea495723c315f62d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 56919467}
+    - targetCorrespondingSourceObject: {fileID: 1990159484799803152, guid: 452071372d955194ea495723c315f62d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 56919471}
   m_SourcePrefab: {fileID: 100100000, guid: 452071372d955194ea495723c315f62d, type: 3}
 --- !u!1 &56919466 stripped
 GameObject:
@@ -223,6 +226,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33382ff4b6ee89f409fe87b0def3cd9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &56919471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 56919466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c240aeb1c66167d4791997f9d460dff9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waterRoomItems:
+  - {fileID: 7104357318301564023, guid: 3d4bd5fef7338964c841b7c9881fd574, type: 3}
+  - {fileID: 2110624621688362508, guid: 28f1c28ccc4d2964c8b7b91942f5698b, type: 3}
+  fireRoomItems:
+  - {fileID: 7104357318301564023, guid: 3d4bd5fef7338964c841b7c9881fd574, type: 3}
+  - {fileID: 3640447467753037221, guid: 7138f967ecf509041b6885845b5d279c, type: 3}
+  airRoomItems:
+  - {fileID: 7104357318301564023, guid: 3d4bd5fef7338964c841b7c9881fd574, type: 3}
+  - {fileID: 3640447467753037221, guid: 7138f967ecf509041b6885845b5d279c, type: 3}
+  earthRoomItems:
+  - {fileID: 7104357318301564023, guid: 3d4bd5fef7338964c841b7c9881fd574, type: 3}
+  - {fileID: 2110624621688362508, guid: 28f1c28ccc4d2964c8b7b91942f5698b, type: 3}
 --- !u!114 &72430345 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3571426750705355574, guid: 452071372d955194ea495723c315f62d, type: 3}
@@ -692,9 +719,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.055555556
-    width: 0.33333334
-    height: 0.3333333
+    y: 0
+    width: 1
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -1324,6 +1351,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetEvents: {fileID: 11400000, guid: cd282362849d556489ff814bc992a7c3, type: 2}
+  itemEvents: {fileID: 11400000, guid: 697be6d0d706f8d498930dc27437446b, type: 2}
 --- !u!114 &1962718398
 MonoBehaviour:
   m_ObjectHideFlags: 0

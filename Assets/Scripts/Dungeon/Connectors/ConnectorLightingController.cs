@@ -31,8 +31,9 @@ public class ConnectorLightingController : MonoBehaviour
     {
         if (connectorDisplayEventArgs.connector == connector && !isLit)
         {
+            if (GameManager.Instance.state != GameState.bossRoom && connector.isBossRoomConnector)
+                return;
             StartCoroutine(FadeInConnector(connector));
-
             isLit = true;
         }
     }

@@ -15,13 +15,15 @@ public class Doorway: MonoBehaviour
     public HashSet<StructureTile> openTiles = new HashSet<StructureTile>();
     public NavMeshObstacle obstacle;
     public NavMeshModifierVolume modifierVolume;
+    public bool isBossRoomDoorway = false;
     public DungeonRoom room;
 
-    public Doorway Initialise(Vector2Int midPosition, int width, DoorType doortype, DungeonRoom room, Grid grid)
+    public Doorway Initialise(Vector2Int midPosition, int width, DoorType doortype, DungeonRoom room, Grid grid, bool isBossRoomDoorway)
     {
         this.room = room;
         structure.floorPositions = new HashSet<Vector2Int>();
         int sideTileCount = width / 2;
+        this.isBossRoomDoorway = isBossRoomDoorway;
 
         this.doortype = doortype;
         this.midPosition = midPosition;
@@ -80,7 +82,7 @@ public class Doorway: MonoBehaviour
             else if (doortype == DoorType.FrontDoor)
             {
                 entryCollider.size = new Vector2(width, 0.2f);
-                entryCollider.offset = new Vector2(0, 0.5f);
+                entryCollider.offset = new Vector2(0, 0.7f);
             }
             else if (doortype == DoorType.BackDoor)
             {
@@ -142,14 +144,6 @@ public class Doorway: MonoBehaviour
         }
 
         return this;
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            StaticEventHandler.CallRoomChangedEvent(this.room);
-        }
     }
 
     public void GenerateStructureTiles()

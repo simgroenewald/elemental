@@ -22,6 +22,11 @@ public class ConnectorGenerator : MonoBehaviour
             //Debug.Log($"Child count: {parent.children.Count} ");
             foreach (var child in parent.children)
             {
+                bool isBossRoomConnector = false;
+                if (child.roomType == RoomType.Boss)
+                {
+                    isBossRoomConnector = true;
+                }
                 //Debug.Log($"Connecting {parent.roomType} {parent.theme} to {child.roomType} {child.theme}");
                 // Get direction from parent to child
                 Direction direction = GetDirectionToChild(parent, child);
@@ -30,7 +35,7 @@ public class ConnectorGenerator : MonoBehaviour
                 // Get best edge tile pair (closest across given direction)
                 (Vector2Int start, Vector2Int end) = GetClosestEdgeTiles(parent, child, direction, connectorWidth, orientation);
                 //Debug.Log($"Connecting {parent.roomType} {parent.theme} to {child.roomType} {child.theme} in direction: {direction} - corridor orientation {orientation}");
-                Connector connector = connectorFactory.CreateConnector(start, end, parent, child, orientation, objectParent);
+                Connector connector = connectorFactory.CreateConnector(start, end, parent, child, orientation, objectParent, isBossRoomConnector);
                 GenerateConnectorSections(connector);
 
                 //Debug.Log($"Start ({start.x}, {start.y}) - end ({end.x}, {end.y})");
@@ -140,39 +145,37 @@ public class ConnectorGenerator : MonoBehaviour
         // Allow wider doorways so that bridge ropes dont overlap + 2 (1 tile for each side)
         if (direction == Direction.North)
         {
-            Doorway parentDoorway = doorwayFactory.CreateDoorway(bestStart, corridorWidth + 2, DoorType.BackDoor, parent);
-            parent.AddDoorway(parentDoorway);
-            parent.AddExitDoorway(parentDoorway);
-
-            Doorway childDoorway = doorwayFactory.CreateDoorway(bestEnd, corridorWidth + 2, DoorType.FrontDoor, child);
-            child.AddDoorway(childDoorway);
-        } else if (direction == Direction.South)
+            CreateDoorways(parent, child, corridorWidth, bestStart, bestEnd, DoorType.BackDoor, DoorType.FrontDoor);
+        }
+        else if (direction == Direction.South)
         {
-            Doorway parentDoorway = doorwayFactory.CreateDoorway(bestStart, corridorWidth + 2, DoorType.FrontDoor, parent);
-            parent.AddDoorway(parentDoorway);
-            parent.AddExitDoorway(parentDoorway);
-
-            Doorway childDoorway = doorwayFactory.CreateDoorway(bestEnd, corridorWidth + 2, DoorType.BackDoor, child);
-            child.AddDoorway(childDoorway);
-        } else if (direction == Direction.East)
+            CreateDoorways(parent, child, corridorWidth, bestStart, bestEnd, DoorType.FrontDoor, DoorType.BackDoor);
+        } 
+        else if (direction == Direction.East)
         {
-            Doorway parentDoorway = doorwayFactory.CreateDoorway(bestStart, corridorWidth + 2, DoorType.RightDoor, parent);
-            parent.AddDoorway(parentDoorway);
-            parent.AddExitDoorway(parentDoorway);
-
-            Doorway childDoorway = doorwayFactory.CreateDoorway(bestEnd, corridorWidth + 2, DoorType.LeftDoor, child);
-            child.AddDoorway(childDoorway);
-        } else if (direction == Direction.West)
+            CreateDoorways(parent, child, corridorWidth, bestStart, bestEnd, DoorType.RightDoor, DoorType.LeftDoor);
+        } 
+        else if (direction == Direction.West)
         {
-            Doorway parentDoorway = doorwayFactory.CreateDoorway(bestStart, corridorWidth + 2, DoorType.LeftDoor, parent);
-            parent.AddDoorway(parentDoorway);
-            parent.AddExitDoorway(parentDoorway);
-
-            Doorway childDoorway = doorwayFactory.CreateDoorway(bestEnd, corridorWidth + 2, DoorType.RightDoor, child);
-            child.AddDoorway(childDoorway);
+            CreateDoorways(parent, child, corridorWidth, bestStart, bestEnd, DoorType.LeftDoor, DoorType.RightDoor);
         }
 
         return (bestStart, bestEnd);
+    }
+
+    private void CreateDoorways(DungeonRoom parent, DungeonRoom child, int corridorWidth, Vector2Int bestStart, Vector2Int bestEnd, DoorType parentDoorType, DoorType childDoorType)
+    {
+        bool isBossRoomDoorway = false;
+        if (child.roomType == RoomType.Boss)
+        {
+            isBossRoomDoorway = true;
+        }
+        Doorway parentDoorway = doorwayFactory.CreateDoorway(bestStart, corridorWidth + 2, parentDoorType, parent, isBossRoomDoorway);
+        parent.AddDoorway(parentDoorway);
+        parent.AddExitDoorway(parentDoorway);
+
+        Doorway childDoorway = doorwayFactory.CreateDoorway(bestEnd, corridorWidth + 2, childDoorType, child, isBossRoomDoorway);
+        child.AddDoorway(childDoorway);
     }
 
     private bool HasCorridorWidth(Vector2Int pos, Direction dir, List<Vector2Int> edge, int width)

@@ -111,11 +111,11 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
             }
             else if (dungeonRoom.theme == ElementTheme.Earth)
             {
-                roomGenerator.GenerateStructuredRoom(dungeonRoom, 3);
+                roomGenerator.GenerateStructuredRoom(dungeonRoom, 2);
             }
             else if (dungeonRoom.theme == ElementTheme.Fire)
             {
-                roomGenerator.GenerateStructuredRoom(dungeonRoom, 3);
+                roomGenerator.GenerateStructuredRoom(dungeonRoom, 2);
             }
             else
             {
@@ -162,13 +162,13 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
             WaveFunctionCollapse2 wfc;
             if (dungeonRoom.theme == ElementTheme.Air)
             {
-                wfc = new WaveFunctionCollapse2(dungeonRoom.structure.structureTiles, waterRoomProperties, 10);
+                wfc = new WaveFunctionCollapse2(dungeonRoom.structure.structureTiles, airRoomProperties, 10);
             } else if (dungeonRoom.theme == ElementTheme.Earth) 
             {
-                wfc = new WaveFunctionCollapse2(dungeonRoom.structure.structureTiles, waterRoomProperties, 10);
+                wfc = new WaveFunctionCollapse2(dungeonRoom.structure.structureTiles, earthRoomProperties, 10);
             } else if (dungeonRoom.theme == ElementTheme.Fire)
             {
-                wfc = new WaveFunctionCollapse2(dungeonRoom.structure.structureTiles, waterRoomProperties, 10);
+                wfc = new WaveFunctionCollapse2(dungeonRoom.structure.structureTiles, fireRoomProperties, 10);
             } else
             {
                 wfc = new WaveFunctionCollapse2(dungeonRoom.structure.structureTiles, waterRoomProperties, 10);
@@ -201,15 +201,15 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
                 WaveFunctionCollapse2 wfc;
                 if (dungeonRoom.theme == ElementTheme.Air)
                 {
-                    wfc = new WaveFunctionCollapse2(door.structure.structureTiles, waterDoorProperties, 1);
+                    wfc = new WaveFunctionCollapse2(door.structure.structureTiles, airDoorProperties, 1);
                 }
                 else if (dungeonRoom.theme == ElementTheme.Earth)
                 {
-                    wfc = new WaveFunctionCollapse2(door.structure.structureTiles, waterDoorProperties, 1);
+                    wfc = new WaveFunctionCollapse2(door.structure.structureTiles, earthDoorProperties, 1);
                 }
                 else if (dungeonRoom.theme == ElementTheme.Fire)
                 {
-                    wfc = new WaveFunctionCollapse2(door.structure.structureTiles, waterDoorProperties, 1);
+                    wfc = new WaveFunctionCollapse2(door.structure.structureTiles, fireDoorProperties, 1);
                 }
                 else
                 {
