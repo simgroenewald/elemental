@@ -43,7 +43,7 @@ public class EnemyAutoController : MonoBehaviour
 
     private void Start()
     {
-        lineOfSight = enemy.enemyDetails.lineOfSight;
+        lineOfSight = enemy.characterDetails.stats.GetStat(StatType.LineOfSight);
     }
 
     void FixedUpdate()
@@ -108,7 +108,7 @@ public class EnemyAutoController : MonoBehaviour
 
     private void OnDeath()
     {
-        GameEventManager.Instance.itemEvents.RaiseDropItemEvent(enemy.room, enemy.characterDetails.health, enemy.transform);
+        GameEventManager.Instance.itemEvents.RaiseDropItemEvent(enemy.room, (int)enemy.characterDetails.stats.GetStat(StatType.Health), enemy.transform);
         Destroy(gameObject);
     }
 

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.Playables;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Rendering;
@@ -51,6 +52,7 @@ public class Character : MonoBehaviour, ITargetable
     [HideInInspector] public CharacterStatsModifier characterStatsModifier;
     [HideInInspector] public StatModifierEvents statModifierEvents;
     [HideInInspector] public NavMeshAgent agent;
+    [HideInInspector] public Ability baseAbility;
     [SerializeField] public Transform target;
 
     public List<Ability> abilityList = new List<Ability>();
@@ -83,7 +85,14 @@ public class Character : MonoBehaviour, ITargetable
     {
         this.characterDetails = characterDetails;
         CreateCharacterStartingAbilities();
+        CreateCharacterBaseAbility();
         SetCharacterHealth();
+    }
+
+    private void CreateCharacterBaseAbility()
+    {
+        baseAbility = new Ability() { abilityDetails = characterDetails.baseAbility, abilityCooldownTime = 0f, isCoolingDown = false };
+        setActiveAbilityEvent.CallSetActiveAbilityEvent(baseAbility);
     }
 
     private void CreateCharacterStartingAbilities()
@@ -103,14 +112,14 @@ public class Character : MonoBehaviour, ITargetable
 
         ability.abilityListPosition = abilityList.Count;
 
-        setActiveAbilityEvent.CallSetActiveAbilityEvent(ability);
+        //setActiveAbilityEvent.CallSetActiveAbilityEvent(ability);
 
         return ability;
     }
 
     private void SetCharacterHealth()
     {
-        health.SetHealth(characterDetails.health, characterDetails.health);
+        health.SetHealth(characterDetails.stats.GetStat(StatType.Health), characterDetails.stats.GetStat(StatType.Health));
     }
 
     public void SetCharacterPosition(Vector2Int position, Grid grid)

@@ -29,7 +29,7 @@ public class CharacterMovement : MonoBehaviour
         character.abilityEvents.OnAbilityCasted += HandleIdleState;
         character.abilityEvents.OnMeleeEndAttack += HandleIdleState;
 
-        movementSpeed = character.characterDetails.movementSpeed;
+        movementSpeed = character.characterDetails.stats.GetStat(StatType.MovementSpeed);
         SetAgentSpeed(movementSpeed);
         SetPlayerMovmentAnimationSpeed();
     }

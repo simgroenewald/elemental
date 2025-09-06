@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02fcef62324c14e40a4163a9c9ea0b81, type: 3}
+  m_Name: MageSkeleton
+  m_EditorClassIdentifier: 
+  characterName: Mage Skeleton
+  characterPrefab: {fileID: 4167889123300124595, guid: 8044614bd42b89947a08e6fb5e571ee4, type: 3}
+  runtimeAnimatorController: {fileID: 9100000, guid: 28bc3f7ec27f1984784ba3ffdd005644, type: 2}
+  stats: {fileID: 11400000, guid: 05de79010f2b41b4a88667bf25fac568, type: 2}
+  miniMapIcon: {fileID: 0}
+  baseAbility: {fileID: 11400000, guid: d0b3b46bfdd58414ea104ed4e3519fdf, type: 2}
+  startingAbility: {fileID: 11400000, guid: d0b3b46bfdd58414ea104ed4e3519fdf, type: 2}
+  abilityList:
+  - {fileID: 11400000, guid: d0b3b46bfdd58414ea104ed4e3519fdf, type: 2}

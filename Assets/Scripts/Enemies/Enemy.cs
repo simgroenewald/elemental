@@ -8,6 +8,7 @@ using UnityEngine.Rendering;
 public class Enemy : Character
 {
     public EnemyDetailsSO enemyDetails;
+    public Stats enemyStats;
     public DungeonRoom room;
     protected override void Awake()
     {
@@ -16,15 +17,12 @@ public class Enemy : Character
 
     private void Start()
     {
-        Initialise(enemyDetails);
+        Initialise();
     }
 
-    protected virtual void Initialise(EnemyDetailsSO enemyDetails)
+    protected virtual void Initialise()
     {
-        this.enemyDetails = enemyDetails;
-
         base.Initialise(enemyDetails);
-
     }
 
     public void SetRoom(DungeonRoom room)

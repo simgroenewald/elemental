@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02fcef62324c14e40a4163a9c9ea0b81, type: 3}
+  m_Name: PorcumanBlue
+  m_EditorClassIdentifier: 
+  characterName: Porcuman Blue
+  characterPrefab: {fileID: 3741971743796395161, guid: 752c760e8c6ddfa468b8fb040420d086, type: 3}
+  runtimeAnimatorController: {fileID: 9100000, guid: 9ef5c12897a16dc4fb4eb3f70655b75a, type: 2}
+  stats: {fileID: 11400000, guid: 2ff51f6bfa26845488fabcdfe590a85e, type: 2}
+  miniMapIcon: {fileID: 0}
+  baseAbility: {fileID: 11400000, guid: 9706090b4f022344c8bc205fe9f5ece7, type: 2}
+  startingAbility: {fileID: 11400000, guid: 9706090b4f022344c8bc205fe9f5ece7, type: 2}
+  abilityList:
+  - {fileID: 11400000, guid: 9706090b4f022344c8bc205fe9f5ece7, type: 2}

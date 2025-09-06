@@ -70,7 +70,6 @@ public class CastAbility : MonoBehaviour
     {
         ProjectileDetailsSO currentProjectile = activeAbility.GetCurrentProjectile();
         
-
         if (currentProjectile != null)
         {
             GameObject projectilePrefab = currentProjectile.projectilePrefabArray[Random.Range(0, currentProjectile.projectilePrefabArray.Length)];

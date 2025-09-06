@@ -10,6 +10,7 @@ public class AbilityDetailsSO : ScriptableObject
     public bool isEnemyTargetable;
     public bool isDirectionTargetable;
     public bool isGroundTargetable;
+    public bool isBaseAbility;
 
     public bool isPassive;
     public bool isRanged;

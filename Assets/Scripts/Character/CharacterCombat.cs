@@ -35,7 +35,7 @@ public class CharacterCombat : MonoBehaviour
 
     private void SetPlayerAttackAnimationSpeed()
     {
-        character.animator.SetFloat("attackSpeed", 1);
+        character.animator.SetFloat("attackSpeed", character.characterDetails.stats.GetStat(StatType.AttackSpeed));
     }
 
     public bool SetMovementSpeedForAttack(Character targetCharacter)

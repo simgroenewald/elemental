@@ -27,7 +27,7 @@ public class ActiveAbility: MonoBehaviour
     {
         setAbilityEvent.OnSetActiveAbility -= OnSetActiveAbility;
     }
-    private void OnSetActiveAbility(SetActiveAbilityEvent setActiveAbilityEvent, SetActiveAbilityEventArgs setActiveAbilityEventArgs)
+    private void OnSetActiveAbility(SetActiveAbilityEvent setActiveAbilityEvent, SetAbilityEventArgs setActiveAbilityEventArgs)
     {
         SetAbility(setActiveAbilityEventArgs.ability);
     }
