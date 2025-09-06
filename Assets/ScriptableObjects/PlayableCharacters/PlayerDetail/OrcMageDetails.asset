@@ -15,7 +15,7 @@ MonoBehaviour:
   characterName: Orc mage
   characterPrefab: {fileID: 3343493735705289243, guid: 2c7dcb6299343684ea960f68543cfa42, type: 3}
   runtimeAnimatorController: {fileID: 9100000, guid: ea9659ed465a49a44a5c9256e96a6704, type: 2}
-  stats: {fileID: 11400000, guid: 6be05d2f9d3a81e4d8288cf876209f45, type: 2}
+  statsSO: {fileID: 11400000, guid: 6be05d2f9d3a81e4d8288cf876209f45, type: 2}
   miniMapIcon: {fileID: 0}
   baseAbility: {fileID: 11400000, guid: c24beabdad3521442ae606c4848076c3, type: 2}
   startingAbility: {fileID: 11400000, guid: c24beabdad3521442ae606c4848076c3, type: 2}

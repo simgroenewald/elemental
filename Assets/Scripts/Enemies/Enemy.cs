@@ -8,7 +8,7 @@ using UnityEngine.Rendering;
 public class Enemy : Character
 {
     public EnemyDetailsSO enemyDetails;
-    public Stats enemyStats;
+    public StatsSO enemyStatsSO;
     public DungeonRoom room;
     protected override void Awake()
     {

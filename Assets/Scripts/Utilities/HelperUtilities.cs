@@ -1,5 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -59,6 +62,13 @@ public static class HelperUtilities
 
         return direction;
 
+    }
+
+    public static string GetDescription(this Enum value)
+    {
+        FieldInfo field = value.GetType().GetField(value.ToString());
+        DescriptionAttribute attribute = field.GetCustomAttribute<DescriptionAttribute>();
+        return attribute != null ? attribute.Description : value.ToString();
     }
 
 }

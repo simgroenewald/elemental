@@ -9,7 +9,7 @@ public class CharacterDetailSO : ScriptableObject
     [SerializeField] public string characterName;
     [SerializeField] public GameObject characterPrefab;
     [SerializeField] public RuntimeAnimatorController runtimeAnimatorController;
-    [SerializeField] public Stats stats;
+    [SerializeField] public StatsSO statsSO;
     [SerializeField] public Sprite miniMapIcon;
 
 /*    [Header("Character Stats")]
