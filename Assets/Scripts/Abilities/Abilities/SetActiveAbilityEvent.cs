@@ -4,15 +4,15 @@ using System;
 [DisallowMultipleComponent]
 public class SetActiveAbilityEvent : MonoBehaviour
 {
-    public event Action<SetActiveAbilityEvent, SetActiveAbilityEventArgs> OnSetActiveAbility;
+    public event Action<SetActiveAbilityEvent, SetAbilityEventArgs> OnSetActiveAbility;
 
     public void CallSetActiveAbilityEvent(Ability ability)
     {
-        OnSetActiveAbility?.Invoke(this, new SetActiveAbilityEventArgs() { ability = ability });
+        OnSetActiveAbility?.Invoke(this, new SetAbilityEventArgs() { ability = ability });
     }
 }
 
-public class SetActiveAbilityEventArgs : EventArgs
+public class SetAbilityEventArgs : EventArgs
 {
     public Ability ability;
 }

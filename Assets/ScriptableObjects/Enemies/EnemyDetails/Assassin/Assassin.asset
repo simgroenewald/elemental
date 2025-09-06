@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02fcef62324c14e40a4163a9c9ea0b81, type: 3}
+  m_Name: Assassin
+  m_EditorClassIdentifier: 
+  characterName: Assassin
+  characterPrefab: {fileID: 5358808577364504236, guid: 69b73534cb30a5545b2e336f62fba1e8, type: 3}
+  runtimeAnimatorController: {fileID: 9100000, guid: 2f658ccbd1f58b74ca8fa893733f68f2, type: 2}
+  statsSO: {fileID: 11400000, guid: 1a4b7f745d8e9fa4ba05d37338103c99, type: 2}
+  miniMapIcon: {fileID: 0}
+  baseAbility: {fileID: 11400000, guid: 31024f918212b9346b6d07007579217a, type: 2}
+  startingAbility: {fileID: 11400000, guid: 31024f918212b9346b6d07007579217a, type: 2}
+  abilityList:
+  - {fileID: 11400000, guid: 31024f918212b9346b6d07007579217a, type: 2}

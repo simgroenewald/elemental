@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
+using UnityEditor.Playables;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Rendering;
@@ -28,6 +30,7 @@ using UnityEngine.Rendering;
 [RequireComponent(typeof(CharacterStatsModifier))]
 [RequireComponent(typeof(CharacterMovement))]
 [RequireComponent(typeof(StatModifierEvents))]
+[RequireComponent(typeof(Stats))]
 
 [DisallowMultipleComponent]
 public class Character : MonoBehaviour, ITargetable
@@ -51,6 +54,8 @@ public class Character : MonoBehaviour, ITargetable
     [HideInInspector] public CharacterStatsModifier characterStatsModifier;
     [HideInInspector] public StatModifierEvents statModifierEvents;
     [HideInInspector] public NavMeshAgent agent;
+    [HideInInspector] public Ability baseAbility;
+    [HideInInspector] public Stats stats;
     [SerializeField] public Transform target;
 
     public List<Ability> abilityList = new List<Ability>();
@@ -74,6 +79,7 @@ public class Character : MonoBehaviour, ITargetable
         characterState = GetComponent<CharacterState>();
         characterMovement = GetComponent<CharacterMovement>();
         statModifierEvents = GetComponent<StatModifierEvents>();
+        stats = GetComponent<Stats>();
         characterStatsModifier = GetComponent<CharacterStatsModifier>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
@@ -82,8 +88,16 @@ public class Character : MonoBehaviour, ITargetable
     protected virtual void Initialise(CharacterDetailSO characterDetails)
     {
         this.characterDetails = characterDetails;
+        stats.Initialise(characterDetails.statsSO);
         CreateCharacterStartingAbilities();
+        CreateCharacterBaseAbility();
         SetCharacterHealth();
+    }
+
+    private void CreateCharacterBaseAbility()
+    {
+        baseAbility = new Ability() { abilityDetails = characterDetails.baseAbility, abilityCooldownTime = 0f, isCoolingDown = false };
+        setActiveAbilityEvent.CallSetActiveAbilityEvent(baseAbility);
     }
 
     private void CreateCharacterStartingAbilities()
@@ -103,14 +117,14 @@ public class Character : MonoBehaviour, ITargetable
 
         ability.abilityListPosition = abilityList.Count;
 
-        setActiveAbilityEvent.CallSetActiveAbilityEvent(ability);
+        //setActiveAbilityEvent.CallSetActiveAbilityEvent(ability);
 
         return ability;
     }
 
     private void SetCharacterHealth()
     {
-        health.SetHealth(characterDetails.health, characterDetails.health);
+        health.SetHealth(stats.GetStat(StatType.Health), stats.GetStat(StatType.Health));
     }
 
     public void SetCharacterPosition(Vector2Int position, Grid grid)

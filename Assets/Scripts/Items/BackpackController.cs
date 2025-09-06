@@ -18,7 +18,8 @@ public class BackpackController : MonoBehaviour
     private void Awake()
     {
         backpackUI = GameObject.FindWithTag("Backpack").GetComponent<BackpackUI>();
-        itemDetails = GameObject.FindWithTag("ItemDetails").GetComponent<ItemDetailsUI>();
+        GameObject itemDetailsGO = GameObject.FindWithTag("ItemDetails");
+        itemDetails = itemDetailsGO.GetComponent<ItemDetailsUI>();
     }
 
     private void Start()
@@ -98,7 +99,9 @@ public class BackpackController : MonoBehaviour
         {
             itemAction.PerformAction(gameObject, backpackItem.itemParameters);
             if (backpack.GetItemAtIndex(index).isEmpty)
+            {
                 backpackUI.Unfocus();
+            }
         }
     }
 
@@ -122,6 +125,7 @@ public class BackpackController : MonoBehaviour
         if (backpackItem.isEmpty)
         {
             backpackUI.Unfocus();
+            itemDetails.ResetItemDetails();
             return;
         }
         ItemSO item = backpackItem.item;

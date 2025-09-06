@@ -15,12 +15,9 @@ MonoBehaviour:
   characterName: Corrupt Moose Miniboss
   characterPrefab: {fileID: 5822319915835916726, guid: 82499dd565984b44e991747455d37889, type: 3}
   runtimeAnimatorController: {fileID: 9100000, guid: fa0f573ce4269714990b336c60ac2605, type: 2}
+  statsSO: {fileID: 11400000, guid: 359100ac261f7164fab159c9d0cc783c, type: 2}
   miniMapIcon: {fileID: 0}
-  healthRegenRate: 0
-  health: 300
-  movementSpeed: 3
-  baseAttackDamage: 0
+  baseAbility: {fileID: 11400000, guid: cbe506b3491662a41a6ab3fe706758c6, type: 2}
   startingAbility: {fileID: 11400000, guid: cbe506b3491662a41a6ab3fe706758c6, type: 2}
   abilityList:
   - {fileID: 11400000, guid: cbe506b3491662a41a6ab3fe706758c6, type: 2}
-  lineOfSight: 5

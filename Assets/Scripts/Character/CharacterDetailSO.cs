@@ -9,15 +9,17 @@ public class CharacterDetailSO : ScriptableObject
     [SerializeField] public string characterName;
     [SerializeField] public GameObject characterPrefab;
     [SerializeField] public RuntimeAnimatorController runtimeAnimatorController;
+    [SerializeField] public StatsSO statsSO;
     [SerializeField] public Sprite miniMapIcon;
 
-    [Header("Character Stats")]
+/*    [Header("Character Stats")]
     [SerializeField] public int healthRegenRate;
     [SerializeField] public int health;
     [SerializeField] public float movementSpeed;
-    [SerializeField] public float baseAttackDamage;
+    [SerializeField] public float baseAttackDamage;*/
 
     [Header("Character Abilities")]
+    public AbilityDetailsSO baseAbility;
     public AbilityDetailsSO startingAbility;
     public List<AbilityDetailsSO> abilityList;
 }
