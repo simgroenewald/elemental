@@ -10,27 +10,36 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 609fa1f9b66b0544196f4f77e751f80f, type: 3}
-  m_Name: Punch
+  m_Name: Porcupunch
   m_EditorClassIdentifier: 
-  abilityName: Punch
+  abilityName: Porcupunch
   icon: {fileID: 0}
+  range: 0.8
+  isBaseAbility: 1
   isAutoAttack: 1
   isEnemyTargetable: 1
   isDirectionTargetable: 0
   isGroundTargetable: 0
   isPassive: 0
-  isRanged: 0
   isDamageOverTime: 0
   isCritical: 0
   isAreaOfEffect: 0
   isHurt: 0
+  slowDownBuffer: 0
+  coolDownTime: 0
   isCoolingDown: 0
+  damage: 10
+  isMagical: 0
+  critChance: 0
+  manaCost: 0
+  isRanged: 0
   abilityCastPositionLeft: {x: 0, y: 0, z: 0}
   abilityCastPositionRight: {x: 0, y: 0, z: 0}
   abilityProjectileDetails: {fileID: 0}
-  slowDownBuffer: 0
-  coolDownTime: 0
-  manaCost: 0
-  magicalDamage: 0
-  range: 0.8
-  physicalDamage: 10
+  projectileSpeed: 0
+  _damage: 0
+  _projectileSpeed: 0
+  _coolDownTime: 0
+  _critChance: 0
+  _range: 0.8
+  _manaCost: 0

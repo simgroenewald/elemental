@@ -15,12 +15,6 @@ public class ProjectileDetailsSO : ScriptableObject
     public float chargeTime = 0.1f;
     public Material chargeMaterial;
 
-    public float projectileDamage = 0.1f;
-    public float projectileSpeed = 0.1f;
-    public float projectileSpeedMin = 20f;
-    public float projectileSpeedMax = 20f;
-    public float projectileRange = 20f;
-
     public float projectileRotationSpeed = 20f;
 
     public bool isProjectileTrail = false;

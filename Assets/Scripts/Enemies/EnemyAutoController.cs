@@ -17,6 +17,7 @@ public class EnemyAutoController : MonoBehaviour
     private CharacterCombat characterCombat;
 
     private float lineOfSight;
+    private bool itemDropped = false;
 
 
     private void Awake()
@@ -82,6 +83,7 @@ public class EnemyAutoController : MonoBehaviour
         }
         if (enemy.characterState.isDead)
         {
+            GameEventManager.Instance.targetEvents.RaiseOnRemoveAim();
             OnDeath();
         }
     }
@@ -108,8 +110,14 @@ public class EnemyAutoController : MonoBehaviour
 
     private void OnDeath()
     {
-        GameEventManager.Instance.itemEvents.RaiseDropItemEvent(enemy.room, (int)enemy.stats.GetStat(StatType.Health), enemy.transform);
+        if (!itemDropped)
+        {
+            itemDropped = true;
+            GameEventManager.Instance.itemEvents.RaiseDropItemEvent(enemy.room, (int)enemy.stats.GetStat(StatType.Health), enemy.transform);
+        }
+            
         Destroy(gameObject);
+
     }
 
 

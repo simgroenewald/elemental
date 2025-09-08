@@ -10,6 +10,8 @@ using UnityEngine.Rendering;
 
 [RequireComponent(typeof(Health))]
 [RequireComponent(typeof(HealthEvents))]
+[RequireComponent(typeof(Mana))]
+[RequireComponent(typeof(ManaEvents))]
 [RequireComponent(typeof(MovementHandler))]
 [RequireComponent(typeof(SetActiveAbilityEvent))]
 [RequireComponent(typeof(ActiveAbility))]
@@ -27,10 +29,10 @@ using UnityEngine.Rendering;
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CharacterCombat))]
 [RequireComponent(typeof(CharacterState))]
-[RequireComponent(typeof(CharacterStatsModifier))]
 [RequireComponent(typeof(CharacterMovement))]
 [RequireComponent(typeof(StatModifierEvents))]
 [RequireComponent(typeof(Stats))]
+[RequireComponent(typeof(StatModifierEvents))]
 
 [DisallowMultipleComponent]
 public class Character : MonoBehaviour, ITargetable
@@ -38,6 +40,8 @@ public class Character : MonoBehaviour, ITargetable
     [HideInInspector] public CharacterDetailSO characterDetails;
     [HideInInspector] public Health health;
     [HideInInspector] public HealthEvents healthEvents;
+    [HideInInspector] public Mana mana;
+    [HideInInspector] public ManaEvents manaEvents;
     [HideInInspector] public SetActiveAbilityEvent setActiveAbilityEvent;
     [HideInInspector] public ActiveAbility activeAbility;
     [HideInInspector] public CastAbility castAbility;
@@ -51,7 +55,6 @@ public class Character : MonoBehaviour, ITargetable
     [HideInInspector] public CharacterCombat characterCombat;
     [HideInInspector] public CharacterState characterState;
     [HideInInspector] public CharacterMovement characterMovement;
-    [HideInInspector] public CharacterStatsModifier characterStatsModifier;
     [HideInInspector] public StatModifierEvents statModifierEvents;
     [HideInInspector] public NavMeshAgent agent;
     [HideInInspector] public Ability baseAbility;
@@ -65,6 +68,8 @@ public class Character : MonoBehaviour, ITargetable
         // Load components
         health = GetComponent<Health>();
         healthEvents = GetComponent<HealthEvents>();
+        mana = GetComponent<Mana>();
+        manaEvents = GetComponent<ManaEvents>();
         setActiveAbilityEvent = GetComponent<SetActiveAbilityEvent>();
         activeAbility = GetComponent<ActiveAbility>();
         castAbility = GetComponent<CastAbility>();
@@ -80,7 +85,6 @@ public class Character : MonoBehaviour, ITargetable
         characterMovement = GetComponent<CharacterMovement>();
         statModifierEvents = GetComponent<StatModifierEvents>();
         stats = GetComponent<Stats>();
-        characterStatsModifier = GetComponent<CharacterStatsModifier>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
     }
@@ -124,7 +128,7 @@ public class Character : MonoBehaviour, ITargetable
 
     private void SetCharacterHealth()
     {
-        health.SetHealth(stats.GetStat(StatType.Health), stats.GetStat(StatType.Health));
+        health.SetHealth();
     }
 
     public void SetCharacterPosition(Vector2Int position, Grid grid)

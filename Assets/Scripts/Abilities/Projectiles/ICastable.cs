@@ -4,9 +4,9 @@ public interface ICastable
 {
     void InitialiseProjectile(
         ProjectileDetailsSO projectileDetails,
+        Ability ability,
         float aimAngle,
         float castPointAngle,
-        float projectileSpeed,
         Vector3 targetDirectionVector,
         Character characterTarget,
         bool overrideProjectileMovement = false

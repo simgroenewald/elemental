@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Character))]
@@ -12,7 +13,6 @@ public class CharacterCombat : MonoBehaviour
     private int currentAbilityIndex = 1;
     public Ability currentAbility;
     private float slowDownBuffer;
-    public float attackRange;
     public Character currentTarget;
 
     // Used for enemy auto attack if attacked by player
@@ -33,7 +33,7 @@ public class CharacterCombat : MonoBehaviour
         SetPlayerAttackAnimationSpeed();
     }
 
-    private void SetPlayerAttackAnimationSpeed()
+    public void SetPlayerAttackAnimationSpeed()
     {
         character.animator.SetFloat("attackSpeed", character.stats.GetStat(StatType.AttackSpeed));
     }
@@ -44,7 +44,7 @@ public class CharacterCombat : MonoBehaviour
         {
             float dist = Vector3.Distance(transform.position, targetCharacter.transform.position);
             // Slow down at buffer distance
-            if (dist < attackRange + slowDownBuffer)
+            if (dist < currentAbility.abilityDetails._range + slowDownBuffer)
             {
                 character.agent.speed = 1f;
             }
@@ -80,7 +80,6 @@ public class CharacterCombat : MonoBehaviour
         }
         currentAbility = character.activeAbility.GetCurrentAbility();
         slowDownBuffer = currentAbility.abilityDetails.slowDownBuffer;
-        attackRange = currentAbility.abilityDetails.range;
     }
 
     public void AttemptAttack(Character characterTarget, bool isAutoAttack, float lineOfSight)
@@ -88,14 +87,14 @@ public class CharacterCombat : MonoBehaviour
         currentTarget = characterTarget;
         float distanceFromTarget = Vector2.Distance(characterTarget.transform.position, character.transform.position);
         // If player is in range and target is selected
-        if (distanceFromTarget < attackRange && characterTarget != null && !characterState.isAttacking)
+        if (distanceFromTarget < currentAbility.abilityDetails._range && characterTarget != null && !characterState.isAttacking)
         {
             AttackEnemy(characterTarget);
         }
         // If player is not in range and target is selected
         else if (characterTarget != null && !characterState.isAttacking)
         {
-            if (isAutoAttack && distanceFromTarget < lineOfSight || !isAutoAttack && distanceFromTarget >= attackRange)
+            if (isAutoAttack && distanceFromTarget < lineOfSight || !isAutoAttack && distanceFromTarget >= currentAbility.abilityDetails._range)
             {
                 characterMovement.MoveToPosition(characterTarget.transform.position);
             }

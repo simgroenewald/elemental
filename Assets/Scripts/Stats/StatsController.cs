@@ -21,12 +21,12 @@ public class StatsController : MonoBehaviour
 
     private void SetUpUI()
     {
-        playerStatsUI.Initialise(stats.GetAllStats());
+        playerStatsUI.Initialise(stats.GetAllDisplayStats());
     }
 
     private void UpdateStatsUI()
     {
-        Dictionary<StatType, float> statsDict = stats.GetAllStats();
+        Dictionary<StatType, float> statsDict = stats.GetAllDisplayStats();
         foreach (var stat in statsDict)
         {
             Sprite icon = statIcons.GetIcon(stat.Key);
@@ -36,6 +36,11 @@ public class StatsController : MonoBehaviour
 
     private void UpdateStat(StatType statType, float value)
     {
+        List<StatType> percentageOnlyStats = new List<StatType> {StatType.MagicalDamageBonus, StatType.PhysicalDamageBonus, StatType.RangeBonus};
+        if (percentageOnlyStats.Contains(statType))
+        {
+            value = value * 100;
+        }
         playerStatsUI.UpdateStatUI(statType, value);
     }
 }

@@ -74,15 +74,13 @@ public class CastAbility : MonoBehaviour
         {
             GameObject projectilePrefab = currentProjectile.projectilePrefabArray[Random.Range(0, currentProjectile.projectilePrefabArray.Length)];
 
-            float projectileSpeed = Random.Range(currentProjectile.projectileSpeedMin, currentProjectile.projectileSpeedMax);
-
             Vector3 spawnPosition = activeAbility.GetCastPosition(direction);
             // Ensure projectile spawns at Z = 0 for 2D consistency
             spawnPosition.z = 0f;
             
             projectile = (ICastable)PoolManager.Instance.ReuseComponent(projectilePrefab, spawnPosition, Quaternion.identity);
 
-            projectile.InitialiseProjectile(currentProjectile, aimAngle, abilityAimAngle, projectileSpeed, abilityAimDirectionVector, characterTarget);
+            projectile.InitialiseProjectile(currentProjectile, activeAbility.GetCurrentAbility(), aimAngle, abilityAimAngle, abilityAimDirectionVector, characterTarget);
 
         }
     }

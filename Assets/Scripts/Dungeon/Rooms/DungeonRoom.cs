@@ -149,7 +149,7 @@ public class DungeonRoom : MonoBehaviour
         }
     }
 
-     public void SpawnRoomItems(int itemCount)
+/*     public void SpawnRoomItems(int itemCount)
     {
         SimpleItemInitialiser itemInitialiser = GetComponent<SimpleItemInitialiser>();
         Transform roomTransform = GetComponent<Transform>();
@@ -176,7 +176,7 @@ public class DungeonRoom : MonoBehaviour
                 itemGO.transform.rotation = Quaternion.identity;
             }
         }
-    }
+    }*/
 
 
     public Vector2Int GetValidSpawnPosition()

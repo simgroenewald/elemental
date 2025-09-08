@@ -5,8 +5,6 @@ public class Projectile : MonoBehaviour, ICastable
 {
     [SerializeField] private TrailRenderer trailRenderer;
 
-    private float projectileRange = 0f;
-    private float projectileSpeed;
     private Vector3 castDirectionVector;
     private float castDirectionAngle;
     private SpriteRenderer spriteRenderer;
@@ -15,6 +13,10 @@ public class Projectile : MonoBehaviour, ICastable
     private bool isProjectileMaterialSet = false;
     private bool overrideProjectileMovement;
     private Character characterTarget;
+    private Ability ability;
+    private float projectileDamage = 0f;
+    private float projectileSpeed = 0f;
+    private float projectileRange = 0f;
 
     private void Awake()
     {
@@ -61,7 +63,17 @@ public class Projectile : MonoBehaviour, ICastable
         {
             if (collision.gameObject == characterTarget.GetGameObject())
             {
-                characterTarget.healthEvents.RaiseReduceHealthEvent(projectileDetails.projectileDamage);
+                float damage;
+                if (ability.abilityDetails.isCritical)
+                {
+                    damage = ability.EvaluateDamageDealingStats(ability.abilityDetails._damage);
+                }
+                else
+                {
+                    damage = ability.abilityDetails._damage;
+                }
+                damage = characterTarget.stats.EvaluateDamageTakingStats(damage);
+                characterTarget.healthEvents.RaiseReduceHealthEvent(damage);
                 DisableProjectile();
             }
             // Check if the projectile reached the target
@@ -69,14 +81,18 @@ public class Projectile : MonoBehaviour, ICastable
         {
             DisableProjectile();
         }
-
     }
 
-    public void InitialiseProjectile(ProjectileDetailsSO projectileDetails, float castAngle, float castPointAngle, float projectileSpeed, Vector3 targetDirectionVector, Character characterTarget, bool overrideProjectileMovement = false)
+    public void InitialiseProjectile(ProjectileDetailsSO projectileDetails, Ability ability, float castAngle, float castPointAngle, Vector3 targetDirectionVector, Character characterTarget, bool overrideProjectileMovement = false)
     {
         // Initialise Projectile
         this.projectileDetails = projectileDetails;
         this.characterTarget = characterTarget;
+        this.ability = ability;
+
+        this.projectileDamage = ability.abilityDetails._damage;
+        this.projectileRange = ability.abilityDetails._range;
+        this.projectileSpeed = ability.abilityDetails._projectileSpeed;
 
         // Set cast direction
         SetCastDirection(projectileDetails, castAngle, castPointAngle, targetDirectionVector);
@@ -95,8 +111,6 @@ public class Projectile : MonoBehaviour, ICastable
             isProjectileMaterialSet = true;
         }
 
-        projectileRange = projectileDetails.projectileRange;
-        this.projectileSpeed = projectileSpeed;
         this.overrideProjectileMovement = overrideProjectileMovement;
 
         // InitialiseTrail

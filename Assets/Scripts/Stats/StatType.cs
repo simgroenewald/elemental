@@ -7,14 +7,14 @@ public enum StatType
     Health,
     [Description("Mana")]
     Mana,
-    [Description("Physical Damage")]
-    PhysicalDamage,
-    [Description("Magical Damage Bonus")]
+    [Description("Physical Dmg Bonus")]
+    PhysicalDamageBonus,
+    [Description("Magical Dmg Bonus")]
     MagicalDamageBonus,
     [Description("Attack Speed")]
     AttackSpeed,
-    [Description("Range")]
-    Range,
+    [Description("Range Bonus")]
+    RangeBonus,
     [Description("Line Of Sight")]
     LineOfSight,
     [Description("Movement Speed")]
@@ -28,5 +28,9 @@ public enum StatType
     [Description("Crit Chance")]
     CritChance,
     [Description("Projectile Speed")]
-    ProjectileSpeed
+    ProjectileSpeed,
+    [Description("Evasion")]
+    Evasion,
+    [Description("Cooldown")]
+    Cooldown
 }
