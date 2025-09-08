@@ -6,24 +6,14 @@ using UnityEngine;
 
 public class ItemSpawner : MonoBehaviour
 {
-    [SerializeField]
-    List<GameObject> waterRoomItems;
-    [SerializeField]
-    List<GameObject> fireRoomItems;
-    [SerializeField]
-    List<GameObject> airRoomItems;
-    [SerializeField]
-    List<GameObject> earthRoomItems;
+    [SerializeField] private ElementToItemsListMapperSO elementToItemsListMapperSO;
+    private Dictionary<ElementTheme, List<GameObject>> elementToItemsListDict;
 
-    Dictionary<ElementTheme, List<GameObject>> themeToEnemiesDict = new Dictionary<ElementTheme, List<GameObject>>();
     private void Start()
     {
         GameEventManager.Instance.itemEvents.OnItemDrop += SpawnItem;
-
-        themeToEnemiesDict[ElementTheme.Water] = waterRoomItems;
-        themeToEnemiesDict[ElementTheme.Fire] = fireRoomItems;
-        themeToEnemiesDict[ElementTheme.Air] = airRoomItems;
-        themeToEnemiesDict[ElementTheme.Earth] = earthRoomItems;
+        elementToItemsListMapperSO.Initialise();
+        elementToItemsListDict = elementToItemsListMapperSO.GetElementToItemsListDict();
     }
 
     private void OnDisable()
@@ -38,7 +28,7 @@ public class ItemSpawner : MonoBehaviour
         int rndNumber = UnityEngine.Random.Range(1, 101);
         List<GameObject> possibleItems = new List<GameObject>();
 
-        foreach (var itemObject in themeToEnemiesDict[theme])
+        foreach (var itemObject in elementToItemsListDict[ElementTheme.Water])
         {
             Item item = itemObject.GetComponent<Item>();
             if (rndNumber <= item.ItemSO.DropChance)
@@ -57,6 +47,9 @@ public class ItemSpawner : MonoBehaviour
     private void SpawnItem(DungeonRoom room, int health, Transform transform)
     {
         GameObject itemObjectToDrop = GetItemToDrop(room.theme, health);
+
+        if (itemObjectToDrop == null)
+            return;
 
         Item item = itemObjectToDrop.GetComponent<Item>();
         Instantiate(itemObjectToDrop, transform.position, Quaternion.identity, room.transform);

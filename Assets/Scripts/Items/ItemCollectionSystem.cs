@@ -7,14 +7,22 @@ public class ItemCollectionSystem : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Item item = collision.GetComponent<Item>();
+        if (!collision.TryGetComponent<Item>(out var item)) return;
+
+        // Prevent double-trigger by locking & disabling colliders immediately
+        if (!item.TryBeginPickup()) return;
+
         if (item != null)
         {
             int remainder = backpack.AddItem(item.ItemSO, item.Quantity);
             if (remainder == 0)
+            {
                 item.DestroyItem();
+            }
             else
+            {
                 item.Quantity = remainder;
+            }
         }
     }
 }
