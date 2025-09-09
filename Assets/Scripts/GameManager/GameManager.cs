@@ -114,7 +114,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
             if (room.roomType != RoomType.Start)
             {
                 room.SpawnRoomEnemies(5);
-                room.SpawnRoomItems(2);
+                //room.SpawnRoomItems(2);
             }
         }
 

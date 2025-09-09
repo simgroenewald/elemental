@@ -33,6 +33,7 @@ public class BackpackController : MonoBehaviour
     {
         backpack.Initialise();
         backpack.OnBackpackUpdated += UpdateBackpackUI;
+        backpack.OnNewItemAdded += ApplyEffects;
         foreach (BackpackItem item in initialItems)
         {
             if (item.isEmpty)
@@ -65,16 +66,21 @@ public class BackpackController : MonoBehaviour
         BackpackItem backpackItem = backpack.GetItemAtIndex(index);
         if (backpackItem.isEmpty)
             return;
+        backpackUI.ShowItemAction(index);
         IItemAction itemAction = backpackItem.item as IItemAction;
         if (itemAction != null)
         {
-            backpackUI.ShowItemAction(index);
             backpackUI.AddAction(itemAction.ActionName, () => PerformAction(index));
         }
         IDestroyableItem destroyableItem = backpackItem.item as IDestroyableItem;
         if (destroyableItem != null)
         {
             backpackUI.AddAction("Drop", () => DropItem(index, backpackItem.quantity));
+        }
+        IDroppable droppableItem = backpackItem.item as IDroppable;
+        if (droppableItem != null)
+        {
+            backpackUI.AddAction("Drop", () => RemoveEffects(index, backpackItem.quantity));
         }
     }
 
@@ -83,6 +89,7 @@ public class BackpackController : MonoBehaviour
         backpack.RemoveItem(index, quantity);
         backpackUI.Unfocus();
     }
+
 
     public void PerformAction(int index)
     {
@@ -102,6 +109,32 @@ public class BackpackController : MonoBehaviour
             {
                 backpackUI.Unfocus();
             }
+        }
+    }
+
+    public void ApplyEffects(int index)
+    {
+        BackpackItem backpackItem = backpack.GetItemAtIndex(index);
+        IItemPassive itemPassive = backpackItem.item as IItemPassive;
+        if (itemPassive != null)
+        {
+            itemPassive.ApplyEffects(gameObject, backpackItem.itemParameters);
+            if (backpack.GetItemAtIndex(index).isEmpty)
+            {
+                backpackUI.Unfocus();
+            }
+        }
+    }
+
+    public void RemoveEffects(int index, int quantity)
+    {
+        BackpackItem backpackItem = backpack.GetItemAtIndex(index);
+        IItemPassive itemPassive = backpackItem.item as IItemPassive;
+        if (itemPassive != null)
+        {
+            itemPassive.RemoveEffects(gameObject, backpackItem.itemParameters);
+            backpack.RemoveItem(index, quantity);
+            backpackUI.Unfocus();
         }
     }
 

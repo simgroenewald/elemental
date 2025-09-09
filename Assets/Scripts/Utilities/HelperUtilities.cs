@@ -71,4 +71,15 @@ public static class HelperUtilities
         return attribute != null ? attribute.Description : value.ToString();
     }
 
+    public static float GetModifyAmountResult(float initialValue, float modifierValue, bool isPercentage)
+    {
+        if (isPercentage)
+        {
+            return initialValue + (initialValue * modifierValue / 100);
+        } else
+        {
+            return initialValue + modifierValue;
+        }
+    }
+
 }

@@ -301,11 +301,11 @@ public class PlayerControl : MonoBehaviour
 
         if (currentAbility.abilityDetails.isEnemyTargetable)
         {
-            player.abilitySetupEvent.RaiseAbilitySetupEvent(true, aimDirection, playerAngle, castPointAngle, castPointDirection, targetEnemy.enemy);
+            player.abilitySetupEvent.RaiseAbilitySetupEvent(true, aimDirection, playerAngle, castPointAngle, castPointDirection, player, targetEnemy.enemy);
         }
         else
         {
-            player.abilitySetupEvent.RaiseAbilitySetupEvent(true, aimDirection, playerAngle, castPointAngle, castPointDirection, null);
+            player.abilitySetupEvent.RaiseAbilitySetupEvent(true, aimDirection, playerAngle, castPointAngle, castPointDirection, player, null);
         }
         player.abilityEvents.RaiseCastAbilityEvent();
 
@@ -352,11 +352,11 @@ public class PlayerControl : MonoBehaviour
 
             if (currentAbility.abilityDetails.isEnemyTargetable)
             {
-                player.abilitySetupEvent.RaiseAbilitySetupEvent(true, aimDirection, playerAngle, castPointAngle, castPointDirection, targetEnemy.enemy);
+                player.abilitySetupEvent.RaiseAbilitySetupEvent(true, aimDirection, playerAngle, castPointAngle, castPointDirection, player, targetEnemy.enemy);
             }
             else
             {
-                player.abilitySetupEvent.RaiseAbilitySetupEvent(true, aimDirection, playerAngle, castPointAngle, castPointDirection, null);
+                player.abilitySetupEvent.RaiseAbilitySetupEvent(true, aimDirection, playerAngle, castPointAngle, castPointDirection, player, null);
             }
             player.abilityEvents.RaiseCastAbilityEvent();
         }

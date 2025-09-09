@@ -17,6 +17,7 @@ public class BackpackSO : ScriptableObject
     public int Size { get; private set; } = 10;
 
     public event Action<Dictionary<int, BackpackItem>> OnBackpackUpdated;
+    public event Action<int> OnNewItemAdded;
 
     public void Initialise()
     {
@@ -60,6 +61,7 @@ public class BackpackSO : ScriptableObject
             if (backpackItems[i].isEmpty)
             {
                 backpackItems[i] = newBackpackItem;
+                OnNewItemAdded?.Invoke(i);
                 return quantity;
             }
         }
@@ -116,6 +118,11 @@ public class BackpackSO : ScriptableObject
     public BackpackItem GetItemAtIndex(int index)
     {
         return backpackItems[index];
+    }
+
+    public List<BackpackItem> GetAllItems()
+    {
+        return backpackItems;
     }
 
     public void AddItem(BackpackItem item)

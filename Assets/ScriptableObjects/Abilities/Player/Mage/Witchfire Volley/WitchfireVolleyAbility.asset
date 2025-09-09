@@ -14,22 +14,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Witchfire Volley
   icon: {fileID: 0}
+  range: 1
+  isBaseAbility: 1
   isAutoAttack: 1
   isEnemyTargetable: 1
   isDirectionTargetable: 0
   isGroundTargetable: 0
   isPassive: 0
-  isRanged: 1
   isDamageOverTime: 0
   isCritical: 1
   isAreaOfEffect: 0
   isHurt: 1
+  slowDownBuffer: 0
+  coolDownTime: 10
   isCoolingDown: 0
+  damage: 10
+  isMagical: 1
+  critChance: 0
+  manaCost: 30
+  isRanged: 1
   abilityCastPositionLeft: {x: -0.155, y: 0.222, z: 0}
   abilityCastPositionRight: {x: 0.155, y: 0.222, z: 0}
   abilityProjectileDetails: {fileID: 11400000, guid: a441b82159785a642b509ab9bfb94cc3, type: 2}
-  slowDownBuffer: 0
-  coolDownTime: 10
-  manaCost: 30
-  magicalDamage: 30
-  range: 10
+  projectileSpeed: 2
+  _damage: 10
+  _projectileSpeed: 2
+  _coolDownTime: 10
+  _critChance: 99.21875
+  _range: 1
+  _manaCost: 30

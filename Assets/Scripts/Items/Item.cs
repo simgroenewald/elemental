@@ -13,6 +13,8 @@ public class Item : MonoBehaviour
     [SerializeField]
     private float duration = 0.3f;
 
+    private bool pickupLocked;
+
     private void Start()
     {
         GetComponent<SpriteRenderer>().sprite = ItemSO.ItemImage;
@@ -37,5 +39,21 @@ public class Item : MonoBehaviour
             yield return null;
         }
         Destroy(gameObject);
+    }
+
+    internal bool TryBeginPickup()
+    {
+        if (pickupLocked) 
+            return false;
+
+        pickupLocked = true;
+        SetCollidersEnabled(false);  // prevent re-entry this frame
+        return true;
+    }
+
+    private void SetCollidersEnabled(bool enabled)
+    {
+        var collider = GetComponent<Collider2D>();
+        if (collider) collider.enabled = enabled;
     }
 }

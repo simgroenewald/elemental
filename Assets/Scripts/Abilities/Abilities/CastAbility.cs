@@ -47,6 +47,7 @@ public class CastAbility : MonoBehaviour
                     onAbilitySetupEventArgs.abilityAimAngle, 
                     onAbilitySetupEventArgs.abilityAimDirectionVector,
                     onAbilitySetupEventArgs.direction,
+                    onAbilitySetupEventArgs.characterCaster,
                     onAbilitySetupEventArgs.characterTarget);
 
                 ResetCoolDownTimer();
@@ -66,7 +67,7 @@ public class CastAbility : MonoBehaviour
 
     }
 
-    private void SetCastProjectile(float aimAngle, float abilityAimAngle, Vector3 abilityAimDirectionVector, TargetDirection direction, Character characterTarget)
+    private void SetCastProjectile(float aimAngle, float abilityAimAngle, Vector3 abilityAimDirectionVector, TargetDirection direction, Character characterCaster, Character characterTarget)
     {
         ProjectileDetailsSO currentProjectile = activeAbility.GetCurrentProjectile();
         
@@ -74,15 +75,13 @@ public class CastAbility : MonoBehaviour
         {
             GameObject projectilePrefab = currentProjectile.projectilePrefabArray[Random.Range(0, currentProjectile.projectilePrefabArray.Length)];
 
-            float projectileSpeed = Random.Range(currentProjectile.projectileSpeedMin, currentProjectile.projectileSpeedMax);
-
             Vector3 spawnPosition = activeAbility.GetCastPosition(direction);
             // Ensure projectile spawns at Z = 0 for 2D consistency
             spawnPosition.z = 0f;
             
             projectile = (ICastable)PoolManager.Instance.ReuseComponent(projectilePrefab, spawnPosition, Quaternion.identity);
 
-            projectile.InitialiseProjectile(currentProjectile, aimAngle, abilityAimAngle, projectileSpeed, abilityAimDirectionVector, characterTarget);
+            projectile.InitialiseProjectile(currentProjectile, activeAbility.GetCurrentAbility(), aimAngle, abilityAimAngle, abilityAimDirectionVector, characterCaster, characterTarget);
 
         }
     }

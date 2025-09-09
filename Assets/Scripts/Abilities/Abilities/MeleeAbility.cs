@@ -18,9 +18,19 @@ public class MeleeAbility : MonoBehaviour
     private void MeleeAttack()
     {
         float distanceFromTarget = Vector2.Distance(characterCombat.currentTarget.transform.position, transform.position);
-        if (distanceFromTarget <= characterCombat.attackRange)
+        if (distanceFromTarget <= characterCombat.currentAbility.abilityDetails._range)
         {
-            characterCombat.currentTarget.healthEvents.RaiseReduceHealthEvent(characterCombat.currentAbility.abilityDetails.physicalDamage);
+            float damage;
+            if (characterCombat.currentAbility.abilityDetails.isCritical)
+            {
+                damage = characterCombat.currentAbility.EvaluateDamageDealingStats(character, characterCombat.currentAbility.abilityDetails._damage);
+            }
+            else
+            {
+                damage = characterCombat.currentAbility.abilityDetails._damage;
+            }
+            damage = characterCombat.currentTarget.stats.EvaluateDamageTakingStats(damage);
+            characterCombat.currentTarget.healthEvents.RaiseReduceHealthEvent(damage);
         }
     }
 

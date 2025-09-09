@@ -14,23 +14,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityName: Sword Slash
   icon: {fileID: 0}
+  range: 0.5
+  isBaseAbility: 1
   isAutoAttack: 1
   isEnemyTargetable: 1
   isDirectionTargetable: 0
   isGroundTargetable: 0
   isPassive: 0
-  isRanged: 0
   isDamageOverTime: 0
-  isCritical: 0
+  isCritical: 1
   isAreaOfEffect: 0
   isHurt: 0
+  slowDownBuffer: 0
+  coolDownTime: 0
   isCoolingDown: 0
+  damage: 10
+  isMagical: 0
+  critChance: 0
+  manaCost: 0
+  isRanged: 0
   abilityCastPositionLeft: {x: 0, y: 0, z: 0}
   abilityCastPositionRight: {x: 0, y: 0, z: 0}
   abilityProjectileDetails: {fileID: 0}
-  slowDownBuffer: 0
-  coolDownTime: 0
-  manaCost: 0
-  magicalDamage: 0
-  range: 0.5
-  physicalDamage: 10
+  projectileSpeed: 0
+  _damage: 0
+  _projectileSpeed: 0
+  _coolDownTime: 0
+  _critChance: 0
+  _range: 0.5
+  _manaCost: 0

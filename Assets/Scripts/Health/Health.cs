@@ -1,14 +1,20 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Net.Sockets;
 using UnityEngine;
 using UnityEngine.Rendering;
+using static Unity.Cinemachine.CinemachineFreeLookModifier;
 
 [DisallowMultipleComponent]
 public class Health: MonoBehaviour
 {
+    private Coroutine healthRegenCoroutine;
+    private float tickSeconds = 0.1f;
     private Character character;
-    private float maxHealth;
     private float currentHealth;
-    private float healthRegenRate;
-    float regenBucket;
+    private float regenBucket;
+    private float flatBonusHealthRegen;
+    private float percentageBonusHealthRegen;
     [SerializeField] private GameObject fillArea;
 
     private void Awake()
@@ -20,50 +26,125 @@ public class Health: MonoBehaviour
     {
         character.healthEvents.OnReduceHealth += OnReduceHealth;
         character.healthEvents.OnIncreaseHealth += OnIncreaseHealth;
+        healthRegenCoroutine = StartCoroutine(RegenLoop());
     }
 
     private void OnDisable()
     {
         character.healthEvents.OnReduceHealth -= OnReduceHealth;
         character.healthEvents.OnIncreaseHealth -= OnIncreaseHealth;
+        if (healthRegenCoroutine != null) StopCoroutine(healthRegenCoroutine);
     }
 
-    private void Update()
+/*    private void Update()
     {
-        /*        if (characterStats.healthRegenRate != 0 && Time.frameCount % characterStats.healthRegenRate == 0)
-                {
-                    if (currentHealth < maxHealth)
-                    {
-                        OnIncreaseHealth(1);
-                    }
-                }*/
+        if (character.stats.GetStat(StatType.HealthRegen) != 0 && Time.frameCount % character.stats.GetStat(StatType.HealthRegen) == 0)
+        {
+            if (currentHealth < character.stats.GetStat(StatType.Health))
+            {
+                OnIncreaseHealth(1);
+            }
+        }
 
-        if (currentHealth >= maxHealth || healthRegenRate == 0) return;
+        if (currentHealth >= character.stats.GetStat(StatType.Health) || character.stats.GetStat(StatType.HealthRegen) == 0) return;
 
-        regenBucket += healthRegenRate * Time.deltaTime;
+        regenBucket += character.stats.GetStat(StatType.HealthRegen) * Time.deltaTime;
         int whole = Mathf.FloorToInt(regenBucket);
         if (whole > 0)
         {
             OnIncreaseHealth(whole);
             regenBucket -= whole;
         }
+    }*/
+
+    private IEnumerator RegenLoop()
+    {
+        var wait = new WaitForSeconds(tickSeconds);
+
+        while (true)
+        {
+            float maxHealth = character.stats.GetStat(StatType.Health);
+            float healthRegen = character.stats.GetStat(StatType.HealthRegen);
+
+            if (healthRegen > 0)
+            {
+                // --- Check modifiers dictionary each tick ---
+                if (character.stats.healthLevelModifierList.Count > 0)
+                {
+                    foreach (HealthLevelModifier modifier in character.stats.healthLevelModifierList)
+                    {
+                        // Trigger if not already running
+                        if (!modifier.isActive)
+                        {
+                            float currentHealthPercent = currentHealth / Mathf.Max(1f, maxHealth) * 100;
+                            if (currentHealthPercent <= modifier.trigger)
+                            {
+                                StartCoroutine(ApplyModifier(modifier));
+                                modifier.isActive = true; // mark as active so we don’t double-apply
+                            }
+                        }
+                    }
+                }
+
+                float healthRegenTotal = healthRegen * (1f + percentageBonusHealthRegen) + flatBonusHealthRegen;
+
+                if (healthRegenTotal > 0f && currentHealth < maxHealth)
+                {
+                    regenBucket += healthRegenTotal * tickSeconds;
+
+                    int whole = Mathf.FloorToInt(regenBucket);
+                    if (whole > 0)
+                    {
+                        int amountToHeal = Mathf.Min(whole, Mathf.CeilToInt(maxHealth - currentHealth));
+                        if (amountToHeal > 0)
+                        {
+                            OnIncreaseHealth(amountToHeal);
+                            regenBucket -= amountToHeal;
+                        }
+                        else
+                        {
+                            regenBucket = 0f;
+                        }
+                    }
+                }
+            }
+
+            yield return wait;
+        }
     }
 
-    public void SetHealth(float maxHealth, float currentHealth)
+    private IEnumerator ApplyModifier(HealthLevelModifier modifier)
     {
-        this.maxHealth = maxHealth;
-        this.currentHealth = currentHealth;
-        character.healthEvents.RaiseUpdateHealthbarMax(maxHealth);
+        if (modifier.isPercentage) percentageBonusHealthRegen += modifier.increase/100;
+        else flatBonusHealthRegen += modifier.increase;
+
+        yield return new WaitForSeconds(modifier.duration);
+
+        if (modifier.isActive)
+        {
+            if (modifier.isPercentage) percentageBonusHealthRegen -= modifier.increase/100;
+            else flatBonusHealthRegen -= modifier.increase;
+
+            modifier.isActive = false; // allow it to be reapplied later if needed
+        }
+    }
+
+
+    public void SetHealth()
+    {
+        currentHealth = character.stats.GetStat(StatType.Health);
+
+        character.healthEvents.RaiseUpdateHealthbarMax(character.stats.GetStat(StatType.Health));
         character.healthEvents.RaiseUpdateHealthbar(currentHealth);
     }
 
-    public void SetHealthRegenRate(float healthRegenRate)
+    public void UpdateHealth(float percentageOfMax)
     {
-        this.healthRegenRate = healthRegenRate;
-    }
+        float maxHealth = character.stats.GetStat(StatType.Health);
+        currentHealth = maxHealth * percentageOfMax;
 
-    public float GetMaxHealth() { 
-        return maxHealth;
+        character.healthEvents.RaiseUpdateHealthbarMax(maxHealth);
+        character.healthEvents.RaiseUpdateHealthbar(currentHealth);
     }
 
     public float GetCurrentHealth()
@@ -92,10 +173,11 @@ public class Health: MonoBehaviour
     public void OnIncreaseHealth(float health)
     {
         float newHealth = currentHealth + health;
-        if (newHealth > maxHealth)
+        if (newHealth > character.stats.GetStat(StatType.Health))
         {
-            currentHealth = maxHealth;
-        } else
+            currentHealth = character.stats.GetStat(StatType.Health);
+        }
+        else
         {
             currentHealth = newHealth;
         }
