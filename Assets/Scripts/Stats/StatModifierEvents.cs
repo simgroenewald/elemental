@@ -11,6 +11,7 @@ public class StatModifierEvents : MonoBehaviour
     public event Action<string> OnRemoveHealthLevelItemEvent;
     public event Action<StatType, string, float, float, float, bool> OnAddAttackCountItemEvent;
     public event Action<string> OnRemoveAttackCountItemEvent;
+    public event Action<StatType, float, bool> OnConsumableItemUsedEvent;
 
     public void RaiseModifyMaxHealthEvent(float val, bool isPercentage)
     {
@@ -53,5 +54,10 @@ public class StatModifierEvents : MonoBehaviour
     internal void RaiseRemoveHealthLevelItemEvent(string name)
     {
         OnRemoveHealthLevelItemEvent?.Invoke(name);
+    }
+
+    internal void RaiseConsumableUsedEvent(StatType statType, float val, bool isPercentage)
+    {
+        OnConsumableItemUsedEvent?.Invoke(statType, val, isPercentage);
     }
 }

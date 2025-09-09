@@ -37,6 +37,7 @@ public class Stats : MonoBehaviour
         character.statModifierEvents.OnRemoveHealthLevelItemEvent += RemoveHealthLevelModifier;
         character.statModifierEvents.OnAddAttackCountItemEvent += AddAttackCountModifier;
         character.statModifierEvents.OnRemoveAttackCountItemEvent += RemoveAttackCountModifier;
+        character.statModifierEvents.OnConsumableItemUsedEvent += ApplyConsumableEffects;
     }
 
     private void OnDisable()
@@ -44,8 +45,9 @@ public class Stats : MonoBehaviour
         character.statModifierEvents.OnAddBasicStatEvent -= (statType, stat, isPercentage) => { ModifybasicStat(statType, stat, isPercentage, true); };
         character.statModifierEvents.OnRemoveBasicStatEvent -= (statType, stat, isPercentage) => { ModifybasicStat(statType, stat, isPercentage, false); };
         character.statModifierEvents.OnAddHealthLevelItemEvent -= AddHealthLevelModifier;
-        character.statModifierEvents.OnRemoveHealthLevelItemEvent += RemoveHealthLevelModifier;
-        character.statModifierEvents.OnRemoveAttackCountItemEvent += RemoveAttackCountModifier;
+        character.statModifierEvents.OnRemoveHealthLevelItemEvent -= RemoveHealthLevelModifier;
+        character.statModifierEvents.OnRemoveAttackCountItemEvent -= RemoveAttackCountModifier;
+        character.statModifierEvents.OnConsumableItemUsedEvent -= ApplyConsumableEffects;
     }
 
 
@@ -390,6 +392,34 @@ public class Stats : MonoBehaviour
         float newTotalValue = (originalValue + totalFlatModifier) + ((originalValue + totalFlatModifier) * (totalPercentageModifier));
 
         return newTotalValue;
+    }
+
+    private void ApplyConsumableEffects(StatType statType, float val, bool isPercentage)
+    {
+        if (statType == StatType.Health)
+        {
+            if (isPercentage)
+            {
+                float additionalHealth = GetStat(StatType.Health) * val / 100;
+                character.healthEvents.RaiseIncreaseHealthEvent(additionalHealth);
+            }
+            else
+            {
+                character.healthEvents.RaiseIncreaseHealthEvent(val);
+            }
+        }
+        if (statType == StatType.ManaRegen)
+        {
+            if (isPercentage)
+            {
+                float additionalMana = GetStat(StatType.Mana) * val / 100;
+                character.manaEvents.RaiseIncreaseManaEvent(additionalMana);
+            }
+            else
+            {
+                character.manaEvents.RaiseIncreaseManaEvent(val);
+            }
+        }
     }
 
     public float EvaluateDamageTakingStats(float damage)

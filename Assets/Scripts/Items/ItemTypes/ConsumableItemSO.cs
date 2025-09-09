@@ -38,7 +38,7 @@ public interface IItemAction
 [Serializable]
 public class ModifierData
 {
-    public PlayerStatModifierSO statModifier;
+    public ConsumableStatModifierSO statModifier;
     public StatType statType;
     public float value;
     public bool isPercentage;

@@ -24,7 +24,7 @@ MonoBehaviour:
     statType: 14
     value: 10
     isPercentage: 1
-  - statModifier: {fileID: 0}
+  - statModifier: {fileID: 11400000, guid: 468695d91446670468eccf0ae434f3e4, type: 2}
     statType: 14
     value: 10
     isPercentage: 1

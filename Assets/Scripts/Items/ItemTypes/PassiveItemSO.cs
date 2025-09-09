@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,13 +6,13 @@ using UnityEngine;
 public class PassiveItemSO : ItemSO, IDroppable, IItemPassive
 {
     [SerializeField]
-    private List<ModifierData> modifiersData = new List<ModifierData>();
+    private List<PassiveModifierData> modifiersData = new List<PassiveModifierData>();
 
     public AudioClip actionSFX {get; private set;}
 
     public bool ApplyEffects(GameObject player, List<ItemParameter> itemParameters = null)
     {
-        foreach (ModifierData data in modifiersData)
+        foreach (PassiveModifierData data in modifiersData)
         {
             data.statModifier.AffectPlayer(player, data.statType, data.value, data.isPercentage);
         }
@@ -20,7 +21,7 @@ public class PassiveItemSO : ItemSO, IDroppable, IItemPassive
 
     public bool RemoveEffects(GameObject player, List<ItemParameter> itemParameters = null)
     {
-        foreach (ModifierData data in modifiersData)
+        foreach (PassiveModifierData data in modifiersData)
         {
             data.statModifier.UnaffectPlayer(player, data.statType, data.value, data.isPercentage);
         }
@@ -39,3 +40,13 @@ public interface IItemPassive
     bool ApplyEffects(GameObject player, List<ItemParameter> itemParameters);
     bool RemoveEffects(GameObject player, List<ItemParameter> itemParameters);
 }
+
+[Serializable]
+public class PassiveModifierData
+{
+    public BasicStatModifierSO statModifier;
+    public StatType statType;
+    public float value;
+    public bool isPercentage;
+}
+

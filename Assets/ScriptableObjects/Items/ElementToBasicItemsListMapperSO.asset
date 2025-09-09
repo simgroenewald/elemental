@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a33ee69094b847d4387c354dd084a2f1, type: 3}
-  m_Name: ElementToItemsListMapperSO
+  m_Name: ElementToBasicItemsListMapperSO
   m_EditorClassIdentifier: 
   elementToItemsList:
   - theme: 3

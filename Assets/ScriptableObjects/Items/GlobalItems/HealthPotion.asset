@@ -20,7 +20,7 @@ MonoBehaviour:
   <DefaultParametersList>k__BackingField: []
   <DropChance>k__BackingField: 50
   modifiersData:
-  - statModifier: {fileID: 11400000, guid: 468695d91446670468eccf0ae434f3e4, type: 2}
+  - statModifier: {fileID: 11400000, guid: 6f74d810a7de3454a887f3cd885e3924, type: 2}
     statType: 0
     value: 25
     isPercentage: 0

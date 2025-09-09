@@ -120,6 +120,11 @@ public class BackpackSO : ScriptableObject
         return backpackItems[index];
     }
 
+    public List<BackpackItem> GetAllItems()
+    {
+        return backpackItems;
+    }
+
     public void AddItem(BackpackItem item)
     {
         AddItem(item.item, item.quantity);
