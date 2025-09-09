@@ -147,6 +147,29 @@ public class DungeonRoom : MonoBehaviour
             miniBoss.SetRoom(this);
             enemies.Add(miniBoss);
         }
+
+        if (roomType == RoomType.Boss)
+        {
+            GameObject bossPrefab = enemyInitialiser.GetBossPrefab(theme);
+            Vector2Int spawnPosition2D = GetValidSpawnPosition();
+
+            // Convert tile position to world position
+            Vector3 worldPosition = this.structure.tilemapLayers.grid.CellToWorld((Vector3Int)spawnPosition2D);
+            // Center the position in the tile
+            worldPosition += this.structure.tilemapLayers.grid.cellSize * 0.16f;
+
+            // Instantiate enemy
+            GameObject bossGO = Instantiate(bossPrefab, worldPosition, Quaternion.identity, roomTransform);
+
+            bossGO.name = $"Boss";
+
+            // Ensure proper 2D rotation (no X or Y rotation)
+            bossGO.transform.rotation = Quaternion.identity;
+
+            Enemy boss = bossGO.GetComponent<Enemy>();
+            boss.SetRoom(this);
+            enemies.Add(boss);
+        }
     }
 
 /*     public void SpawnRoomItems(int itemCount)
@@ -202,7 +225,24 @@ public class DungeonRoom : MonoBehaviour
 
     public void EnterRoom()
     {
+
         isEntered = true;
+        SetMainBossHealthbar();
+    }
+
+    private void SetMainBossHealthbar ()
+    {
+        if (roomType == RoomType.MiniBoss || roomType == RoomType.Boss)
+        {
+            foreach (var enemy in enemies)
+            {
+                if (enemy.enemyDetails.isMiniBoss || enemy.enemyDetails.isBoss)
+                {
+                    GameEventManager.Instance.globalUIEvents.RaiseShowBossMainHealthBarEvent(enemy);
+                    return;
+                }
+            }
+        }
     }
 
     public void ExitRoom()

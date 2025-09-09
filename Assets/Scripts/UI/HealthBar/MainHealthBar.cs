@@ -16,13 +16,13 @@ public class MainHealthBar : MonoBehaviour
     {
         player = GameManager.Instance.player;
         player.healthEvents.OnUpdateHealthbarMax += OnUpdateMaxHealth;
-        player.healthEvents.OnUpdateHealthbar += OnUpdatehealthbar;
+        player.healthEvents.OnUpdateHealthbar += OnUpdateHealthbar;
     }
 
     private void OnDisable()
     {
         player.healthEvents.OnUpdateHealthbarMax += OnUpdateMaxHealth;
-        player.healthEvents.OnUpdateHealthbar -= OnUpdatehealthbar;
+        player.healthEvents.OnUpdateHealthbar -= OnUpdateHealthbar;
     }
 
     private void OnUpdateMaxHealth(float maxHealth)
@@ -31,7 +31,7 @@ public class MainHealthBar : MonoBehaviour
         Updatetext((int)currentHealth, (int)maxHealth);
     }
 
-    private void OnUpdatehealthbar(float currentHealth)
+    private void OnUpdateHealthbar(float currentHealth)
     {
         this.currentHealth = currentHealth;
         slider.value = currentHealth / maxHealth;
