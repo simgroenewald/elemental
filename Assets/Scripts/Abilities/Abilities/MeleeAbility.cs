@@ -23,7 +23,7 @@ public class MeleeAbility : MonoBehaviour
             float damage;
             if (characterCombat.currentAbility.abilityDetails.isCritical)
             {
-                damage = characterCombat.currentAbility.EvaluateDamageDealingStats(characterCombat.currentAbility.abilityDetails._damage);
+                damage = characterCombat.currentAbility.EvaluateDamageDealingStats(character, characterCombat.currentAbility.abilityDetails._damage);
             }
             else
             {

@@ -115,14 +115,14 @@ public class Health: MonoBehaviour
 
     private IEnumerator ApplyModifier(HealthLevelModifier modifier)
     {
-        if (modifier.isPercentage) percentageBonusHealthRegen += modifier.increase;
+        if (modifier.isPercentage) percentageBonusHealthRegen += modifier.increase/100;
         else flatBonusHealthRegen += modifier.increase;
 
         yield return new WaitForSeconds(modifier.duration);
 
         if (modifier.isActive)
         {
-            if (modifier.isPercentage) percentageBonusHealthRegen -= modifier.increase;
+            if (modifier.isPercentage) percentageBonusHealthRegen -= modifier.increase/100;
             else flatBonusHealthRegen -= modifier.increase;
 
             modifier.isActive = false; // allow it to be reapplied later if needed

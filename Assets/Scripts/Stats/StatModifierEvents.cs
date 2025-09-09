@@ -8,6 +8,9 @@ public class StatModifierEvents : MonoBehaviour
     public event Action<StatType, float, bool> OnAddBasicStatEvent;
     public event Action<StatType, float, bool> OnRemoveBasicStatEvent;
     public event Action<string, float, float, float, bool> OnAddHealthLevelItemEvent;
+    public event Action<string> OnRemoveHealthLevelItemEvent;
+    public event Action<StatType, string, float, float, float, bool> OnAddAttackCountItemEvent;
+    public event Action<string> OnRemoveAttackCountItemEvent;
 
     public void RaiseModifyMaxHealthEvent(float val, bool isPercentage)
     {
@@ -17,11 +20,6 @@ public class StatModifierEvents : MonoBehaviour
     public void RaiseModifyMaxManaEvent(float val, bool isPercentage)
     {
         OnModifyMaxManaEvent?.Invoke(val, isPercentage);
-    }
-
-    internal void RaiseAddAttackCountItemEvent(StatType statType, float count, float duration, float val, bool isPercentage)
-    {
-        Debug.Log($"Modify attack at {count} attacks by {val} for {duration}");
     }
 
     internal void RaiseAddHealthLevelItemEvent(string name, float trigger, float duration, float increase, bool isPercentage)
@@ -42,13 +40,18 @@ public class StatModifierEvents : MonoBehaviour
         OnRemoveBasicStatEvent?.Invoke(statType, val, isPercentage);
     }
 
-    internal void RaiseRemoveAttackCountItemEvent(StatType statType, float count, float duration, float val, bool isPercentage)
+    internal void RaiseAddAttackCountItemEvent(StatType statType, string name, float count, float duration, float val, bool isPercentage)
     {
-        throw new NotImplementedException();
+        OnAddAttackCountItemEvent?.Invoke(statType, name, count, duration, val, isPercentage);
     }
 
-    internal void RaiseRemoveHealthLevelItemEvent(string name, float trigger, float duration, float increase, bool isPercentage)
+    internal void RaiseRemoveAttackCountItemEvent(string name)
     {
-        throw new NotImplementedException();
+        OnRemoveAttackCountItemEvent?.Invoke(name);
+    }
+
+    internal void RaiseRemoveHealthLevelItemEvent(string name)
+    {
+        OnRemoveHealthLevelItemEvent?.Invoke(name);
     }
 }

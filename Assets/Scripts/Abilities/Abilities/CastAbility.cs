@@ -47,6 +47,7 @@ public class CastAbility : MonoBehaviour
                     onAbilitySetupEventArgs.abilityAimAngle, 
                     onAbilitySetupEventArgs.abilityAimDirectionVector,
                     onAbilitySetupEventArgs.direction,
+                    onAbilitySetupEventArgs.characterCaster,
                     onAbilitySetupEventArgs.characterTarget);
 
                 ResetCoolDownTimer();
@@ -66,7 +67,7 @@ public class CastAbility : MonoBehaviour
 
     }
 
-    private void SetCastProjectile(float aimAngle, float abilityAimAngle, Vector3 abilityAimDirectionVector, TargetDirection direction, Character characterTarget)
+    private void SetCastProjectile(float aimAngle, float abilityAimAngle, Vector3 abilityAimDirectionVector, TargetDirection direction, Character characterCaster, Character characterTarget)
     {
         ProjectileDetailsSO currentProjectile = activeAbility.GetCurrentProjectile();
         
@@ -80,7 +81,7 @@ public class CastAbility : MonoBehaviour
             
             projectile = (ICastable)PoolManager.Instance.ReuseComponent(projectilePrefab, spawnPosition, Quaternion.identity);
 
-            projectile.InitialiseProjectile(currentProjectile, activeAbility.GetCurrentAbility(), aimAngle, abilityAimAngle, abilityAimDirectionVector, characterTarget);
+            projectile.InitialiseProjectile(currentProjectile, activeAbility.GetCurrentAbility(), aimAngle, abilityAimAngle, abilityAimDirectionVector, characterCaster, characterTarget);
 
         }
     }

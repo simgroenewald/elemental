@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "AttackCountItemSO", menuName = "Item Types/AttackCountItemSO")]
-public class AttackCountItemSO : ItemSO, IDestroyableItem, IItemPassive
+public class AttackCountItemSO : ItemSO, IDroppable, IItemPassive
 {
     [SerializeField]
     private List<AttackCountModifierData> attackCountModifierData = new List<AttackCountModifierData>();
@@ -14,7 +14,7 @@ public class AttackCountItemSO : ItemSO, IDestroyableItem, IItemPassive
     {
         foreach (AttackCountModifierData data in attackCountModifierData)
         {
-            data.statModifier.AffectPlayer(player, data.statType, data.count, data.duration, data.val, data.isPercentage);
+            data.statModifier.AffectPlayer(player, data.statType, data.name, data.count, data.duration, data.val, data.isPercentage);
         }
         return true;
     }
@@ -23,7 +23,7 @@ public class AttackCountItemSO : ItemSO, IDestroyableItem, IItemPassive
     {
         foreach (AttackCountModifierData data in attackCountModifierData)
         {
-            data.statModifier.UnaffectPlayer(player, data.statType, data.count, data.duration, data.val, data.isPercentage);
+            data.statModifier.UnaffectPlayer(player, data.name);
         }
         return true;
     }
@@ -34,6 +34,7 @@ public class AttackCountModifierData
 {
     public AttackCountModifierSO statModifier;
     public StatType statType;
+    public string name;
     public float count;
     public float duration;
     public float val;

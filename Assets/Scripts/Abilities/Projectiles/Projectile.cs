@@ -5,6 +5,7 @@ public class Projectile : MonoBehaviour, ICastable
 {
     [SerializeField] private TrailRenderer trailRenderer;
 
+    private Character characterCaster;
     private Vector3 castDirectionVector;
     private float castDirectionAngle;
     private SpriteRenderer spriteRenderer;
@@ -66,7 +67,7 @@ public class Projectile : MonoBehaviour, ICastable
                 float damage;
                 if (ability.abilityDetails.isCritical)
                 {
-                    damage = ability.EvaluateDamageDealingStats(ability.abilityDetails._damage);
+                    damage = ability.EvaluateDamageDealingStats(characterCaster, ability.abilityDetails._damage);
                 }
                 else
                 {
@@ -83,10 +84,11 @@ public class Projectile : MonoBehaviour, ICastable
         }
     }
 
-    public void InitialiseProjectile(ProjectileDetailsSO projectileDetails, Ability ability, float castAngle, float castPointAngle, Vector3 targetDirectionVector, Character characterTarget, bool overrideProjectileMovement = false)
+    public void InitialiseProjectile(ProjectileDetailsSO projectileDetails, Ability ability, float castAngle, float castPointAngle, Vector3 targetDirectionVector, Character characterCaster, Character characterTarget, bool overrideProjectileMovement = false)
     {
         // Initialise Projectile
         this.projectileDetails = projectileDetails;
+        this.characterCaster = characterCaster;
         this.characterTarget = characterTarget;
         this.ability = ability;
 

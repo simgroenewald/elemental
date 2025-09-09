@@ -16,6 +16,7 @@ public class Stats : MonoBehaviour
     [SerializeField] private Dictionary<StatType, float> statsDict = new Dictionary<StatType, float>();
     [SerializeField] private Dictionary<StatType, float> displayStatsDict = new Dictionary<StatType, float>();
     public List<HealthLevelModifier> healthLevelModifierList = new List<HealthLevelModifier>();
+    public List<AttackCountModifier> attackCountModifierList = new List<AttackCountModifier>();
     internal Action<StatType, float> OnStatUpdated;
     Mana mana;
     Health health;
@@ -33,6 +34,9 @@ public class Stats : MonoBehaviour
         character.statModifierEvents.OnAddBasicStatEvent += (statType, stat, isPercentage) =>{ModifybasicStat(statType, stat, isPercentage, true);};
         character.statModifierEvents.OnRemoveBasicStatEvent += (statType, stat, isPercentage) => { ModifybasicStat(statType, stat, isPercentage, false); };
         character.statModifierEvents.OnAddHealthLevelItemEvent += AddHealthLevelModifier;
+        character.statModifierEvents.OnRemoveHealthLevelItemEvent += RemoveHealthLevelModifier;
+        character.statModifierEvents.OnAddAttackCountItemEvent += AddAttackCountModifier;
+        character.statModifierEvents.OnRemoveAttackCountItemEvent += RemoveAttackCountModifier;
     }
 
     private void OnDisable()
@@ -40,6 +44,8 @@ public class Stats : MonoBehaviour
         character.statModifierEvents.OnAddBasicStatEvent -= (statType, stat, isPercentage) => { ModifybasicStat(statType, stat, isPercentage, true); };
         character.statModifierEvents.OnRemoveBasicStatEvent -= (statType, stat, isPercentage) => { ModifybasicStat(statType, stat, isPercentage, false); };
         character.statModifierEvents.OnAddHealthLevelItemEvent -= AddHealthLevelModifier;
+        character.statModifierEvents.OnRemoveHealthLevelItemEvent += RemoveHealthLevelModifier;
+        character.statModifierEvents.OnRemoveAttackCountItemEvent += RemoveAttackCountModifier;
     }
 
 
@@ -91,12 +97,49 @@ public class Stats : MonoBehaviour
 
     public void AddHealthLevelModifier(string name, float trigger, float duration, float increase, bool isPercentage)
     {
-            HealthLevelModifier healthLevelModifier = new HealthLevelModifier();
-            healthLevelModifier.trigger = trigger;
-            healthLevelModifier.duration = duration;
-            healthLevelModifier.increase = increase;
-            healthLevelModifier.isPercentage = isPercentage;
-            healthLevelModifierList.Add(healthLevelModifier);
+        HealthLevelModifier healthLevelModifier = new HealthLevelModifier();
+        healthLevelModifier.name = name;
+        healthLevelModifier.trigger = trigger;
+        healthLevelModifier.duration = duration;
+        healthLevelModifier.increase = increase;
+        healthLevelModifier.isPercentage = isPercentage;
+        healthLevelModifierList.Add(healthLevelModifier);
+    }
+
+    public void RemoveHealthLevelModifier(string name)
+    {
+        foreach (var healthLevelModifier in healthLevelModifierList)
+        {
+            if (healthLevelModifier.name == name) {
+                healthLevelModifierList.Remove(healthLevelModifier);
+                return;
+            }
+        }
+    }
+
+    public void AddAttackCountModifier(StatType statType, string name, float count, float duration, float val, bool isPercentage)
+    {
+        AttackCountModifier attackCountModifier = new AttackCountModifier();
+        attackCountModifier.statType = statType;
+        attackCountModifier.name = name;
+        attackCountModifier.count = count;
+        attackCountModifier.duration = duration;
+        attackCountModifier.val = val;
+        attackCountModifier.isPercentage = isPercentage;
+        attackCountModifier.counter = 0;
+        attackCountModifierList.Add(attackCountModifier);
+    }
+
+    public void RemoveAttackCountModifier(string name)
+    {
+        foreach (var attackCountModifier in attackCountModifierList)
+        {
+            if (attackCountModifier.name == name)
+            {
+                attackCountModifierList.Remove(attackCountModifier);
+                return;
+            }
+        }
     }
 
     private void ModifybasicStat(StatType statType, float val, bool isPercentage, bool isAdding)
@@ -379,9 +422,21 @@ public class Stats : MonoBehaviour
 
 public class HealthLevelModifier
 {
+    public string name;
     public float trigger;
     public float duration;
     public float increase;
     public bool isPercentage;
     public bool isActive;
+}
+
+public class AttackCountModifier
+{
+    public StatType statType;
+    public string name;
+    public float count;
+    public float duration;
+    public float val;
+    public bool isPercentage;
+    public int counter;
 }

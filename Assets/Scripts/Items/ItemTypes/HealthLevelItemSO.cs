@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "HealthLevelItemSO", menuName = "Item Types/HealthLevelItemSO")]
-public class HealthLevelItemSO : ItemSO, IDestroyableItem, IItemPassive
+public class HealthLevelItemSO : ItemSO, IDroppable, IItemPassive
 {
     [SerializeField]
     private List<HealthLevelModifierData> healthLevelModifierData = new List<HealthLevelModifierData>();
@@ -23,7 +23,7 @@ public class HealthLevelItemSO : ItemSO, IDestroyableItem, IItemPassive
     {
         foreach (HealthLevelModifierData data in healthLevelModifierData)
         {
-            data.statModifier.UnaffectPlayer(player, data.name, data.trigger, data.duration, data.increase, data.isPercentage);
+            data.statModifier.UnaffectPlayer(player, data.name);
         }
         return true;
     }

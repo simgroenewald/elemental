@@ -138,11 +138,11 @@ public class CharacterCombat : MonoBehaviour
 
         if (currentAbility.abilityDetails.isEnemyTargetable)
         {
-            character.abilitySetupEvent.RaiseAbilitySetupEvent(true, aimDirection, playerAngle, castPointAngle, castPointDirection, characterTarget);
+            character.abilitySetupEvent.RaiseAbilitySetupEvent(true, aimDirection, playerAngle, castPointAngle, castPointDirection, character, characterTarget);
         }
         else
         {
-            character.abilitySetupEvent.RaiseAbilitySetupEvent(true, aimDirection, playerAngle, castPointAngle, castPointDirection, null);
+            character.abilitySetupEvent.RaiseAbilitySetupEvent(true, aimDirection, playerAngle, castPointAngle, castPointDirection, character, null);
         }
         character.abilityEvents.RaiseCastAbilityEvent();
 

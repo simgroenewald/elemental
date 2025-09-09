@@ -11,6 +11,7 @@ public class AbilitySetupEvent : MonoBehaviour
         float aimAngle,
         float abilityAimAngle,
         Vector3 abilityAimDirectionVector,
+        Character characterCaster,
         Character characterTarget)
     {
         OnAbilitySetup?.Invoke(
@@ -21,6 +22,7 @@ public class AbilitySetupEvent : MonoBehaviour
                 aimAngle = aimAngle,
                 abilityAimAngle = abilityAimAngle,
                 abilityAimDirectionVector = abilityAimDirectionVector,
+                characterCaster = characterCaster,
                 characterTarget = characterTarget
             });
     }
@@ -33,5 +35,6 @@ public class OnAbilitySetupEventArgs : EventArgs
     public float aimAngle;
     public float abilityAimAngle;
     public Vector3 abilityAimDirectionVector;
+    public Character characterCaster;
     public Character characterTarget;
 }

@@ -9,9 +9,9 @@ public class HealthLevelModifierSO : ScriptableObject
         statModifierEvents.RaiseAddHealthLevelItemEvent(name, trigger, duration, increase, isPercentage);
     }
 
-    public void UnaffectPlayer(GameObject player, string name, float trigger, float duration, float increase, bool isPercentage)
+    public void UnaffectPlayer(GameObject player, string name)
     {
         StatModifierEvents statModifierEvents = player.GetComponent<StatModifierEvents>();
-        statModifierEvents.RaiseRemoveHealthLevelItemEvent(name, trigger, duration, increase, isPercentage);
+        statModifierEvents.RaiseRemoveHealthLevelItemEvent(name);
     }
 }
