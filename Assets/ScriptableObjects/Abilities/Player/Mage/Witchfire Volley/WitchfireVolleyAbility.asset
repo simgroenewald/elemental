@@ -40,6 +40,6 @@ MonoBehaviour:
   _damage: 10
   _projectileSpeed: 2
   _coolDownTime: 10
-  _critChance: 0
+  _critChance: 99.21875
   _range: 1
   _manaCost: 30

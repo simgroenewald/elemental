@@ -13,6 +13,42 @@ MonoBehaviour:
   m_Name: ElementToItemsListMapperSO
   m_EditorClassIdentifier: 
   elementToItemsList:
+  - theme: 3
+    items:
+    - {fileID: 4226936395379353178, guid: a28785d716430e04a96b0563ab2828ca, type: 3}
+    - {fileID: 4226936395379353178, guid: 6ff40d8aa5a7f3c488887abc13b71b47, type: 3}
+    - {fileID: 4226936395379353178, guid: 2a291e4699040804887c5839259fc0c8, type: 3}
+    - {fileID: 4226936395379353178, guid: 8c4342bace981c94488de3baa4dd6ba1, type: 3}
+    - {fileID: 4226936395379353178, guid: eada2a02030927841b50099faceb18b9, type: 3}
+    - {fileID: 4226936395379353178, guid: cfa9d85ae2692924281a69a017c09bc5, type: 3}
+    - {fileID: 4226936395379353178, guid: abe91b4a86690f648beeb065a5f81523, type: 3}
+    - {fileID: 4226936395379353178, guid: 895053fda4f6c4649a9b194524fb777e, type: 3}
   - theme: 1
     items:
+    - {fileID: 1195616609521127905, guid: a935168505c57874586d20d11c9dba87, type: 3}
+    - {fileID: 7128821282895156651, guid: b621a8f7779128c48ae7b77f5248dfcc, type: 3}
     - {fileID: 7182382099282328912, guid: 5b873247d269db546a48a76a31080040, type: 3}
+    - {fileID: 1938872929418164222, guid: 8208be9815c40e64889d4688e9e35104, type: 3}
+    - {fileID: 8238311259232762660, guid: 94afe8867782ced4bb886883862788d9, type: 3}
+    - {fileID: 5067613126194740895, guid: db53a94a86d23c242be72b17c79f5c74, type: 3}
+    - {fileID: 7961210307658431317, guid: 9e807bf5ff55f3448b9f8d1b5552f8dd, type: 3}
+    - {fileID: 8562067876905166064, guid: 6d3dacd27b9802b4992cb30b07882177, type: 3}
+  - theme: 2
+    items:
+    - {fileID: 8380555777435959847, guid: 4338a972dfd0acd4d80eabe11ba8548d, type: 3}
+    - {fileID: 8380555777435959847, guid: 6a92df70058951f48a73ea1873e7e518, type: 3}
+    - {fileID: 8380555777435959847, guid: 717dab09959b84440bea9e6ed34b312e, type: 3}
+    - {fileID: 8380555777435959847, guid: 4cedc1bee9ed94a4eb6ac5a7900fd006, type: 3}
+    - {fileID: 8380555777435959847, guid: c22ed4df117a8874195cd667eddbb7fb, type: 3}
+    - {fileID: 8380555777435959847, guid: 0d3d40953f989f5489b870e1523c4228, type: 3}
+    - {fileID: 8380555777435959847, guid: cd9cec1e19597d0498247e07711e8339, type: 3}
+    - {fileID: 8380555777435959847, guid: ee86bf0ecbd1cad4592002772e2c512d, type: 3}
+  - theme: 2
+    items:
+    - {fileID: 2230946788211686962, guid: fdb31f184f5ae1645ad6990b85824e33, type: 3}
+    - {fileID: 2230946788211686962, guid: 687cd963d424132408a7f88f960b387c, type: 3}
+    - {fileID: 2230946788211686962, guid: 3e789ced2d96b694db83eb9a88d90e2b, type: 3}
+    - {fileID: 7037684767529940981, guid: 0dc67ad99c867854b9843c5ad269834c, type: 3}
+    - {fileID: 2230946788211686962, guid: 7b15bdc701b3c234796b5968a2e6e4ab, type: 3}
+    - {fileID: 2230946788211686962, guid: a7f16a415137c704ab004f30b9e27f8e, type: 3}
+    - {fileID: 2230946788211686962, guid: c6747a2507df9f2429ac843d049be1c8, type: 3}

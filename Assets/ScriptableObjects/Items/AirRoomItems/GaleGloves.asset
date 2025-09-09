@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e3a66d1f1e256743b1696c1b824c115, type: 3}
+  m_Name: GaleGloves
+  m_EditorClassIdentifier: 
+  <IsStackable>k__BackingField: 0
+  <MaxStackSize>k__BackingField: 0
+  <Name>k__BackingField: Gale Gloves
+  <Description>k__BackingField: +20% Range
+  <ItemImage>k__BackingField: {fileID: 21300000, guid: a52cdb77b6e33da4489df24f8316d699, type: 3}
+  <DefaultParametersList>k__BackingField: []
+  <DropChance>k__BackingField: 25
+  modifiersData:
+  - statModifier: {fileID: 11400000, guid: 468695d91446670468eccf0ae434f3e4, type: 2}
+    statType: 5
+    value: 20
+    isPercentage: 1

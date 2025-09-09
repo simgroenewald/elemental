@@ -18,9 +18,9 @@ MonoBehaviour:
   <Description>k__BackingField: +10% Spell Damage
   <ItemImage>k__BackingField: {fileID: 21300000, guid: 1f711a791ec06434aae4b0935a45e5fa, type: 3}
   <DefaultParametersList>k__BackingField: []
-  <DropChance>k__BackingField: 50
+  <DropChance>k__BackingField: 35
   modifiersData:
   - statModifier: {fileID: 11400000, guid: 468695d91446670468eccf0ae434f3e4, type: 2}
     statType: 3
     value: 10
-    isPercentage: 0
+    isPercentage: 1
