@@ -7,19 +7,26 @@ using UnityEngine.EventSystems;
 [RequireComponent(typeof(AbilityEvents))]
 public class TargetEnemy : MonoBehaviour, ITargetable
 {
-    [SerializeField] SpriteRenderer[] renderers;
+    [SerializeField] SpriteRenderer mainRenderer;
     [SerializeField] Material normalMat;
     [SerializeField] Material outlinedMat;
     public Enemy enemy;
     public Transform target;
 
+    Material normalInst;
+    Material outlinedInst;
+
+    bool isHovered;
     bool isSelected;
     bool mouseOver;
 
+    MaterialPropertyBlock _mpb;
+
     void Awake()
-    {
-        if (renderers == null || renderers.Length == 0)
-            renderers = GetComponentsInChildren<SpriteRenderer>(true);
+    { 
+        normalInst = new Material(normalMat);
+        outlinedInst = new Material(outlinedMat);
+        _mpb = new MaterialPropertyBlock();
 
         // start normal
         enemy = GetComponent<Enemy>();
@@ -38,7 +45,7 @@ public class TargetEnemy : MonoBehaviour, ITargetable
 
     void HighlightEnemy()
     {
-        if (!isSelected) SetOutlined(true);
+        if (!isSelected && !isHovered) SetOutlined(true);
         GameEventManager.Instance.targetEvents.RaiseOnRemoveAim();
     }
 
@@ -46,6 +53,7 @@ public class TargetEnemy : MonoBehaviour, ITargetable
     {
         RemoveHighlight();
         mouseOver = false;
+        isHovered = false;
         GameEventManager.Instance.targetEvents.RaiseOnRemoveAim();
     }
 
@@ -82,10 +90,11 @@ public class TargetEnemy : MonoBehaviour, ITargetable
 
     void SetOutlined(bool outlined)
     {
-        if (renderers == null) return;
-        var mat = outlined ? outlinedMat : normalMat;
-        foreach (var sr in renderers)
-            if (sr) sr.sharedMaterial = mat;
+        var mat = outlined ? outlinedInst : normalInst;
+        mainRenderer.material = mat;
+        mainRenderer.GetPropertyBlock(_mpb);
+        _mpb.Clear();
+        mainRenderer.SetPropertyBlock(_mpb);
     }
 
     public GameObject GetGameObject()

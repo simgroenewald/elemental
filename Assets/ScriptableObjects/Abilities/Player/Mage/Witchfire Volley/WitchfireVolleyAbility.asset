@@ -28,7 +28,7 @@ MonoBehaviour:
   slowDownBuffer: 0
   coolDownTime: 10
   isCoolingDown: 0
-  damage: 50
+  damage: 100
   isMagical: 1
   critChance: 0
   manaCost: 30
@@ -37,7 +37,7 @@ MonoBehaviour:
   abilityCastPositionRight: {x: 0.155, y: 0.222, z: 0}
   abilityProjectileDetails: {fileID: 11400000, guid: a441b82159785a642b509ab9bfb94cc3, type: 2}
   projectileSpeed: 2
-  _damage: 50
+  _damage: 100
   _projectileSpeed: 2
   _coolDownTime: 10
   _critChance: 0
