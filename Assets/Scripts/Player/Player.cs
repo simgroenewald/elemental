@@ -7,14 +7,23 @@ using UnityEngine.AI;
 using UnityEngine.Rendering;
 
 [DisallowMultipleComponent]
+[RequireComponent(typeof(ItemCollectionSystem))]
+[RequireComponent(typeof(BackpackController))]
+[RequireComponent(typeof(ItemSelectorController))]
 public class Player : Character
 {
 
     public PlayerDetailsSO playerDetails;
+    [HideInInspector] public ItemCollectionSystem itemCollectionSystem;
+    [HideInInspector] public BackpackController backpackController;
+    [HideInInspector] public ItemSelectorController itemSelectorController;
 
     protected override void Awake()
     {
         base.Awake();
+        itemCollectionSystem = GetComponent<ItemCollectionSystem>();
+        backpackController = GetComponent<BackpackController>();
+        itemSelectorController = GetComponent<ItemSelectorController>();
     }
 
     private void Start()
