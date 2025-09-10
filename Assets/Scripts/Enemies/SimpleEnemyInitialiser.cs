@@ -25,5 +25,11 @@ public class SimpleEnemyInitialiser : MonoBehaviour
         GameObject miniBoss = miniBosses[Random.Range(0, miniBosses.Count)];
         return miniBoss;
     }
+    public GameObject GetBossPrefab(ElementTheme theme)
+    {
+        List<GameObject> bosses = mapper.themeToBossesDict[theme];
+        GameObject boss = bosses[Random.Range(0, bosses.Count)];
+        return boss;
+    }
 
 }

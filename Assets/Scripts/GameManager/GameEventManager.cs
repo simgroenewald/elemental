@@ -6,6 +6,7 @@ public class GameEventManager : MonoBehaviour
 
     public TargetEvents targetEvents;
     public ItemEvents itemEvents;
+    public GlobalUIEvents globalUIEvents;
 
     private void Awake()
     {

@@ -64,7 +64,7 @@ public class EnemyAutoController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!enemy.characterState.isDying && !enemy.characterState.isDead && !player.characterState.isDead && enemy.room.isEntered) {
+        if (!enemy.characterState.isDying && !enemy.characterState.isDead && !player.characterState.isDying && !player.characterState.isDead && enemy.room.isEntered) {
             characterCombat.AttemptAttack(player, true, lineOfSight);
             if (characterState.isMoving)
             {
@@ -113,7 +113,13 @@ public class EnemyAutoController : MonoBehaviour
         if (!itemDropped)
         {
             itemDropped = true;
-            GameEventManager.Instance.itemEvents.RaiseDropItemEvent(enemy.room, (int)enemy.stats.GetStat(StatType.Health), enemy.transform);
+            if (!enemy.enemyDetails.isBoss && !enemy.enemyDetails.isMiniBoss)
+            {
+                GameEventManager.Instance.itemEvents.RaiseDropItemEvent(enemy.room, enemy.transform);
+            } else
+            {
+                GameEventManager.Instance.globalUIEvents.RaiseRemoveBossMainHealthBarEvent();
+            }
         }
             
         Destroy(gameObject);

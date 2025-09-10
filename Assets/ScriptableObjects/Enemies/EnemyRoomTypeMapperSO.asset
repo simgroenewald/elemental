@@ -23,8 +23,19 @@ MonoBehaviour:
   airEnemies:
   - {fileID: 5358808577364504236, guid: 69b73534cb30a5545b2e336f62fba1e8, type: 3}
   - {fileID: 512824244805761353, guid: 7f5e5dc6b56c4ff47966e1981af10ec7, type: 3}
-  earthMiniBosses: []
+  earthMiniBosses:
+  - {fileID: 5822319915835916726, guid: 82499dd565984b44e991747455d37889, type: 3}
   waterMiniBosses:
   - {fileID: 5822319915835916726, guid: 82499dd565984b44e991747455d37889, type: 3}
-  fireMiniBosses: []
-  airMiniBosses: []
+  fireMiniBosses:
+  - {fileID: 5822319915835916726, guid: 82499dd565984b44e991747455d37889, type: 3}
+  airMiniBosses:
+  - {fileID: 5822319915835916726, guid: 82499dd565984b44e991747455d37889, type: 3}
+  earthBosses:
+  - {fileID: 1987396307156395925, guid: f3017e6d01684cc4390068b14dbfc7c2, type: 3}
+  waterBosses:
+  - {fileID: 1987396307156395925, guid: f3017e6d01684cc4390068b14dbfc7c2, type: 3}
+  fireBosses:
+  - {fileID: 1987396307156395925, guid: f3017e6d01684cc4390068b14dbfc7c2, type: 3}
+  airBosses:
+  - {fileID: 1987396307156395925, guid: f3017e6d01684cc4390068b14dbfc7c2, type: 3}

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02fcef62324c14e40a4163a9c9ea0b81, type: 3}
+  m_Name: FireElementalBoss
+  m_EditorClassIdentifier: 
+  characterName: FireElemental
+  characterPrefab: {fileID: 1987396307156395925, guid: f3017e6d01684cc4390068b14dbfc7c2, type: 3}
+  runtimeAnimatorController: {fileID: 9100000, guid: de3d0d6da35c11042bbfe43d64125409, type: 2}
+  statsSO: {fileID: 11400000, guid: 46b58662442044c48832d7a1338fcf93, type: 2}
+  miniMapIcon: {fileID: 0}
+  baseAbility: {fileID: 11400000, guid: 35eacb4d5f3261d46a30f7df06f68126, type: 2}
+  startingAbility: {fileID: 11400000, guid: 35eacb4d5f3261d46a30f7df06f68126, type: 2}
+  abilityList:
+  - {fileID: 11400000, guid: 35eacb4d5f3261d46a30f7df06f68126, type: 2}
+  isBoss: 1
+  isMiniBoss: 0

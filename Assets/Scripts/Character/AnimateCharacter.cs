@@ -88,6 +88,8 @@ public class AnimateCharacter : MonoBehaviour
     private void HandleDyingAnimation()
     {
         ResetAnimationBools();
+        if (character.animator.GetBool(Settings.posTargetLeft) == false && character.animator.GetBool(Settings.posTargetLeft))
+            character.animator.SetBool(Settings.posTargetRight, true);
         character.animator.SetBool(Settings.isDying, true);
     }
 

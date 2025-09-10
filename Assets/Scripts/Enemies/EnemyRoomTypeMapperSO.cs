@@ -17,6 +17,12 @@ public class EnemyRoomTypeMapperSO : ScriptableObject
     public List<GameObject> airMiniBosses;
     public Dictionary<ElementTheme, List<GameObject>> themeToMiniBossesDict = new Dictionary<ElementTheme, List<GameObject>>();
 
+    public List<GameObject> earthBosses;
+    public List<GameObject> waterBosses;
+    public List<GameObject> fireBosses;
+    public List<GameObject> airBosses;
+    public Dictionary<ElementTheme, List<GameObject>> themeToBossesDict = new Dictionary<ElementTheme, List<GameObject>>();
+
     public void PopulateEnemiesDicts()
     {
         themeToEnemiesDict[ElementTheme.Earth] = earthEnemies;
@@ -28,5 +34,11 @@ public class EnemyRoomTypeMapperSO : ScriptableObject
         themeToMiniBossesDict[ElementTheme.Water] = waterMiniBosses;
         themeToMiniBossesDict[ElementTheme.Fire] = fireMiniBosses;
         themeToMiniBossesDict[ElementTheme.Air] = airMiniBosses;
+
+        themeToBossesDict[ElementTheme.Earth] = earthBosses;
+        themeToBossesDict[ElementTheme.Water] = waterBosses;
+        themeToBossesDict[ElementTheme.Fire] = fireBosses;
+        themeToBossesDict[ElementTheme.Air] = airBosses;
+;
     }
 }
