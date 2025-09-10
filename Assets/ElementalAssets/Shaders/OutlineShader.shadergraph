@@ -508,8 +508,8 @@
     "m_ObjectId": "0138e7ef48764fd4827171e156e49ca6",
     "m_Title": "Sample Original Sprite",
     "m_Position": {
-        "x": 582.0,
-        "y": 702.0
+        "x": 581.999755859375,
+        "y": 701.9998779296875
     }
 }
 
@@ -632,8 +632,8 @@
     "m_ObjectId": "07def17bafba45ce8aac5b412b6d69d5",
     "m_Title": "Subtract original silhouette from offset",
     "m_Position": {
-        "x": 1115.0,
-        "y": 1065.0
+        "x": 1114.999755859375,
+        "y": 1065.0001220703125
     }
 }
 
@@ -981,8 +981,8 @@
     "m_ObjectId": "2d6ebdebeb2741cab9d057ef4fd4a949",
     "m_Title": "Offset Silhouette in all four directions",
     "m_Position": {
-        "x": -652.0,
-        "y": 726.0
+        "x": -651.9998168945313,
+        "y": 725.9999389648438
     }
 }
 
@@ -1044,8 +1044,8 @@
     "m_ObjectId": "2ec643aad9ca4896ae07c7dd7847fc75",
     "m_Title": "Add offsets together",
     "m_Position": {
-        "x": 56.0,
-        "y": 878.0
+        "x": 56.00001525878906,
+        "y": 877.9999389648438
     }
 }
 
@@ -1885,7 +1885,7 @@
     "hlslDeclarationOverride": 0,
     "m_Hidden": false,
     "m_Value": {
-        "m_SerializedTexture": "{\"texture\":{\"fileID\":2800000,\"guid\":\"ac36c2ebc8f0c0d47b25c368a51e4496\",\"type\":3}}",
+        "m_SerializedTexture": "{\"texture\":{\"fileID\":2800000,\"guid\":\"2e2ab90fb12df7f4e9a04bd089306888\",\"type\":3}}",
         "m_Guid": ""
     },
     "isMainTexture": false,
@@ -2930,7 +2930,7 @@
     "m_ObjectId": "f63a649cde434c5db55a737d4e81bc35",
     "m_Title": "Clean colour - get rid of bleed",
     "m_Position": {
-        "x": 1128.0,
+        "x": 1127.999755859375,
         "y": 297.0
     }
 }

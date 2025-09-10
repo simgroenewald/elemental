@@ -12,6 +12,11 @@ public class ItemCollectionSystem : MonoBehaviour
         // Prevent double-trigger by locking & disabling colliders immediately
         if (!item.TryBeginPickup()) return;
 
+        AddItemToBackpack(item);
+    }
+
+    public void AddItemToBackpack(Item item)
+    {
         if (item != null)
         {
             int remainder = backpack.AddItem(item.ItemSO, item.Quantity);
@@ -23,6 +28,14 @@ public class ItemCollectionSystem : MonoBehaviour
             {
                 item.Quantity = remainder;
             }
+        }
+    }
+
+    public void AddItemToBackpack(ItemSO item)
+    {
+        if (item != null)
+        {
+            backpack.AddItem(item, 1);
         }
     }
 }

@@ -391,6 +391,7 @@ GameObject:
   - component: {fileID: 690454267072083704}
   - component: {fileID: 9199767639976912158}
   - component: {fileID: 6151266797421742028}
+  - component: {fileID: 7930425721723422741}
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
@@ -674,6 +675,9 @@ MonoBehaviour:
   stats: {fileID: 0}
   target: {fileID: 0}
   playerDetails: {fileID: 0}
+  itemCollectionSystem: {fileID: 0}
+  backpackController: {fileID: 0}
+  itemSelectorController: {fileID: 0}
 --- !u!114 &2090834104267613397
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1010,6 +1014,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67745d62a45f68a4781ef34df55cc965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7930425721723422741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5919330583086702471}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a30be71b28edcb43934cb53e0f980a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemSelectorUI: {fileID: 0}
+  itemOptions: {fileID: 11400000, guid: b10e2a411eb4d044e928a012c447b672, type: 2}
+  items: []
+  selectedItem: {fileID: 0}
+  initialItems: []
 --- !u!1 &8774360104910127703
 GameObject:
   m_ObjectHideFlags: 0

@@ -21,6 +21,7 @@ TagManager:
   - Backpack
   - ItemDetails
   - PlayerStats
+  - ItemSelector
   layers:
   - Default
   - TransparentFX

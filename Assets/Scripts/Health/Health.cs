@@ -155,7 +155,7 @@ public class Health: MonoBehaviour
     public void OnReduceHealth(float damage)
     {
         float newHealth = currentHealth - damage;
-        if (newHealth <= 0)
+        if (newHealth <= 0 && !character.characterState.isDying)
         {
             currentHealth = 0;
             Destroy(fillArea);

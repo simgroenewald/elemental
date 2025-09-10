@@ -28,6 +28,7 @@ public class CharacterMovement : MonoBehaviour
     {
         character.abilityEvents.OnAbilityCasted += HandleIdleState;
         character.abilityEvents.OnMeleeEndAttack += HandleIdleState;
+        character.movementEvents.OnDying += StopMovementOnDeath;
 
         SetMovementSpeed();
     }
@@ -36,6 +37,7 @@ public class CharacterMovement : MonoBehaviour
     {
         character.abilityEvents.OnAbilityCasted -= HandleIdleState;
         character.abilityEvents.OnMeleeEndAttack -= HandleIdleState;
+        character.movementEvents.OnDying -= StopMovementOnDeath;
     }
 
     public void SetMovementSpeed()
@@ -81,6 +83,11 @@ public class CharacterMovement : MonoBehaviour
             character.movementEvents.RaiseMoveByPosition(movementSpeed);
             StartTracking();
         }
+    }
+
+    public void StopMovementOnDeath()
+    {
+        character.agent.ResetPath();
     }
 
 

@@ -27,6 +27,9 @@ public abstract class ItemSO : ScriptableObject
 
     [field: SerializeField]
     public int DropChance { get; set; }
+
+    [field: SerializeField]
+    public Item ItemPrefab { get; set; }
 }
 
 [Serializable]

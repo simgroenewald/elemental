@@ -113,12 +113,17 @@ public class EnemyAutoController : MonoBehaviour
         if (!itemDropped)
         {
             itemDropped = true;
-            if (!enemy.enemyDetails.isBoss && !enemy.enemyDetails.isMiniBoss)
+            if (enemy.enemyDetails.isBoss)
             {
-                GameEventManager.Instance.itemEvents.RaiseDropItemEvent(enemy.room, enemy.transform);
+                GameEventManager.Instance.itemEvents.RaiseShowBossItemsEvent(enemy.room);
+                GameEventManager.Instance.globalUIEvents.RaiseRemoveBossMainHealthBarEvent();
+            } else if (enemy.enemyDetails.isMiniBoss)
+            {
+                GameEventManager.Instance.itemEvents.RaiseShowMinibossItemsEvent(enemy.room);
+                GameEventManager.Instance.globalUIEvents.RaiseRemoveBossMainHealthBarEvent();
             } else
             {
-                GameEventManager.Instance.globalUIEvents.RaiseRemoveBossMainHealthBarEvent();
+                GameEventManager.Instance.itemEvents.RaiseDropItemEvent(enemy.room, enemy.transform);
             }
         }
             

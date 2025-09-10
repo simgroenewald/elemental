@@ -84,10 +84,26 @@ public class GameManager : SingletonMonobehaviour<GameManager>
             case GameState.start:
                 StartGameLevel();
                 break;
+            case GameState.playing:
+                HandlePlaying();
+                break;
             case GameState.bossRoom:
                 StartBossFight();
                 break;
+            case GameState.paused:
+                PauseGame();
+                break;
         }
+    }
+
+    private void PauseGame()
+    {
+        Time.timeScale = 0f;
+    }
+
+    private void HandlePlaying()
+    {
+        Time.timeScale = 1f;
     }
 
     private void StartBossFight()

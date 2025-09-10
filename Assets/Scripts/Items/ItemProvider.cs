@@ -2,27 +2,35 @@ using GLTFast.Schema;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor.Rendering;
 using UnityEngine;
 
-public class ItemSpawner : MonoBehaviour
+public class ItemProvider : MonoBehaviour
 {
     [SerializeField] List<GameObject> globalItems;
     [SerializeField] private ElementToItemsListMapperSO elementToBasicItemsListMapperSO;
     [SerializeField] private ElementToItemsListMapperSO elementToUltraItemsListMapperSO;
     private Dictionary<ElementTheme, List<GameObject>> elementToBasicItemsListDict;
     private Dictionary<ElementTheme, List<GameObject>> elementToUltraItemsListDict;
+    private Player player;
+    private BackpackSO backpack;
 
 
     private void Start()
     {
         GameEventManager.Instance.itemEvents.OnItemDrop += SpawnItem;
+        GameEventManager.Instance.itemEvents.OnShowMinibossItems += ShowMinibossItemChoices;
+        GameEventManager.Instance.itemEvents.OnShowBossItems += ShowBossItemChoices;
 
         elementToBasicItemsListMapperSO.Initialise();
         elementToBasicItemsListDict = elementToBasicItemsListMapperSO.GetElementToItemsListDict();
 
         elementToUltraItemsListMapperSO.Initialise();
         elementToUltraItemsListDict = elementToUltraItemsListMapperSO.GetElementToItemsListDict();
+
+        player = GameManager.Instance.player;
+        backpack = player.backpackController.backpack;
     }
 
     private void OnDisable()
@@ -64,9 +72,14 @@ public class ItemSpawner : MonoBehaviour
         foreach (var itemObject in itemList)
         {
             Item item = itemObject.GetComponent<Item>();
+
             if (basicItemPercentage <= item.ItemSO.DropChance)
             {
-                possibleItems.Add(itemObject);
+                bool containsBasicItem = BackPackContainsItem(backpack, item.GetComponent<Item>().ItemSO);
+                if (!containsBasicItem)
+                {
+                    possibleItems.Add(itemObject);
+                }
             }
         }
         if (possibleItems.Count > 0)
@@ -91,70 +104,73 @@ public class ItemSpawner : MonoBehaviour
         itemObjectToDrop.transform.rotation = Quaternion.identity;
     }
 
-    private GameObject GetMinibossItemChoices(int itemCoiceCount, DungeonRoom room)
+    private void ShowMinibossItemChoices(DungeonRoom room)
     {
-        List<GameObject> itemChoices = new List<GameObject>();
-        BackpackSO backpack = GameManager.Instance.player.GetComponent<BackpackController>().backpack;
+        List<ItemSO> itemChoices = new List<ItemSO>();
 
-        while (itemChoices.Count < itemCoiceCount)
+        while (itemChoices.Count != 3)
         {
             int ultraItemDrop = UnityEngine.Random.Range(1, 101);
 
-            // 20% chance to drop a basic item
+            // 20% chance to drop a ultra item
             if (ultraItemDrop < 20)
             {
-                GameObject ultraItem = elementToUltraItemsListDict[room.theme][UnityEngine.Random.Range(0, elementToUltraItemsListDict[room.theme].Count)];
+                GameObject ultraItemGO = elementToUltraItemsListDict[room.theme][UnityEngine.Random.Range(0, elementToUltraItemsListDict[room.theme].Count)];
+                if (!ultraItemGO) continue;
+                ItemSO ultraItem = ultraItemGO.GetComponent<Item>().ItemSO;
                 bool containsUltraItem = BackPackContainsItem(backpack, ultraItem);
-                if (!containsUltraItem)
+                if (!containsUltraItem && !itemChoices.Contains(ultraItem))
                 {
                     itemChoices.Add(ultraItem);
                     continue;
                 }
             }
-            GameObject basicItem = GetItemFromDropChances(elementToBasicItemsListDict[room.theme]);
+            GameObject basicItemGO = GetItemFromDropChances(elementToBasicItemsListDict[room.theme]);
+            if (!basicItemGO) continue;
+            ItemSO basicItem = basicItemGO.GetComponent<Item>().ItemSO;
             bool containsItem = BackPackContainsItem(backpack, basicItem);
-            if (!containsItem)
+            if (!containsItem && !itemChoices.Contains(basicItem))
             {
                 itemChoices.Add(basicItem);
             }
         }
 
-        GameObject globalItem = GetItemFromDropChances(globalItems);
-        return globalItem;
+        player.itemSelectorController.SetUpItemSelection(itemChoices);
     }
 
-    private GameObject GetBossItemChoices(int itemCoiceCount, DungeonRoom room)
+    private void ShowBossItemChoices(DungeonRoom room)
     {
-        List<GameObject> itemChoices = new List<GameObject>();
-        BackpackSO backpack = GameManager.Instance.player.GetComponent<BackpackController>().backpack;
+        List<ItemSO> itemChoices = new List<ItemSO>();
 
-        GameObject ultraItem = elementToUltraItemsListDict[room.theme][UnityEngine.Random.Range(0, elementToUltraItemsListDict[room.theme].Count)];
+        GameObject ultraItemGO = elementToUltraItemsListDict[room.theme][UnityEngine.Random.Range(0, elementToUltraItemsListDict[room.theme].Count)];
+        ItemSO ultraItem = ultraItemGO.GetComponent<Item>().ItemSO;
         bool containsUltraItem = BackPackContainsItem(backpack, ultraItem);
         if (!containsUltraItem)
         {
             itemChoices.Add(ultraItem);
         }
 
-        while (itemChoices.Count < itemCoiceCount)
+        while (itemChoices.Count != 3)
         {
-            GameObject basicItem = GetItemFromDropChances(elementToBasicItemsListDict[room.theme]);
+            GameObject basicItemGO = GetItemFromDropChances(elementToBasicItemsListDict[room.theme]);
+            if (!basicItemGO) continue;
+            ItemSO basicItem = basicItemGO.GetComponent<Item>().ItemSO;
             bool containsItem = BackPackContainsItem(backpack, basicItem);
-            if (!containsItem)
+            if (!containsItem && !itemChoices.Contains(basicItem))
             {
                 itemChoices.Add(basicItem);
             }
         }
 
-        GameObject globalItem = GetItemFromDropChances(globalItems);
-        return globalItem;
+        player.itemSelectorController.SetUpItemSelection(itemChoices);
     }
 
-    private bool BackPackContainsItem(BackpackSO backpack, GameObject basicItem)
+    private bool BackPackContainsItem(BackpackSO backpack, ItemSO itemSO)
     {
-        if (basicItem == null) return false;
+        if (itemSO == null) return false;
         foreach (var backpackitem in backpack.GetAllItems())
         {
-            if (backpackitem.item.ID == basicItem.GetComponent<ItemSO>().ID)
+            if (backpackitem.item != null && backpackitem.item.ID == itemSO.ID)
             {
                 return true;
             }
