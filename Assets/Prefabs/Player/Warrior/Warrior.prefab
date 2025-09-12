@@ -39,6 +39,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -5626827378301181451, guid: f12c9e2f2a28e7b4f828e4230d51bcc2, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 1655376414095403669}
+    - target: {fileID: -5626827378301181451, guid: f12c9e2f2a28e7b4f828e4230d51bcc2, type: 3}
+      propertyPath: attackLeftClip
+      value: 
+      objectReference: {fileID: 7400000, guid: c578935674aa3b641858c714ed592fc8, type: 2}
+    - target: {fileID: -5626827378301181451, guid: f12c9e2f2a28e7b4f828e4230d51bcc2, type: 3}
+      propertyPath: baseController
+      value: 
+      objectReference: {fileID: 9100000, guid: 322e6ab2bb65ada499a9a2e20c069e52, type: 2}
+    - target: {fileID: -5626827378301181451, guid: f12c9e2f2a28e7b4f828e4230d51bcc2, type: 3}
+      propertyPath: attackRightClip
+      value: 
+      objectReference: {fileID: 7400000, guid: dd239265cf5f2db4f90902e12b256946, type: 2}
     - target: {fileID: -973754093991526888, guid: f12c9e2f2a28e7b4f828e4230d51bcc2, type: 3}
       propertyPath: m_Speed
       value: 2
@@ -209,6 +225,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 817cc6584ea720f4aaf8449d9e7ddc42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &1655376414095403669 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 8620456082638655861, guid: f12c9e2f2a28e7b4f828e4230d51bcc2, type: 3}
+  m_PrefabInstance: {fileID: 7015226346804558816}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3100162668778989635 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5358978666208465827, guid: f12c9e2f2a28e7b4f828e4230d51bcc2, type: 3}

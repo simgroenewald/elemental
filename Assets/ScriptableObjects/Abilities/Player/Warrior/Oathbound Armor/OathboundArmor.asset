@@ -10,31 +10,35 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 609fa1f9b66b0544196f4f77e751f80f, type: 3}
-  m_Name: SwordSlash
+  m_Name: OathboundArmor
   m_EditorClassIdentifier: 
-  abilityName: Sword Slash
-  description: 
-  icon: {fileID: 0}
-  attackAnimationTrigger: isAttacking
-  range: 0.5
-  isBaseAbility: 1
-  isAutoAttack: 1
-  isEnemyTargetable: 1
+  abilityName: Oathbound Armor
+  description: "The warrior\u2019s hardened body reduces incoming damage, granting
+    innate resilience against physical attacks."
+  icon: {fileID: 21300000, guid: d48141dc12a3cee449f6d9a79173cd79, type: 3}
+  attackAnimationTrigger: 
+  range: 0
+  isBaseAbility: 0
+  isAutoAttack: 0
+  isEnemyTargetable: 0
   isDirectionTargetable: 0
   isGroundTargetable: 0
   isMultiTarget: 0
-  isPassive: 0
+  isPassive: 1
   isDamageOverTime: 0
-  isCritical: 1
+  isCritical: 0
   isAreaOfEffect: 0
   isHurt: 0
   isCastAtTarget: 0
+  isSelfEffect: 0
   slowDownBuffer: 0
   hasCooldown: 0
   coolDownTime: 0
+  hasEffectTime: 0
+  effectTime: 0
   hasCountLimit: 0
   countLimit: 0
-  damage: 10
+  damage: 0
   isMagical: 0
   critChance: 0
   manaCost: 0
@@ -44,11 +48,16 @@ MonoBehaviour:
   castPositionOffset: {x: 0, y: 0, z: 0}
   abilityProjectileDetails: {fileID: 0}
   projectileSpeed: 0
-  modifierData: []
-  _damage: 10
+  modifierData:
+  - statModifier: {fileID: 11400000, guid: 468695d91446670468eccf0ae434f3e4, type: 2}
+    statType: 8
+    value: 5
+    isPercentage: 0
+  instantModifierData: []
+  _damage: 0
   _projectileSpeed: 0
   _coolDownTime: 0
   _critChance: 0
-  _range: 0.5
+  _range: 0
   _manaCost: 0
-  triggerKey: 0
+  triggerKey: 113

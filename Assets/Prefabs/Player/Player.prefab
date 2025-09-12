@@ -392,6 +392,7 @@ GameObject:
   - component: {fileID: 9199767639976912158}
   - component: {fileID: 6151266797421742028}
   - component: {fileID: 7930425721723422741}
+  - component: {fileID: 7211341444454770428}
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
@@ -657,7 +658,7 @@ MonoBehaviour:
   healthEvents: {fileID: 11400000, guid: d03651913f7a123498b0c23b78876e15, type: 2}
   mana: {fileID: 0}
   manaEvents: {fileID: 0}
-  setActiveAbilityEvent: {fileID: 0}
+  abilityActivationEvents: {fileID: 0}
   activeAbility: {fileID: 0}
   castAbility: {fileID: 0}
   meleeAbility: {fileID: 0}
@@ -678,6 +679,7 @@ MonoBehaviour:
   itemCollectionSystem: {fileID: 0}
   backpackController: {fileID: 0}
   itemSelectorController: {fileID: 0}
+  abilityController: {fileID: 0}
 --- !u!114 &2090834104267613397
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -751,7 +753,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityCastPositionLeftTransform: {fileID: 0}
   abilityCastPositionRightTransform: {fileID: 0}
-  abilityEffectPositionTransform: {fileID: 2442322500857349959}
+  castPositionOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &5547859721608900105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -870,6 +872,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 562219d959d24ce478746e22723ebc6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activeAbility: {fileID: 0}
   currentTarget: {fileID: 0}
   attackTriggered: 0
   normalAdvance: 0
@@ -1028,8 +1031,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemSelectorUI: {fileID: 0}
   itemOptions: {fileID: 11400000, guid: b10e2a411eb4d044e928a012c447b672, type: 2}
-  items: []
   selectedItem: {fileID: 0}
+  initialItems: []
+--- !u!114 &7211341444454770428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5919330583086702471}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac8e09cd75dde284b9b129a0c9b8eb92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  abilitySelectorUI: {fileID: 0}
+  itemDetails: {fileID: 0}
+  actionKeys: {fileID: 11400000, guid: 35e2fa1f44f721842a51f83d4ac8d880, type: 2}
   initialItems: []
 --- !u!1 &8774360104910127703
 GameObject:
