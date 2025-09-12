@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b1676e888e655846a9eb85aa7a764ec, type: 3}
+  m_Name: EarthSplinterProjectile
+  m_EditorClassIdentifier: 
+  projectileName: EarthSplitterProjectile
+  isPlayerProjectile: 1
+  isAnimated: 1
+  followsTarget: 0
+  projectileSprite: {fileID: 0}
+  projectilePrefabArray:
+  - {fileID: 207582939768763744, guid: 95f4a1225a72e0a45a203381c1906452, type: 3}
+  projectileMaterial: {fileID: 0}
+  chargeTime: 0.1
+  chargeMaterial: {fileID: 0}
+  projectileRotationSpeed: 20
+  isProjectileTrail: 0
+  projectileTrailTime: 3
+  projectileTrailMaterial: {fileID: 0}
+  projectileTrailStartWidth: 0
+  projectileTrailEndWidth: 0

@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 609fa1f9b66b0544196f4f77e751f80f, type: 3}
+  m_Name: StormwrathAbility
+  m_EditorClassIdentifier: 
+  abilityName: Stormwrath
+  description: Unleashes the fury of the storm, blasting all nearby enemies with
+    devastating lightning.
+  icon: {fileID: 21300000, guid: 4c687b2617c2b824f93acff16e86a25a, type: 3}
+  attackAnimationTrigger: isAttacking
+  range: 20
+  isBaseAbility: 0
+  isAutoAttack: 0
+  isEnemyTargetable: 0
+  isDirectionTargetable: 0
+  isGroundTargetable: 0
+  isMultiTarget: 1
+  isPassive: 0
+  isDamageOverTime: 0
+  isCritical: 0
+  isAreaOfEffect: 0
+  isHurt: 1
+  isCastAtTarget: 1
+  slowDownBuffer: 0
+  hasCooldown: 0
+  coolDownTime: 120
+  hasCountLimit: 0
+  countLimit: 0
+  damage: 80
+  isMagical: 1
+  critChance: 0
+  manaCost: 50
+  isRanged: 1
+  abilityCastPositionLeft: {x: 0, y: 0, z: 0}
+  abilityCastPositionRight: {x: 0, y: 0, z: 0}
+  castPositionOffset: {x: -0.3, y: 3, z: 0}
+  abilityProjectileDetails: {fileID: 11400000, guid: 985216be6d2d143418a70a3ef6d8d6f3, type: 2}
+  projectileSpeed: 0
+  modifierData: []
+  _damage: 80
+  _projectileSpeed: 0
+  _coolDownTime: 120
+  _critChance: 0
+  _range: 20
+  _manaCost: 50
+  triggerKey: 114
