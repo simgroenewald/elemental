@@ -16,11 +16,15 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     [SerializeField] int currentLevelIndex = 0;
     private Dungeon dungeon;
     private DungeonRoom previousDungeonRoom;
-    private DungeonRoom currentDungeonRoom;
+    public DungeonRoom currentDungeonRoom;
     private List<DungeonRoom> completeDungeonRooms;
     private PlayerDetailsSO playerDetails;
     public Player player;
     private CameraController cameraController;
+    // Main UI Components
+    public BackpackUI backpackUI;
+    public ItemDetailsUI itemDetailsUI;
+    public AbilitySelectorUI abilitySelectorUI;
 
     public GameState state;
 

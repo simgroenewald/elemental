@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 [DisallowMultipleComponent]
 public class Projectile : MonoBehaviour, ICastable
@@ -64,23 +65,43 @@ public class Projectile : MonoBehaviour, ICastable
         {
             if (collision.gameObject == characterTarget.GetGameObject())
             {
-                float damage;
-                if (ability.abilityDetails.isCritical)
-                {
-                    damage = ability.EvaluateDamageDealingStats(characterCaster, ability.abilityDetails._damage);
-                }
-                else
-                {
-                    damage = ability.abilityDetails._damage;
-                }
-                damage = characterTarget.stats.EvaluateDamageTakingStats(damage);
-                characterTarget.healthEvents.RaiseReduceHealthEvent(damage);
+                DealDamage();
                 DisableProjectile();
             }
             // Check if the projectile reached the target
         } else
         {
             DisableProjectile();
+        }
+    }
+
+    public void ManualDisable()
+    {
+        DisableProjectile();
+    }
+
+    public void DealDamage()
+    {
+        float damage;
+        if (ability.abilityDetails.isHurt)
+        {
+            characterTarget.characterState.SetToHurt();
+            characterTarget.movementEvents.RaiseHurt();
+        }
+        if (ability.abilityDetails.isCritical)
+        {
+            damage = ability.EvaluateDamageDealingStats(characterCaster, ability.abilityDetails._damage);
+        }
+        else
+        {
+            damage = ability.abilityDetails._damage;
+        }
+        damage = characterTarget.stats.EvaluateDamageTakingStats(damage);
+        characterTarget.healthEvents.RaiseReduceHealthEvent(damage);
+        if (characterCaster.stats.GetStat(StatType.HealthSteal) > 0)
+        {
+            float health = characterCaster.stats.GetStat(StatType.HealthSteal) * damage / 100;
+            characterCaster.healthEvents.RaiseIncreaseHealthEvent(health);
         }
     }
 
@@ -134,6 +155,11 @@ public class Projectile : MonoBehaviour, ICastable
 
     public void Cast()
     {
+        Animator animator = gameObject.GetComponent<Animator>();
+        if (animator)
+        {
+            animator.SetBool(Settings.isTriggered, true);
+        }
         gameObject.SetActive(true);
     }
 
@@ -166,5 +192,30 @@ public class Projectile : MonoBehaviour, ICastable
     public GameObject GetGameObject()
     {
         return gameObject;
+    }
+
+    // Static animated ability
+    public void InitialiseProjectile(ProjectileDetailsSO projectileDetails, Ability ability, Character characterCaster, Character characterTarget)
+    {
+        // Initialise Projectile
+        this.projectileDetails = projectileDetails;
+        this.characterCaster = characterCaster;
+        this.characterTarget = characterTarget;
+        this.ability = ability;
+
+        this.projectileDamage = ability.abilityDetails._damage;
+        this.projectileRange = ability.abilityDetails._range;
+        this.projectileSpeed = ability.abilityDetails._projectileSpeed;
+
+        spriteRenderer.sprite = projectileDetails.projectileSprite;
+
+        projectileChargeTimer = 0f;
+        //SetProjectileMaterial(projectileDetails.projectileMaterial);
+        isProjectileMaterialSet = true;
+
+        this.overrideProjectileMovement = false;
+
+        trailRenderer.emitting = false;
+        trailRenderer.gameObject.SetActive(false);
     }
 }

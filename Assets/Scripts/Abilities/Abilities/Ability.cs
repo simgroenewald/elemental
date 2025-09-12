@@ -11,6 +11,27 @@ public class Ability
     public int abilityListPosition;
     public float abilityCooldownTime;
     public bool isCoolingDown;
+    private int counter;
+
+    public void SetCounter()
+    {
+        counter = 0;
+    }
+
+    public void IncrementCounter()
+    {
+        counter++;
+    }
+
+    public bool IsCountBelowLimit()
+    {
+        if (abilityDetails.hasCountLimit && counter >= abilityDetails.countLimit)
+        {
+            //isCoolingDown = true;
+            return false;
+        }
+        return true;
+    }
 
     public void UpdatePhysicalDamage(float damage)
     {

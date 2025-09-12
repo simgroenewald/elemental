@@ -1,5 +1,7 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+
 
 [RequireComponent(typeof(ActiveAbility))]
 [RequireComponent(typeof(AbilityEvents))]
@@ -13,6 +15,7 @@ public class CastAbility : MonoBehaviour
     private AbilityEvents abilityEvents;
     private AbilitySetupEvent abilitySetupEvent;
     private ICastable projectile;
+    private List<ICastable> projectiles;
 
     private void Awake()
     {
@@ -23,12 +26,16 @@ public class CastAbility : MonoBehaviour
 
     private void OnEnable()
     {
-        abilitySetupEvent.OnAbilitySetup += OnAbilitySetup;
+        abilitySetupEvent.OnSingleMovementAbilitySetup += OnSingleMovementAbilitySetup;
+        abilitySetupEvent.OnSingleStaticAbilitySetup += OnSingleStaticAbilitySetup;
+        abilitySetupEvent.OnMultiAbilitySetup += OnMultiAbilitySetup;
     }
 
     private void OnDisable()
     {
-        abilitySetupEvent.OnAbilitySetup -= OnAbilitySetup;
+        abilitySetupEvent.OnSingleMovementAbilitySetup -= OnSingleMovementAbilitySetup;
+        abilitySetupEvent.OnSingleStaticAbilitySetup -= OnSingleStaticAbilitySetup;
+        abilitySetupEvent.OnMultiAbilitySetup -= OnMultiAbilitySetup;
     }
 
     private void Update()
@@ -36,7 +43,7 @@ public class CastAbility : MonoBehaviour
         coolDownTimer -= Time.deltaTime;
     }
 
-    private void OnAbilitySetup(AbilitySetupEvent abilitySetupEvent, OnAbilitySetupEventArgs onAbilitySetupEventArgs)
+    private void OnSingleMovementAbilitySetup(AbilitySetupEvent abilitySetupEvent, OnAbilitySetupEventArgs onAbilitySetupEventArgs)
     {
         if (onAbilitySetupEventArgs.cast)
         {
@@ -52,6 +59,26 @@ public class CastAbility : MonoBehaviour
 
                 ResetCoolDownTimer();
             }
+        }
+    }
+
+    private void OnSingleStaticAbilitySetup(AbilitySetupEvent abilitySetupEvent, OnAbilitySetupEventArgs onAbilitySetupEventArgs)
+    {
+        if (IsAbilityReadyToCast())
+        {
+            SetCastProjectile(onAbilitySetupEventArgs.characterCaster, onAbilitySetupEventArgs.characterTarget);
+
+            ResetCoolDownTimer();
+        }
+    }
+
+    private void OnMultiAbilitySetup(AbilitySetupEvent abilitySetupEvent, OnAbilitySetupEventArgs onAbilitySetupEventArgs)
+    {
+        if (IsAbilityReadyToCast())
+        {
+            SetCastProjectiles(onAbilitySetupEventArgs.characterCaster, onAbilitySetupEventArgs.characterTargets);
+
+            ResetCoolDownTimer();
         }
     }
 
@@ -81,14 +108,64 @@ public class CastAbility : MonoBehaviour
             
             projectile = (ICastable)PoolManager.Instance.ReuseComponent(projectilePrefab, spawnPosition, Quaternion.identity);
 
-            projectile.InitialiseProjectile(currentProjectile, activeAbility.GetCurrentAbility(), aimAngle, abilityAimAngle, abilityAimDirectionVector, characterCaster, characterTarget);
+            projectile.InitialiseProjectile(currentProjectile, activeAbility.currentAbility, aimAngle, abilityAimAngle, abilityAimDirectionVector, characterCaster, characterTarget);
 
         }
     }
 
-    public void OnCastAbility(GameObject target)
+    private void SetCastProjectile(Character characterCaster, Character characterTarget)
     {
-        projectile.Cast();
+        ProjectileDetailsSO currentProjectile = activeAbility.GetCurrentProjectile();
+
+        if (currentProjectile != null)
+        {
+            GameObject projectilePrefab = currentProjectile.projectilePrefabArray[Random.Range(0, currentProjectile.projectilePrefabArray.Length)];
+
+            Vector3 spawnPosition = activeAbility.GetCastPosition(characterTarget.GetComponent<Transform>().position);
+            spawnPosition.z = 0f;
+
+            projectile = (ICastable)PoolManager.Instance.ReuseComponent(projectilePrefab, spawnPosition, Quaternion.identity);
+
+            projectile.InitialiseProjectile(currentProjectile, activeAbility.GetCurrentAbility(), characterCaster, characterTarget);
+        }
+    }
+
+    private void SetCastProjectiles(Character characterCaster, List<Character> characterTargets)
+    {
+        projectiles = new List<ICastable>();
+        foreach (Character target in characterTargets)
+        {
+            ProjectileDetailsSO currentProjectile = activeAbility.GetCurrentProjectile();
+
+            if (currentProjectile != null && !target.characterState.isDead && !target.characterState.isDying)
+            {
+                GameObject projectilePrefab = currentProjectile.projectilePrefabArray[Random.Range(0, currentProjectile.projectilePrefabArray.Length)];
+
+                Vector3 spawnPosition = activeAbility.GetCastPosition(target.GetComponent<Transform>().position);
+                spawnPosition.z = 0f;
+
+                projectile = (ICastable)PoolManager.Instance.ReuseComponent(projectilePrefab, spawnPosition, Quaternion.identity);
+
+                projectile.InitialiseProjectile(currentProjectile, activeAbility.GetCurrentAbility(), characterCaster, target);
+
+                projectiles.Add(projectile);
+            }
+        }
+    }
+
+    public void OnCastAbility()
+    {
+        if (activeAbility.currentAbility.abilityDetails.isMultiTarget)
+        {
+            foreach (var projectile in projectiles)
+            {
+                projectile.Cast();
+            }      
+        } else
+        {
+            projectile.Cast();
+        }
+
     }
 
     public void OnAbilityCasted()

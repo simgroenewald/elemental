@@ -13,7 +13,7 @@ using UnityEngine.Rendering;
 [RequireComponent(typeof(Mana))]
 [RequireComponent(typeof(ManaEvents))]
 [RequireComponent(typeof(MovementHandler))]
-[RequireComponent(typeof(SetActiveAbilityEvent))]
+[RequireComponent(typeof(AbilityActivationEvents))]
 [RequireComponent(typeof(ActiveAbility))]
 [RequireComponent(typeof(CastAbility))]
 [RequireComponent(typeof(MeleeAbility))]
@@ -42,7 +42,7 @@ public class Character : MonoBehaviour, ITargetable
     [HideInInspector] public HealthEvents healthEvents;
     [HideInInspector] public Mana mana;
     [HideInInspector] public ManaEvents manaEvents;
-    [HideInInspector] public SetActiveAbilityEvent setActiveAbilityEvent;
+    [HideInInspector] public AbilityActivationEvents abilityActivationEvents;
     [HideInInspector] public ActiveAbility activeAbility;
     [HideInInspector] public CastAbility castAbility;
     [HideInInspector] public MeleeAbility meleeAbility;
@@ -70,7 +70,7 @@ public class Character : MonoBehaviour, ITargetable
         healthEvents = GetComponent<HealthEvents>();
         mana = GetComponent<Mana>();
         manaEvents = GetComponent<ManaEvents>();
-        setActiveAbilityEvent = GetComponent<SetActiveAbilityEvent>();
+        abilityActivationEvents = GetComponent<AbilityActivationEvents>();
         activeAbility = GetComponent<ActiveAbility>();
         castAbility = GetComponent<CastAbility>();
         meleeAbility = GetComponent<MeleeAbility>();
@@ -78,6 +78,7 @@ public class Character : MonoBehaviour, ITargetable
         movementEvents = GetComponent<MovementEvents>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
+        animateCharacter = GetComponent<AnimateCharacter>();
         agent = GetComponent<NavMeshAgent>();
         abilitySetupEvent = GetComponent<AbilitySetupEvent>();
         characterCombat = GetComponent<CharacterCombat>();
@@ -94,6 +95,7 @@ public class Character : MonoBehaviour, ITargetable
         this.characterDetails = characterDetails;
         stats.Initialise(characterDetails.statsSO);
         CreateCharacterStartingAbilities();
+
         CreateCharacterBaseAbility();
         SetCharacterHealth();
     }
@@ -101,7 +103,7 @@ public class Character : MonoBehaviour, ITargetable
     private void CreateCharacterBaseAbility()
     {
         baseAbility = new Ability() { abilityDetails = characterDetails.baseAbility, abilityCooldownTime = 0f, isCoolingDown = false };
-        setActiveAbilityEvent.CallSetActiveAbilityEvent(baseAbility);
+        abilityActivationEvents.CallSetActiveAbilityEvent(baseAbility);
     }
 
     private void CreateCharacterStartingAbilities()

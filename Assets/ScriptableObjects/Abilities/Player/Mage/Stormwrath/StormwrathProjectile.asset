@@ -10,26 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8b1676e888e655846a9eb85aa7a764ec, type: 3}
-  m_Name: WitchfireVolleyProjectile
+  m_Name: StormwrathProjectile
   m_EditorClassIdentifier: 
-  projectileName: Witchfire Volley Projectile
+  projectileName: StormwrathProjectile
   isPlayerProjectile: 1
   isAnimated: 1
   followsTarget: 0
-  projectileSprite: {fileID: -14110601, guid: b81550b463513b7449b4a892e4418745, type: 3}
+  projectileSprite: {fileID: 21300000, guid: c216cbd5366eb6e478c5f988a38b7e71, type: 3}
   projectilePrefabArray:
-  - {fileID: 1025246606280818693, guid: 0cd22f3b1c511674187a27718fbcc190, type: 3}
+  - {fileID: 1122618946408703622, guid: 2402a3b8e124c624c867b72499f2f6a7, type: 3}
   projectileMaterial: {fileID: 0}
   chargeTime: 0
   chargeMaterial: {fileID: 0}
-  projectileDamage: 20
-  projectileSpeed: 1.5
-  projectileSpeedMin: 1.5
-  projectileSpeedMax: 1.5
-  projectileRange: 10
-  projectileRotationSpeed: 1
+  projectileRotationSpeed: 0
   isProjectileTrail: 0
-  projectileTrailTime: 0
+  projectileTrailTime: 3
   projectileTrailMaterial: {fileID: 0}
   projectileTrailStartWidth: 0
   projectileTrailEndWidth: 0

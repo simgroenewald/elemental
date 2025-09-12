@@ -320,6 +320,22 @@ PrefabInstance:
       propertyPath: enemyStatsSO
       value: 
       objectReference: {fileID: 11400000, guid: 46b58662442044c48832d7a1338fcf93, type: 2}
+    - target: {fileID: 8169613600479682509, guid: c71c5ca299148ec4298772eea3b9d173, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 4496117015512451158}
+    - target: {fileID: 8169613600479682509, guid: c71c5ca299148ec4298772eea3b9d173, type: 3}
+      propertyPath: attackLeftClip
+      value: 
+      objectReference: {fileID: 7400000, guid: 5f9e624b9ad43774fad11c3f314af8b0, type: 2}
+    - target: {fileID: 8169613600479682509, guid: c71c5ca299148ec4298772eea3b9d173, type: 3}
+      propertyPath: baseController
+      value: 
+      objectReference: {fileID: 9100000, guid: de3d0d6da35c11042bbfe43d64125409, type: 2}
+    - target: {fileID: 8169613600479682509, guid: c71c5ca299148ec4298772eea3b9d173, type: 3}
+      propertyPath: attackRightClip
+      value: 
+      objectReference: {fileID: 7400000, guid: e2b3c5becd07537468455e84d1047728, type: 2}
     - target: {fileID: 8881559155593203371, guid: c71c5ca299148ec4298772eea3b9d173, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 36.1
@@ -329,6 +345,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c71c5ca299148ec4298772eea3b9d173, type: 3}
+--- !u!95 &4496117015512451158 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 2232647147469282343, guid: c71c5ca299148ec4298772eea3b9d173, type: 3}
+  m_PrefabInstance: {fileID: 2350490168399991921}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7868019469313222582 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5597495360420459463, guid: c71c5ca299148ec4298772eea3b9d173, type: 3}

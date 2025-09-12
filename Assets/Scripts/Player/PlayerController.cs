@@ -1,3 +1,4 @@
+using UnityEditor.Playables;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
@@ -80,6 +81,7 @@ public class PlayerController : MonoBehaviour
 
         if (!player.characterState.isDying && !player.characterState.isDead){
             MouseInput();
+            KeyInput();
             //CastAbility();
 
             if (targetEnemy != null)
@@ -113,13 +115,39 @@ public class PlayerController : MonoBehaviour
             // Clicked on an already selected enemy
             else
             {
-                if (characterCombat.currentAbility.abilityDetails.isEnemyTargetable && targetEnemy)
+                player.abilityActivationEvents.CallSetActiveAbilityEvent(player.baseAbility);
+                if (characterCombat.activeAbility.currentAbility.abilityDetails.isEnemyTargetable && targetEnemy)
                 {
                     characterCombat.AttackEnemy(targetEnemy.enemy);
                 }
             }
         }
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject() || player.activeAbility.GetStagedAbility() == null || player.activeAbility.GetStagedAbility().abilityDetails.isPassive)
+                return; // clicked UI, ignore gameplay
 
+            player.abilityActivationEvents.CallActivateStagedAbilityEvent();
+
+            if (player.activeAbility.stagedAbility.abilityDetails.isEnemyTargetable && targetEnemy)
+            {
+                characterCombat.AttackEnemy(targetEnemy.enemy);
+            }
+        }
+    }
+
+    private void KeyInput()
+    {
+
+        // Noe enemy targetable ie can be triggered
+        if (player.activeAbility.stagedAbility != null && !player.activeAbility.stagedAbility.abilityDetails.isPassive && !player.activeAbility.stagedAbility.abilityDetails.isEnemyTargetable && Input.GetKeyDown(player.activeAbility.stagedAbility.abilityDetails.triggerKey))
+        {
+            player.abilityActivationEvents.CallActivateStagedAbilityEvent();
+            if (!player.activeAbility.currentAbility.abilityDetails.isSelfEffect)
+            {
+                characterCombat.TriggerAbility();
+            }
+        }
     }
 
     private void MoveToClickPosition()

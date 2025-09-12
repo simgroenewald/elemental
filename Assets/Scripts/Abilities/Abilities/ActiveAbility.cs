@@ -1,45 +1,122 @@
+using GLTFast.Schema;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
-[RequireComponent(typeof(SetActiveAbilityEvent))]
+[RequireComponent(typeof(AbilityActivationEvents))]
 
 [DisallowMultipleComponent]
 public class ActiveAbility: MonoBehaviour
 {
     [SerializeField] private Transform abilityCastPositionLeftTransform;
     [SerializeField] private Transform abilityCastPositionRightTransform;
-    [SerializeField] private Transform abilityEffectPositionTransform;
+    [SerializeField] private Vector3 castPositionOffset;
 
-    private SetActiveAbilityEvent setAbilityEvent;
-    private Ability currentAbility;
+    private Character character;
+    private StatModifierEvents statModifierEvents;
+
+    private AbilityActivationEvents abilityActivationEvents;
+    public Ability currentAbility;
+    public Ability stagedAbility;
 
     private void Awake()
     {
-        setAbilityEvent = GetComponent<SetActiveAbilityEvent>();
+        character = GetComponent<Character>();
+        statModifierEvents = character.statModifierEvents;
+        abilityActivationEvents = GetComponent<AbilityActivationEvents>();
+    }
+
+    private void Start()
+    {
+        SetCharacterStartAbility();
     }
 
     private void OnEnable()
     {
-        setAbilityEvent.OnSetActiveAbility += OnSetActiveAbility;
+        abilityActivationEvents.OnSetActiveAbility += OnSetActiveAbility;
+        abilityActivationEvents.OnStageAbility += OnStageAbility;
+        abilityActivationEvents.OnActivateStagedAbility += OnActivateStagedAbility;
     }
 
     private void OnDisable()
     {
-        setAbilityEvent.OnSetActiveAbility -= OnSetActiveAbility;
+        abilityActivationEvents.OnSetActiveAbility -= OnSetActiveAbility;
+        abilityActivationEvents.OnStageAbility -= OnStageAbility;
+        abilityActivationEvents.OnActivateStagedAbility -= OnActivateStagedAbility;
     }
-    private void OnSetActiveAbility(SetActiveAbilityEvent setActiveAbilityEvent, SetAbilityEventArgs setActiveAbilityEventArgs)
+    private void OnSetActiveAbility(AbilityActivationEvents abilityActivationEvent, AbilityEventArgs abilityEventArgs)
     {
-        SetAbility(setActiveAbilityEventArgs.ability);
+        SetAbility(abilityEventArgs.ability);
+    }
+
+    private void OnStageAbility(AbilityActivationEvents abilityActivationEvent, AbilityEventArgs abilityEventArgs)
+    {
+        StageAbility(abilityEventArgs.ability);
+    }
+
+    private void OnActivateStagedAbility()
+    {
+        SetAbility(stagedAbility);
     }
 
     private void SetAbility(Ability ability)
     {
+        RemoveModifiers();
         currentAbility = ability;
         if (ability.abilityDetails.isRanged)
         {
             abilityCastPositionLeftTransform.localPosition = currentAbility.abilityDetails.abilityCastPositionLeft;
             abilityCastPositionRightTransform.localPosition = currentAbility.abilityDetails.abilityCastPositionRight;
+            castPositionOffset = currentAbility.abilityDetails.castPositionOffset;
         }
+        ApplyModifiers();
+    }
+
+    private void RemoveModifiers()
+    {
+        if (currentAbility != null && currentAbility.abilityDetails.modifierData != null)
+        {
+            foreach (var modifier in currentAbility.abilityDetails.modifierData)
+            {
+                statModifierEvents.RaiseRemoveBasicStatEvent(modifier.statType, modifier.value, modifier.isPercentage);
+            }
+        }
+    }
+
+    private void ApplyModifiers()
+    {
+        if (currentAbility.abilityDetails.modifierData.Count > 0)
+        {
+            foreach (var modifier in currentAbility.abilityDetails.modifierData)
+            {
+                statModifierEvents.RaiseAddBasicStatEvent(modifier.statType, modifier.value, modifier.isPercentage);
+            }
+        }
+        if (currentAbility.abilityDetails.instantModifierData.Count > 0)
+        {
+            foreach (var modifier in currentAbility.abilityDetails.instantModifierData)
+            {
+                statModifierEvents.RaiseConsumableUsedEvent(modifier.statType, modifier.value, modifier.isPercentage);
+            }
+        }
+    }
+
+    private void SetCharacterStartAbility()
+    {
+        foreach (Ability ability in character.abilityList)
+        {
+            if (ability.abilityDetails == character.characterDetails.startingAbility)
+            {
+                SetAbility(ability);
+                break;
+            }
+        }
+    }
+
+    private void StageAbility(Ability ability)
+    {
+        stagedAbility = ability;
     }
 
     public ProjectileDetailsSO GetCurrentProjectile()
@@ -50,6 +127,11 @@ public class ActiveAbility: MonoBehaviour
     public Ability GetCurrentAbility()
     {
         return currentAbility;
+    }
+
+    public Ability GetStagedAbility()
+    {
+        return stagedAbility;
     }
 
     public Vector3 GetCastPosition(TargetDirection direction)
@@ -63,9 +145,10 @@ public class ActiveAbility: MonoBehaviour
         }
     }
 
-    public Vector3 GetCastEffectPosition()
+    public Vector3 GetCastPosition(Vector3 position)
     {
-        return abilityEffectPositionTransform.position;
+        position = position + castPositionOffset;
+        return position;
     }
 
     public void RemoveCurrentAbility()

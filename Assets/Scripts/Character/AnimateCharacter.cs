@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEngine;
-using UnityEngine.TextCore.Text;
-using UnityEngine.UIElements;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(Character))]
 [DisallowMultipleComponent]
@@ -25,9 +19,11 @@ public class AnimateCharacter : MonoBehaviour
         character.movementEvents.OnFaceRight += HandleFaceRightAnimation;
         character.movementEvents.OnMoveByPosition += HandleMovementAnimation;
         character.movementEvents.OnIdle += HandleIdleAnimation;
+        character.movementEvents.OnHurt += HandleHurtAnimation;
         character.movementEvents.OnDying += HandleDyingAnimation;
-        character.abilityEvents.OnCastAbility += HandleAbilityCastAnimation;
-        character.abilityEvents.OnMeleeAttack += HandleMeleeAttackAnimation;
+        character.abilityEvents.OnCastAbility += HandleAttackAnimation;
+        character.abilityEvents.OnMeleeAttack += HandleAttackAnimation;
+        HandleFaceLeftAnimation();
     }
 
     private void OnDisable()
@@ -37,8 +33,8 @@ public class AnimateCharacter : MonoBehaviour
         character.movementEvents.OnMoveByPosition -= HandleMovementAnimation;
         character.movementEvents.OnIdle -= HandleIdleAnimation;
         character.movementEvents.OnDying -= HandleDyingAnimation;
-        character.abilityEvents.OnCastAbility -= HandleAbilityCastAnimation;
-        character.abilityEvents.OnMeleeAttack -= HandleMeleeAttackAnimation;
+        character.abilityEvents.OnCastAbility -= HandleAttackAnimation;
+        character.abilityEvents.OnMeleeAttack -= HandleAttackAnimation;
     }
 
     private void ResetAnimationBools()
@@ -46,6 +42,8 @@ public class AnimateCharacter : MonoBehaviour
         character.animator.SetBool(Settings.isMoving, false);
         character.animator.SetBool(Settings.isIdle, false);
         character.animator.SetBool(Settings.isAttacking, false);
+        character.animator.SetBool(Settings.isAttacking2, false);
+        character.animator.SetBool(Settings.isHurting, false);
     }
 
     private void HandleFaceLeftAnimation()
@@ -69,20 +67,28 @@ public class AnimateCharacter : MonoBehaviour
     private void HandleIdleAnimation()
     {
         ResetAnimationBools();
-        character.animator.SetBool(Settings.isMoving, false);
         character.animator.SetBool(Settings.isIdle, true);
     }
 
-    private void HandleAbilityCastAnimation()
+    private void HandleHurtAnimation()
     {
         ResetAnimationBools();
-        character.animator.SetBool(Settings.isAttacking, true);
+        character.animator.SetBool(Settings.isHurting, true);
     }
 
-    private void HandleMeleeAttackAnimation()
+    private void HandleAttackAnimation()
     {
         ResetAnimationBools();
-        character.animator.SetBool(Settings.isAttacking, true);
+        if (character.activeAbility.currentAbility.abilityDetails.attackAnimationTrigger == null)
+        {
+            character.animator.SetBool(Settings.isAttacking, true);
+        } 
+        else
+        {
+            int attackParamHash = Animator.StringToHash(character.activeAbility.currentAbility.abilityDetails.attackAnimationTrigger);
+            character.animator.SetBool(attackParamHash, true);
+        }
+
     }
 
     private void HandleDyingAnimation()

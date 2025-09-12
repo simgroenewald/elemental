@@ -10,6 +10,7 @@ using UnityEngine.Rendering;
 [RequireComponent(typeof(ItemCollectionSystem))]
 [RequireComponent(typeof(BackpackController))]
 [RequireComponent(typeof(ItemSelectorController))]
+[RequireComponent(typeof(AbilityController))]
 public class Player : Character
 {
 
@@ -17,6 +18,7 @@ public class Player : Character
     [HideInInspector] public ItemCollectionSystem itemCollectionSystem;
     [HideInInspector] public BackpackController backpackController;
     [HideInInspector] public ItemSelectorController itemSelectorController;
+    [HideInInspector] public AbilityController abilityController;
 
     protected override void Awake()
     {
@@ -24,6 +26,7 @@ public class Player : Character
         itemCollectionSystem = GetComponent<ItemCollectionSystem>();
         backpackController = GetComponent<BackpackController>();
         itemSelectorController = GetComponent<ItemSelectorController>();
+        abilityController = GetComponent<AbilityController>();
     }
 
     private void Start()

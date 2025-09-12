@@ -17,8 +17,8 @@ public class BackpackController : MonoBehaviour
 
     private void Awake()
     {
-        backpackUI = GameObject.FindWithTag("Backpack").GetComponent<BackpackUI>();
-        itemDetails = GameObject.FindWithTag("ItemDetails").GetComponent<ItemDetailsUI>();
+        backpackUI = GameManager.Instance.backpackUI;
+        itemDetails = GameManager.Instance.itemDetailsUI;
     }
 
     private void Start()

@@ -308,11 +308,32 @@ PrefabInstance:
       propertyPath: enemyDetails
       value: 
       objectReference: {fileID: 11400000, guid: 3ffa1683697e1f7448ea940f47f92f88, type: 2}
+    - target: {fileID: 8169613600479682509, guid: c71c5ca299148ec4298772eea3b9d173, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 2413064848728803592}
+    - target: {fileID: 8169613600479682509, guid: c71c5ca299148ec4298772eea3b9d173, type: 3}
+      propertyPath: attackLeftClip
+      value: 
+      objectReference: {fileID: 7400000, guid: 9740cf72946bc0b42af45186f21b68f8, type: 2}
+    - target: {fileID: 8169613600479682509, guid: c71c5ca299148ec4298772eea3b9d173, type: 3}
+      propertyPath: baseController
+      value: 
+      objectReference: {fileID: 9100000, guid: 634dee606d6bd064693ec82f5bfb989b, type: 2}
+    - target: {fileID: 8169613600479682509, guid: c71c5ca299148ec4298772eea3b9d173, type: 3}
+      propertyPath: attackRightClip
+      value: 
+      objectReference: {fileID: 7400000, guid: 6e0fda0717cec0346b61b9d48c1918eb, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c71c5ca299148ec4298772eea3b9d173, type: 3}
+--- !u!95 &2413064848728803592 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 2232647147469282343, guid: c71c5ca299148ec4298772eea3b9d173, type: 3}
+  m_PrefabInstance: {fileID: 4577655521745851695}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8226199850694633192 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5597495360420459463, guid: c71c5ca299148ec4298772eea3b9d173, type: 3}

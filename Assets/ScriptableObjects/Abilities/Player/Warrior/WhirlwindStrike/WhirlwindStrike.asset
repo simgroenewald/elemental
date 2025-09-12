@@ -10,36 +10,50 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 609fa1f9b66b0544196f4f77e751f80f, type: 3}
-  m_Name: Porcupunch
+  m_Name: WhirlwindStrike
   m_EditorClassIdentifier: 
-  abilityName: Porcupunch
-  icon: {fileID: 0}
-  range: 0.8
-  isBaseAbility: 1
-  isAutoAttack: 1
+  abilityName: Whirlwind Strike
+  description: A sweeping melee strike that cuts through multiple enemies, dealing
+    damage to enemies in an area.
+  icon: {fileID: 21300000, guid: 0147b4a57d8fed44c8bcd6c2dd6052a6, type: 3}
+  attackAnimationTrigger: isAttacking2
+  range: 2
+  isBaseAbility: 0
+  isAutoAttack: 0
   isEnemyTargetable: 1
   isDirectionTargetable: 0
   isGroundTargetable: 0
+  isMultiTarget: 1
   isPassive: 0
   isDamageOverTime: 0
   isCritical: 0
   isAreaOfEffect: 0
-  isHurt: 0
+  isHurt: 1
+  isCastAtTarget: 0
+  isSelfEffect: 0
   slowDownBuffer: 0
-  coolDownTime: 0
-  isCoolingDown: 0
-  damage: 10
-  isMagical: 0
+  hasCooldown: 1
+  coolDownTime: 30
+  hasEffectTime: 0
+  effectTime: 0
+  hasCountLimit: 1
+  countLimit: 1
+  damage: 20
+  isMagical: 1
   critChance: 0
-  manaCost: 0
+  manaCost: 30
   isRanged: 0
   abilityCastPositionLeft: {x: 0, y: 0, z: 0}
   abilityCastPositionRight: {x: 0, y: 0, z: 0}
+  castPositionOffset: {x: 0, y: 0, z: 0}
   abilityProjectileDetails: {fileID: 0}
   projectileSpeed: 0
-  _damage: 0
+  modifierData: []
+  instantModifierData: []
+  _damage: 20
   _projectileSpeed: 0
-  _coolDownTime: 0
+  _coolDownTime: 30
   _critChance: 0
-  _range: 0.8
-  _manaCost: 0
+  _range: 2
+  _manaCost: 30
+  triggerKey: 0

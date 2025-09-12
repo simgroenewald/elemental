@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 609fa1f9b66b0544196f4f77e751f80f, type: 3}
+  m_Name: EssenceShotAbility
+  m_EditorClassIdentifier: 
+  abilityName: Witchfire Volley
+  description: Base ability
+  icon: {fileID: 0}
+  attackAnimationTrigger: isAttacking
+  range: 3
+  isBaseAbility: 1
+  isAutoAttack: 1
+  isEnemyTargetable: 1
+  isDirectionTargetable: 0
+  isGroundTargetable: 0
+  isMultiTarget: 0
+  isPassive: 0
+  isDamageOverTime: 0
+  isCritical: 1
+  isAreaOfEffect: 0
+  isHurt: 0
+  isCastAtTarget: 0
+  slowDownBuffer: 0
+  hasCooldown: 0
+  coolDownTime: 10
+  hasCountLimit: 0
+  countLimit: 0
+  damage: 10
+  isMagical: 1
+  critChance: 0
+  manaCost: 30
+  isRanged: 1
+  abilityCastPositionLeft: {x: -0.155, y: 0.222, z: 0}
+  abilityCastPositionRight: {x: 0.155, y: 0.222, z: 0}
+  castPositionOffset: {x: 0, y: 0, z: 0}
+  abilityProjectileDetails: {fileID: 11400000, guid: a441b82159785a642b509ab9bfb94cc3, type: 2}
+  projectileSpeed: 2
+  modifierData: []
+  _damage: 10
+  _projectileSpeed: 2
+  _coolDownTime: 10
+  _critChance: 0
+  _range: 3
+  _manaCost: 30
+  triggerKey: 0

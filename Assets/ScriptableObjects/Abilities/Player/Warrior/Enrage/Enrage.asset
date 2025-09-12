@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 609fa1f9b66b0544196f4f77e751f80f, type: 3}
+  m_Name: Enrage
+  m_EditorClassIdentifier: 
+  abilityName: Enrage
+  description: A portion of the damage dealt is returned as health, allowing the
+    warrior to sustain in prolonged battles.
+  icon: {fileID: 21300000, guid: 073dff49b0ebaec4396bf8f904c048f2, type: 3}
+  attackAnimationTrigger: isAttacking
+  range: 0.5
+  isBaseAbility: 0
+  isAutoAttack: 0
+  isEnemyTargetable: 1
+  isDirectionTargetable: 0
+  isGroundTargetable: 0
+  isMultiTarget: 0
+  isPassive: 0
+  isDamageOverTime: 0
+  isCritical: 1
+  isAreaOfEffect: 0
+  isHurt: 0
+  isCastAtTarget: 0
+  isSelfEffect: 1
+  slowDownBuffer: 0
+  hasCooldown: 0
+  coolDownTime: 0
+  hasEffectTime: 1
+  effectTime: 10
+  hasCountLimit: 0
+  countLimit: 0
+  damage: 10
+  isMagical: 0
+  critChance: 40
+  manaCost: 0
+  isRanged: 0
+  abilityCastPositionLeft: {x: 0, y: 0, z: 0}
+  abilityCastPositionRight: {x: 0, y: 0, z: 0}
+  castPositionOffset: {x: 0, y: 0, z: 0}
+  abilityProjectileDetails: {fileID: 0}
+  projectileSpeed: 0
+  modifierData:
+  - statModifier: {fileID: 11400000, guid: 468695d91446670468eccf0ae434f3e4, type: 2}
+    statType: 13
+    value: 40
+    isPercentage: 1
+  - statModifier: {fileID: 11400000, guid: 468695d91446670468eccf0ae434f3e4, type: 2}
+    statType: 4
+    value: 40
+    isPercentage: 1
+  instantModifierData: []
+  _damage: 10
+  _projectileSpeed: 0
+  _coolDownTime: 0
+  _critChance: 40
+  _range: 0.5
+  _manaCost: 0
+  triggerKey: 114

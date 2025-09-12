@@ -73,6 +73,13 @@ public class TargetEnemy : MonoBehaviour, ITargetable
                 SetOutlined(isSelected);
                 GameEventManager.Instance.targetEvents.RaiseOnTargetEnemy(this);
             }
+            if (Input.GetMouseButtonDown(0))
+            {
+                if (GameManager.Instance.player.activeAbility.GetStagedAbility() == null || !GameManager.Instance.player.activeAbility.GetStagedAbility().abilityDetails.isEnemyTargetable) return;
+                isSelected = true;
+                SetOutlined(isSelected);
+                GameEventManager.Instance.targetEvents.RaiseOnTargetEnemy(this);
+            }
         }
     }
 

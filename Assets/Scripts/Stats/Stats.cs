@@ -275,6 +275,12 @@ public class Stats : MonoBehaviour
             else RemoveModifiers(statType, val, isPercentage);
             UpdatePercentageChanceStat(statType);
         }
+        if (statType == StatType.HealthSteal)
+        {
+            if (isAdding) AddModifiers(statType, val, isPercentage);
+            else RemoveModifiers(statType, val, isPercentage);
+            UpdatePercentageChanceStat(statType);
+        }
         if (statType == StatType.Cooldown)
         {
             if (isAdding) AddModifiers(statType, val, isPercentage);

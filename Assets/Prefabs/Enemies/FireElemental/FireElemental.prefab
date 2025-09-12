@@ -296,8 +296,29 @@ PrefabInstance:
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[23].y
       value: 0.32375422
       objectReference: {fileID: 0}
+    - target: {fileID: 8169613600479682509, guid: c71c5ca299148ec4298772eea3b9d173, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 4725602540893976947}
+    - target: {fileID: 8169613600479682509, guid: c71c5ca299148ec4298772eea3b9d173, type: 3}
+      propertyPath: attackLeftClip
+      value: 
+      objectReference: {fileID: 7400000, guid: 5f9e624b9ad43774fad11c3f314af8b0, type: 2}
+    - target: {fileID: 8169613600479682509, guid: c71c5ca299148ec4298772eea3b9d173, type: 3}
+      propertyPath: baseController
+      value: 
+      objectReference: {fileID: 9100000, guid: de3d0d6da35c11042bbfe43d64125409, type: 2}
+    - target: {fileID: 8169613600479682509, guid: c71c5ca299148ec4298772eea3b9d173, type: 3}
+      propertyPath: attackRightClip
+      value: 
+      objectReference: {fileID: 7400000, guid: e2b3c5becd07537468455e84d1047728, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c71c5ca299148ec4298772eea3b9d173, type: 3}
+--- !u!95 &4725602540893976947 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 2232647147469282343, guid: c71c5ca299148ec4298772eea3b9d173, type: 3}
+  m_PrefabInstance: {fileID: 6876788519866017108}
+  m_PrefabAsset: {fileID: 0}

@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b1676e888e655846a9eb85aa7a764ec, type: 3}
+  m_Name: WitchfireVolleyProjectile
+  m_EditorClassIdentifier: 
+  projectileName: Slurry Projectile
+  isPlayerProjectile: 1
+  isAnimated: 0
+  followsTarget: 1
+  projectileSprite: {fileID: -1765175190, guid: 6971568c77e37d3448478c0aca6a833d, type: 3}
+  projectilePrefabArray:
+  - {fileID: 655898048687781763, guid: ecbb093c1dad6cf49a30e0d73fe57747, type: 3}
+  projectileMaterial: {fileID: 0}
+  chargeTime: 0
+  chargeMaterial: {fileID: 0}
+  projectileRotationSpeed: 1
+  isProjectileTrail: 0
+  projectileTrailTime: 0
+  projectileTrailMaterial: {fileID: 0}
+  projectileTrailStartWidth: 0
+  projectileTrailEndWidth: 0

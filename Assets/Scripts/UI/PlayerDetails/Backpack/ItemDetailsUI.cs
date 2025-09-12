@@ -11,9 +11,9 @@ public class ItemDetailsUI : MonoBehaviour
     [SerializeField] TMP_Text itemDescription;
     [SerializeField] GameObject itemDetailsGO;
 
-    public void Awake()
+    public void Start()
     {
-        ResetItemDetails();
+        //ResetItemDetails();
     }
 
     private void Update()
