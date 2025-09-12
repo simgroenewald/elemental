@@ -45,7 +45,7 @@ public class PlayerControl : MonoBehaviour
     private void Start()
     {
         SetPlayerAnimationspeed();
-        SetPlayerStartAbility();
+        //SetPlayerStartAbility();
         player.abilityEvents.OnAbilityCasted += HandleIdleState;
         player.abilityEvents.OnMeleeEndAttack += HandleIdleState;
         GameEventManager.Instance.targetEvents.OnAimEnemy += HandleOnAimEnemy;
@@ -126,7 +126,7 @@ public class PlayerControl : MonoBehaviour
         if (abilityIndex - 1 < player.abilityList.Count)
         {
             currentAbilityIndex = abilityIndex;
-            player.setActiveAbilityEvent.CallSetActiveAbilityEvent(player.abilityList[abilityIndex - 1]);
+            player.abilityActivationEvents.CallSetActiveAbilityEvent(player.abilityList[abilityIndex - 1]);
         }
         currentAbility = player.activeAbility.GetCurrentAbility();
         slowDownBuffer = currentAbility.abilityDetails.slowDownBuffer;
@@ -217,6 +217,14 @@ public class PlayerControl : MonoBehaviour
                 }
             }
         }
+        if (Input.GetMouseButtonDown(0))
+        {
+            player.abilityActivationEvents.CallActivateStagedAbilityEvent();
+            if (currentAbility.abilityDetails.isEnemyTargetable && targetEnemy)
+            {
+                AttackEnemy();
+            }
+        }
         
     }
 
@@ -301,11 +309,11 @@ public class PlayerControl : MonoBehaviour
 
         if (currentAbility.abilityDetails.isEnemyTargetable)
         {
-            player.abilitySetupEvent.RaiseAbilitySetupEvent(true, aimDirection, playerAngle, castPointAngle, castPointDirection, player, targetEnemy.enemy);
+            player.abilitySetupEvent.RaiseSingleMovementAbilitySetupEvent(true, aimDirection, playerAngle, castPointAngle, castPointDirection, player, targetEnemy.enemy);
         }
         else
         {
-            player.abilitySetupEvent.RaiseAbilitySetupEvent(true, aimDirection, playerAngle, castPointAngle, castPointDirection, player, null);
+            player.abilitySetupEvent.RaiseSingleMovementAbilitySetupEvent(true, aimDirection, playerAngle, castPointAngle, castPointDirection, player, null);
         }
         player.abilityEvents.RaiseCastAbilityEvent();
 
@@ -352,11 +360,11 @@ public class PlayerControl : MonoBehaviour
 
             if (currentAbility.abilityDetails.isEnemyTargetable)
             {
-                player.abilitySetupEvent.RaiseAbilitySetupEvent(true, aimDirection, playerAngle, castPointAngle, castPointDirection, player, targetEnemy.enemy);
+                player.abilitySetupEvent.RaiseSingleMovementAbilitySetupEvent(true, aimDirection, playerAngle, castPointAngle, castPointDirection, player, targetEnemy.enemy);
             }
             else
             {
-                player.abilitySetupEvent.RaiseAbilitySetupEvent(true, aimDirection, playerAngle, castPointAngle, castPointDirection, player, null);
+                player.abilitySetupEvent.RaiseSingleMovementAbilitySetupEvent(true, aimDirection, playerAngle, castPointAngle, castPointDirection, player, null);
             }
             player.abilityEvents.RaiseCastAbilityEvent();
         }

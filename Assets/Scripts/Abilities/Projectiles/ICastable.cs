@@ -16,4 +16,6 @@ public interface ICastable
     void Cast();
 
     GameObject GetGameObject();
+
+    void InitialiseProjectile(ProjectileDetailsSO currentProjectile, Ability ability, Character characterCaster, Character characterTarget);
 }

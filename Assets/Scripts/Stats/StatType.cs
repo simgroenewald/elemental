@@ -32,5 +32,7 @@ public enum StatType
     [Description("Evasion")]
     Evasion,
     [Description("Cooldown")]
-    Cooldown
+    Cooldown,
+    [Description("Health Steal")]
+    HealthSteal
 }

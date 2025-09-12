@@ -1,4 +1,5 @@
 using System;
+using UnityEditor.Playables;
 using UnityEngine;
 using static UnityEngine.EventSystems.EventTrigger;
 
@@ -7,30 +8,68 @@ public class MeleeAbility : MonoBehaviour
     private Character character;
     private AbilityEvents abilityEvents;
     private CharacterCombat characterCombat;
+    private ActiveAbility activeAbility;
 
     private void Awake()
     {
         character = GetComponent<Character>();
         abilityEvents = GetComponent<AbilityEvents>();
         characterCombat = GetComponent<CharacterCombat>();
+        activeAbility = GetComponent<ActiveAbility>();
     }
 
     private void MeleeAttack()
     {
-        float distanceFromTarget = Vector2.Distance(characterCombat.currentTarget.transform.position, transform.position);
-        if (distanceFromTarget <= characterCombat.currentAbility.abilityDetails._range)
+        if (characterCombat.currentTarget.characterState.isDead || characterCombat.currentTarget.characterState.isDying)
         {
-            float damage;
-            if (characterCombat.currentAbility.abilityDetails.isCritical)
+            EndAttack();
+            return;
+        }
+        float distanceFromTarget = Vector2.Distance(characterCombat.currentTarget.transform.position, transform.position);
+        if (distanceFromTarget <= activeAbility.currentAbility.abilityDetails._range)
+        {
+            DealDamage(characterCombat.currentTarget);
+        }
+
+    }
+
+    private void MeleeMultiAttack()
+    {
+        if (activeAbility.currentAbility.abilityDetails.isMultiTarget)
+        {
+            foreach (var characterTarget in characterCombat.currentTargets)
             {
-                damage = characterCombat.currentAbility.EvaluateDamageDealingStats(character, characterCombat.currentAbility.abilityDetails._damage);
+                if (characterTarget.characterState.isDead || characterTarget.characterState.isDying)
+                {
+                    continue;
+                }
+                DealDamage(characterTarget);
             }
-            else
-            {
-                damage = characterCombat.currentAbility.abilityDetails._damage;
-            }
-            damage = characterCombat.currentTarget.stats.EvaluateDamageTakingStats(damage);
-            characterCombat.currentTarget.healthEvents.RaiseReduceHealthEvent(damage);
+        }
+    }
+
+    private void DealDamage(Character target)
+    {
+        float damage;
+        if (activeAbility.currentAbility.abilityDetails.isHurt)
+        {
+            target.characterState.SetToHurt();
+            target.movementEvents.RaiseHurt();
+        }
+        if (activeAbility.currentAbility.abilityDetails.isCritical)
+        {
+            damage = activeAbility.currentAbility.EvaluateDamageDealingStats(character, activeAbility.currentAbility.abilityDetails._damage);
+        }
+        else
+        {
+            damage = activeAbility.currentAbility.abilityDetails._damage;
+        }
+        damage = target.stats.EvaluateDamageTakingStats(damage);
+        target.healthEvents.RaiseReduceHealthEvent(damage);
+        if (character.stats.GetStat(StatType.HealthSteal) > 0)
+        {
+            float health = character.stats.GetStat(StatType.HealthSteal) * damage / 100;
+            character.healthEvents.RaiseIncreaseHealthEvent(health);
         }
     }
 

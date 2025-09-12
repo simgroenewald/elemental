@@ -12,7 +12,7 @@ public class BackpackUI : MonoBehaviour
     [SerializeField] private ItemDetailsUI itemDetailsUI;
     [SerializeField] private DragItemUI dragItemUI;
     [SerializeField] private ItemActionUI itemActionUI;
-    [SerializeField] private ItemActionKeysSO actionKeys;
+    [SerializeField] private ActionKeysSO actionKeys;
     List<ItemUI> itemUIList = new List<ItemUI>();
 
     private int currentDraggedIndex = -1;
@@ -31,7 +31,7 @@ public class BackpackUI : MonoBehaviour
 
     private void Update()
     {
-        foreach (var binding in actionKeys.itemActionKeyBindings)
+        foreach (var binding in actionKeys.actionKeyBindings)
         {
             if (Input.GetKeyDown(binding.key))
             {

@@ -23,6 +23,7 @@ public class CharacterState : MonoBehaviour
         isIdle = false;
         isDying = false;
         isDead = false;
+        isHurt = false;
     }
 
     public void SetToIdle()
@@ -41,6 +42,12 @@ public class CharacterState : MonoBehaviour
     {
         ResetStates();
         isAttacking = true;
+    }
+
+    public void SetToHurt()
+    {
+        ResetStates();
+        isHurt = true;
     }
 
     public void SetToDying()

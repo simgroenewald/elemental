@@ -10,36 +10,45 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 609fa1f9b66b0544196f4f77e751f80f, type: 3}
-  m_Name: FlameSlash
+  m_Name: Punch
   m_EditorClassIdentifier: 
-  abilityName: Flame Slash
+  abilityName: Punch
+  description: 
   icon: {fileID: 0}
-  range: 1.5
+  attackAnimationTrigger: isAttacking
+  range: 0.5
   isBaseAbility: 1
   isAutoAttack: 1
   isEnemyTargetable: 1
   isDirectionTargetable: 0
   isGroundTargetable: 0
+  isMultiTarget: 0
   isPassive: 0
   isDamageOverTime: 0
   isCritical: 0
   isAreaOfEffect: 0
   isHurt: 0
+  isCastAtTarget: 0
   slowDownBuffer: 0
+  hasCooldown: 0
   coolDownTime: 0
-  isCoolingDown: 0
-  damage: 15
+  hasCountLimit: 0
+  countLimit: 0
+  damage: 10
   isMagical: 0
   critChance: 0
   manaCost: 0
   isRanged: 0
   abilityCastPositionLeft: {x: 0, y: 0, z: 0}
   abilityCastPositionRight: {x: 0, y: 0, z: 0}
+  castPositionOffset: {x: 0, y: 0, z: 0}
   abilityProjectileDetails: {fileID: 0}
   projectileSpeed: 0
-  _damage: 15
+  modifierData: []
+  _damage: 10
   _projectileSpeed: 0
   _coolDownTime: 0
   _critChance: 0
-  _range: 1.5
+  _range: 0.5
   _manaCost: 0
+  triggerKey: 0

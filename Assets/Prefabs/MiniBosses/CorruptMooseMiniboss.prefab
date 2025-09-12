@@ -112,6 +112,22 @@ PrefabInstance:
       propertyPath: enemyDetails
       value: 
       objectReference: {fileID: 11400000, guid: 7eb38169c21165d4ba414d89a64fab70, type: 2}
+    - target: {fileID: 8169613600479682509, guid: c71c5ca299148ec4298772eea3b9d173, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 8447844628540583541}
+    - target: {fileID: 8169613600479682509, guid: c71c5ca299148ec4298772eea3b9d173, type: 3}
+      propertyPath: attackLeftClip
+      value: 
+      objectReference: {fileID: 7400000, guid: 11bb0ed8652c8b44dab3c84457c3e73a, type: 2}
+    - target: {fileID: 8169613600479682509, guid: c71c5ca299148ec4298772eea3b9d173, type: 3}
+      propertyPath: baseController
+      value: 
+      objectReference: {fileID: 9100000, guid: fa0f573ce4269714990b336c60ac2605, type: 2}
+    - target: {fileID: 8169613600479682509, guid: c71c5ca299148ec4298772eea3b9d173, type: 3}
+      propertyPath: attackRightClip
+      value: 
+      objectReference: {fileID: 7400000, guid: 4be4dff9244014942adf2ad17c4c67ef, type: 2}
     - target: {fileID: 8881559155593203371, guid: c71c5ca299148ec4298772eea3b9d173, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 42.5
@@ -124,5 +140,10 @@ PrefabInstance:
 --- !u!4 &2767881372992946581 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5597495360420459463, guid: c71c5ca299148ec4298772eea3b9d173, type: 3}
+  m_PrefabInstance: {fileID: 7766230157075444306}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &8447844628540583541 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 2232647147469282343, guid: c71c5ca299148ec4298772eea3b9d173, type: 3}
   m_PrefabInstance: {fileID: 7766230157075444306}
   m_PrefabAsset: {fileID: 0}

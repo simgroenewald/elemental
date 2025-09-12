@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2a2402fe861f6d43af03a005a0d94c5, type: 3}
   m_Name: ItemActionKeys
   m_EditorClassIdentifier: 
-  <itemActionKeyBindings>k__BackingField:
+  <actionKeyBindings>k__BackingField:
   - key: 49
     index: 0
   - key: 50
