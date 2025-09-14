@@ -47,51 +47,25 @@ public class CastAbility : MonoBehaviour
     {
         if (onAbilitySetupEventArgs.cast)
         {
-            if (IsAbilityReadyToCast())
-            {
-                SetCastProjectile(
-                    onAbilitySetupEventArgs.aimAngle, 
-                    onAbilitySetupEventArgs.abilityAimAngle, 
-                    onAbilitySetupEventArgs.abilityAimDirectionVector,
-                    onAbilitySetupEventArgs.direction,
-                    onAbilitySetupEventArgs.characterCaster,
-                    onAbilitySetupEventArgs.characterTarget);
-
-                ResetCoolDownTimer();
-            }
+            SetCastProjectile(
+                onAbilitySetupEventArgs.aimAngle, 
+                onAbilitySetupEventArgs.abilityAimAngle, 
+                onAbilitySetupEventArgs.abilityAimDirectionVector,
+                onAbilitySetupEventArgs.direction,
+                onAbilitySetupEventArgs.characterCaster,
+                onAbilitySetupEventArgs.characterTarget);
         }
     }
 
     private void OnSingleStaticAbilitySetup(AbilitySetupEvent abilitySetupEvent, OnAbilitySetupEventArgs onAbilitySetupEventArgs)
     {
-        if (IsAbilityReadyToCast())
-        {
-            SetCastProjectile(onAbilitySetupEventArgs.characterCaster, onAbilitySetupEventArgs.characterTarget);
 
-            ResetCoolDownTimer();
-        }
+            SetCastProjectile(onAbilitySetupEventArgs.characterCaster, onAbilitySetupEventArgs.characterTarget);
     }
 
     private void OnMultiAbilitySetup(AbilitySetupEvent abilitySetupEvent, OnAbilitySetupEventArgs onAbilitySetupEventArgs)
     {
-        if (IsAbilityReadyToCast())
-        {
-            SetCastProjectiles(onAbilitySetupEventArgs.characterCaster, onAbilitySetupEventArgs.characterTargets);
-
-            ResetCoolDownTimer();
-        }
-    }
-
-    private bool IsAbilityReadyToCast()
-    {
-        if (activeAbility.GetCurrentAbility().isCoolingDown)
-            return false;
-
-        if (coolDownTimer > 0f)
-            return false;
-
-        return true;
-
+        SetCastProjectiles(onAbilitySetupEventArgs.characterCaster, onAbilitySetupEventArgs.characterTargets);
     }
 
     private void SetCastProjectile(float aimAngle, float abilityAimAngle, Vector3 abilityAimDirectionVector, TargetDirection direction, Character characterCaster, Character characterTarget)
@@ -176,9 +150,4 @@ public class CastAbility : MonoBehaviour
     /// <summary>
     /// Reset cooldown timer
     /// </summary>
-    private void ResetCoolDownTimer()
-    {
-        // Reset cooldown timer
-        coolDownTimer = activeAbility.GetCurrentAbility().abilityCooldownTime;
-    }
 }

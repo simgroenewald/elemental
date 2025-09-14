@@ -29,15 +29,18 @@ MonoBehaviour:
   isAreaOfEffect: 0
   isHurt: 0
   isCastAtTarget: 0
+  isSelfEffect: 0
   slowDownBuffer: 0
   hasCooldown: 0
-  coolDownTime: 10
+  coolDownTime: 0
+  hasEffectTime: 0
+  effectTime: 0
   hasCountLimit: 0
   countLimit: 0
   damage: 10
   isMagical: 1
   critChance: 0
-  manaCost: 30
+  manaCost: 0
   isRanged: 1
   abilityCastPositionLeft: {x: -0.155, y: 0.222, z: 0}
   abilityCastPositionRight: {x: 0.155, y: 0.222, z: 0}
@@ -45,10 +48,11 @@ MonoBehaviour:
   abilityProjectileDetails: {fileID: 11400000, guid: a441b82159785a642b509ab9bfb94cc3, type: 2}
   projectileSpeed: 2
   modifierData: []
+  instantModifierData: []
   _damage: 10
   _projectileSpeed: 2
-  _coolDownTime: 10
+  _coolDownTime: 0
   _critChance: 0
   _range: 3
-  _manaCost: 30
+  _manaCost: 0
   triggerKey: 0

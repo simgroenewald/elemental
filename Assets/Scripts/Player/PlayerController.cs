@@ -2,6 +2,7 @@ using UnityEditor.Playables;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
+using UnityEngine.TextCore.Text;
 
 [RequireComponent(typeof(Player))]
 [RequireComponent(typeof(CharacterState))]
@@ -139,14 +140,19 @@ public class PlayerController : MonoBehaviour
     private void KeyInput()
     {
 
-        // Noe enemy targetable ie can be triggered
+        // No enemy targetable ie can be triggered
         if (player.activeAbility.stagedAbility != null && !player.activeAbility.stagedAbility.abilityDetails.isPassive && !player.activeAbility.stagedAbility.abilityDetails.isEnemyTargetable && Input.GetKeyDown(player.activeAbility.stagedAbility.abilityDetails.triggerKey))
         {
             player.abilityActivationEvents.CallActivateStagedAbilityEvent();
             if (!player.activeAbility.currentAbility.abilityDetails.isSelfEffect)
             {
                 characterCombat.TriggerAbility();
+            } else
+            {
+                // Use ability for healing spells
+                characterCombat.activeAbility.currentAbility.AttemptToUseSuccessful(player);
             }
+            player.abilityActivationEvents.CallSetActiveAbilityEvent(player.baseAbility);
         }
     }
 

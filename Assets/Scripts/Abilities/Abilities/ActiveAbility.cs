@@ -62,15 +62,24 @@ public class ActiveAbility: MonoBehaviour
 
     private void SetAbility(Ability ability)
     {
-        RemoveModifiers();
-        currentAbility = ability;
-        if (ability.abilityDetails.isRanged)
+        if (ability.CanActivate())
         {
-            abilityCastPositionLeftTransform.localPosition = currentAbility.abilityDetails.abilityCastPositionLeft;
-            abilityCastPositionRightTransform.localPosition = currentAbility.abilityDetails.abilityCastPositionRight;
-            castPositionOffset = currentAbility.abilityDetails.castPositionOffset;
+            if (currentAbility != ability)
+            {
+                ability.ResetStates();
+            }
+            {
+                RemoveModifiers();
+                currentAbility = ability;
+                if (ability.abilityDetails.isRanged)
+                {
+                    abilityCastPositionLeftTransform.localPosition = currentAbility.abilityDetails.abilityCastPositionLeft;
+                    abilityCastPositionRightTransform.localPosition = currentAbility.abilityDetails.abilityCastPositionRight;
+                    castPositionOffset = currentAbility.abilityDetails.castPositionOffset;
+                }
+                ApplyModifiers();
+            }
         }
-        ApplyModifiers();
     }
 
     private void RemoveModifiers()

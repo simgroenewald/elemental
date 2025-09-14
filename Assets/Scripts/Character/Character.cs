@@ -98,6 +98,7 @@ public class Character : MonoBehaviour, ITargetable
 
         CreateCharacterBaseAbility();
         SetCharacterHealth();
+        SetCharacterMana();
     }
 
     private void CreateCharacterBaseAbility()
@@ -131,6 +132,11 @@ public class Character : MonoBehaviour, ITargetable
     private void SetCharacterHealth()
     {
         health.SetHealth();
+    }
+
+    private void SetCharacterMana()
+    {
+        mana.SetMana();
     }
 
     public void SetCharacterPosition(Vector2Int position, Grid grid)

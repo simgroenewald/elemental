@@ -1,6 +1,7 @@
 using GLTFast.Schema;
 using System;
 using System.Diagnostics;
+using System.Security.Policy;
 using UnityEditor.Playables;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
@@ -10,7 +11,10 @@ public class Ability
     public AbilityDetailsSO abilityDetails;
     public int abilityListPosition;
     public float abilityCooldownTime;
+    public float abilityEffectTime;
     public bool isCoolingDown;
+    public bool isEffectTime;
+    public bool locked;
     private int counter;
 
     public void SetCounter()
@@ -23,14 +27,88 @@ public class Ability
         counter++;
     }
 
-    public bool IsCountBelowLimit()
+    public bool CanActivate()
     {
-        if (abilityDetails.hasCountLimit && counter >= abilityDetails.countLimit)
+        // Check if its targeted and if there is a valid target
+        if (abilityDetails.isPassive)
         {
-            //isCoolingDown = true;
+            return false;
+        }
+        if (locked)
+        {
             return false;
         }
         return true;
+    }
+
+    public bool CanUse(float currentMana)
+    {
+        if (isCoolingDown)
+        {
+            return false;
+        }
+        if (abilityDetails.manaCost > currentMana)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    public bool AttemptToUseSuccessful(Character character)
+    {
+        if (CanUse(character.mana.GetCurrentMana()))
+        {
+            AbilityTriggered();
+            character.manaEvents.RaiseReduceManaEvent(abilityDetails.manaCost);
+            return true;
+        }
+        else
+        {
+            DisplayManaError();
+            return false;
+        }
+    }
+
+    private void DisplayManaError()
+    {
+        UnityEngine.Debug.Log("Not Enoug mana");
+    }
+
+    public void ResetStates()
+    {
+        if (abilityDetails.hasEffectTime)
+        {
+            abilityEffectTime = abilityDetails.effectTime;
+            isEffectTime = true;
+        }
+        if (abilityDetails.hasCountLimit)
+        {
+            counter = 0;
+        }
+        if (abilityDetails.hasCooldown)
+        {
+            abilityCooldownTime = abilityDetails.coolDownTime;
+        }
+    }
+
+    public void AbilityTriggered()
+    {
+        if (isEffectTime)
+        {
+            return;
+        }
+        if (abilityDetails.hasCountLimit)
+        {
+            if (counter < abilityDetails.countLimit)
+            {
+                counter++;
+                return;
+            }
+        }
+        if (abilityDetails.hasCooldown)
+        {
+            isCoolingDown = true;
+        }
     }
 
     public void UpdatePhysicalDamage(float damage)
