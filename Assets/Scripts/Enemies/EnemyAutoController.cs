@@ -65,7 +65,7 @@ public class EnemyAutoController : MonoBehaviour
     void Update()
     {
         if (!enemy.characterState.isDying && !enemy.characterState.isDead && !enemy.characterState.isHurt && !player.characterState.isDying && !player.characterState.isDead && enemy.room.isEntered) {
-            //characterCombat.AttemptAttack(player, true, lineOfSight);
+            characterCombat.AttemptAttack(player, true, lineOfSight);
             if (characterState.isMoving)
             {
                 characterMovement.UpdateCharacterMovement();

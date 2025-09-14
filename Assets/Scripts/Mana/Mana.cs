@@ -1,12 +1,20 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Net.Sockets;
 using UnityEngine;
 using UnityEngine.Rendering;
+using static Unity.Cinemachine.CinemachineFreeLookModifier;
 
 [DisallowMultipleComponent]
 public class Mana : MonoBehaviour
 {
+    private Coroutine manaRegenCoroutine;
+    private float tickSeconds = 0.1f;
     private Character character;
     private float currentMana;
-    float regenBucket;
+    private float regenBucket;
+    private float flatBonusManaRegen;
+    private float percentageBonusManaRegen;
     [SerializeField] private GameObject fillArea;
 
     private void Awake()
@@ -18,34 +26,54 @@ public class Mana : MonoBehaviour
     {
         character.manaEvents.OnReduceMana += OnReduceMana;
         character.manaEvents.OnIncreaseMana += OnIncreaseMana;
+        manaRegenCoroutine = StartCoroutine(RegenLoop());
     }
 
     private void OnDisable()
     {
         character.manaEvents.OnReduceMana -= OnReduceMana;
         character.manaEvents.OnIncreaseMana -= OnIncreaseMana;
+        if (manaRegenCoroutine != null) StopCoroutine(manaRegenCoroutine);
     }
 
-    private void Update()
+    private IEnumerator RegenLoop()
     {
-        if (character.stats.GetStat(StatType.ManaRegen) != 0 && Time.frameCount % character.stats.GetStat(StatType.ManaRegen) == 0)
+        var wait = new WaitForSeconds(tickSeconds);
+
+        while (true)
         {
-            if (currentMana < character.stats.GetStat(StatType.Mana))
+            float maxMana = character.stats.GetStat(StatType.Mana);
+            float manaRegen = character.stats.GetStat(StatType.ManaRegen);
+
+            if (manaRegen > 0)
             {
-                OnIncreaseMana(1);
+                float manaRegenTotal = manaRegen * (1f + percentageBonusManaRegen) + flatBonusManaRegen;
+
+                if (manaRegenTotal > 0f && currentMana < maxMana)
+                {
+                    regenBucket += manaRegenTotal * tickSeconds;
+
+                    int whole = Mathf.FloorToInt(regenBucket);
+                    if (whole > 0)
+                    {
+                        int amountToIncrease = Mathf.Min(whole, Mathf.CeilToInt(maxMana - currentMana));
+                        if (amountToIncrease > 0)
+                        {
+                            OnIncreaseMana(amountToIncrease);
+                            regenBucket -= amountToIncrease;
+                        }
+                        else
+                        {
+                            regenBucket = 0f;
+                        }
+                    }
+                }
             }
-        }
 
-        if (currentMana >= character.stats.GetStat(StatType.Mana) || character.stats.GetStat(StatType.ManaRegen) == 0) return;
-
-        regenBucket += character.stats.GetStat(StatType.ManaRegen) * Time.deltaTime;
-        int whole = Mathf.FloorToInt(regenBucket);
-        if (whole > 0)
-        {
-            OnIncreaseMana(whole);
-            regenBucket -= whole;
+            yield return wait;
         }
     }
+
 
     public void SetMana()
     {

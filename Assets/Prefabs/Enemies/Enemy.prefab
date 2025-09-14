@@ -103,7 +103,7 @@ SortingGroup:
   m_Enabled: 1
   m_SortingLayerID: -653709415
   m_SortingLayer: 7
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_SortAtRoot: 0
 --- !u!212 &688862256297629065
 SpriteRenderer:
@@ -306,7 +306,7 @@ MonoBehaviour:
   healthEvents: {fileID: 0}
   mana: {fileID: 0}
   manaEvents: {fileID: 0}
-  setActiveAbilityEvent: {fileID: 0}
+  abilityActivationEvents: {fileID: 0}
   activeAbility: {fileID: 0}
   castAbility: {fileID: 0}
   meleeAbility: {fileID: 0}
@@ -437,7 +437,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityCastPositionLeftTransform: {fileID: 0}
   abilityCastPositionRightTransform: {fileID: 0}
-  abilityEffectPositionTransform: {fileID: 0}
+  castPositionOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &-6674960830216039165
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -615,7 +615,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 562219d959d24ce478746e22723ebc6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activeAbility: {fileID: 0}
   currentTarget: {fileID: 0}
+  currentTargets: []
   attackTriggered: 0
   normalAdvance: 0
 --- !u!114 &2933706589297246695

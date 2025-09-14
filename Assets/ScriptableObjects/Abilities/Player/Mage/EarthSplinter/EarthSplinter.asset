@@ -30,9 +30,12 @@ MonoBehaviour:
   isAreaOfEffect: 0
   isHurt: 1
   isCastAtTarget: 1
+  isSelfEffect: 0
   slowDownBuffer: 0
-  hasCooldown: 0
+  hasCooldown: 1
   coolDownTime: 30
+  hasEffectTime: 0
+  effectTime: 0
   hasCountLimit: 0
   countLimit: 0
   damage: 20
@@ -46,6 +49,7 @@ MonoBehaviour:
   abilityProjectileDetails: {fileID: 11400000, guid: 0d96a2e7d19dbdd4ba7923875ed57695, type: 2}
   projectileSpeed: 0
   modifierData: []
+  instantModifierData: []
   _damage: 20
   _projectileSpeed: 0
   _coolDownTime: 30

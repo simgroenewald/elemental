@@ -175,7 +175,7 @@ public class Stats : MonoBehaviour
             // Update Max
             UpdateStat(statType);
 
-            // Set new current health
+            // Set new current mana
             mana.UpdateMana(percentageOfMax);
         }
         if (statType == StatType.HealthRegen)
@@ -414,7 +414,7 @@ public class Stats : MonoBehaviour
                 character.healthEvents.RaiseIncreaseHealthEvent(val);
             }
         }
-        if (statType == StatType.ManaRegen)
+        if (statType == StatType.Mana)
         {
             if (isPercentage)
             {

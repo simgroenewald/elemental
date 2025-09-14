@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using UnityEditor.Playables;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -130,11 +131,13 @@ public class CharacterCombat : MonoBehaviour
         {
             if (activeAbility.currentAbility.abilityDetails.isCastAtTarget)
             {
+                if (!activeAbility.currentAbility.AttemptToUseSuccessful(character)) return;
                 MultiCastAtTargetAttack(currentTargets);
             }
         }
         else
         {
+            if (!activeAbility.currentAbility.AttemptToUseSuccessful(character)) return;
             MeleeAttack();
         }
 
@@ -153,6 +156,8 @@ public class CharacterCombat : MonoBehaviour
         TargetDirection aimDirection = HelperUtilities.GetTargetDirection(playerAngle);
 
         characterMovement.UpdateCharacterDirection(aimDirection);
+
+        if (!activeAbility.currentAbility.AttemptToUseSuccessful(character)) return;
 
         if (activeAbility.currentAbility.abilityDetails.isRanged)
         {
@@ -174,6 +179,7 @@ public class CharacterCombat : MonoBehaviour
             MeleeAttack();
         }
     }
+
 
     private void RangedTargetAttack(TargetDirection aimDirection, Vector3 enemyPosition, float playerAngle, Character characterTarget)
     {
