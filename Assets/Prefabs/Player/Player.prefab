@@ -427,7 +427,7 @@ SortingGroup:
   m_Enabled: 1
   m_SortingLayerID: -653709415
   m_SortingLayer: 7
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_SortAtRoot: 0
 --- !u!212 &3175993449239557789
 SpriteRenderer:
@@ -874,6 +874,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activeAbility: {fileID: 0}
   currentTarget: {fileID: 0}
+  currentTargets: []
   attackTriggered: 0
   normalAdvance: 0
 --- !u!114 &5172446786497358768
