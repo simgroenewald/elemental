@@ -76,10 +76,10 @@ public class Ability
 
     public void ResetStates()
     {
+        isCoolingDown = false;
         if (abilityDetails.hasEffectTime)
         {
-            abilityEffectTime = abilityDetails.effectTime;
-            isEffectTime = true;
+            abilityEffectTime = 0;
         }
         if (abilityDetails.hasCountLimit)
         {
@@ -91,8 +91,18 @@ public class Ability
         }
     }
 
+    public void EffectTimeEnd()
+    {
+        isEffectTime = false;
+        isCoolingDown = true;
+    }
+
     public void AbilityTriggered()
     {
+        if (abilityDetails.hasEffectTime)
+        {
+            isEffectTime = true;
+        }
         if (isEffectTime)
         {
             return;

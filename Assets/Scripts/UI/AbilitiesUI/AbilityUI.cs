@@ -11,6 +11,8 @@ public class AbilityUI : MonoBehaviour
     [SerializeField] Sprite emptyIcon;
     [SerializeField] TMP_Text controlText;
     [SerializeField] Image border;
+    [SerializeField] Image cooldown;
+    [SerializeField] Image effectTime;
 
     public event Action<AbilityUI> OnAbilityClicked;
 
@@ -55,5 +57,25 @@ public class AbilityUI : MonoBehaviour
         if (pointerData.button == PointerEventData.InputButton.Left)
             OnAbilityClicked?.Invoke(this);
 
+    }
+
+    public void UpdateCooldown(float fillAmount)
+    {
+        cooldown.fillAmount = fillAmount;
+    }
+
+    public void ResetCooldown()
+    {
+        cooldown.fillAmount = 0;
+    }
+
+    public void UpdateEffectTime(float value)
+    {
+        effectTime.fillAmount = 1 - value;
+    }
+
+    public void ResetEffectTime()
+    {
+        effectTime.fillAmount = 0;
     }
 }
