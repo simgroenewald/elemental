@@ -103,4 +103,24 @@ public class AbilitySelectorUI : MonoBehaviour
         }
     }
 
+    public void UpdateCooldown(int index, float value)
+    {
+        abilityUIList[index].UpdateCooldown(value);
+    }
+
+    public void ResetCooldown(int index)
+    {
+        abilityUIList[index].ResetCooldown();
+    }
+
+    public void UpdateEffectTime(int index, float value)
+    {
+        abilityUIList[index].UpdateEffectTime(value);
+    }
+
+    public void ResetEffectTime(int index)
+    {
+        abilityUIList[index].ResetEffectTime();
+    }
+
 }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text;
+using UnityEditor.Playables;
 using UnityEngine;
 
 public class AbilityController : MonoBehaviour
@@ -43,6 +44,41 @@ public class AbilityController : MonoBehaviour
             }
         }
 
+    }
+
+    private void Update()
+    {
+        for (int i = 0; i < abilities.Count; i++)
+        {
+            if (abilities[i].isEffectTime)
+            {
+                abilities[i].abilityEffectTime += Time.deltaTime;
+
+                float ratio = abilities[i].abilityEffectTime / abilities[i].abilityDetails.effectTime;
+                abilitySelectorUI.UpdateEffectTime(i, ratio);
+
+                if (abilities[i].abilityEffectTime >= abilities[i].abilityDetails.effectTime)
+                {
+                    abilities[i].EffectTimeEnd();
+                    abilitySelectorUI.ResetEffectTime(i);
+                }
+            }
+            if (abilities[i].isCoolingDown)
+            {
+                abilities[i].abilityCooldownTime -= Time.deltaTime;
+
+                float ratio = abilities[i].abilityCooldownTime / abilities[i].abilityDetails.coolDownTime;
+                abilitySelectorUI.UpdateCooldown(i, ratio);
+
+                // Clamp to 0 and mark cooldown finished
+                if (abilities[i].abilityCooldownTime <= 0f)
+                {
+                    abilities[i].ResetStates();
+                    abilitySelectorUI.ResetCooldown(i);
+                }
+
+            }
+        }
     }
 
     private void UpdateAbilitiesUI()

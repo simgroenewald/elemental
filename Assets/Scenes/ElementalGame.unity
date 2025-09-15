@@ -1780,9 +1780,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.055555556
-    width: 0.33333334
-    height: 0.3333333
+    y: 0
+    width: 1
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -2925,7 +2925,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20116d861fc5d5642b882a5e432c9a18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  abilityUIPrefab: {fileID: 4864886253566352858, guid: 9cb0f876f9dd6e147833ae8f42f26f60, type: 3}
+  abilityUIPrefab: {fileID: 8384059683241395856, guid: 9cb0f876f9dd6e147833ae8f42f26f60, type: 3}
   abilities: {fileID: 1516698568}
   itemDetailsUI: {fileID: 1843689104400888206}
   actionKeys: {fileID: 11400000, guid: 35e2fa1f44f721842a51f83d4ac8d880, type: 2}
