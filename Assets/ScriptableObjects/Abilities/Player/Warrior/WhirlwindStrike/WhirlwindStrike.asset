@@ -36,8 +36,8 @@ MonoBehaviour:
   coolDownTime: 30
   hasEffectTime: 0
   effectTime: 0
-  hasCountLimit: 1
-  countLimit: 1
+  hasCountLimit: 0
+  countLimit: 0
   damage: 20
   isMagical: 1
   critChance: 0
@@ -56,4 +56,4 @@ MonoBehaviour:
   _critChance: 0
   _range: 2
   _manaCost: 30
-  triggerKey: 0
+  triggerKey: 119

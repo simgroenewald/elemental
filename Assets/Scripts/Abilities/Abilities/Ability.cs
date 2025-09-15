@@ -109,9 +109,9 @@ public class Ability
         }
         if (abilityDetails.hasCountLimit)
         {
+            counter++;
             if (counter < abilityDetails.countLimit)
             {
-                counter++;
                 return;
             }
         }
