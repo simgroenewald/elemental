@@ -156,13 +156,13 @@ public class Structure: MonoBehaviour
     {
         floorPositions = positions;
 
-        for (var x = bounds.position.x; x < bounds.position.x + bounds.size.x; x++)
+        for (var x = bounds.position.x; x <= bounds.position.x + bounds.size.x; x++)
         {
-            for (var y = bounds.position.y; y < bounds.position.y + bounds.size.y; y++)
+            for (var y = bounds.position.y; y <= bounds.position.y + bounds.size.y; y++)
             {
                 Vector2Int pos = new Vector2Int(x, y);
 
-                Vector2Int search = new Vector2Int(148, 89);
+                Vector2Int search = new Vector2Int(-9, 92);
 
                 if (pos == search)
                 {

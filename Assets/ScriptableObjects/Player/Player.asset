@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 013072dcf68ad7841b650cc0683acac6, type: 3}
   m_Name: Player
   m_EditorClassIdentifier: 
-  playerDetails: {fileID: 11400000, guid: 4bc16e0775d26c948be583ab6f3a5523, type: 2}
+  playerDetails: {fileID: 11400000, guid: 79bca5e24c0f8aa49af809e85db70d94, type: 2}
   playerName: Johnny

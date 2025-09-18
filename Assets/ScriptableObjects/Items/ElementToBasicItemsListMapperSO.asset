@@ -43,7 +43,7 @@ MonoBehaviour:
     - {fileID: 8380555777435959847, guid: 0d3d40953f989f5489b870e1523c4228, type: 3}
     - {fileID: 8380555777435959847, guid: cd9cec1e19597d0498247e07711e8339, type: 3}
     - {fileID: 8380555777435959847, guid: ee86bf0ecbd1cad4592002772e2c512d, type: 3}
-  - theme: 2
+  - theme: 0
     items:
     - {fileID: 2230946788211686962, guid: fdb31f184f5ae1645ad6990b85824e33, type: 3}
     - {fileID: 2230946788211686962, guid: 687cd963d424132408a7f88f960b387c, type: 3}

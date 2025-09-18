@@ -44,6 +44,7 @@ public class AnimateCharacter : MonoBehaviour
         character.animator.SetBool(Settings.isAttacking, false);
         character.animator.SetBool(Settings.isAttacking2, false);
         character.animator.SetBool(Settings.isHurting, false);
+        character.animator.SetBool(Settings.isDying, false);
     }
 
     private void HandleFaceLeftAnimation()
@@ -97,6 +98,12 @@ public class AnimateCharacter : MonoBehaviour
         if (!character.animator.GetBool(Settings.posTargetLeft) && !character.animator.GetBool(Settings.posTargetRight))
             character.animator.SetBool(Settings.posTargetRight, true);
         character.animator.SetBool(Settings.isDying, true);
+    }
+
+    public void ResetAnimation()
+    {
+        HandleIdleAnimation();
+        HandleFaceLeftAnimation();
     }
 
 }

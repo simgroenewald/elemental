@@ -80,7 +80,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
 
-        if (!player.characterState.isDying && !player.characterState.isDead){
+        if (!player.characterState.isDying && !player.characterState.isDead && !player.isMovementDisabled){
             MouseInput();
             KeyInput();
             //CastAbility();
@@ -117,10 +117,10 @@ public class PlayerController : MonoBehaviour
             else
             {
                 player.abilityActivationEvents.CallSetActiveAbilityEvent(player.baseAbility);
-                if (characterCombat.activeAbility.currentAbility.abilityDetails.isEnemyTargetable && targetEnemy)
+/*                if (characterCombat.activeAbility.currentAbility.abilityDetails.isEnemyTargetable && targetEnemy)
                 {
                     characterCombat.AttackEnemy(targetEnemy.enemy);
-                }
+                }*/
             }
         }
         if (Input.GetMouseButtonDown(0))
@@ -130,10 +130,10 @@ public class PlayerController : MonoBehaviour
 
             player.abilityActivationEvents.CallActivateStagedAbilityEvent();
 
-            if (player.activeAbility.stagedAbility.abilityDetails.isEnemyTargetable && targetEnemy)
+/*            if (player.activeAbility.stagedAbility.abilityDetails.isEnemyTargetable && targetEnemy)
             {
                 characterCombat.AttackEnemy(targetEnemy.enemy);
-            }
+            }*/
         }
     }
 
@@ -175,6 +175,12 @@ public class PlayerController : MonoBehaviour
         Vector3 worldPosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
         worldPosition.z = 0f; // Ensure z = 0 for 2D
         return worldPosition;
+    }
+
+
+    public void OnDeath()
+    {
+        GameManager.Instance.SetStateGameOver();
     }
 
 }

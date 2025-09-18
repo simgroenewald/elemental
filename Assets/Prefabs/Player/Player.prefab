@@ -680,6 +680,7 @@ MonoBehaviour:
   backpackController: {fileID: 0}
   itemSelectorController: {fileID: 0}
   abilityController: {fileID: 0}
+  isMovementDisabled: 0
 --- !u!114 &2090834104267613397
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -692,7 +693,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1db5a08bb8db30b478234c1393e0d9c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fillArea: {fileID: 954797879490224099}
 --- !u!114 &635509132678744631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1154,3 +1154,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slider: {fileID: 2605775571311175803}
   character: {fileID: 7082850648229560361}
+  fill: {fileID: 1480404736846873014}

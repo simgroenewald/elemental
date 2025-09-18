@@ -15,9 +15,15 @@ MonoBehaviour:
   characterName: Bat
   characterPrefab: {fileID: 512824244805761353, guid: 7f5e5dc6b56c4ff47966e1981af10ec7, type: 3}
   runtimeAnimatorController: {fileID: 9100000, guid: c5b65300b9d24cd40b3cd6df514fb36f, type: 2}
-  statsSO: {fileID: 11400000, guid: e94afcde8fe75bf46babd812d5352730, type: 2}
   miniMapIcon: {fileID: 0}
   baseAbility: {fileID: 11400000, guid: 366d5ddb15a16954aace191b8a662fae, type: 2}
   startingAbility: {fileID: 11400000, guid: 366d5ddb15a16954aace191b8a662fae, type: 2}
   abilityList:
   - {fileID: 11400000, guid: 366d5ddb15a16954aace191b8a662fae, type: 2}
+  isBoss: 0
+  isMiniBoss: 0
+  statsSO:
+  - {fileID: 11400000, guid: e94afcde8fe75bf46babd812d5352730, type: 2}
+  - {fileID: 11400000, guid: 2421c34a0e472d148a904a9e6725350e, type: 2}
+  - {fileID: 11400000, guid: 485c7b2f6d20fd14c974b980f36b72bd, type: 2}
+  - {fileID: 11400000, guid: 900b8a1351cee6a4aac8c9fbc97efd69, type: 2}

@@ -15,9 +15,15 @@ MonoBehaviour:
   characterName: Orc Warrior
   characterPrefab: {fileID: 327954915785254603, guid: f16faa576c1173343bc01c7be47b55a5, type: 3}
   runtimeAnimatorController: {fileID: 9100000, guid: 634dee606d6bd064693ec82f5bfb989b, type: 2}
-  statsSO: {fileID: 11400000, guid: 719d8dee900cf3c4795919789f13395f, type: 2}
   miniMapIcon: {fileID: 0}
   baseAbility: {fileID: 11400000, guid: dc738153c77bff14fa967fe84778a482, type: 2}
   startingAbility: {fileID: 11400000, guid: dc738153c77bff14fa967fe84778a482, type: 2}
   abilityList:
   - {fileID: 11400000, guid: dc738153c77bff14fa967fe84778a482, type: 2}
+  isBoss: 0
+  isMiniBoss: 0
+  statsSO:
+  - {fileID: 11400000, guid: 719d8dee900cf3c4795919789f13395f, type: 2}
+  - {fileID: 11400000, guid: 861cb6d97a44ea14991393cb7cc540cd, type: 2}
+  - {fileID: 11400000, guid: 0dfa8e659c411d340b25ee2aff9d2a40, type: 2}
+  - {fileID: 11400000, guid: f683501af1bae5b42b5ad4d498fd28f2, type: 2}

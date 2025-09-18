@@ -64,6 +64,7 @@ public class CharacterCombat : MonoBehaviour
     public void AttemptAttack(Character characterTarget, bool isAutoAttack, float lineOfSight)
     {
         currentTarget = characterTarget;
+        if (currentTarget.characterState.isDead || currentTarget.characterState.isDying) return;
         float distanceFromTarget = Vector2.Distance(characterTarget.transform.position, character.transform.position);
         // If player is in range and target is selected
         if (distanceFromTarget < activeAbility.currentAbility.abilityDetails._range && characterTarget != null && !characterState.isAttacking)

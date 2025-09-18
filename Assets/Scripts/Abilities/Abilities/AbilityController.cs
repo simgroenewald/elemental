@@ -1,11 +1,13 @@
 using System.Collections.Generic;
 using System.Text;
 using UnityEditor.Playables;
+using UnityEditor.Search;
 using UnityEngine;
 
 public class AbilityController : MonoBehaviour
 {
     public AbilitySelectorUI abilitySelectorUI;
+    public AbilityUnlockedUI abilityUnlockedUI;
     public ItemDetailsUI itemDetails;
     [SerializeField] private ActionKeysSO actionKeys;
     List<Ability> abilities;
@@ -17,33 +19,60 @@ public class AbilityController : MonoBehaviour
     {
         itemDetails = GameManager.Instance.itemDetailsUI;
         abilitySelectorUI = GameManager.Instance.abilitySelectorUI;
+        abilityUnlockedUI = GameManager.Instance.abilityUnlockedUI;
     }
 
     private void Start()
     {
         player = GameManager.Instance.player;
         abilities = player.abilityList;
-        ActivatePassiveAbilities();
         SetUpUI();
         UpdateAbilitiesUI();
+        abilityUnlockedUI.OnContinue += HandleContinue;
     }
 
-    private void ActivatePassiveAbilities()
+    private void ActivatePassiveAbility(Ability ability)
     {
-        foreach (var ability in abilities)
+        if (ability.abilityDetails.isPassive && !ability.locked)
         {
-            if (ability.abilityDetails.isPassive)
+            if (ability.abilityDetails.modifierData.Count > 0)
             {
-                if (ability.abilityDetails.modifierData.Count > 0)
+                foreach (var modifier in ability.abilityDetails.modifierData)
                 {
-                    foreach (var modifier in ability.abilityDetails.modifierData)
-                    {
-                        player.statModifierEvents.RaiseAddBasicStatEvent(modifier.statType, modifier.value, modifier.isPercentage);
-                    }
+                    player.statModifierEvents.RaiseAddBasicStatEvent(modifier.statType, modifier.value, modifier.isPercentage);
                 }
             }
         }
+    }
 
+    public void UnlockAbility(bool showUI, int index)
+    {
+        GameManager.Instance.newAbilityUnlocked = true;
+        if (index >= abilities.Count)
+        {
+            return;
+        }
+        Ability ability = abilities[index];
+
+        if (showUI)
+        {
+            string description = SetUpDescription(ability.abilityDetails);
+            abilityUnlockedUI.SetAbilityDetails(ability.abilityDetails.icon, ability.abilityDetails.name, description);
+        }
+
+        ability.locked = false;
+        abilitySelectorUI.UnlockAbility(index);
+        ActivatePassiveAbility(ability);
+    }
+
+    public void HandleContinue()
+    {
+        abilityUnlockedUI.ResetAbilityDetails();
+        GameManager.Instance.state = GameState.playing;
+        if (GameManager.Instance.previousState == GameState.bossRoom)
+        {
+            GameManager.Instance.SetStateCompleteLevel();
+        }
     }
 
     private void Update()
@@ -67,7 +96,7 @@ public class AbilityController : MonoBehaviour
             {
                 abilities[i].abilityCooldownTime -= Time.deltaTime;
 
-                float ratio = abilities[i].abilityCooldownTime / abilities[i].abilityDetails.coolDownTime;
+                float ratio = abilities[i].abilityCooldownTime / abilities[i].abilityDetails._coolDownTime;
                 abilitySelectorUI.UpdateCooldown(i, ratio);
 
                 // Clamp to 0 and mark cooldown finished
@@ -86,9 +115,12 @@ public class AbilityController : MonoBehaviour
         abilitySelectorUI.ResetAllAbilities();
         for (int i = 0; i < abilities.Count; i++)
         {
+            abilities[i].locked = true;
             abilities[i].abilityDetails.triggerKey = actionKeys.actionKeyBindings[i].key;
             abilitySelectorUI.UpdateAbilitySlot(i, abilities[i].abilityDetails.icon);
+            abilitySelectorUI.LockAbility(i);
         }
+        UnlockAbility(false, 0);
     }
 
     private void SetUpUI()
@@ -143,7 +175,7 @@ public class AbilityController : MonoBehaviour
         }
         if (abilityDetails.hasCooldown)
         {
-            sb.Append($"Cooldown Time: {abilityDetails.coolDownTime}s");
+            sb.Append($"Cooldown Time: {abilityDetails._coolDownTime}s");
             sb.AppendLine();
         }
         if (abilityDetails.manaCost > 0)

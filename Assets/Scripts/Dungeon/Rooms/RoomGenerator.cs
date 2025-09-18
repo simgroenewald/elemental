@@ -70,73 +70,92 @@ using UnityEngine.Tilemaps;
 
         private static void CleanUpRoomTiles(BoundsInt roomBounds, HashSet<Vector2Int> floorPositions)
         {
-
-            for (var x = roomBounds.position.x; x < roomBounds.position.x + roomBounds.size.x; x++)
+        for (var x = roomBounds.position.x; x < roomBounds.position.x + roomBounds.size.x; x++)
+        {
+            for (var y = roomBounds.position.y; y < roomBounds.position.y + roomBounds.size.y; y++)
             {
-                for (var y = roomBounds.position.y; y < roomBounds.position.y + roomBounds.size.y; y++)
+                Vector2Int pos = new Vector2Int(x, y);
+                if (pos == new Vector2Int(-9, 92))
                 {
-                    Vector2Int pos = new Vector2Int(x, y);
-                    Vector2Int up = pos + Vector2Int.up;
-                    Vector2Int down = pos + Vector2Int.down;
-                    Vector2Int left = pos + Vector2Int.left;
-                    Vector2Int right = pos + Vector2Int.right;
-                    Vector2Int dgUpLeft = pos + Vector2Int.up + Vector2Int.left;
-                    Vector2Int dgUpRight = pos + Vector2Int.up + Vector2Int.right;
-                    Vector2Int dgDownLeft = pos + Vector2Int.down + Vector2Int.left;
-                    Vector2Int dgDownRight = pos + Vector2Int.down + Vector2Int.right;
-
-                if (floorPositions.Contains(up) && floorPositions.Contains(down))
-                {
-                    floorPositions.Add(pos);
+                    Debug.Log("gotcha");
                 }
+                Vector2Int up = pos + Vector2Int.up;
+                Vector2Int down = pos + Vector2Int.down;
+                Vector2Int left = pos + Vector2Int.left;
+                Vector2Int right = pos + Vector2Int.right;
+                Vector2Int dgUpLeft = pos + Vector2Int.up + Vector2Int.left;
+                Vector2Int dgUpRight = pos + Vector2Int.up + Vector2Int.right;
+                Vector2Int dgDownLeft = pos + Vector2Int.down + Vector2Int.left;
+                Vector2Int dgDownRight = pos + Vector2Int.down + Vector2Int.right;
 
-                if (floorPositions.Contains(left) && floorPositions.Contains(right))
-                {
-                    floorPositions.Add(pos);
-                }
-
-                if (floorPositions.Contains(dgUpLeft) && floorPositions.Contains(dgDownRight) && !floorPositions.Contains(up) && !floorPositions.Contains(down) && !floorPositions.Contains(left) && !floorPositions.Contains(right) && !floorPositions.Contains(dgUpRight) && !floorPositions.Contains(dgDownLeft))
-                {
-                    floorPositions.Add(pos);
-                    floorPositions.Add(up);
-                    floorPositions.Add(down);
-                    floorPositions.Add(left);
-                    floorPositions.Add(right);
-                    floorPositions.Add(dgUpRight);
-                    floorPositions.Add(dgDownLeft);
-                }
-
-                if (floorPositions.Contains(dgUpRight) && floorPositions.Contains(dgDownLeft) && !floorPositions.Contains(up) && !floorPositions.Contains(down) && !floorPositions.Contains(left) && !floorPositions.Contains(right) && !floorPositions.Contains(dgUpLeft) && !floorPositions.Contains(dgDownRight))
-                {
-                    floorPositions.Add(pos);
-                    floorPositions.Add(up);
-                    floorPositions.Add(down);
-                    floorPositions.Add(left);
-                    floorPositions.Add(right);
-                    floorPositions.Add(dgUpLeft);
-                    floorPositions.Add(dgDownRight);
-                }
-
+            if (floorPositions.Contains(up) && floorPositions.Contains(down))
+            {
+                AddFloorPosition(roomBounds, floorPositions, pos);
             }
-            }
-            /*        foreach(var tile in roomTiles)
-                    {
-                        Vector2Int up = tile.position + Vector2Int.up;
-                        Vector2Int down = tile.position + Vector2Int.down;
-                        Vector2Int left = tile.position + Vector2Int.left;
-                        Vector2Int right = tile.position + Vector2Int.right;
 
-                        if (floorPositions.Contains(up) && floorPositions.Contains(down))
-                        {
-                            tile.tileType = TileType.Floor;
-                        }
+            if (floorPositions.Contains(left) && floorPositions.Contains(right))
+            {
+                    AddFloorPosition(roomBounds, floorPositions, pos);
+                }
 
-                        if (floorPositions.Contains(left) && floorPositions.Contains(right))
-                        {
-                            tile.tileType = TileType.Floor;
-                        }
-                    }*/
+            if (floorPositions.Contains(dgUpLeft) && floorPositions.Contains(dgDownRight) && !floorPositions.Contains(up) && !floorPositions.Contains(down) && !floorPositions.Contains(left) && !floorPositions.Contains(right) && !floorPositions.Contains(dgUpRight) && !floorPositions.Contains(dgDownLeft))
+            {
+                    AddFloorPosition(roomBounds, floorPositions, pos);
+                    AddFloorPosition(roomBounds, floorPositions, up);
+                    AddFloorPosition(roomBounds, floorPositions, down);
+                    AddFloorPosition(roomBounds, floorPositions, left);
+                    AddFloorPosition(roomBounds, floorPositions, right);
+                    AddFloorPosition(roomBounds, floorPositions, dgUpRight);
+                    AddFloorPosition(roomBounds, floorPositions, dgDownLeft);
+                }
+
+            if (floorPositions.Contains(dgUpRight) && floorPositions.Contains(dgDownLeft) && !floorPositions.Contains(up) && !floorPositions.Contains(down) && !floorPositions.Contains(left) && !floorPositions.Contains(right) && !floorPositions.Contains(dgUpLeft) && !floorPositions.Contains(dgDownRight))
+            {
+                    AddFloorPosition(roomBounds, floorPositions, pos);
+                    AddFloorPosition(roomBounds, floorPositions, up);
+                    AddFloorPosition(roomBounds, floorPositions, down);
+                    AddFloorPosition(roomBounds, floorPositions, left);
+                    AddFloorPosition(roomBounds, floorPositions, right);
+                    AddFloorPosition(roomBounds, floorPositions, dgUpLeft);
+                    AddFloorPosition(roomBounds, floorPositions, dgDownRight);
+                }
+
         }
+        }
+        /*        foreach(var tile in roomTiles)
+                {
+                    Vector2Int up = tile.position + Vector2Int.up;
+                    Vector2Int down = tile.position + Vector2Int.down;
+                    Vector2Int left = tile.position + Vector2Int.left;
+                    Vector2Int right = tile.position + Vector2Int.right;
+
+                    if (floorPositions.Contains(up) && floorPositions.Contains(down))
+                    {
+                        tile.tileType = TileType.Floor;
+                    }
+
+                    if (floorPositions.Contains(left) && floorPositions.Contains(right))
+                    {
+                        tile.tileType = TileType.Floor;
+                    }
+                }*/
+        }
+
+    private static void AddFloorPosition(BoundsInt roomBounds, HashSet<Vector2Int> floorPositions, Vector2Int newPos)
+    {
+        if (newPos == new Vector2Int(-9, 93))
+        {
+            Debug.Log("gotcha");
+        }
+        if (newPos.x > roomBounds.position.x + 1 && 
+            newPos.x < roomBounds.position.x -1 + roomBounds.size.x && 
+            newPos.y > roomBounds.position.y + 1 && 
+            newPos.y < roomBounds.position.y + roomBounds.size.y - 1)
+        {
+            floorPositions.Add(newPos);
+        }
+    }
+
 
         private int[,] GenerateCellularAutomataLayout(int width, int length)
         {

@@ -32,8 +32,8 @@ MonoBehaviour:
   isCastAtTarget: 0
   isSelfEffect: 1
   slowDownBuffer: 0
-  hasCooldown: 0
-  coolDownTime: 0
+  hasCooldown: 1
+  coolDownTime: 120
   hasEffectTime: 1
   effectTime: 10
   hasCountLimit: 0
@@ -60,7 +60,7 @@ MonoBehaviour:
   instantModifierData: []
   _damage: 10
   _projectileSpeed: 0
-  _coolDownTime: 0
+  _coolDownTime: 120
   _critChance: 40
   _range: 0.5
   _manaCost: 0

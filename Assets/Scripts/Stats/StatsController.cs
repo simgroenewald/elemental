@@ -17,6 +17,7 @@ public class StatsController : MonoBehaviour
         SetUpUI();
         UpdateStatsUI();
         stats.OnStatUpdated += UpdateStat;
+        stats.OnResetAllStats += UpdateStatsUI;
     }
 
     private void SetUpUI()

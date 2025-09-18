@@ -93,9 +93,7 @@ public class Character : MonoBehaviour, ITargetable
     protected virtual void Initialise(CharacterDetailSO characterDetails)
     {
         this.characterDetails = characterDetails;
-        stats.Initialise(characterDetails.statsSO);
         CreateCharacterStartingAbilities();
-
         CreateCharacterBaseAbility();
         SetCharacterHealth();
         SetCharacterMana();
@@ -141,7 +139,8 @@ public class Character : MonoBehaviour, ITargetable
 
     public void SetCharacterPosition(Vector2Int position, Grid grid)
     {
-        this.gameObject.transform.position = grid.CellToWorld((Vector3Int)position);
+        Vector3 newPos = grid.CellToWorld((Vector3Int)position);
+        this.gameObject.transform.position = newPos;
     }
 
     public GameObject GetGameObject()

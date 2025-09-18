@@ -5,4 +5,5 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "PlayerDetailsSO", menuName = "Scriptable Objects/PlayerDetailsSO")]
 public class PlayerDetailsSO : CharacterDetailSO
 {
+    [SerializeField] public StatsSO statsSO;
 }

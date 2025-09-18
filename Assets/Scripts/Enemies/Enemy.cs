@@ -22,6 +22,7 @@ public class Enemy : Character
 
     protected virtual void Initialise()
     {
+        stats.Initialise(enemyDetails.statsSO[GameManager.Instance.currentLevelIndex]);
         base.Initialise(enemyDetails);
     }
 

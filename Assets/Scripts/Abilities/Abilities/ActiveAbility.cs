@@ -52,6 +52,7 @@ public class ActiveAbility: MonoBehaviour
 
     private void OnStageAbility(AbilityActivationEvents abilityActivationEvent, AbilityEventArgs abilityEventArgs)
     {
+        if (!abilityEventArgs.ability.locked)
         StageAbility(abilityEventArgs.ability);
     }
 

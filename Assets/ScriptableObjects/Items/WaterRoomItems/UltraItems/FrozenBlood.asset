@@ -19,6 +19,7 @@ MonoBehaviour:
   <ItemImage>k__BackingField: {fileID: 21300000, guid: cdf402683f412e345a843606cd7fcd27, type: 3}
   <DefaultParametersList>k__BackingField: []
   <DropChance>k__BackingField: 10
+  <ItemPrefab>k__BackingField: {fileID: 2835015405039741986, guid: 50794994591237d48b27310a17150bd0, type: 3}
   healthLevelModifierData:
   - statModifier: {fileID: 11400000, guid: e897887250d90e94a838a62a233a59c3, type: 2}
     name: FrozenBlood
