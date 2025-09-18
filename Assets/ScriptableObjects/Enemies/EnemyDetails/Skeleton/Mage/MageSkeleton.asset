@@ -15,9 +15,15 @@ MonoBehaviour:
   characterName: Mage Skeleton
   characterPrefab: {fileID: 4167889123300124595, guid: 8044614bd42b89947a08e6fb5e571ee4, type: 3}
   runtimeAnimatorController: {fileID: 9100000, guid: 28bc3f7ec27f1984784ba3ffdd005644, type: 2}
-  statsSO: {fileID: 11400000, guid: 05de79010f2b41b4a88667bf25fac568, type: 2}
   miniMapIcon: {fileID: 0}
   baseAbility: {fileID: 11400000, guid: d0b3b46bfdd58414ea104ed4e3519fdf, type: 2}
   startingAbility: {fileID: 11400000, guid: d0b3b46bfdd58414ea104ed4e3519fdf, type: 2}
   abilityList:
   - {fileID: 11400000, guid: d0b3b46bfdd58414ea104ed4e3519fdf, type: 2}
+  isBoss: 0
+  isMiniBoss: 0
+  statsSO:
+  - {fileID: 11400000, guid: 05de79010f2b41b4a88667bf25fac568, type: 2}
+  - {fileID: 11400000, guid: 7486ce6368168404a8974bb73ce8043f, type: 2}
+  - {fileID: 11400000, guid: 5b5fa1ec7f93f0a41a82e0deaa6f70f3, type: 2}
+  - {fileID: 11400000, guid: 0923589490731ae4092b475494bd0af0, type: 2}

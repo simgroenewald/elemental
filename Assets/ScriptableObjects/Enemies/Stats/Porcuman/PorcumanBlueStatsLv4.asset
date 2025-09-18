@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 37879b29631af55408e02ac05fef0983, type: 3}
-  m_Name: RockmanStats
+  m_Name: PorcumanBlueStatsLv4
   m_EditorClassIdentifier: 
   stats:
   - type: 0
-    value: 100
+    value: 150
   - type: 2
-    value: 10
+    value: 8
   - type: 5
-    value: 0.8
+    value: 0.5
   - type: 6
-    value: 2
+    value: 1.8
   - type: 7
-    value: 2
+    value: 2.2
   - type: 4
-    value: 1
+    value: 1.5

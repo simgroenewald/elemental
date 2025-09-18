@@ -17,7 +17,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     [SerializeField] NavMeshSurface playerNavMeshSurface;
     [SerializeField] NavMeshSurface enemyNavMeshSurface;
     [SerializeField] DungeonNavigationDisplayController dungeonNavigationDisplay;
-    [SerializeField] int currentLevelIndex = 0;
+    public int currentLevelIndex = 0;
     private Dungeon dungeon;
     private DungeonRoom previousDungeonRoom;
     public DungeonRoom currentDungeonRoom;
@@ -29,6 +29,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     public BackpackUI backpackUI;
     public ItemDetailsUI itemDetailsUI;
     public AbilitySelectorUI abilitySelectorUI;
+    public AbilityUnlockedUI abilityUnlockedUI;
 
     private bool firstTimeLoad = false;
     public bool newAbilityUnlocked = false;

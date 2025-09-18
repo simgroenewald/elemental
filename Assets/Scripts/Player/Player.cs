@@ -39,8 +39,9 @@ public class Player : Character
     {
         this.playerDetails = playerDetails;
 
-        base.Initialise(playerDetails);
+        stats.Initialise(playerDetails.statsSO);
 
+        base.Initialise(playerDetails);
     }
 
     public void SetPlayerStartPosition(DungeonRoom room, Grid grid)

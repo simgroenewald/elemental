@@ -6,4 +6,5 @@ public class EnemyDetailsSO : CharacterDetailSO
 {
     public bool isBoss;
     public bool isMiniBoss;
+    public List<StatsSO> statsSO;
 }

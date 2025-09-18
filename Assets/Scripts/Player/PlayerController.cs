@@ -117,10 +117,10 @@ public class PlayerController : MonoBehaviour
             else
             {
                 player.abilityActivationEvents.CallSetActiveAbilityEvent(player.baseAbility);
-                if (characterCombat.activeAbility.currentAbility.abilityDetails.isEnemyTargetable && targetEnemy)
+/*                if (characterCombat.activeAbility.currentAbility.abilityDetails.isEnemyTargetable && targetEnemy)
                 {
                     characterCombat.AttackEnemy(targetEnemy.enemy);
-                }
+                }*/
             }
         }
         if (Input.GetMouseButtonDown(0))
@@ -130,10 +130,10 @@ public class PlayerController : MonoBehaviour
 
             player.abilityActivationEvents.CallActivateStagedAbilityEvent();
 
-            if (player.activeAbility.stagedAbility.abilityDetails.isEnemyTargetable && targetEnemy)
+/*            if (player.activeAbility.stagedAbility.abilityDetails.isEnemyTargetable && targetEnemy)
             {
                 characterCombat.AttackEnemy(targetEnemy.enemy);
-            }
+            }*/
         }
     }
 

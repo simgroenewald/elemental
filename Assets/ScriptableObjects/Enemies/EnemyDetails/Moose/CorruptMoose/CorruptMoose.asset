@@ -15,9 +15,15 @@ MonoBehaviour:
   characterName: Corrupt Moose
   characterPrefab: {fileID: 5822319915835916726, guid: 7e9339e4dfb0703409217bc219b5b556, type: 3}
   runtimeAnimatorController: {fileID: 9100000, guid: fa0f573ce4269714990b336c60ac2605, type: 2}
-  statsSO: {fileID: 11400000, guid: 04f2b3192f63cde42afb3f8d99c07d97, type: 2}
   miniMapIcon: {fileID: 0}
   baseAbility: {fileID: 11400000, guid: af9d6bd231f03a24fb8e4262f6ab6673, type: 2}
   startingAbility: {fileID: 11400000, guid: af9d6bd231f03a24fb8e4262f6ab6673, type: 2}
   abilityList:
   - {fileID: 11400000, guid: af9d6bd231f03a24fb8e4262f6ab6673, type: 2}
+  isBoss: 0
+  isMiniBoss: 0
+  statsSO:
+  - {fileID: 11400000, guid: 04f2b3192f63cde42afb3f8d99c07d97, type: 2}
+  - {fileID: 11400000, guid: acc84d7f4199f154590159fab03894d4, type: 2}
+  - {fileID: 11400000, guid: a0780529d93c63943a511d71923e8f14, type: 2}
+  - {fileID: 11400000, guid: e71ba1e6e67a73a4f8df5ec00edb3431, type: 2}

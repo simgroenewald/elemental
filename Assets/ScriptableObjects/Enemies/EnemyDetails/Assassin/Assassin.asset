@@ -15,9 +15,15 @@ MonoBehaviour:
   characterName: Assassin
   characterPrefab: {fileID: 5358808577364504236, guid: 69b73534cb30a5545b2e336f62fba1e8, type: 3}
   runtimeAnimatorController: {fileID: 9100000, guid: 2f658ccbd1f58b74ca8fa893733f68f2, type: 2}
-  statsSO: {fileID: 11400000, guid: 1a4b7f745d8e9fa4ba05d37338103c99, type: 2}
   miniMapIcon: {fileID: 0}
   baseAbility: {fileID: 11400000, guid: 31024f918212b9346b6d07007579217a, type: 2}
   startingAbility: {fileID: 11400000, guid: 31024f918212b9346b6d07007579217a, type: 2}
   abilityList:
   - {fileID: 11400000, guid: 31024f918212b9346b6d07007579217a, type: 2}
+  isBoss: 0
+  isMiniBoss: 0
+  statsSO:
+  - {fileID: 11400000, guid: 1a4b7f745d8e9fa4ba05d37338103c99, type: 2}
+  - {fileID: 11400000, guid: d30057477e79a94479e8dab321ea2070, type: 2}
+  - {fileID: 11400000, guid: 944bf8539c6d73d4eac3e71d3f6d37a6, type: 2}
+  - {fileID: 11400000, guid: 8f8c4a9a9f2566943ba442550042e1fa, type: 2}

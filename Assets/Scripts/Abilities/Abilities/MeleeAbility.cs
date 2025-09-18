@@ -39,7 +39,7 @@ public class MeleeAbility : MonoBehaviour
         {
             foreach (var characterTarget in characterCombat.currentTargets)
             {
-                if (characterTarget.characterState.isDead || characterTarget.characterState.isDying)
+                if (!characterTarget && characterTarget.characterState.isDead || characterTarget.characterState.isDying)
                 {
                     continue;
                 }

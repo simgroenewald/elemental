@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
+using static UnityEngine.Rendering.DebugUI;
 
 public class AbilitySelectorUI : MonoBehaviour
 {
@@ -121,6 +122,16 @@ public class AbilitySelectorUI : MonoBehaviour
     public void ResetEffectTime(int index)
     {
         abilityUIList[index].ResetEffectTime();
+    }
+
+    public void LockAbility(int index)
+    {
+        abilityUIList[index].LockAbility();
+    }
+
+    public void UnlockAbility (int index)
+    {
+        abilityUIList[index].UnlockAbility();
     }
 
 }

@@ -93,9 +93,7 @@ public class Character : MonoBehaviour, ITargetable
     protected virtual void Initialise(CharacterDetailSO characterDetails)
     {
         this.characterDetails = characterDetails;
-        stats.Initialise(characterDetails.statsSO);
         CreateCharacterStartingAbilities();
-
         CreateCharacterBaseAbility();
         SetCharacterHealth();
         SetCharacterMana();

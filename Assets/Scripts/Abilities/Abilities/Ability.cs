@@ -87,7 +87,7 @@ public class Ability
         }
         if (abilityDetails.hasCooldown)
         {
-            abilityCooldownTime = abilityDetails.coolDownTime;
+            abilityCooldownTime = abilityDetails._coolDownTime;
         }
     }
 
@@ -155,7 +155,7 @@ public class Ability
 
     internal void UpdateCooldown(float cooldown)
     {
-        if (abilityDetails._coolDownTime > 0)
+        if (cooldown > 0)
         {
             abilityDetails._coolDownTime = cooldown;
         } else

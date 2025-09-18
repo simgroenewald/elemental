@@ -13,6 +13,7 @@ public class AbilityUI : MonoBehaviour
     [SerializeField] Image border;
     [SerializeField] Image cooldown;
     [SerializeField] Image effectTime;
+    [SerializeField] Image lockedImage;
 
     public event Action<AbilityUI> OnAbilityClicked;
 
@@ -77,5 +78,15 @@ public class AbilityUI : MonoBehaviour
     public void ResetEffectTime()
     {
         effectTime.fillAmount = 0;
+    }
+
+    public void LockAbility()
+    {
+        lockedImage.gameObject.SetActive(true);
+    }
+
+    public void UnlockAbility()
+    {
+        lockedImage.gameObject.SetActive(false);
     }
 }
