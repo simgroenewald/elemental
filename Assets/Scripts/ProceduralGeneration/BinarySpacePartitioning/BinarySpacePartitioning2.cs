@@ -54,11 +54,11 @@ public static class BinarySpacePartitioning2
         }
 
         // Post-process and return merged room groups
-        List<HashSet<BoundsInt>> roomGroups = ShiftAndMerge(partitions, area);
+        List<HashSet<BoundsInt>> roomGroups = ShiftAndMerge(partitions, area, minWidth, minHeight);
         return roomGroups;
     }
 
-    private static List<HashSet<BoundsInt>> ShiftAndMerge(List<BoundsInt> partitions, BoundsInt area)
+    private static List<HashSet<BoundsInt>> ShiftAndMerge(List<BoundsInt> partitions, BoundsInt area, int minWidth, int minHeight)
     {
         // Shift, trim, and optionally merge on overlap
         List<BoundsInt> shiftedPartitions = new List<BoundsInt>();
@@ -68,10 +68,10 @@ public static class BinarySpacePartitioning2
             // Random shift (50/50 per direction)
             int dx = 0;
             int dy = 0;
-            if (Random.value < 0.5f) dx -= 4;
-            if (Random.value < 0.5f) dx += 4;
-            if (Random.value < 0.5f) dy -= 4;
-            if (Random.value < 0.5f) dy += 4;
+            if (Random.value < 0.5f) dx -= (int)(minWidth / 2.5);
+            if (Random.value < 0.5f) dx += (int)(minWidth / 2.5);
+            if (Random.value < 0.5f) dy -= (int)(minHeight / 2.5);
+            if (Random.value < 0.5f) dy += (int)(minHeight / 2.5);
 
             BoundsInt shifted = new BoundsInt(partition.min + new Vector3Int(dx, dy, 0), partition.size);
 
@@ -81,6 +81,16 @@ public static class BinarySpacePartitioning2
             if (shifted.size.x > 6 && shifted.size.y > 6)
             {
                 shiftedPartitions.Add(shifted);
+            }
+        }
+
+        // If none of the shifted partitions were big enough use the original partitions
+        if (shiftedPartitions.Count == 0 )
+        {
+            foreach (var partition in partitions)
+            {
+                BoundsInt newPartition = TrimToBounds(partition, area);
+                shiftedPartitions.Add(newPartition);
             }
         }
 

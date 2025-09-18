@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MediumRoom
   m_EditorClassIdentifier: 
   size: Medium
-  width: 60
-  height: 60
+  width: 35
+  height: 35
   subRoomMinWidth: 10
   subRoomMinHeight: 10

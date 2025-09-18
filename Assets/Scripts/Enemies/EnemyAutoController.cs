@@ -81,11 +81,6 @@ public class EnemyAutoController : MonoBehaviour
                 }
             }
         }
-        if (enemy.characterState.isDead)
-        {
-            GameEventManager.Instance.targetEvents.RaiseOnRemoveAim();
-            OnDeath();
-        }
     }
 
     private void OnReduceHealth(float health)
@@ -108,8 +103,12 @@ public class EnemyAutoController : MonoBehaviour
         }
     }
 
-    private void OnDeath()
+    public void OnDeath()
     {
+        enemy.characterState.Die();
+
+        GameEventManager.Instance.targetEvents.RaiseOnRemoveAim();
+
         if (!itemDropped)
         {
             itemDropped = true;
@@ -126,9 +125,10 @@ public class EnemyAutoController : MonoBehaviour
                 GameEventManager.Instance.itemEvents.RaiseDropItemEvent(enemy.room, enemy.transform);
             }
         }
-            
+
         Destroy(gameObject);
 
+        //GameManager.Instance.SetStateCompleteLevel();
     }
 
 

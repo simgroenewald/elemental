@@ -250,7 +250,7 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
                     bridgeStartWFC.PopulateOutputCells();
                     WaveFunctionCollapse2 bridgeEndWFC = new WaveFunctionCollapse2(connector.bridgeEnd.structure.structureTiles, horizontalBridgeProperties, 1);
                     bridgeEndWFC.PopulateOutputCells();
-                    WaveFunctionCollapse2 platformWFC = new WaveFunctionCollapse2(connector.bridgeEnd.structure.structureTiles, platformProperties, 1);
+                    WaveFunctionCollapse2 platformWFC = new WaveFunctionCollapse2(connector.platform.structure.structureTiles, platformProperties, 1);
                     platformWFC.PopulateOutputCells();
                 }
             }
@@ -303,6 +303,23 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
         foreach (var room in dungeonRooms)
         {
             StaticEventHandler.CallOpenRoomDoors(room);
+        }
+    }
+
+    public void Clear()
+    {
+        for (int i = dungeonParent.transform.childCount - 1; i >= 0; i--)
+        {
+            Transform child = dungeonParent.transform.GetChild(i);
+
+            if (child.name != "Grid" && child.name != "Environment")
+            {
+                Destroy(child.gameObject);
+            }
+        }
+        if (dungeonLayers)
+        {
+            dungeonLayers.collisionTilemap.ClearAllTiles();
         }
     }
 }

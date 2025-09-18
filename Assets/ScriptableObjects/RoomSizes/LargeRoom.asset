@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: LargeRoom
   m_EditorClassIdentifier: 
   size: Large
-  width: 80
-  height: 80
+  width: 50
+  height: 50
   subRoomMinWidth: 10
   subRoomMinHeight: 10

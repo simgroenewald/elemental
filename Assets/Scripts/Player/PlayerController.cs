@@ -80,7 +80,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
 
-        if (!player.characterState.isDying && !player.characterState.isDead){
+        if (!player.characterState.isDying && !player.characterState.isDead && !player.isMovementDisabled){
             MouseInput();
             KeyInput();
             //CastAbility();
@@ -175,6 +175,12 @@ public class PlayerController : MonoBehaviour
         Vector3 worldPosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
         worldPosition.z = 0f; // Ensure z = 0 for 2D
         return worldPosition;
+    }
+
+
+    public void OnDeath()
+    {
+        GameManager.Instance.SetStateGameOver();
     }
 
 }

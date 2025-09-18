@@ -16,6 +16,11 @@ public class CharacterState : MonoBehaviour
         SetToIdle();
     }
 
+    public void Reset()
+    {
+        SetToIdle();
+    }
+
     private void ResetStates()
     {
         isMoving = false;

@@ -15,7 +15,6 @@ public class Health: MonoBehaviour
     private float regenBucket;
     private float flatBonusHealthRegen;
     private float percentageBonusHealthRegen;
-    [SerializeField] private GameObject fillArea;
 
     private void Awake()
     {
@@ -158,7 +157,6 @@ public class Health: MonoBehaviour
         if (newHealth <= 0 && !character.characterState.isDying)
         {
             currentHealth = 0;
-            Destroy(fillArea);
             // Death
             character.characterState.SetToDying();
             character.movementEvents.RaiseOnDying();

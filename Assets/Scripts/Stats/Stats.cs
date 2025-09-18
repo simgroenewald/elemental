@@ -18,8 +18,10 @@ public class Stats : MonoBehaviour
     public List<HealthLevelModifier> healthLevelModifierList = new List<HealthLevelModifier>();
     public List<AttackCountModifier> attackCountModifierList = new List<AttackCountModifier>();
     internal Action<StatType, float> OnStatUpdated;
+    internal Action OnResetAllStats;
     Mana mana;
     Health health;
+    StatsSO statsSO;
 
     private Dictionary<StatType, Dictionary<string, List<float>>> statModifierData = new Dictionary<StatType, Dictionary<string, List<float>>>();
 
@@ -53,7 +55,7 @@ public class Stats : MonoBehaviour
 
     public void Initialise(StatsSO statsSO)
     {
-
+        this.statsSO = statsSO;
         foreach (StatType stat in Enum.GetValues(typeof(StatType)))
         {
             originalStatsDict[stat] = 0;
@@ -452,6 +454,12 @@ public class Stats : MonoBehaviour
     public Dictionary<StatType, float> GetAllDisplayStats()
     {
         return displayStatsDict;
+    }
+
+    public void ResetStats()
+    {
+        Initialise(statsSO);
+        OnResetAllStats?.Invoke();
     }
 
 }

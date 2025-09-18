@@ -162,6 +162,15 @@ public class BackpackSO : ScriptableObject
             PublishBackpackUpdated();
         }
     }
+
+    public void ResetBackpack()
+    {
+        for (int i = 0; i < Size; i++)
+        {
+            backpackItems[i] = BackpackItem.GetEmptyItem();
+        }
+        PublishBackpackUpdated();
+    }
 }
 
 [Serializable]

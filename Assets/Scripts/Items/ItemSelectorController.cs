@@ -48,6 +48,11 @@ public class ItemSelectorController : MonoBehaviour
         GameManager.Instance.player.itemCollectionSystem.AddItemToBackpack(selectedItem);
         itemSelectorUI.Hide();
         GameManager.Instance.state = GameState.playing;
+        if (GameManager.Instance.previousState == GameState.bossRoom)
+        {
+            GameManager.Instance.newAbilityUnlocked = true;
+            GameManager.Instance.SetStateCompleteLevel();
+        } 
     }
 
     private void HandleItemSelected(int index)

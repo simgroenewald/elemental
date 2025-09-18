@@ -9,5 +9,6 @@ public enum GameState
     levelPassed,
     won,
     lost,
-    restart
+    restart,
+    none
 }

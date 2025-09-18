@@ -20,7 +20,7 @@ public class MeleeAbility : MonoBehaviour
 
     private void MeleeAttack()
     {
-        if (characterCombat.currentTarget.characterState.isDead || characterCombat.currentTarget.characterState.isDying)
+        if (!characterCombat.currentTarget || characterCombat.currentTarget.characterState.isDead || characterCombat.currentTarget.characterState.isDying)
         {
             EndAttack();
             return;

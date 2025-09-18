@@ -141,7 +141,8 @@ public class Character : MonoBehaviour, ITargetable
 
     public void SetCharacterPosition(Vector2Int position, Grid grid)
     {
-        this.gameObject.transform.position = grid.CellToWorld((Vector3Int)position);
+        Vector3 newPos = grid.CellToWorld((Vector3Int)position);
+        this.gameObject.transform.position = newPos;
     }
 
     public GameObject GetGameObject()

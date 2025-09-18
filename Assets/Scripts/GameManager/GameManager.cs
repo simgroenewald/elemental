@@ -1,9 +1,13 @@
 using NavMeshPlus.Components;
 using NUnit.Framework;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 [DisallowMultipleComponent]
 public class GameManager : SingletonMonobehaviour<GameManager>
@@ -26,7 +30,14 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     public ItemDetailsUI itemDetailsUI;
     public AbilitySelectorUI abilitySelectorUI;
 
+    private bool firstTimeLoad = false;
+    public bool newAbilityUnlocked = false;
+
+    [SerializeField]private CanvasGroup fadeScreen;
+    [SerializeField]private TextMeshProUGUI screenMessage;
+
     public GameState state;
+    public GameState previousState;
 
     private void OnEnable()
     {
@@ -45,7 +56,11 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
         base.Awake();
 
-        completeDungeonRooms = new List<DungeonRoom>();
+        firstTimeLoad = true;
+        newAbilityUnlocked = false;
+
+        fadeScreen.alpha = 1f;
+        screenMessage.SetText("");
 
         GameResources gameResources = GameResources.Instance;
 
@@ -73,6 +88,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     void Start()
     {
         state = GameState.start;
+        previousState = GameState.none;
     }
 
     // Update is called once per frame
@@ -85,19 +101,124 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     {
         switch (state)
         {
+            case GameState.restart:
+                RestartGame();
+                break;
             case GameState.start:
-                StartGameLevel();
+                if (previousState != GameState.start)
+                {
+                    StartCoroutine(StartGameLevel());
+                }
                 break;
             case GameState.playing:
                 HandlePlaying();
                 break;
             case GameState.bossRoom:
-                StartBossFight();
+                if (previousState != GameState.bossRoom)
+                {
+                    StartCoroutine(StartBossFight());
+                }
                 break;
             case GameState.paused:
                 PauseGame();
                 break;
+            case GameState.levelPassed:
+                StartCoroutine(CompleteLevel());
+                break;
+            case GameState.won:
+                if (previousState != GameState.won)
+                {
+                    StartCoroutine(GameWon());
+                }
+                break;
+            case GameState.lost:
+                if (previousState != GameState.lost)
+                {
+                    StopAllCoroutines();
+                    StartCoroutine(GameLost());
+                }
+                break;
+
         }
+    }
+
+    private IEnumerator GameWon()
+    {
+
+        previousState = GameState.won;
+        yield return StartCoroutine(Fade(0f, 1f, 2f, Color.black));
+
+        player.DisablePlayer();
+        dungeonBuilder.Clear();
+        playerNavMeshSurface.RemoveData();
+
+        yield return StartCoroutine(DisplayMessageRoutine("WELL DONE! \n\n You have completed the dungeon!", 3f));
+        yield return StartCoroutine(DisplayMessageRoutine("You scored 1000", 4f));
+        yield return StartCoroutine(DisplayMessageRoutine("Press enter to restart the game", 0f));
+
+        while (!Input.GetKeyDown(KeyCode.Return))
+        {
+            state = GameState.restart;
+            yield break;
+        }
+    }
+
+
+    private IEnumerator GameLost()
+    {
+        previousState = GameState.lost;
+
+        yield return StartCoroutine(Fade(0f, 1f, 1f, Color.black));
+
+        player.DisablePlayer();
+        dungeonBuilder.Clear();
+        playerNavMeshSurface.RemoveData();
+
+        yield return StartCoroutine(DisplayMessageRoutine("You were defeated", 3f));
+        yield return StartCoroutine(DisplayMessageRoutine("Press enter to restart the game", 0f));
+
+        while (!Input.GetKeyDown(KeyCode.Return))
+        {
+            state = GameState.restart;
+            yield break;
+        }
+
+    }
+
+    private IEnumerator CompleteLevel()
+    {
+        if (currentLevelIndex == levels.Count - 1)
+        {
+            state = GameState.won;
+            yield break;
+        }
+
+        previousState = GameState.levelPassed;
+        state = GameState.playing;
+        yield return StartCoroutine(Fade(0f, 1f, 1f, new Color(0f, 0f, 0f, 0.4f)));
+        yield return StartCoroutine(DisplayMessageRoutine("WELL DONE! \n\n You have survived this dungeon", 5f));
+        yield return StartCoroutine(DisplayMessageRoutine("Collect any remaining items then \n\npress enter to continue to the next dungeon", 5f));
+        yield return StartCoroutine(Fade(1f, 0f, 1f, new Color(0f, 0f, 0f, 0.4f)));
+
+        while (!Input.GetKeyDown(KeyCode.Return))
+        {
+            yield return null;
+        }
+
+        yield return null;
+
+        currentLevelIndex++;
+        state = GameState.start;
+    }
+
+    private void RestartGame()
+    {
+        firstTimeLoad = true;
+        newAbilityUnlocked = false;
+        player.backpackController.backpack.ResetBackpack();
+        player.stats.ResetStats();
+        currentLevelIndex = 0;
+        state = GameState.start;
     }
 
     private void PauseGame()
@@ -110,14 +231,46 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         Time.timeScale = 1f;
     }
 
-    private void StartBossFight()
+    private IEnumerator StartBossFight()
     {
+        previousState = GameState.bossRoom;
+        state = GameState.playing;
+        yield return StartCoroutine(Fade(0f, 1f, 1f, new Color(0f, 0f, 0f, 0.4f)));
+        yield return StartCoroutine(DisplayMessageRoutine("The boss room had been unlocked.", 5f));
+        yield return StartCoroutine(DisplayMessageRoutine("Find and defeat the boss\n\nto unlock your next ability", 5f));
+        yield return StartCoroutine(Fade(1f, 0f, 1f, new Color(0f, 0f, 0f, 0.4f)));
+
+        while (!Input.GetKeyDown(KeyCode.Return))
+        {
+            yield return null;
+        }
+
+        state = GameState.playing;
     }
 
-    private void StartGameLevel()
+    private IEnumerator StartGameLevel()
     {
+        previousState = GameState.start;
+
+        if (!firstTimeLoad)
+        {
+            DisplayDungeonLevelText();
+            StartCoroutine(Fade(0f, 1f, 2f, Color.black));
+            yield return new WaitForSeconds(2f);
+        } else
+        {
+            DisplayDungeonLevelText();
+            yield return new WaitForSeconds(2f);
+        }
+
+        player.DisablePlayer();
+        dungeonBuilder.Clear();
+        playerNavMeshSurface.RemoveData();
+
         dungeon = dungeonBuilder.GenerateDungeon(6776, levels[currentLevelIndex]);
         //dungeon = dungeonBuilder.GenerateDungeon(8543, levels[currentLevelIndex]);
+
+        completeDungeonRooms = new List<DungeonRoom>();
         dungeonNavigationDisplay.Initialise(dungeon.dungeonRooms, dungeon.connectors);
         GameResources.Instance.dungeon = dungeon;
 
@@ -125,9 +278,8 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         startRoom.CompleteRoom();
         StaticEventHandler.CallRoomEnteredEvent(startRoom);
 
-
         player.SetPlayerStartPosition(startRoom, startRoom.structure.tilemapLayers.grid);
-        
+
         // Initialize enemies BEFORE NavMesh baking so they're included as obstacles
         foreach (var room in dungeon.dungeonRooms)
         {
@@ -140,11 +292,81 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
         // Now bake NavMesh with all agents present
         playerNavMeshSurface.BuildNavMesh();
-        enemyNavMeshSurface.BuildNavMesh();
+        player.EnablePlayer();
 
         cameraController.SetupCamera(player.transform.position, dungeon.dungeonLayers.collisionTilemap);
 
+        StartCoroutine(Fade(1f, 0f, 2f, Color.black));
+        screenMessage.SetText("");
+        firstTimeLoad = false;
+        newAbilityUnlocked = false;
+
         state = GameState.playing;
+    }
+
+    public void SetStateCompleteLevel()
+    {
+        // Check that all enemies are defeted and all rooms are complete
+        if (completeDungeonRooms.Count == dungeon.dungeonRooms.Count && newAbilityUnlocked && state != GameState.levelPassed)
+        {
+            state = GameState.levelPassed;
+        }
+    }
+
+    public void SetStateGameOver()
+    {
+        if (state != GameState.lost)
+        {
+            state = GameState.lost;
+        }
+    }
+
+    private void DisplayDungeonLevelText()
+    {
+        string messageText = "LOADING LEVEL " + (currentLevelIndex + 1).ToString();
+        screenMessage.SetText(messageText);
+    }
+
+    private IEnumerator DisplayMessageRoutine(string text, float displaySeconds)
+    {
+        screenMessage.SetText(text);
+
+        if (displaySeconds > 0f)
+        {
+            float timer = displaySeconds;
+
+            while (timer > 0f && !Input.GetKeyDown(KeyCode.Return))
+            {
+                timer -= Time.deltaTime;
+                yield return null;
+            }
+        }
+        else
+        {
+            while (!Input.GetKeyDown(KeyCode.Return))
+            {
+                yield return null;
+            }
+        }
+
+        yield return null;
+
+        screenMessage.SetText("");
+    }
+
+    public IEnumerator Fade(float startFadeAlpha, float targetFadeAlpha, float fadeSeconds, Color backgroundColour)
+    {
+        Image image = fadeScreen.GetComponent<Image>();
+        image.color = backgroundColour;
+
+        float time = 0;
+
+        while (time < fadeSeconds)
+        {
+            time += Time.deltaTime;
+            fadeScreen.alpha = Mathf.Lerp(startFadeAlpha, targetFadeAlpha, time / fadeSeconds);
+            yield return null;
+        }
     }
 
     internal Player GetPlayer()
@@ -180,7 +402,11 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     public void AppendCompletedDungeonRooms(DungeonRoom room)
     {
         completeDungeonRooms.Add(room);
-        if (completeDungeonRooms.Count >= dungeon.dungeonRooms.Count - 1)
+        if (previousState == GameState.bossRoom)
+        {
+            SetStateCompleteLevel();
+        }
+        if (completeDungeonRooms.Count == dungeon.dungeonRooms.Count - 1)
         {
             state = GameState.bossRoom;
         }
