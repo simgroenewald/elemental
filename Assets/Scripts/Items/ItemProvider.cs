@@ -9,6 +9,7 @@ using UnityEngine;
 public class ItemProvider : MonoBehaviour
 {
     [SerializeField] List<GameObject> globalItems;
+    [SerializeField] List<ItemDropChance> itemDropChances;
     [SerializeField] private ElementToItemsListMapperSO elementToBasicItemsListMapperSO;
     [SerializeField] private ElementToItemsListMapperSO elementToUltraItemsListMapperSO;
     private Dictionary<ElementTheme, List<GameObject>> elementToBasicItemsListDict;
@@ -20,6 +21,7 @@ public class ItemProvider : MonoBehaviour
     private void Start()
     {
         GameEventManager.Instance.itemEvents.OnItemDrop += SpawnItem;
+        GameEventManager.Instance.itemEvents.OnSelectedItemDrop += SpawnSelectedItem;
         GameEventManager.Instance.itemEvents.OnShowMinibossItems += ShowMinibossItemChoices;
         GameEventManager.Instance.itemEvents.OnShowBossItems += ShowBossItemChoices;
 
@@ -47,9 +49,9 @@ public class ItemProvider : MonoBehaviour
 
         int chanceToBeat;
         if (room.isComplete) 
-            chanceToBeat = 40;
+            chanceToBeat = itemDropChances[GameManager.Instance.currentLevelIndex].normalRoomCompleteItemDropChance;
         else 
-            chanceToBeat = 20;
+            chanceToBeat = itemDropChances[GameManager.Instance.currentLevelIndex].normalRoomItemDropChance;
 
         // 20% chance to drop a basic item
         if (basicItemDrop < chanceToBeat)
@@ -61,8 +63,13 @@ public class ItemProvider : MonoBehaviour
             }
         }
 
-        GameObject globalItem = GetItemFromDropChances(globalItems);
-        return globalItem;
+        if (basicItemDrop < itemDropChances[GameManager.Instance.currentLevelIndex].normalRoomConsumableDropChance)
+        {
+            GameObject globalItem = GetItemFromDropChances(globalItems);
+            return globalItem;
+        }
+
+        return null;
     }
 
     private GameObject GetItemFromDropChances(List<GameObject> itemList)
@@ -104,6 +111,18 @@ public class ItemProvider : MonoBehaviour
         itemObjectToDrop.transform.rotation = Quaternion.identity;
     }
 
+    public void SpawnSelectedItem(DungeonRoom room, Item itemToDrop)
+    {
+        if (itemToDrop == null)
+            return;
+
+        Item item = itemToDrop.GetComponent<Item>();
+        Instantiate(itemToDrop, GameManager.Instance.player.transform.position, Quaternion.identity, room.transform);
+        itemToDrop.name = item.name;
+        // Ensure proper 2D rotation (no X or Y rotation)
+        itemToDrop.transform.rotation = Quaternion.identity;
+    }
+
     private void ShowMinibossItemChoices(DungeonRoom room)
     {
         List<ItemSO> itemChoices = new List<ItemSO>();
@@ -113,7 +132,7 @@ public class ItemProvider : MonoBehaviour
             int ultraItemDrop = UnityEngine.Random.Range(1, 101);
 
             // 20% chance to drop a ultra item
-            if (ultraItemDrop < 20)
+            if (ultraItemDrop < itemDropChances[GameManager.Instance.currentLevelIndex].miniBossRoomUltraDropChance)
             {
                 GameObject ultraItemGO = elementToUltraItemsListDict[room.theme][UnityEngine.Random.Range(0, elementToUltraItemsListDict[room.theme].Count)];
                 if (!ultraItemGO) continue;
@@ -177,4 +196,14 @@ public class ItemProvider : MonoBehaviour
         }
         return false;
     }
+}
+
+
+[Serializable]
+public class ItemDropChance
+{
+    public int normalRoomConsumableDropChance;
+    public int normalRoomItemDropChance;
+    public int normalRoomCompleteItemDropChance;
+    public int miniBossRoomUltraDropChance;
 }

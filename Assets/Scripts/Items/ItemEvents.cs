@@ -8,9 +8,16 @@ public class ItemEvents : ScriptableObject
     public Action<DungeonRoom> OnShowBossItems { get; internal set; }
 
     public event Action<DungeonRoom, Transform> OnItemDrop;
+
+    public event Action<DungeonRoom, Item> OnSelectedItemDrop;
     public void RaiseDropItemEvent(DungeonRoom room, Transform transform)
     {
         OnItemDrop?.Invoke(room, transform);
+    }
+
+    public void RaiseDropSelectedItemEvent(DungeonRoom room, Item item)
+    {
+        OnSelectedItemDrop?.Invoke(room, item);
     }
 
     public void RaiseShowMinibossItemsEvent(DungeonRoom room)

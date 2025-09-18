@@ -19,6 +19,7 @@ MonoBehaviour:
   <ItemImage>k__BackingField: {fileID: 21300000, guid: 2d97cd5b8e01f9542a35f5c618a273c2, type: 3}
   <DefaultParametersList>k__BackingField: []
   <DropChance>k__BackingField: 30
+  <ItemPrefab>k__BackingField: {fileID: 7558568975215875783, guid: b621a8f7779128c48ae7b77f5248dfcc, type: 3}
   healthLevelModifierData:
   - statModifier: {fileID: 11400000, guid: e897887250d90e94a838a62a233a59c3, type: 2}
     name: FloodedCore

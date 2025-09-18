@@ -45,14 +45,15 @@ public class ItemSelectorController : MonoBehaviour
 
     public void HandleContinue()
     {
-        GameManager.Instance.player.itemCollectionSystem.AddItemToBackpack(selectedItem);
+        GameEventManager.Instance.itemEvents.RaiseDropSelectedItemEvent(GameManager.Instance.currentDungeonRoom, selectedItem.ItemPrefab.GetComponent<Item>());
         itemSelectorUI.Hide();
-        GameManager.Instance.state = GameState.playing;
         if (GameManager.Instance.previousState == GameState.bossRoom)
         {
-            GameManager.Instance.newAbilityUnlocked = true;
-            GameManager.Instance.SetStateCompleteLevel();
-        } 
+            GameManager.Instance.player.abilityController.UnlockAbility(true, GameManager.Instance.currentLevelIndex + 1);
+        } else
+        {
+            GameManager.Instance.state = GameState.playing;
+        }
     }
 
     private void HandleItemSelected(int index)

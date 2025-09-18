@@ -19,6 +19,7 @@ MonoBehaviour:
   <ItemImage>k__BackingField: {fileID: 21300000, guid: 0c394ff1bbec7a5448853f950ab76e66, type: 3}
   <DefaultParametersList>k__BackingField: []
   <DropChance>k__BackingField: 10
+  <ItemPrefab>k__BackingField: {fileID: 5741699695136386420, guid: 5c3bea262f9bad64eabef44e31756a0c, type: 3}
   modifiersData:
   - statModifier: {fileID: 11400000, guid: 468695d91446670468eccf0ae434f3e4, type: 2}
     statType: 11

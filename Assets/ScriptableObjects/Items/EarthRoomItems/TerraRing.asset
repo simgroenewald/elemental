@@ -19,6 +19,7 @@ MonoBehaviour:
   <ItemImage>k__BackingField: {fileID: 21300000, guid: a4172fa32de925643a9edf84f6d559a3, type: 3}
   <DefaultParametersList>k__BackingField: []
   <DropChance>k__BackingField: 50
+  <ItemPrefab>k__BackingField: {fileID: 9099083601187242315, guid: cd9cec1e19597d0498247e07711e8339, type: 3}
   healthLevelModifierData:
   - statModifier: {fileID: 11400000, guid: e897887250d90e94a838a62a233a59c3, type: 2}
     name: TerraRing
