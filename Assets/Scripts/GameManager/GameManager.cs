@@ -41,6 +41,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     public ItemDetailsUI itemDetailsUI;
     public AbilitySelectorUI abilitySelectorUI;
     public AbilityUnlockedUI abilityUnlockedUI;
+    public GameObject pauseMenuUI;
     [SerializeField] private CanvasGroup fadeScreen;
     [SerializeField] private TextMeshProUGUI screenMessage;
 
@@ -238,11 +239,36 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     private void PauseGame()
     {
         Time.timeScale = 0f;
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            HidePauseGameMenu();
+        }
     }
 
     private void HandlePlaying()
     {
         Time.timeScale = 1f;
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            DisplayPauseGameMenu();
+        }
+    }
+
+    public void DisplayPauseGameMenu()
+    {
+        if (state != GameState.paused)
+        {
+            pauseMenuUI.SetActive(true);
+            state = GameState.paused;
+        }
+    }
+
+    public void HidePauseGameMenu()
+    {
+        pauseMenuUI.SetActive(false);
+        state = GameState.playing;
     }
 
     private IEnumerator StartBossFight()
@@ -258,6 +284,11 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         while (!Input.GetKeyDown(KeyCode.Return))
         {
             yield return null;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            DisplayPauseGameMenu();
         }
 
         state = GameState.playing;
