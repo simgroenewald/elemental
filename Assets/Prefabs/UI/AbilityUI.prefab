@@ -418,6 +418,7 @@ MonoBehaviour:
   cooldown: {fileID: 2816329462251413547}
   effectTime: {fileID: 1215937185853769728}
   lockedImage: {fileID: 1267200745269283788}
+  clickSound: {fileID: 11400000, guid: 6adb2bec97d83bd449d8e01d1fb5bc2f, type: 2}
 --- !u!1 &3254173116357483992
 GameObject:
   m_ObjectHideFlags: 0

@@ -131,12 +131,14 @@ public class CastAbility : MonoBehaviour
     {
         if (activeAbility.currentAbility.abilityDetails.isMultiTarget)
         {
+            SoundEffectManager.Instance.PlaySoundEffect(activeAbility.currentAbility.abilityDetails.abilityAttackSound);
             foreach (var projectile in projectiles)
             {
                 projectile.Cast();
             }      
         } else
         {
+            SoundEffectManager.Instance.PlaySoundEffect(activeAbility.currentAbility.abilityDetails.abilityAttackSound);
             projectile.Cast();
         }
 

@@ -10,6 +10,7 @@ public class AbilityUnlockedUI : MonoBehaviour
     [SerializeField] TMP_Text abilityName;
     [SerializeField] TMP_Text abilityDescription;
     [SerializeField] GameObject abilityDetailsGO;
+    [SerializeField] SoundEffectSO clickSound;
 
     public event Action OnContinue;
 
@@ -38,6 +39,7 @@ public class AbilityUnlockedUI : MonoBehaviour
     }
     public void OnButtonClick()
     {
+        SoundEffectManager.Instance.PlaySoundEffect(clickSound);
         OnContinue?.Invoke();
     }
 }

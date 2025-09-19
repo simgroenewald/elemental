@@ -78,6 +78,11 @@ MonoBehaviour:
   preferredEnemyPathTile: {fileID: 11400000, guid: 639e354fdc58ed74cb577ddfc653666b, type: 2}
   cameraController: {fileID: 0}
   structureTemplatePrefab: {fileID: 2761768881728766154, guid: 105e34c90d3c6fc4f8c08e7c9f4bcf45, type: 3}
+  soundsMasterMixerGroup: {fileID: -4734643798044506327, guid: 53f63f6535dd39e4195f28af15d4667e, type: 2}
+  musicMasterMixerGroup: {fileID: -7206380732494497733, guid: 53f63f6535dd39e4195f28af15d4667e, type: 2}
+  musicOnFullSnapshot: {fileID: 24500006, guid: 53f63f6535dd39e4195f28af15d4667e, type: 2}
+  musicLowSnapshot: {fileID: 8893122114324796974, guid: 53f63f6535dd39e4195f28af15d4667e, type: 2}
+  musicOffSnapshot: {fileID: -3084740370723268673, guid: 53f63f6535dd39e4195f28af15d4667e, type: 2}
   dimmedMaterial: {fileID: 2100000, guid: 6bb7bd03f1d62b74591475475ea344fc, type: 2}
   litMaterial: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   variableLitShader: {fileID: -6465566751694194690, guid: 5849265a5eb365c46b72c3c2e3835a84, type: 3}

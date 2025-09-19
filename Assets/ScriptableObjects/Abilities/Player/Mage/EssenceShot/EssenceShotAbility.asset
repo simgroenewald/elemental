@@ -17,6 +17,8 @@ MonoBehaviour:
   icon: {fileID: 0}
   attackAnimationTrigger: isAttacking
   range: 3
+  abilityAttackSound: {fileID: 11400000, guid: ebd45bf1fc1146b46976dfd2b0f50ad7, type: 2}
+  abilityActivateSound: {fileID: 0}
   isBaseAbility: 1
   isAutoAttack: 1
   isEnemyTargetable: 1

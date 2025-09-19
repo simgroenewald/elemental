@@ -118,10 +118,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemIcon: {fileID: 569791852360974744}
-  emptyIcon: {fileID: 0}
   itemName: {fileID: 7907642495502059824}
   itemDescription: {fileID: 5484042622808560003}
   border: {fileID: 6755099691575097768}
+  hoverSound: {fileID: 11400000, guid: 353001654af517d41897f10c7a4abe09, type: 2}
+  clickSound: {fileID: 11400000, guid: 6adb2bec97d83bd449d8e01d1fb5bc2f, type: 2}
 --- !u!114 &7017714580031414029
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,6 +143,22 @@ MonoBehaviour:
         - m_Target: {fileID: 7054535389664202046}
           m_TargetAssemblyTypeName: ItemOptionUI, Assembly-CSharp
           m_MethodName: OnPointerClick
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 7054535389664202046}
+          m_TargetAssemblyTypeName: ItemOptionUI, Assembly-CSharp
+          m_MethodName: OnPointerHover
           m_Mode: 0
           m_Arguments:
             m_ObjectArgument: {fileID: 0}

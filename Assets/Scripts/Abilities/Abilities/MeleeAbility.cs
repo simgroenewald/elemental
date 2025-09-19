@@ -26,6 +26,7 @@ public class MeleeAbility : MonoBehaviour
             return;
         }
         float distanceFromTarget = Vector2.Distance(characterCombat.currentTarget.transform.position, transform.position);
+        SoundEffectManager.Instance.PlaySoundEffect(activeAbility.currentAbility.abilityDetails.abilityAttackSound);
         if (distanceFromTarget <= activeAbility.currentAbility.abilityDetails._range)
         {
             DealDamage(characterCombat.currentTarget);
@@ -37,6 +38,7 @@ public class MeleeAbility : MonoBehaviour
     {
         if (activeAbility.currentAbility.abilityDetails.isMultiTarget)
         {
+            SoundEffectManager.Instance.PlaySoundEffect(activeAbility.currentAbility.abilityDetails.abilityAttackSound);
             foreach (var characterTarget in characterCombat.currentTargets)
             {
                 if (!characterTarget && characterTarget.characterState.isDead || characterTarget.characterState.isDying)

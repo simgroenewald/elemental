@@ -427,7 +427,7 @@ SortingGroup:
   m_Enabled: 1
   m_SortingLayerID: -653709415
   m_SortingLayer: 7
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_SortAtRoot: 0
 --- !u!212 &3175993449239557789
 SpriteRenderer:
@@ -905,6 +905,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   backpack: {fileID: 11400000, guid: 9ecb956214851bc418c9982e8d2b043b, type: 2}
+  itemCollectSound: {fileID: 11400000, guid: 4ab07462f854fa04386ba0c81c09bd1c, type: 2}
 --- !u!114 &8045889658126868808
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1047,8 +1048,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   abilitySelectorUI: {fileID: 0}
+  abilityUnlockedUI: {fileID: 0}
   itemDetails: {fileID: 0}
   actionKeys: {fileID: 11400000, guid: 35e2fa1f44f721842a51f83d4ac8d880, type: 2}
+  abilityUnlockedSound: {fileID: 11400000, guid: c67e23104011a99419ebbc0a598e94e7, type: 2}
   initialItems: []
 --- !u!1 &8774360104910127703
 GameObject:

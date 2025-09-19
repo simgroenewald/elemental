@@ -14,6 +14,7 @@ public class AbilityUI : MonoBehaviour
     [SerializeField] Image cooldown;
     [SerializeField] Image effectTime;
     [SerializeField] Image lockedImage;
+    [SerializeField] SoundEffectSO clickSound;
 
     public event Action<AbilityUI> OnAbilityClicked;
 
@@ -56,8 +57,10 @@ public class AbilityUI : MonoBehaviour
     {
         PointerEventData pointerData = (PointerEventData)data;
         if (pointerData.button == PointerEventData.InputButton.Left)
+        {
+            SoundEffectManager.Instance.PlaySoundEffect(clickSound);
             OnAbilityClicked?.Invoke(this);
-
+        }
     }
 
     public void UpdateCooldown(float fillAmount)

@@ -7,6 +7,7 @@ public class ItemSelectorUI : MonoBehaviour
     [SerializeField] private ItemOptionUI itemOptionPrefab;
     [SerializeField] private GameObject itemSelectorGO;
     [SerializeField] private RectTransform optionsPanel;
+    [SerializeField] SoundEffectSO clickSound;
     List<ItemOptionUI> itemOptions = new List<ItemOptionUI>();
 
     public event Action<int> OnItemSelected;
@@ -79,6 +80,7 @@ public class ItemSelectorUI : MonoBehaviour
 
     public void OnButtonClick()
     {
+        SoundEffectManager.Instance.PlaySoundEffect(clickSound);
         OnContinue?.Invoke();
     }
 }

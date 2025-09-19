@@ -10,6 +10,7 @@ public class AbilityController : MonoBehaviour
     public AbilityUnlockedUI abilityUnlockedUI;
     public ItemDetailsUI itemDetails;
     [SerializeField] private ActionKeysSO actionKeys;
+    [SerializeField] private SoundEffectSO abilityUnlockedSound;
     List<Ability> abilities;
     private Player player;
 
@@ -56,6 +57,7 @@ public class AbilityController : MonoBehaviour
 
         if (showUI)
         {
+            SoundEffectManager.Instance.PlaySoundEffect(abilityUnlockedSound);
             string description = SetUpDescription(ability.abilityDetails);
             abilityUnlockedUI.SetAbilityDetails(ability.abilityDetails.icon, ability.abilityDetails.name, description);
         }

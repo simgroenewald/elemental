@@ -10,6 +10,8 @@ public class AbilityDetailsSO : ScriptableObject
     public Sprite icon;
     public string attackAnimationTrigger;
     public float range;
+    public SoundEffectSO abilityAttackSound;
+    public SoundEffectSO abilityActivateSound;
 
     [Header("Base Ability")]
     public bool isBaseAbility;

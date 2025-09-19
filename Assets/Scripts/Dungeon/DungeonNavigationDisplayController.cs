@@ -59,6 +59,14 @@ public class DungeonNavigationDisplayController : MonoBehaviour
 
     public void NewRoomEntered(DungeonRoom dungeonRoom)
     {
+        if (dungeonRoom.roomType == RoomType.Boss || dungeonRoom.roomType == RoomType.MiniBoss)
+        {
+            MusicManager.Instance.PlayMusic(dungeonRoom.battleMusic, 0.2f, 2f);
+        }
+        else
+        {
+            MusicManager.Instance.PlayMusic(dungeonRoom.ambientMusic, 0.2f, 2f);
+        }
         GameManager.Instance.SetCurrentRoom(dungeonRoom);
 
         foreach (var room in allRooms)
@@ -80,6 +88,7 @@ public class DungeonNavigationDisplayController : MonoBehaviour
     public void CompleteRoom(RoomChangedEventArgs roomChangedEventArgs)
     {
         DungeonRoom dungeonRoom = roomChangedEventArgs.room;
+        MusicManager.Instance.PlayMusic(dungeonRoom.ambientMusic, 0.2f, 2f);
         GameManager.Instance.AppendCompletedDungeonRooms(dungeonRoom);
         List<DungeonRoom> completedRooms = GameManager.Instance.GetCompletedDungeonRooms();
         foreach (var completedRoom in completedRooms)
