@@ -686,6 +686,7 @@ MonoBehaviour:
   controlText: {fileID: 4591125357983441826}
   quantityText: {fileID: 322749418748657107}
   border: {fileID: 6324175404564044515}
+  clickSound: {fileID: 11400000, guid: 6adb2bec97d83bd449d8e01d1fb5bc2f, type: 2}
 --- !u!114 &1095960194970104878
 MonoBehaviour:
   m_ObjectHideFlags: 0

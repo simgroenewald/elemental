@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.Tilemaps;
 
 public class GameResources : MonoBehaviour
@@ -23,6 +24,7 @@ public class GameResources : MonoBehaviour
     public TileBase preferredEnemyPathTile;
     public CameraController cameraController;
     public GameObject structureTemplatePrefab;
+    public AudioMixerGroup soundsMasterMixerGroup;
 
     // Materials - Fading rooms
     public Material dimmedMaterial;

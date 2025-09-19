@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class ItemCollectionSystem : MonoBehaviour
 {
-    [SerializeField]
-    private BackpackSO backpack;
+    [SerializeField] private BackpackSO backpack;
+    [SerializeField] private SoundEffectSO itemCollectSound;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -12,6 +12,7 @@ public class ItemCollectionSystem : MonoBehaviour
         // Prevent double-trigger by locking & disabling colliders immediately
         if (!item.TryBeginPickup()) return;
 
+        SoundEffectManager.Instance.PlaySoundEffect(itemCollectSound);
         AddItemToBackpack(item);
     }
 

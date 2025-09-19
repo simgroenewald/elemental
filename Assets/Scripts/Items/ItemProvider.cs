@@ -10,12 +10,14 @@ public class ItemProvider : MonoBehaviour
 {
     [SerializeField] List<GameObject> globalItems;
     [SerializeField] List<ItemDropChance> itemDropChances;
+    [SerializeField] SoundEffectSO itemDropSound;
     [SerializeField] private ElementToItemsListMapperSO elementToBasicItemsListMapperSO;
     [SerializeField] private ElementToItemsListMapperSO elementToUltraItemsListMapperSO;
     private Dictionary<ElementTheme, List<GameObject>> elementToBasicItemsListDict;
     private Dictionary<ElementTheme, List<GameObject>> elementToUltraItemsListDict;
     private Player player;
     private BackpackSO backpack;
+
 
 
     private void Start()
@@ -109,6 +111,7 @@ public class ItemProvider : MonoBehaviour
         itemObjectToDrop.name = item.name;
         // Ensure proper 2D rotation (no X or Y rotation)
         itemObjectToDrop.transform.rotation = Quaternion.identity;
+        SoundEffectManager.Instance.PlaySoundEffect(itemDropSound);
     }
 
     public void SpawnSelectedItem(DungeonRoom room, Item itemToDrop)
@@ -121,6 +124,7 @@ public class ItemProvider : MonoBehaviour
         itemToDrop.name = item.name;
         // Ensure proper 2D rotation (no X or Y rotation)
         itemToDrop.transform.rotation = Quaternion.identity;
+        SoundEffectManager.Instance.PlaySoundEffect(itemDropSound);
     }
 
     private void ShowMinibossItemChoices(DungeonRoom room)

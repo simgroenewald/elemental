@@ -11,6 +11,8 @@ public class ItemOptionUI : MonoBehaviour
     [SerializeField] TMP_Text itemName;
     [SerializeField] TMP_Text itemDescription;
     [SerializeField] Image border;
+    [SerializeField] SoundEffectSO hoverSound;
+    [SerializeField] SoundEffectSO clickSound;
 
     public event Action<ItemOptionUI> OnItemClicked;
 
@@ -47,8 +49,14 @@ public class ItemOptionUI : MonoBehaviour
         PointerEventData pointerData = (PointerEventData)data;
         if (pointerData.button == PointerEventData.InputButton.Left)
         {
+            SoundEffectManager.Instance.PlaySoundEffect(clickSound);
             OnItemClicked?.Invoke(this);
         }
+    }
+
+    public void OnPointerHover(BaseEventData data)
+    {
+        SoundEffectManager.Instance.PlaySoundEffect(hoverSound);
     }
 
 }

@@ -17,6 +17,8 @@ MonoBehaviour:
   icon: {fileID: 0}
   attackAnimationTrigger: isAttacking
   range: 1.5
+  abilityAttackSound: {fileID: 11400000, guid: 0a5ed9483c85b6d48b6bd00c6a9efd53, type: 2}
+  abilityActivateSound: {fileID: 0}
   isBaseAbility: 1
   isAutoAttack: 1
   isEnemyTargetable: 1
@@ -29,9 +31,12 @@ MonoBehaviour:
   isAreaOfEffect: 0
   isHurt: 0
   isCastAtTarget: 0
+  isSelfEffect: 0
   slowDownBuffer: 0
   hasCooldown: 0
   coolDownTime: 0
+  hasEffectTime: 0
+  effectTime: 0
   hasCountLimit: 0
   countLimit: 0
   damage: 15
@@ -45,6 +50,7 @@ MonoBehaviour:
   abilityProjectileDetails: {fileID: 0}
   projectileSpeed: 0
   modifierData: []
+  instantModifierData: []
   _damage: 15
   _projectileSpeed: 0
   _coolDownTime: 0

@@ -49,6 +49,10 @@ public class Ability
         }
         if (abilityDetails.manaCost > currentMana)
         {
+            if (SoundEffectManager.Instance.deniedSound)
+            {
+                SoundEffectManager.Instance.PlaySoundEffect(SoundEffectManager.Instance.deniedSound);
+            }
             return false;
         }
         return true;
@@ -59,19 +63,16 @@ public class Ability
         if (CanUse(character.mana.GetCurrentMana()))
         {
             AbilityTriggered();
+
             character.manaEvents.RaiseReduceManaEvent(abilityDetails.manaCost);
+
             return true;
         }
         else
         {
-            DisplayManaError();
             return false;
-        }
-    }
 
-    private void DisplayManaError()
-    {
-        UnityEngine.Debug.Log("Not Enoug mana");
+        }
     }
 
     public void ResetStates()
@@ -99,6 +100,10 @@ public class Ability
 
     public void AbilityTriggered()
     {
+        if (abilityDetails.abilityActivateSound)
+        {
+            SoundEffectManager.Instance.PlaySoundEffect(abilityDetails.abilityActivateSound);
+        }
         if (abilityDetails.hasEffectTime)
         {
             isEffectTime = true;
@@ -204,6 +209,7 @@ public class Ability
         int rndNumber = UnityEngine.Random.Range(1, 101);
         if (rndNumber <= chance)
         {
+            SoundEffectManager.Instance.PlaySoundEffect(SoundEffectManager.Instance.criticalAttackSound);
             int critDamagePercent = UnityEngine.Random.Range(50, 200);
             float critDamage = damage * (critDamagePercent / 100f);
             damage = damage + critDamage;

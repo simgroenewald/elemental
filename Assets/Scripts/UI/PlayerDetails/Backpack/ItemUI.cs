@@ -13,6 +13,7 @@ public class ItemUI : MonoBehaviour
     [SerializeField] TMP_Text controlText;
     [SerializeField] TMP_Text quantityText;
     [SerializeField] Image border;
+    [SerializeField] SoundEffectSO clickSound;
 
     public event Action<ItemUI>
         OnItemClicked,
@@ -82,10 +83,13 @@ public class ItemUI : MonoBehaviour
         PointerEventData pointerData = (PointerEventData)data;
         if (pointerData.button == PointerEventData.InputButton.Right)
         {
+            SoundEffectManager.Instance.PlaySoundEffect(clickSound);
             OnRightMouseBtnClick?.Invoke(this);
         } else
         {
+            SoundEffectManager.Instance.PlaySoundEffect(clickSound);
             OnItemClicked?.Invoke(this);
         }
     }
+
 }

@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 442dfdcde6c953a4bab50c2c0d914324, type: 3}
+  m_Name: FlutterSE
+  m_EditorClassIdentifier: 
+  soundEffectName: FlutterSE
+  soundPrefab: {fileID: 4405443540290785747, guid: db4155ea1d2c2a04495b0bc32619e0ad, type: 3}
+  soundEffectClip: {fileID: 8300000, guid: fa233d93473598a499cc216af67102ea, type: 3}
+  soundEffectPitchRandomVariationMin: 0.8
+  soundEffectPitchRandomVariationMax: 1.2
+  soundEffectVolume: 1

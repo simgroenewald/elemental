@@ -12,33 +12,45 @@ using UnityEngine.UI;
 [DisallowMultipleComponent]
 public class GameManager : SingletonMonobehaviour<GameManager>
 {
+
+    [Header("Main Game Components")]
+    private PlayerDetailsSO playerDetails;
+    public Player player;
+    private CameraController cameraController;
+    private Dungeon dungeon;
+
+    [Header("Levels")]
     [SerializeField] List<LevelSettingSO> levels;
+    public int currentLevelIndex = 0;
+
+    [Header("Dungeon Builders")]
     [SerializeField] DungeonBuilder dungeonBuilder;
     [SerializeField] NavMeshSurface playerNavMeshSurface;
     [SerializeField] NavMeshSurface enemyNavMeshSurface;
     [SerializeField] DungeonNavigationDisplayController dungeonNavigationDisplay;
-    public int currentLevelIndex = 0;
-    private Dungeon dungeon;
-    private DungeonRoom previousDungeonRoom;
+
+    [Header("States")]
+    public GameState state;
+    public GameState previousState;
     public DungeonRoom currentDungeonRoom;
+    private DungeonRoom previousDungeonRoom;
     private List<DungeonRoom> completeDungeonRooms;
-    private PlayerDetailsSO playerDetails;
-    public Player player;
-    private CameraController cameraController;
-    // Main UI Components
+
+    [Header("UI Components")]
     public BackpackUI backpackUI;
     public ItemDetailsUI itemDetailsUI;
     public AbilitySelectorUI abilitySelectorUI;
     public AbilityUnlockedUI abilityUnlockedUI;
+    [SerializeField] private CanvasGroup fadeScreen;
+    [SerializeField] private TextMeshProUGUI screenMessage;
 
+    [Header("Abaility Bools")]
     private bool firstTimeLoad = false;
     public bool newAbilityUnlocked = false;
 
-    [SerializeField]private CanvasGroup fadeScreen;
-    [SerializeField]private TextMeshProUGUI screenMessage;
-
-    public GameState state;
-    public GameState previousState;
+    [Header("State Sounds")]
+    [SerializeField] SoundEffectSO bossRoomUnlockedSound;
+    [SerializeField] SoundEffectSO levelCompleteSound;
 
     private void OnEnable()
     {
@@ -196,6 +208,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
         previousState = GameState.levelPassed;
         state = GameState.playing;
+        SoundEffectManager.Instance.PlaySoundEffect(levelCompleteSound);
         yield return StartCoroutine(Fade(0f, 1f, 1f, new Color(0f, 0f, 0f, 0.4f)));
         yield return StartCoroutine(DisplayMessageRoutine("WELL DONE! \n\n You have survived this dungeon", 5f));
         yield return StartCoroutine(DisplayMessageRoutine("Collect any remaining items then \n\npress enter to continue to the next dungeon", 5f));
@@ -236,8 +249,9 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     {
         previousState = GameState.bossRoom;
         state = GameState.playing;
+        SoundEffectManager.Instance.PlaySoundEffect(bossRoomUnlockedSound);
         yield return StartCoroutine(Fade(0f, 1f, 1f, new Color(0f, 0f, 0f, 0.4f)));
-        yield return StartCoroutine(DisplayMessageRoutine("The boss room had been unlocked.", 5f));
+        yield return StartCoroutine(DisplayMessageRoutine("The boss room has been unlocked.", 5f));
         yield return StartCoroutine(DisplayMessageRoutine("Find and defeat the boss\n\nto unlock your next ability", 5f));
         yield return StartCoroutine(Fade(1f, 0f, 1f, new Color(0f, 0f, 0f, 0.4f)));
 
