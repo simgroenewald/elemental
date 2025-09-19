@@ -41,6 +41,8 @@ public class DungeonRoom : MonoBehaviour
     public bool isComplete = false;
     public bool previouslyEntered = false;
     private bool allEnemiesDefeated = false;
+    public MusicTrackSO ambientMusic;
+    public MusicTrackSO battleMusic;
 
     public bool IsLeaf => children.Count == 0;
     public bool CanHaveMoreChildren => children.Count < 3;

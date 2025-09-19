@@ -25,4 +25,9 @@ public static class Settings
 
     public const float useTargetAngleDistance = 0.5f;
 
+    // Audio
+    public const float musicFadeOutTime = 0.5f;
+    public const float musicFadeInTime = 0.5f;
+
+
 }

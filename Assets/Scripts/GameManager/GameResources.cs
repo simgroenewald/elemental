@@ -25,6 +25,10 @@ public class GameResources : MonoBehaviour
     public CameraController cameraController;
     public GameObject structureTemplatePrefab;
     public AudioMixerGroup soundsMasterMixerGroup;
+    public AudioMixerGroup musicMasterMixerGroup;
+    public AudioMixerSnapshot musicOnFullSnapshot;
+    public AudioMixerSnapshot musicLowSnapshot;
+    public AudioMixerSnapshot musicOffSnapshot;
 
     // Materials - Fading rooms
     public Material dimmedMaterial;
