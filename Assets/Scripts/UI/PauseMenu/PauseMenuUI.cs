@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseMenuUI : MonoBehaviour
 {
@@ -19,6 +20,11 @@ public class PauseMenuUI : MonoBehaviour
     {
         // Initialise UI text
         StartCoroutine(InitializeUI());
+    }
+
+    private void OnDisable()
+    {
+        Time.timeScale = 1f;
     }
 
     private IEnumerator InitializeUI()
@@ -53,5 +59,11 @@ public class PauseMenuUI : MonoBehaviour
     {
         SoundEffectManager.Instance.DecreaseSoundsVolume();
         soundsLevelText.SetText(SoundEffectManager.Instance.soundsVolume.ToString());
+    }
+
+    // Quit and load main menu - linked to from pause menu UI button
+    public void LoadMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 }

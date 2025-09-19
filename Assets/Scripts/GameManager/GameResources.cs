@@ -1,3 +1,5 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Tilemaps;
@@ -29,6 +31,10 @@ public class GameResources : MonoBehaviour
     public AudioMixerSnapshot musicOnFullSnapshot;
     public AudioMixerSnapshot musicLowSnapshot;
     public AudioMixerSnapshot musicOffSnapshot;
+    public MusicTrackSO mainMenuMusic;
+
+    public GameObject characterOptionPrefab;
+    public List<PlayerDetailsSO> characterOptions;
 
     // Materials - Fading rooms
     public Material dimmedMaterial;
