@@ -250,6 +250,7 @@ public class DungeonLayoutGenerator : MonoBehaviour
             RoomSizeSO fixedSize = GetFixedSize(room.roomType);
             if (fixedSize.width > 0)
             {
+                room.roomSize = fixedSize;
                 room.bounds.size = new Vector3Int(fixedSize.width, fixedSize.height, 0);
                 room.subRoomMinWidth = fixedSize.subRoomMinWidth;
                 room.subRoomMinHeight = fixedSize.subRoomMinHeight;
@@ -285,6 +286,7 @@ public class DungeonLayoutGenerator : MonoBehaviour
 
         for (int i = 0; i < normalRooms.Count && i < sizePool.Count; i++)
         {
+            normalRooms[i].roomSize = sizePool[i];
             normalRooms[i].bounds.size = new Vector3Int(sizePool[i].width, sizePool[i].height, 0);
             normalRooms[i].subRoomMinWidth = sizePool[i].subRoomMinWidth;
             normalRooms[i].subRoomMinHeight = sizePool[i].subRoomMinHeight;

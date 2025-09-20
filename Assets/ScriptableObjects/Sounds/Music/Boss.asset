@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicName: Boss
   musicClip: {fileID: 8300000, guid: 31bcf4c64efcc6744af30a406d7624d3, type: 3}
-  musicVolume: 1
+  musicVolume: 0.7

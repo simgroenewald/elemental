@@ -9,6 +9,7 @@ public class DungeonRoom : MonoBehaviour
 
     public Structure structure = new Structure();
     public RoomType roomType;
+    public RoomSizeSO roomSize;
     public ElementTheme theme;
     public Vector2 nodeGraphPosition;
     public GameObject roomObject;
@@ -91,83 +92,10 @@ public class DungeonRoom : MonoBehaviour
         }
     }
 
-    public void SpawnRoomEnemies(int enemyCount)
+    public void SpawnRoomEnemies()
     {
-        SimpleEnemyInitialiser enemyInitialiser = GetComponent<SimpleEnemyInitialiser>();
-        Transform roomTransform = GetComponent<Transform>();
-        List<GameObject> enemyPrefabs = enemyInitialiser.GetEnemyPrefabs(theme);
-
-        foreach (var enemyPrefab in enemyPrefabs)
-        {
-            for (int i = 0; i < enemyCount; i++)
-            {
-
-                Vector2Int spawnPosition2D = GetValidSpawnPosition();
-
-                // Convert tile position to world position
-                Vector3 worldPosition = this.structure.tilemapLayers.grid.CellToWorld((Vector3Int)spawnPosition2D);
-                // Center the position in the tile
-                worldPosition += this.structure.tilemapLayers.grid.cellSize * 0.16f;
-
-                // Instantiate enemy
-                GameObject enemyGO = Instantiate(enemyPrefab, worldPosition, Quaternion.identity, roomTransform);
-
-                enemyGO.name = $"Enemy_{i + 1}";
-
-                // Ensure proper 2D rotation (no X or Y rotation)
-                enemyGO.transform.rotation = Quaternion.identity;
-
-                Enemy enemy = enemyGO.GetComponent<Enemy>();
-                enemy.SetRoom(this);
-                enemies.Add(enemy);
-            }
-        }
-
-        if (roomType == RoomType.MiniBoss)
-        {
-            GameObject miniBossPrefab = enemyInitialiser.GetMiniBossPrefab(theme);
-            Vector2Int spawnPosition2D = GetValidSpawnPosition();
-
-            // Convert tile position to world position
-            Vector3 worldPosition = this.structure.tilemapLayers.grid.CellToWorld((Vector3Int)spawnPosition2D);
-            // Center the position in the tile
-            worldPosition += this.structure.tilemapLayers.grid.cellSize * 0.16f;
-
-            // Instantiate enemy
-            GameObject miniBossGO = Instantiate(miniBossPrefab, worldPosition, Quaternion.identity, roomTransform);
-
-            miniBossGO.name = $"Miniboss";
-
-            // Ensure proper 2D rotation (no X or Y rotation)
-            miniBossGO.transform.rotation = Quaternion.identity;
-
-            Enemy miniBoss = miniBossGO.GetComponent<Enemy>();
-            miniBoss.SetRoom(this);
-            enemies.Add(miniBoss);
-        }
-
-        if (roomType == RoomType.Boss)
-        {
-            GameObject bossPrefab = enemyInitialiser.GetBossPrefab(theme);
-            Vector2Int spawnPosition2D = GetValidSpawnPosition();
-
-            // Convert tile position to world position
-            Vector3 worldPosition = this.structure.tilemapLayers.grid.CellToWorld((Vector3Int)spawnPosition2D);
-            // Center the position in the tile
-            worldPosition += this.structure.tilemapLayers.grid.cellSize * 0.16f;
-
-            // Instantiate enemy
-            GameObject bossGO = Instantiate(bossPrefab, worldPosition, Quaternion.identity, roomTransform);
-
-            bossGO.name = $"Boss";
-
-            // Ensure proper 2D rotation (no X or Y rotation)
-            bossGO.transform.rotation = Quaternion.identity;
-
-            Enemy boss = bossGO.GetComponent<Enemy>();
-            boss.SetRoom(this);
-            enemies.Add(boss);
-        }
+        EnemyProvider enemyProvider = GetComponent<EnemyProvider>();
+        enemies = enemyProvider.SpawnEnemies(this, this.transform);
     }
 
 /*     public void SpawnRoomItems(int itemCount)
