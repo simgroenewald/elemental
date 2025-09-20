@@ -153,8 +153,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 90, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 46.9, y: -8.7095}
+  m_SizeDelta: {x: 74.7408, y: 77.3538}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &52173443
 MonoBehaviour:
@@ -178,7 +178,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 3944610533857416082, guid: cacd98f5fdd90514ba245c521e37cfc1, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -3061,8 +3061,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -10}
-  m_SizeDelta: {x: 520, y: 75.153}
+  m_AnchoredPosition: {x: -13.935, y: -18.157}
+  m_SizeDelta: {x: 589.6805, y: 75.153}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1542943518
 MonoBehaviour:
@@ -3084,10 +3084,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Characters have different abilities and starting stats. The warrior is
-    more resilient and starts with some armor but has a melee attack and needs to
-    get close to enemies to attack them. The orc mage is ranged but takes more damage
-    as it starts with no armor.
+  m_text: Characters can be selected by clicking on the arrows in the main menu.
+    Characters have different abilities and starting stats. The warrior is more resilient
+    and starts with some armor but has a melee attack and needs to get close to enemies
+    to attack them. The orc mage is ranged but takes more damage as it starts with
+    no armor.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3275,8 +3276,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -90, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: -49.4, y: -10.016}
+  m_SizeDelta: {x: 81.7089, y: 79.9669}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1602643249
 MonoBehaviour:
@@ -3300,7 +3301,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 4593277635297583758, guid: e50437234236b4b4aa8c5171fcb76111, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1

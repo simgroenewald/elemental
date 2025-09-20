@@ -19,6 +19,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     public Player player;
     private CameraController cameraController;
     private Dungeon dungeon;
+    private int seed;
 
     [Header("Levels")]
     [SerializeField] List<LevelSettingSO> levels;
@@ -45,6 +46,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     public GameObject pauseMenuUI;
     [SerializeField] private CanvasGroup fadeScreen;
     [SerializeField] private TextMeshProUGUI screenMessage;
+    [SerializeField] private TextMeshProUGUI seedUI;
 
     [Header("Abaility Bools")]
     private bool firstTimeLoad = false;
@@ -85,6 +87,9 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         cameraController = gameResources.cameraController;
 
         InstantiatePlayer();
+
+        seed = UnityEngine.Random.Range(2000, 10000);
+        seed = 6776;
     }
 
     // TODO: Maybe refactor so charachter doest get the player which then uses character to instantiate - loopy
@@ -159,21 +164,28 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
     private IEnumerator GameWon()
     {
-
-        previousState = GameState.won;
         yield return StartCoroutine(Fade(0f, 1f, 2f, Color.black));
 
         player.DisablePlayer();
         dungeonBuilder.Clear();
         playerNavMeshSurface.RemoveData();
+        Score.Instance.EndLevelTimer();
 
         yield return StartCoroutine(DisplayMessageRoutine("WELL DONE! \n\n You have completed the dungeon!", 3f));
-        yield return StartCoroutine(DisplayMessageRoutine("You scored 1000", 4f));
-        yield return StartCoroutine(DisplayMessageRoutine("Press enter to restart the game", 0f));
+        yield return StartCoroutine(DisplayMessageRoutine($"You scored {Score.Instance.GetScore()}", 4f));
+        yield return StartCoroutine(DisplayMessageRoutine("Press enter to battle a new dungeon\n\nPress escape to return to the main menu", 0f));
 
         while (!Input.GetKeyDown(KeyCode.Return))
         {
+            seed = UnityEngine.Random.Range(2000, 10000);
+            seed = 6776;
             state = GameState.restart;
+            yield break;
+        }
+
+        while (!Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene("MainMenu");
             yield break;
         }
     }
@@ -188,15 +200,28 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         player.DisablePlayer();
         dungeonBuilder.Clear();
         playerNavMeshSurface.RemoveData();
+        Score.Instance.EndLevelTimer();
 
         yield return StartCoroutine(DisplayMessageRoutine("You were defeated", 3f));
+        yield return StartCoroutine(DisplayMessageRoutine("Press enter to retry the same dungeon\n\nPress escape to return to the main menu", 0f));
 
-        SceneManager.LoadScene("MainMenu");
+        while (!Input.GetKeyDown(KeyCode.Return))
+        {
+            state = GameState.restart;
+            yield break;
+        }
+
+        while (!Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene("MainMenu");
+            yield break;
+        }
 
     }
 
     private IEnumerator CompleteLevel()
     {
+        Score.Instance.EndLevelTimer();
         if (currentLevelIndex == levels.Count - 1)
         {
             state = GameState.won;
@@ -309,7 +334,9 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         dungeonBuilder.Clear();
         playerNavMeshSurface.RemoveData();
 
-        dungeon = dungeonBuilder.GenerateDungeon(6776, levels[currentLevelIndex]);
+        seedUI.SetText($"Seed: {seed}");
+
+        dungeon = dungeonBuilder.GenerateDungeon(seed, levels[currentLevelIndex]);
         //dungeon = dungeonBuilder.GenerateDungeon(8543, levels[currentLevelIndex]);
 
         completeDungeonRooms = new List<DungeonRoom>();
@@ -342,6 +369,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         screenMessage.SetText("");
         firstTimeLoad = false;
         newAbilityUnlocked = false;
+        Score.Instance.StartLevelTimer();
 
         state = GameState.playing;
     }

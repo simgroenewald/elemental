@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 using System.Text;
-using UnityEditor.Playables;
-using UnityEditor.Search;
 using UnityEngine;
 
 public class AbilityController : MonoBehaviour
@@ -155,6 +153,15 @@ public class AbilityController : MonoBehaviour
         StringBuilder sb = new StringBuilder();
         sb.Append(abilityDetails.description);
         sb.AppendLine();
+        if (!abilityDetails.isEnemyTargetable && !abilityDetails.isPassive)
+        {
+            sb.Append("Triggerable");
+            sb.AppendLine();
+        } else if (abilityDetails.isEnemyTargetable)
+        {
+            sb.Append("Targeted");
+            sb.AppendLine();
+        }
         if (abilityDetails.isPassive)
         {
             sb.Append("Passive");
@@ -168,6 +175,14 @@ public class AbilityController : MonoBehaviour
         if (abilityDetails.damage > 0)
         {
             sb.Append($"Damage: {abilityDetails.damage}");
+            if (abilityDetails.isMagical)
+            {
+                sb.Append(" (Magical)");
+            }
+            else
+            {
+                sb.Append(" (Physical)");
+            }
             sb.AppendLine();
         }
         if (abilityDetails.hasEffectTime)

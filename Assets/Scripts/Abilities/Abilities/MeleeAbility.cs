@@ -1,7 +1,4 @@
-using System;
-using UnityEditor.Playables;
 using UnityEngine;
-using static UnityEngine.EventSystems.EventTrigger;
 
 public class MeleeAbility : MonoBehaviour
 {
@@ -66,7 +63,15 @@ public class MeleeAbility : MonoBehaviour
         {
             damage = activeAbility.currentAbility.abilityDetails._damage;
         }
+        if (character is Player)
+        {
+            Score.Instance.IncreaseDamageDealt((int)damage);
+        }
         damage = target.stats.EvaluateDamageTakingStats(damage);
+        if (target is Player)
+        {
+            Score.Instance.IncreaseDamageTaken((int)damage);
+        }
         target.healthEvents.RaiseReduceHealthEvent(damage);
         if (character.stats.GetStat(StatType.HealthSteal) > 0)
         {

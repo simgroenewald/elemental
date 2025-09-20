@@ -1,11 +1,12 @@
 using System.Collections.Generic;
-using UnityEditor.MemoryProfiler;
+using TMPro;
 using UnityEngine;
 
 public class DungeonNavigationDisplayController : MonoBehaviour
 {
     private List<DungeonRoom> allRooms;
     private List<Connector> allConnectors;
+    [SerializeField] private TextMeshProUGUI currentRoomUI;
 
     public void Initialise(List<DungeonRoom> rooms, List<Connector> connectors)
     {
@@ -30,6 +31,7 @@ public class DungeonNavigationDisplayController : MonoBehaviour
     public void RoomEntered(RoomChangedEventArgs roomChangedEventArgs)
     {
         DungeonRoom dungeonRoom = roomChangedEventArgs.room;
+        currentRoomUI.SetText($"{dungeonRoom.roomType} {dungeonRoom.theme}");
 
         if (GameManager.Instance.GetCurrentRoom() == null)
         {
@@ -48,6 +50,7 @@ public class DungeonNavigationDisplayController : MonoBehaviour
     public void RoomExited(RoomChangedEventArgs roomChangedEventArgs)
     {
         DungeonRoom dungeonRoom = roomChangedEventArgs.room;
+        currentRoomUI.SetText("Exploring");
         // Player exited room
         if (GameManager.Instance.GetCurrentRoom() == dungeonRoom)
         {
