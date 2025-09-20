@@ -96,7 +96,15 @@ public class Projectile : MonoBehaviour, ICastable
         {
             damage = ability.abilityDetails._damage;
         }
+        if (characterCaster is Player)
+        {
+            Score.Instance.IncreaseDamageDealt((int)damage);
+        }
         damage = characterTarget.stats.EvaluateDamageTakingStats(damage);
+        if (characterTarget is Player)
+        {
+            Score.Instance.IncreaseDamageTaken((int)damage);
+        }
         characterTarget.healthEvents.RaiseReduceHealthEvent(damage);
         if (characterCaster.stats.GetStat(StatType.HealthSteal) > 0)
         {
