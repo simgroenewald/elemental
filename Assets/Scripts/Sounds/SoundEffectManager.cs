@@ -12,7 +12,7 @@ public class SoundEffectManager : SingletonMonobehaviour<SoundEffectManager>
     {
         if (PlayerPrefs.HasKey("soundsVolume"))
         {
-            PlayerPrefs.GetInt("soundsVolume");
+            soundsVolume = PlayerPrefs.GetInt("soundsVolume");
         }
         SetSoundsVolume(soundsVolume);
     }

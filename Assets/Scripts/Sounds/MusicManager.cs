@@ -25,7 +25,7 @@ public class MusicManager : SingletonMonobehaviour<MusicManager>
     private void Start()
     {
         if (PlayerPrefs.HasKey("musicVolume")) {
-            PlayerPrefs.GetInt("musicVolume");
+            musicVolume = PlayerPrefs.GetInt("musicVolume");
         }
         SetMusicVolume(musicVolume);
     }
@@ -65,7 +65,7 @@ public class MusicManager : SingletonMonobehaviour<MusicManager>
             yield return fadeInMusicCoroutine = StartCoroutine(FadeInMusic(musicTrack, fadeInTime));
         }
 
-        yield return null;
+            yield return null;
     }
 
     private IEnumerator FadeOutMusic(float fadeOutTime)

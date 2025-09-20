@@ -7,6 +7,7 @@ using System.Threading;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 [DisallowMultipleComponent]
@@ -189,13 +190,8 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         playerNavMeshSurface.RemoveData();
 
         yield return StartCoroutine(DisplayMessageRoutine("You were defeated", 3f));
-        yield return StartCoroutine(DisplayMessageRoutine("Press enter to restart the game", 0f));
 
-        while (!Input.GetKeyDown(KeyCode.Return))
-        {
-            state = GameState.restart;
-            yield break;
-        }
+        SceneManager.LoadScene("MainMenu");
 
     }
 

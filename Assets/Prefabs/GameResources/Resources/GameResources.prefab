@@ -83,6 +83,11 @@ MonoBehaviour:
   musicOnFullSnapshot: {fileID: 24500006, guid: 53f63f6535dd39e4195f28af15d4667e, type: 2}
   musicLowSnapshot: {fileID: 8893122114324796974, guid: 53f63f6535dd39e4195f28af15d4667e, type: 2}
   musicOffSnapshot: {fileID: -3084740370723268673, guid: 53f63f6535dd39e4195f28af15d4667e, type: 2}
+  mainMenuMusic: {fileID: 11400000, guid: d7f1974bcc9ece3418cc8fb4133b3225, type: 2}
+  characterOptionPrefab: {fileID: 1283881488374091614, guid: 072a30de2f2258f4ab5a9ab825b99a61, type: 3}
+  characterOptions:
+  - {fileID: 11400000, guid: 79bca5e24c0f8aa49af809e85db70d94, type: 2}
+  - {fileID: 11400000, guid: 4bc16e0775d26c948be583ab6f3a5523, type: 2}
   dimmedMaterial: {fileID: 2100000, guid: 6bb7bd03f1d62b74591475475ea344fc, type: 2}
   litMaterial: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   variableLitShader: {fileID: -6465566751694194690, guid: 5849265a5eb365c46b72c3c2e3835a84, type: 3}
