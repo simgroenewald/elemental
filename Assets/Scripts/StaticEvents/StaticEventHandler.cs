@@ -1,6 +1,4 @@
-using UnityEngine;
 using System;
-using UnityEditor.MemoryProfiler;
 
 public static class StaticEventHandler
 {

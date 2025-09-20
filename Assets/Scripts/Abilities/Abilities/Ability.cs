@@ -1,11 +1,3 @@
-using GLTFast.Schema;
-using System;
-using System.Diagnostics;
-using System.Security.Policy;
-using UnityEditor.Playables;
-using UnityEngine;
-using UnityEngine.TextCore.Text;
-
 public class Ability
 {
     public AbilityDetailsSO abilityDetails;

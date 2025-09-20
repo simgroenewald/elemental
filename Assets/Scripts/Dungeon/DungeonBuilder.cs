@@ -1,10 +1,5 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
-using UnityEngine.UIElements;
-using UnityEngine.WSA;
-using static UnityEditor.PlayerSettings;
 
 
 [DisallowMultipleComponent]

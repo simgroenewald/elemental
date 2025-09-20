@@ -1,9 +1,5 @@
-using GLTFast.Schema;
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.Rendering;
 using UnityEngine;
 
 public class ItemProvider : MonoBehaviour

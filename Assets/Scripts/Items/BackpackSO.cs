@@ -1,10 +1,6 @@
-using DarkPixelRPGUI.Scripts.UI.Equipment;
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
-using UnityEditorInternal;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "BackpackSO", menuName = "Scriptable Objects/BackpackSO")]

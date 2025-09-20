@@ -1,13 +1,6 @@
 using System.Collections.Generic;
 using System;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
-using System.Linq;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
-using System.Data;
-using Unity.Collections.LowLevel.Unsafe;
-using UnityEditor.SpeedTree.Importer;
-using UnityEditor.Playables;
 
 public class Stats : MonoBehaviour
 {

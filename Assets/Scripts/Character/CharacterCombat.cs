@@ -1,9 +1,5 @@
-using NUnit.Framework;
-using System;
 using System.Collections.Generic;
-using UnityEditor.Playables;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 [RequireComponent(typeof(Character))]
 [RequireComponent(typeof(CharacterState))]
