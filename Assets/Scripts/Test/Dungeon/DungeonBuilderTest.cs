@@ -1,11 +1,7 @@
 using System;
 using System.Collections.Generic;
-using UnityEditor.MemoryProfiler;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using UnityEngine.UIElements;
-using UnityEngine.WSA;
-using static UnityEditor.PlayerSettings;
 
 
 [DisallowMultipleComponent]
@@ -40,7 +36,7 @@ public class DungeonBuilderTest : SingletonMonobehaviour<DungeonBuilderTest>
         //int seed = 9964;
         //int seed = 6552;
         // seed = 9042
-        seed = 6776;
+        //seed = 6776;
         //seed = 6940;
         //seed = 7691;
         //seed = 8543'
@@ -115,6 +111,11 @@ public class DungeonBuilderTest : SingletonMonobehaviour<DungeonBuilderTest>
     public void PopulateDoorTiles()
     {
         dungeonBuilder.PopulateOpenDoorTiles(dungeonRooms, structureToGridMapper);
+    }
+
+    public void GenerateFullDungeon()
+    {
+        dungeon = dungeonBuilder.GenerateDungeon(seed, levelSettings);
     }
 
     // Debug Gizmos

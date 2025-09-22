@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats:
   - type: 0
-    value: 150
+    value: 80
   - type: 2
-    value: 5
+    value: 0
   - type: 5
-    value: 3
+    value: 0
   - type: 6
     value: 5
   - type: 7

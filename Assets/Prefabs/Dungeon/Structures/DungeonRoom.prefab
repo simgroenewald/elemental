@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 9206618930786755288}
   - component: {fileID: 2226291265045725375}
   - component: {fileID: -1294400793371953713}
+  - component: {fileID: 5108564538311055578}
   m_Layer: 0
   m_Name: DungeonRoom
   m_TagString: Untagged
@@ -50,6 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   structure: {fileID: 8637913578041581453}
   roomType: 0
+  roomSize: {fileID: 0}
   theme: 0
   nodeGraphPosition: {x: 0, y: 0}
   roomObject: {fileID: 0}
@@ -109,7 +111,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e36589f89fbe8d4481bddab76b18649, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5108564538311055578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9049902903817534805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ee35ae20943a9e418549a5781a016ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   mapper: {fileID: 11400000, guid: 52798e58c454c5e40abfb5facc60b523, type: 2}
+  enemySpawnCounts:
+  - roomSizeSO: {fileID: 11400000, guid: cd496d1c20bb3a04fa42c77721c67e3c, type: 2}
+    count: 4
+  - roomSizeSO: {fileID: 11400000, guid: 69b268beff27d71418de4e83a9eec462, type: 2}
+    count: 6
+  - roomSizeSO: {fileID: 11400000, guid: a289e7e3aaa33ec43a965acfa72d3c16, type: 2}
+    count: 8
 --- !u!1001 &1961949189306949688
 PrefabInstance:
   m_ObjectHideFlags: 0

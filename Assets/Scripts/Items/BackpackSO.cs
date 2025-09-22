@@ -1,10 +1,6 @@
-using DarkPixelRPGUI.Scripts.UI.Equipment;
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
-using UnityEditorInternal;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "BackpackSO", menuName = "Scriptable Objects/BackpackSO")]
@@ -31,11 +27,15 @@ public class BackpackSO : ScriptableObject
     // UPDATE THIS
     public int AddItem(ItemSO item, int quantity, List<ItemParameter> itemParameters = null)
     {
+        if (item.IsStackable == false && ContainsItem(item))
+        {
+            return -1;
+        }
         if (item.IsStackable == false)
         {
             for (int i = 0; i < backpackItems.Count; i++)
             {
-                while (quantity > 0 && IsInventoryFull() == false)
+                while (quantity > 0 && IsBackpackFull() == false)
                 {
                     quantity = quantity - AddItemToNewSlot(item, 1, itemParameters);
                 }
@@ -69,7 +69,7 @@ public class BackpackSO : ScriptableObject
 
     }
 
-    private bool IsInventoryFull() => backpackItems.Where(item => item.isEmpty).Any() == false;
+    private bool IsBackpackFull() => backpackItems.Where(item => item.isEmpty).Any() == false;
 
     private int StackItemInExistingSlot(ItemSO item, int quantity)
     {
@@ -92,7 +92,7 @@ public class BackpackSO : ScriptableObject
                 }
             }
         }
-        while (quantity > 0 && IsInventoryFull() == false)
+        while (quantity > 0 && IsBackpackFull() == false)
         {
             int newQuantity = Mathf.Clamp(quantity, 0, item.MaxStackSize);
             quantity -= newQuantity;
@@ -170,6 +170,19 @@ public class BackpackSO : ScriptableObject
             backpackItems[i] = BackpackItem.GetEmptyItem();
         }
         PublishBackpackUpdated();
+    }
+
+    public bool ContainsItem(ItemSO itemSO)
+    {
+        if (itemSO == null) return false;
+        foreach (var backpackitem in GetAllItems())
+        {
+            if (backpackitem.item != null && backpackitem.item.ID == itemSO.ID)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }
 

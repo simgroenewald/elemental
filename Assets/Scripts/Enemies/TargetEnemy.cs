@@ -51,10 +51,13 @@ public class TargetEnemy : MonoBehaviour, ITargetable
 
     void OnMouseExit()
     {
-        RemoveHighlight();
+        if (enemy.room.isEntered)
+        {
+            RemoveHighlight();
         mouseOver = false;
         isHovered = false;
         GameEventManager.Instance.targetEvents.RaiseOnRemoveAim();
+        }
     }
 
     void RemoveHighlight()

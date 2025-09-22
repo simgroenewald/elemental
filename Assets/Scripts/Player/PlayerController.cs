@@ -1,8 +1,6 @@
-using UnityEditor.Playables;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
-using UnityEngine.TextCore.Text;
 
 [RequireComponent(typeof(Player))]
 [RequireComponent(typeof(CharacterState))]

@@ -35,6 +35,11 @@ public class CameraController : MonoBehaviour
         isCameraSet = true;
     }
 
+    public void PlayerFocus()
+    {
+        cameraTarget.position = new Vector3(GameManager.Instance.player.transform.position.x, GameManager.Instance.player.transform.position.y, cameraTarget.position.z);
+    }
+
     public void ClampCamera(Tilemap tilemap)
     {
         BoundsInt tileBounds = tilemap.cellBounds;

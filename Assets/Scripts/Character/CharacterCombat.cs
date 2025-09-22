@@ -1,9 +1,5 @@
-using NUnit.Framework;
-using System;
 using System.Collections.Generic;
-using UnityEditor.Playables;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 [RequireComponent(typeof(Character))]
 [RequireComponent(typeof(CharacterState))]
@@ -100,7 +96,7 @@ public class CharacterCombat : MonoBehaviour
         List<Enemy> allRoomEnemies = GameManager.Instance.currentDungeonRoom.enemies;
         foreach (var enemy in allRoomEnemies)
         {
-            if (!enemy.characterState.isDying && !enemy.characterState.isDead)
+            if (enemy && !enemy.characterState.isDying && !enemy.characterState.isDead)
             {
                 float distanceFromTarget = Vector2.Distance(enemy.transform.position, character.transform.position);
                 // If player is in range and target is selected
@@ -132,13 +128,21 @@ public class CharacterCombat : MonoBehaviour
         {
             if (activeAbility.currentAbility.abilityDetails.isCastAtTarget)
             {
-                if (!activeAbility.currentAbility.AttemptToUseSuccessful(character)) return;
+                if (!activeAbility.currentAbility.AttemptToUseSuccessful(character))
+                {
+                    character.characterMovement.HandleIdleState();
+                    return;
+                }
                 MultiCastAtTargetAttack(currentTargets);
             }
         }
         else
         {
-            if (!activeAbility.currentAbility.AttemptToUseSuccessful(character)) return;
+            if (!activeAbility.currentAbility.AttemptToUseSuccessful(character))
+            {
+                character.characterMovement.HandleIdleState();
+                return;
+            }
             MeleeAttack();
         }
 
@@ -158,7 +162,11 @@ public class CharacterCombat : MonoBehaviour
 
         characterMovement.UpdateCharacterDirection(aimDirection);
 
-        if (!activeAbility.currentAbility.AttemptToUseSuccessful(character)) return;
+        if (!activeAbility.currentAbility.AttemptToUseSuccessful(character))
+        {
+            character.characterMovement.HandleIdleState();
+            return;
+        };
 
         if (activeAbility.currentAbility.abilityDetails.isRanged)
         {

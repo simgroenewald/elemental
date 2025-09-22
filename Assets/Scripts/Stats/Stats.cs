@@ -1,13 +1,6 @@
 using System.Collections.Generic;
 using System;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
-using System.Linq;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
-using System.Data;
-using Unity.Collections.LowLevel.Unsafe;
-using UnityEditor.SpeedTree.Importer;
-using UnityEditor.Playables;
 
 public class Stats : MonoBehaviour
 {
@@ -33,8 +26,8 @@ public class Stats : MonoBehaviour
     }
     private void OnEnable()
     {
-        character.statModifierEvents.OnAddBasicStatEvent += (statType, stat, isPercentage) =>{ModifybasicStat(statType, stat, isPercentage, true);};
-        character.statModifierEvents.OnRemoveBasicStatEvent += (statType, stat, isPercentage) => { ModifybasicStat(statType, stat, isPercentage, false); };
+        character.statModifierEvents.OnAddBasicStatEvent += (statType, stat, isPercentage) =>{ ModifyBasicStat(statType, stat, isPercentage, true);};
+        character.statModifierEvents.OnRemoveBasicStatEvent += (statType, stat, isPercentage) => { ModifyBasicStat(statType, stat, isPercentage, false); };
         character.statModifierEvents.OnAddHealthLevelItemEvent += AddHealthLevelModifier;
         character.statModifierEvents.OnRemoveHealthLevelItemEvent += RemoveHealthLevelModifier;
         character.statModifierEvents.OnAddAttackCountItemEvent += AddAttackCountModifier;
@@ -44,10 +37,11 @@ public class Stats : MonoBehaviour
 
     private void OnDisable()
     {
-        character.statModifierEvents.OnAddBasicStatEvent -= (statType, stat, isPercentage) => { ModifybasicStat(statType, stat, isPercentage, true); };
-        character.statModifierEvents.OnRemoveBasicStatEvent -= (statType, stat, isPercentage) => { ModifybasicStat(statType, stat, isPercentage, false); };
+        character.statModifierEvents.OnAddBasicStatEvent -= (statType, stat, isPercentage) => { ModifyBasicStat(statType, stat, isPercentage, true); };
+        character.statModifierEvents.OnRemoveBasicStatEvent -= (statType, stat, isPercentage) => { ModifyBasicStat(statType, stat, isPercentage, false); };
         character.statModifierEvents.OnAddHealthLevelItemEvent -= AddHealthLevelModifier;
         character.statModifierEvents.OnRemoveHealthLevelItemEvent -= RemoveHealthLevelModifier;
+        character.statModifierEvents.OnAddAttackCountItemEvent -= AddAttackCountModifier;
         character.statModifierEvents.OnRemoveAttackCountItemEvent -= RemoveAttackCountModifier;
         character.statModifierEvents.OnConsumableItemUsedEvent -= ApplyConsumableEffects;
     }
@@ -146,7 +140,7 @@ public class Stats : MonoBehaviour
         }
     }
 
-    private void ModifybasicStat(StatType statType, float val, bool isPercentage, bool isAdding)
+    private void ModifyBasicStat(StatType statType, float val, bool isPercentage, bool isAdding)
     {
         if (statType == StatType.Health)
         {
@@ -206,6 +200,11 @@ public class Stats : MonoBehaviour
                     ability.UpdatePhysicalDamage(newAbilityPhysicalDamage);
                 }
             }
+            if (!character.baseAbility.abilityDetails.isMagical)
+            {
+                float newAbilityPhysicalDamage = GetTotalModifiedValue(StatType.PhysicalDamageBonus, character.baseAbility.abilityDetails.damage);
+                character.baseAbility.UpdatePhysicalDamage(newAbilityPhysicalDamage);
+            }
         }
         if (statType == StatType.MagicalDamageBonus)
         {
@@ -221,6 +220,11 @@ public class Stats : MonoBehaviour
                     ability.UpdateMagicalDamage(newAbilityMagicalDamage);
                 }
             }
+            if (!character.baseAbility.abilityDetails.isMagical)
+            {
+                float newAbilityMagicalDamage = GetTotalModifiedValue(StatType.MagicalDamageBonus, character.baseAbility.abilityDetails.damage);
+                character.baseAbility.UpdateMagicalDamage(newAbilityMagicalDamage);
+            }
         }
         if (statType == StatType.RangeBonus)
         {
@@ -231,6 +235,11 @@ public class Stats : MonoBehaviour
             {
                 float newAbilityRange = GetTotalModifiedValue(StatType.RangeBonus, ability.abilityDetails.range);
                 ability.UpdateRange(newAbilityRange);
+            }
+            if (!character.baseAbility.abilityDetails.isMagical)
+            {
+                float newAbilityRange = GetTotalModifiedValue(StatType.RangeBonus, character.baseAbility.abilityDetails.range);
+                character.baseAbility.UpdateRange(newAbilityRange);
             }
         }
         if (statType == StatType.ProjectileSpeed)

@@ -1,11 +1,3 @@
-using GLTFast.Schema;
-using System;
-using System.Diagnostics;
-using System.Security.Policy;
-using UnityEditor.Playables;
-using UnityEngine;
-using UnityEngine.TextCore.Text;
-
 public class Ability
 {
     public AbilityDetailsSO abilityDetails;
@@ -183,15 +175,15 @@ public class Ability
                     attackCountModifier.counter = 0;
                     if (attackCountModifier.statType == StatType.PhysicalDamageBonus && !abilityDetails.isMagical)
                     {
-                        modifierAdditinalDamage = HelperUtilities.GetModifyAmountResult(damage, attackCountModifier.val, attackCountModifier.isPercentage);
+                        modifierAdditinalDamage += HelperUtilities.GetModifyAmountResult(damage, attackCountModifier.val, attackCountModifier.isPercentage);
                     }
                     else if (attackCountModifier.statType == StatType.MagicalDamageBonus && abilityDetails.isMagical)
                     {
-                        modifierAdditinalDamage = HelperUtilities.GetModifyAmountResult(damage, attackCountModifier.val, attackCountModifier.isPercentage);
+                        modifierAdditinalDamage += HelperUtilities.GetModifyAmountResult(damage, attackCountModifier.val, attackCountModifier.isPercentage);
                     }
                     else if (attackCountModifier.statType == StatType.CritChance)
                     {
-                        modifierAdditinalDamage = ApplyCritDamage(damage, (int)attackCountModifier.val);
+                        modifierAdditinalDamage += ApplyCritDamage(damage, (int)attackCountModifier.val);
                     }
                 }
                 else

@@ -126,7 +126,7 @@ public class CharacterMovement : MonoBehaviour
         HandleIdleState();
     }
 
-    private void HandleIdleState()
+    public void HandleIdleState()
     {
         characterState.SetToIdle();
         character.movementEvents.RaiseIdle();
@@ -145,13 +145,13 @@ public class CharacterMovement : MonoBehaviour
             Vector3 currentPosition = character.transform.position;
             Vector3 delta = currentPosition - lastPosition;
 
-            if (currentPosition.x >= lastPosition.x && !characterState.posTargetRight)
+            if (currentPosition.x >= (lastPosition.x + 0.0005) && !characterState.posTargetRight)
             {
                 character.movementEvents.RaiseFaceRight();
                 characterState.posTargetRight = true;
                 characterState.posTargetLeft = false;
             }
-            else if (currentPosition.x < lastPosition.x && !characterState.posTargetLeft)
+            else if (currentPosition.x < (lastPosition.x - 0.0005) && !characterState.posTargetLeft)
             {
                 character.movementEvents.RaiseFaceLeft();
                 characterState.posTargetRight = false;

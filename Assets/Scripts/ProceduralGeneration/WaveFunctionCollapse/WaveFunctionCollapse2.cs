@@ -37,7 +37,7 @@ public class WaveFunctionCollapse2
         }
     }
 
-    public void PopulateOutputCells()
+    public bool PopulateOutputCells()
     {
         int iteration = 0;
         while (iteration < this.maxIterations && !solved)
@@ -55,31 +55,31 @@ public class WaveFunctionCollapse2
                     Debug.Log("Gotcha");
                 }
                 propagator.CollapseCellNew(waveCell);
-                if (propagator.hasConflict)
-                {
-                    break;
-                }
                 propagator.Propagate(waveCell);
                 propagator.propagationSet.Clear();
             }
-/*            if (propagator.hasConflict && iteration < this.maxIterations - 1)
+            if (propagator.hasConflict && iteration < this.maxIterations)
             {
                 Reset();
-            }*/
-/*            else
+            }
+            else if (propagator.hasConflict)
+            {
+                return false;
+            } else
             {
                 Debug.Log("Solved on: " + iteration);
                 //this.outputGrid.PrintResultsToConsole();
                 break;
-            }*/
+            }
             iteration += 1;
         }
-        if (iteration >= this.maxIterations)
+        if (iteration >= this.maxIterations || propagator.hasConflict == true)
         {
-            Debug.Log("Couldn't solve the tilemap");
+            return false;
         }
         
         PopulateStructureTiles();
+        return true;
     }
 
     public void Reset()

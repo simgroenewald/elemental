@@ -1,10 +1,8 @@
 using NavMeshPlus.Components;
 using System.Collections.Generic;
-using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Tilemaps;
-using UnityEngine.UIElements;
 
 public class Doorway: MonoBehaviour
 {
@@ -71,22 +69,22 @@ public class Doorway: MonoBehaviour
         {
             if (doortype == DoorType.LeftDoor)
             {
-                entryCollider.size = new Vector2(0.2f, width);
+                entryCollider.size = new Vector2(0.2f, width * 0.32f);
                 entryCollider.offset = new Vector2(0.5f, 0);
             }
             else if (doortype == DoorType.RightDoor)
             {
-                entryCollider.size = new Vector2(0.2f, width);
+                entryCollider.size = new Vector2(0.2f, width * 0.32f);
                 entryCollider.offset = new Vector2(-0.5f, 0);
             }
             else if (doortype == DoorType.FrontDoor)
             {
-                entryCollider.size = new Vector2(width, 0.2f);
+                entryCollider.size = new Vector2(width * 0.32f, 0.2f);
                 entryCollider.offset = new Vector2(0, 0.7f);
             }
             else if (doortype == DoorType.BackDoor)
             {
-                entryCollider.size = new Vector2(width, 0.2f);
+                entryCollider.size = new Vector2(width * 0.32f, 0.2f);
                 entryCollider.offset = new Vector2(0, -0.5f);
             }
         }
@@ -97,22 +95,22 @@ public class Doorway: MonoBehaviour
         {
             if (doortype == DoorType.LeftDoor)
             {
-                exitCollider.size = new Vector2(0.2f, width);
+                exitCollider.size = new Vector2(0.2f, width * 0.32f);
                 exitCollider.offset = new Vector2(-0.5f, 0);
             }
             else if (doortype == DoorType.RightDoor)
             {
-                exitCollider.size = new Vector2(0.2f, width);
+                exitCollider.size = new Vector2(0.2f, width * 0.32f);
                 exitCollider.offset = new Vector2(0.5f, 0);
             }
             else if (doortype == DoorType.FrontDoor)
             {
-                exitCollider.size = new Vector2(width, 0.2f);
+                exitCollider.size = new Vector2(width * 0.32f, 0.2f);
                 exitCollider.offset = new Vector2(0, -0.5f);
             }
             else if (doortype == DoorType.BackDoor)
             {
-                exitCollider.size = new Vector2(width, 0.2f);
+                exitCollider.size = new Vector2(width * 0.32f, 0.2f);
                 exitCollider.offset = new Vector2(0, 0.5f);
             }
         }
@@ -122,11 +120,11 @@ public class Doorway: MonoBehaviour
         {
             if (doortype == DoorType.LeftDoor || doortype == DoorType.RightDoor)
             {
-                obstacle.size = new Vector3(0.5f, width, 2);
+                obstacle.size = new Vector3(0.5f, width * 0.32f, 2);
             }
             else
             {
-                obstacle.size = new Vector3(width, 0.5f, 2);
+                obstacle.size = new Vector3(width * 0.32f, 0.5f, 2);
             }
         }
 
@@ -135,11 +133,11 @@ public class Doorway: MonoBehaviour
         {
             if (doortype == DoorType.LeftDoor || doortype == DoorType.RightDoor)
             {
-                modifierVolume.size = new Vector3(0.5f, width, 2);
+                modifierVolume.size = new Vector3(0.5f, width * 0.32f, 2);
             }
             else
             {
-                modifierVolume.size = new Vector3(width, 0.5f, 2);
+                modifierVolume.size = new Vector3(width * 0.32f, 0.5f, 2);
             }
         }
 

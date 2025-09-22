@@ -18,7 +18,7 @@ MonoBehaviour:
   <Description>k__BackingField: Replenishes 25 health instantly
   <ItemImage>k__BackingField: {fileID: 21300000, guid: f1ebfefb05628bd4f913e4cb7c476161, type: 3}
   <DefaultParametersList>k__BackingField: []
-  <DropChance>k__BackingField: 50
+  <DropChance>k__BackingField: 80
   <ItemPrefab>k__BackingField: {fileID: 2950868341024971528, guid: c5c8f20877d40fa428e0c3b68d44ec26, type: 3}
   modifiersData:
   - statModifier: {fileID: 11400000, guid: 6f74d810a7de3454a887f3cd885e3924, type: 2}
