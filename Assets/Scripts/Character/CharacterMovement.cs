@@ -126,7 +126,7 @@ public class CharacterMovement : MonoBehaviour
         HandleIdleState();
     }
 
-    private void HandleIdleState()
+    public void HandleIdleState()
     {
         characterState.SetToIdle();
         character.movementEvents.RaiseIdle();

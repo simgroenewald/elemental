@@ -86,6 +86,13 @@ public class DungeonBuilderEditor : Editor
         {
             dungeonBuilder.CreateCollisionLayer();
 
+        }        
+        
+        
+        if (GUILayout.Button("Generate Full Dungeon"))
+        {
+            dungeonBuilder.GenerateFullDungeon();
+
         }
 
         if (GUILayout.Button("Clear All Rooms"))

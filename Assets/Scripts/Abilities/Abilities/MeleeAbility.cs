@@ -38,7 +38,7 @@ public class MeleeAbility : MonoBehaviour
             SoundEffectManager.Instance.PlaySoundEffect(activeAbility.currentAbility.abilityDetails.abilityAttackSound);
             foreach (var characterTarget in characterCombat.currentTargets)
             {
-                if (!characterTarget && characterTarget.characterState.isDead || characterTarget.characterState.isDying)
+                if (characterTarget == null && characterTarget.characterState.isDead || characterTarget.characterState.isDying)
                 {
                     continue;
                 }

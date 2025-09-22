@@ -6,7 +6,7 @@ public class AbilityController : MonoBehaviour
 {
     public AbilitySelectorUI abilitySelectorUI;
     public AbilityUnlockedUI abilityUnlockedUI;
-    public ItemDetailsUI itemDetails;
+    public DetailsUI details;
     [SerializeField] private ActionKeysSO actionKeys;
     [SerializeField] private SoundEffectSO abilityUnlockedSound;
     List<Ability> abilities;
@@ -16,7 +16,7 @@ public class AbilityController : MonoBehaviour
 
     private void Awake()
     {
-        itemDetails = GameManager.Instance.itemDetailsUI;
+        details = GameManager.Instance.detailsUI;
         abilitySelectorUI = GameManager.Instance.abilitySelectorUI;
         abilityUnlockedUI = GameManager.Instance.abilityUnlockedUI;
     }
@@ -28,6 +28,11 @@ public class AbilityController : MonoBehaviour
         SetUpUI();
         UpdateAbilitiesUI();
         abilityUnlockedUI.OnContinue += HandleContinue;
+    }
+
+    public void ResetAbilities()
+    {
+        UpdateAbilitiesUI();
     }
 
     private void ActivatePassiveAbility(Ability ability)
@@ -130,6 +135,12 @@ public class AbilityController : MonoBehaviour
         this.abilitySelectorUI.OnStageAbility += StageAbility;
     }
 
+    private void OnDestroy()
+    {
+        this.abilitySelectorUI.OnDescriptionRequested -= HandleDescriptionRequested;
+        this.abilitySelectorUI.OnStageAbility -= StageAbility;
+    }
+
 
     public void StageAbility(int index)
     {
@@ -143,7 +154,7 @@ public class AbilityController : MonoBehaviour
 
         AbilityDetailsSO abilityDetails = ability.abilityDetails;
         string description = SetUpDescription(abilityDetails);
-        itemDetails.UpdateItemDetails(abilityDetails.icon, abilityDetails.abilityName, description);
+        details.UpdateDetails(abilityDetails.icon, abilityDetails.abilityName, description);
         abilitySelectorUI.DeselectAllAbilities();
         abilitySelectorUI.Focus(index);
     }

@@ -22,7 +22,7 @@ MonoBehaviour:
   <ItemPrefab>k__BackingField: {fileID: 3504608658907702582, guid: cfa9d85ae2692924281a69a017c09bc5, type: 3}
   attackCountModifierData:
   - statModifier: {fileID: 11400000, guid: 8a739f143b46f674986534dc6b981bc9, type: 2}
-    statType: 3
+    statType: 2
     name: TempestCoil
     count: 4
     duration: 0

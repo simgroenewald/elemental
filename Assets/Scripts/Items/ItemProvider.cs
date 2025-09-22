@@ -36,14 +36,17 @@ public class ItemProvider : MonoBehaviour
     private void OnDisable()
     {
         GameEventManager.Instance.itemEvents.OnItemDrop -= SpawnItem;
+        GameEventManager.Instance.itemEvents.OnSelectedItemDrop -= SpawnSelectedItem;
+        GameEventManager.Instance.itemEvents.OnShowMinibossItems -= ShowMinibossItemChoices;
+        GameEventManager.Instance.itemEvents.OnShowBossItems -= ShowBossItemChoices;
     }
 
 
     private GameObject GetItemToDrop(DungeonRoom room)
     {
-        Debug.Log("Drop Item");
+        System.Random dropRandom = new System.Random();
 
-        int basicItemDrop = UnityEngine.Random.Range(1, 101);
+        int basicItemDrop = dropRandom.Next(1, 101); ;
 
         int chanceToBeat;
         if (room.isComplete) 
@@ -63,7 +66,7 @@ public class ItemProvider : MonoBehaviour
 
         if (basicItemDrop < itemDropChances[GameManager.Instance.currentLevelIndex].normalRoomConsumableDropChance)
         {
-            GameObject globalItem = GetItemFromDropChances(globalItems);
+            GameObject globalItem = GetGlobalItemFromDropChances(globalItems);
             return globalItem;
         }
 
@@ -72,15 +75,16 @@ public class ItemProvider : MonoBehaviour
 
     private GameObject GetItemFromDropChances(List<GameObject> itemList)
     {
-        int basicItemPercentage = UnityEngine.Random.Range(1, 101);
+        System.Random dropRandom = new System.Random();
+        int itemPercentage = dropRandom.Next(1, 101);
         List<GameObject> possibleItems = new List<GameObject>();
         foreach (var itemObject in itemList)
         {
             Item item = itemObject.GetComponent<Item>();
 
-            if (basicItemPercentage <= item.ItemSO.DropChance)
+            if (itemPercentage <= item.ItemSO.DropChance)
             {
-                bool containsBasicItem = BackPackContainsItem(backpack, item.GetComponent<Item>().ItemSO);
+                bool containsBasicItem = backpack.ContainsItem(item.GetComponent<Item>().ItemSO);
                 if (!containsBasicItem)
                 {
                     possibleItems.Add(itemObject);
@@ -89,7 +93,29 @@ public class ItemProvider : MonoBehaviour
         }
         if (possibleItems.Count > 0)
         {
-            GameObject itemToDrop = possibleItems[UnityEngine.Random.Range(0, possibleItems.Count)];
+            GameObject itemToDrop = possibleItems[dropRandom.Next(0, possibleItems.Count)];
+            return itemToDrop;
+        }
+        return null;
+    }
+
+    private GameObject GetGlobalItemFromDropChances(List<GameObject> itemList)
+    {
+        System.Random dropRandom = new System.Random();
+        int itemPercentage = dropRandom.Next(1, 101);
+        List<GameObject> possibleItems = new List<GameObject>();
+        foreach (var itemObject in itemList)
+        {
+            Item item = itemObject.GetComponent<Item>();
+
+            if (itemPercentage <= item.ItemSO.DropChance)
+            {
+                possibleItems.Add(itemObject);
+            }
+        }
+        if (possibleItems.Count > 0)
+        {
+            GameObject itemToDrop = possibleItems[dropRandom.Next(0, possibleItems.Count)];
             return itemToDrop;
         }
         return null;
@@ -125,19 +151,21 @@ public class ItemProvider : MonoBehaviour
 
     private void ShowMinibossItemChoices(DungeonRoom room)
     {
+        System.Random dropRandom = new System.Random();
         List<ItemSO> itemChoices = new List<ItemSO>();
 
         while (itemChoices.Count != 3)
         {
-            int ultraItemDrop = UnityEngine.Random.Range(1, 101);
+            int ultraItemDrop = dropRandom.Next(1, 101);
 
             // 20% chance to drop a ultra item
             if (ultraItemDrop < itemDropChances[GameManager.Instance.currentLevelIndex].miniBossRoomUltraDropChance)
             {
-                GameObject ultraItemGO = elementToUltraItemsListDict[room.theme][UnityEngine.Random.Range(0, elementToUltraItemsListDict[room.theme].Count)];
+                GameObject ultraItemGO = elementToUltraItemsListDict[room.theme][dropRandom.Next(0, elementToUltraItemsListDict[room.theme].Count)];
+                
                 if (!ultraItemGO) continue;
                 ItemSO ultraItem = ultraItemGO.GetComponent<Item>().ItemSO;
-                bool containsUltraItem = BackPackContainsItem(backpack, ultraItem);
+                bool containsUltraItem = backpack.ContainsItem(ultraItem);
                 if (!containsUltraItem && !itemChoices.Contains(ultraItem))
                 {
                     itemChoices.Add(ultraItem);
@@ -147,7 +175,7 @@ public class ItemProvider : MonoBehaviour
             GameObject basicItemGO = GetItemFromDropChances(elementToBasicItemsListDict[room.theme]);
             if (!basicItemGO) continue;
             ItemSO basicItem = basicItemGO.GetComponent<Item>().ItemSO;
-            bool containsItem = BackPackContainsItem(backpack, basicItem);
+            bool containsItem = backpack.ContainsItem(basicItem);
             if (!containsItem && !itemChoices.Contains(basicItem))
             {
                 itemChoices.Add(basicItem);
@@ -159,11 +187,12 @@ public class ItemProvider : MonoBehaviour
 
     private void ShowBossItemChoices(DungeonRoom room)
     {
+        System.Random dropRandom = new System.Random();
         List<ItemSO> itemChoices = new List<ItemSO>();
 
-        GameObject ultraItemGO = elementToUltraItemsListDict[room.theme][UnityEngine.Random.Range(0, elementToUltraItemsListDict[room.theme].Count)];
+        GameObject ultraItemGO = elementToUltraItemsListDict[room.theme][dropRandom.Next(0, elementToUltraItemsListDict[room.theme].Count)];
         ItemSO ultraItem = ultraItemGO.GetComponent<Item>().ItemSO;
-        bool containsUltraItem = BackPackContainsItem(backpack, ultraItem);
+        bool containsUltraItem = backpack.ContainsItem(ultraItem);
         if (!containsUltraItem)
         {
             itemChoices.Add(ultraItem);
@@ -174,7 +203,7 @@ public class ItemProvider : MonoBehaviour
             GameObject basicItemGO = GetItemFromDropChances(elementToBasicItemsListDict[room.theme]);
             if (!basicItemGO) continue;
             ItemSO basicItem = basicItemGO.GetComponent<Item>().ItemSO;
-            bool containsItem = BackPackContainsItem(backpack, basicItem);
+            bool containsItem = backpack.ContainsItem(basicItem);
             if (!containsItem && !itemChoices.Contains(basicItem))
             {
                 itemChoices.Add(basicItem);
@@ -182,19 +211,6 @@ public class ItemProvider : MonoBehaviour
         }
 
         player.itemSelectorController.SetUpItemSelection(itemChoices);
-    }
-
-    private bool BackPackContainsItem(BackpackSO backpack, ItemSO itemSO)
-    {
-        if (itemSO == null) return false;
-        foreach (var backpackitem in backpack.GetAllItems())
-        {
-            if (backpackitem.item != null && backpackitem.item.ID == itemSO.ID)
-            {
-                return true;
-            }
-        }
-        return false;
     }
 }
 

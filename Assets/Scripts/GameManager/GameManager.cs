@@ -40,7 +40,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
     [Header("UI Components")]
     public BackpackUI backpackUI;
-    public ItemDetailsUI itemDetailsUI;
+    public DetailsUI detailsUI;
     public AbilitySelectorUI abilitySelectorUI;
     public AbilityUnlockedUI abilityUnlockedUI;
     public GameObject pauseMenuUI;
@@ -89,7 +89,6 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         InstantiatePlayer();
 
         seed = UnityEngine.Random.Range(2000, 10000);
-        seed = 6776;
     }
 
     // TODO: Maybe refactor so charachter doest get the player which then uses character to instantiate - loopy
@@ -164,6 +163,7 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
     private IEnumerator GameWon()
     {
+        previousState = GameState.won;
         yield return StartCoroutine(Fade(0f, 1f, 2f, Color.black));
 
         player.DisablePlayer();
@@ -173,21 +173,10 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
         yield return StartCoroutine(DisplayMessageRoutine("WELL DONE! \n\n You have completed the dungeon!", 3f));
         yield return StartCoroutine(DisplayMessageRoutine($"You scored {Score.Instance.GetScore()}", 4f));
-        yield return StartCoroutine(DisplayMessageRoutine("Press enter to battle a new dungeon\n\nPress escape to return to the main menu", 0f));
 
-        while (!Input.GetKeyDown(KeyCode.Return))
-        {
-            seed = UnityEngine.Random.Range(2000, 10000);
-            seed = 6776;
-            state = GameState.restart;
-            yield break;
-        }
+        SceneManager.LoadScene("MainMenu");
 
-        while (!Input.GetKeyDown(KeyCode.Escape))
-        {
-            SceneManager.LoadScene("MainMenu");
-            yield break;
-        }
+        yield return null;
     }
 
 
@@ -203,20 +192,13 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         Score.Instance.EndLevelTimer();
 
         yield return StartCoroutine(DisplayMessageRoutine("You were defeated", 3f));
-        yield return StartCoroutine(DisplayMessageRoutine("Press enter to retry the same dungeon\n\nPress escape to return to the main menu", 0f));
+        yield return StartCoroutine(DisplayMessageRoutine("Press enter to retry the same dungeon", 0f));
 
         while (!Input.GetKeyDown(KeyCode.Return))
         {
             state = GameState.restart;
             yield break;
         }
-
-        while (!Input.GetKeyDown(KeyCode.Escape))
-        {
-            SceneManager.LoadScene("MainMenu");
-            yield break;
-        }
-
     }
 
     private IEnumerator CompleteLevel()
@@ -251,8 +233,10 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     {
         firstTimeLoad = true;
         newAbilityUnlocked = false;
-        player.backpackController.backpack.ResetBackpack();
+        player.backpackController.ResetBackpack();
+        player.abilityController.ResetAbilities();
         player.stats.ResetStats();
+        Score.Instance.ResetAll();
         currentLevelIndex = 0;
         state = GameState.start;
     }
@@ -340,6 +324,13 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         //dungeon = dungeonBuilder.GenerateDungeon(8543, levels[currentLevelIndex]);
 
         completeDungeonRooms = new List<DungeonRoom>();
+        foreach (var room in dungeon.dungeonRooms)
+        {
+            if (room.roomType != RoomType.Start)
+            {
+                room.SpawnRoomEnemies();
+            }
+        }
         dungeonNavigationDisplay.Initialise(dungeon.dungeonRooms, dungeon.connectors);
         GameResources.Instance.dungeon = dungeon;
 
@@ -350,13 +341,6 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         player.SetPlayerStartPosition(startRoom, startRoom.structure.tilemapLayers.grid);
 
         // Initialize enemies BEFORE NavMesh baking so they're included as obstacles
-        foreach (var room in dungeon.dungeonRooms)
-        {
-            if (room.roomType != RoomType.Start)
-            {
-                room.SpawnRoomEnemies();
-            }
-        }
 
         // Now bake NavMesh with all agents present
         playerNavMeshSurface.BuildNavMesh();

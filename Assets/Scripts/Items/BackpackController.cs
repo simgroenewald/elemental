@@ -10,7 +10,7 @@ using UnityEngine.UIElements;
 public class BackpackController : MonoBehaviour
 {
     public BackpackUI backpackUI;
-    public ItemDetailsUI itemDetails;
+    public DetailsUI detailsUI;
     [SerializeField] public BackpackSO backpack;
 
     public List<BackpackItem> initialItems = new List<BackpackItem>();
@@ -18,7 +18,7 @@ public class BackpackController : MonoBehaviour
     private void Awake()
     {
         backpackUI = GameManager.Instance.backpackUI;
-        itemDetails = GameManager.Instance.itemDetailsUI;
+        detailsUI = GameManager.Instance.detailsUI;
     }
 
     private void Start()
@@ -39,6 +39,30 @@ public class BackpackController : MonoBehaviour
                 continue;
             backpack.AddItem(item);
         }
+    }
+
+    private void OnDestroy()
+    {
+        if (backpack)
+        {
+            backpack.OnBackpackUpdated -= UpdateBackpackUI;
+            backpack.OnNewItemAdded -= ApplyEffects;
+        }
+
+        if (backpackUI)
+        {
+            backpackUI.OnDescriptionRequested -= HandleDescriptionRequested;
+            backpackUI.OnSwapItems -= HandleSwapItems;
+            backpackUI.OnStartDragging -= HandleDragging;
+            backpackUI.OnItemActionsRequested -= HandleItemActionRequested;
+            backpackUI.OnItemPerformAction -= PerformAction;
+        }
+    }
+
+    public void ResetBackpack()
+    {
+        backpack.Initialise();
+        backpackUI.ResetBackpackUI();
     }
 
     private void UpdateBackpackUI(Dictionary<int, BackpackItem> backpackDict)
@@ -157,12 +181,12 @@ public class BackpackController : MonoBehaviour
         if (backpackItem.isEmpty)
         {
             backpackUI.Unfocus();
-            itemDetails.ResetItemDetails();
+            detailsUI.ResetDetails();
             return;
         }
         ItemSO item = backpackItem.item;
         string description = SetUpDescription(backpackItem);
-        itemDetails.UpdateItemDetails(item.ItemImage, item.Name, description);
+        detailsUI.UpdateDetails(item.ItemImage, item.Name, description);
         backpackUI.DeselectAllItems();
         backpackUI.Focus(index);
     }

@@ -1,8 +1,5 @@
-using System.Collections.Generic;
-using System.ComponentModel;
 using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.Rendering;
+using UnityEngine.UI;
 
 [DisallowMultipleComponent]
 public class Enemy : Character
@@ -10,6 +7,8 @@ public class Enemy : Character
     public EnemyDetailsSO enemyDetails;
     public StatsSO enemyStatsSO;
     public DungeonRoom room;
+    public Image healthBarBackground;
+    public Image healthBarFill;
     protected override void Awake()
     {
         base.Awake();

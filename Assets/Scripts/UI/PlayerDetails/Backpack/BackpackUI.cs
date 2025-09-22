@@ -9,11 +9,11 @@ public class BackpackUI : MonoBehaviour
 {
     [SerializeField] private ItemUI itemUIPrefab;
     [SerializeField] private RectTransform backpack;
-    [SerializeField] private ItemDetailsUI itemDetailsUI;
+    [SerializeField] private DetailsUI detailsUI;
     [SerializeField] private DragItemUI dragItemUI;
     [SerializeField] private ItemActionUI itemActionUI;
     [SerializeField] private ActionKeysSO actionKeys;
-    List<ItemUI> itemUIList = new List<ItemUI>();
+    List<ItemUI> itemUIList;
 
     private int currentDraggedIndex = -1;
 
@@ -25,8 +25,16 @@ public class BackpackUI : MonoBehaviour
 
     private void Awake()
     {
+        itemUIList = new List<ItemUI>();
         dragItemUI.Toggle(false);
-        itemDetailsUI.ResetItemDetails();
+        detailsUI.ResetDetails();
+    }
+
+    public void ResetBackpackUI()
+    {
+        dragItemUI.Toggle(false);
+        detailsUI.ResetDetails();
+        ResetAllItems();
     }
 
     private void Update()
@@ -39,6 +47,19 @@ public class BackpackUI : MonoBehaviour
                 return;
             }
         }
+    }
+
+    private void OnDestroy()
+    {
+        foreach (ItemUI itemUI in itemUIList)
+        {
+            itemUI.OnItemClicked -= HandleItemSelected;
+            itemUI.OnItemBeginDrag -= HandleBeginDrag;
+            itemUI.OnItemDroppedOn -= HandleSwap;
+            itemUI.OnItemEndDrag -= HandleEndDrag;
+            itemUI.OnRightMouseBtnClick -= HandleShowItemActionMenu;
+        }
+
     }
 
     public void Initialise(int size)
@@ -144,7 +165,7 @@ public class BackpackUI : MonoBehaviour
     {
         ResetDragItem();
         DeselectAllItems();
-        itemDetailsUI.ResetItemDetails();
+        detailsUI.ResetDetails();
     }
 
     public void DeselectAllItems()

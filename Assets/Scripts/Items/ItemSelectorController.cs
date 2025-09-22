@@ -23,6 +23,13 @@ public class ItemSelectorController : MonoBehaviour
         SetUpUI();
     }
 
+    private void OnDestroy()
+    {
+        itemOptions.OnItemOptionsUpdated -= UpdateItemSelectorUI;
+        itemSelectorUI.OnItemSelected -= HandleItemSelected;
+        itemSelectorUI.OnContinue -= HandleContinue;
+    }
+
     private void SetUpUI()
     {
         itemSelectorUI.Initialise(3);

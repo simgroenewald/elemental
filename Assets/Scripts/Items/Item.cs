@@ -51,6 +51,12 @@ public class Item : MonoBehaviour
         return true;
     }
 
+    internal void EnablePickup()
+    {
+        pickupLocked = false;
+        SetCollidersEnabled(true);  // prevent re-entry this frame
+    }
+
     private void SetCollidersEnabled(bool enabled)
     {
         var collider = GetComponent<Collider2D>();

@@ -175,15 +175,15 @@ public class Ability
                     attackCountModifier.counter = 0;
                     if (attackCountModifier.statType == StatType.PhysicalDamageBonus && !abilityDetails.isMagical)
                     {
-                        modifierAdditinalDamage = HelperUtilities.GetModifyAmountResult(damage, attackCountModifier.val, attackCountModifier.isPercentage);
+                        modifierAdditinalDamage += HelperUtilities.GetModifyAmountResult(damage, attackCountModifier.val, attackCountModifier.isPercentage);
                     }
                     else if (attackCountModifier.statType == StatType.MagicalDamageBonus && abilityDetails.isMagical)
                     {
-                        modifierAdditinalDamage = HelperUtilities.GetModifyAmountResult(damage, attackCountModifier.val, attackCountModifier.isPercentage);
+                        modifierAdditinalDamage += HelperUtilities.GetModifyAmountResult(damage, attackCountModifier.val, attackCountModifier.isPercentage);
                     }
                     else if (attackCountModifier.statType == StatType.CritChance)
                     {
-                        modifierAdditinalDamage = ApplyCritDamage(damage, (int)attackCountModifier.val);
+                        modifierAdditinalDamage += ApplyCritDamage(damage, (int)attackCountModifier.val);
                     }
                 }
                 else

@@ -23,23 +23,40 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
     public Dungeon GenerateDungeon(int seed, LevelSettingSO level)
     {
         UnityEngine.Random.InitState(seed);
+        Dungeon dungeon = null;
         // Generated dungeon overall layout
-        List<DungeonRoom> dungeonRooms = dungeonLayoutGenerator.GenerateDungeonLayout(level);
+        bool solved = false;
+        while(!solved)
+        {
+            List<DungeonRoom> dungeonRooms = dungeonLayoutGenerator.GenerateDungeonLayout(level);
 
-        GenerateStructuredRooms(dungeonRooms);
-        List<Connector> connectors = GenerateConnectors(dungeonRooms);
-        GenerateStructuredDoors(dungeonRooms);
-        PopulateRoomTiles(dungeonRooms, structureToGridMapper);
-        PopulateOpenDoorTiles(dungeonRooms, structureToGridMapper);
-        PopulateConnectorTiles(connectors, structureToGridMapper);
+            GenerateStructuredRooms(dungeonRooms);
+            List<Connector> connectors = GenerateConnectors(dungeonRooms);
+            GenerateStructuredDoors(dungeonRooms);
+            bool roomsSolved = PopulateRoomTiles(dungeonRooms, structureToGridMapper);
+            if (!roomsSolved)
+            {
+                seed = UnityEngine.Random.Range(2000, 10000);
+                UnityEngine.Random.InitState(seed);
+                Clear();
+                continue;
+            } else
+            {
+                solved = true;
+            }
 
-        //GameObject dungeonParent = new GameObject("Dungeon");
+            PopulateOpenDoorTiles(dungeonRooms, structureToGridMapper);
+            PopulateConnectorTiles(connectors, structureToGridMapper);
 
-        CreateDungeonCollisionLayer(dungeonRooms, connectors);
+            //GameObject dungeonParent = new GameObject("Dungeon");
 
-        DrawDungeonTemplateTiles(dungeonRooms, connectors);
+            CreateDungeonCollisionLayer(dungeonRooms, connectors);
 
-        Dungeon dungeon = new Dungeon(dungeonRooms, connectors, dungeonLayers, seed);
+            DrawDungeonTemplateTiles(dungeonRooms, connectors);
+
+            dungeon = new Dungeon(dungeonRooms, connectors, dungeonLayers, seed);
+
+        }
         return dungeon;
     }
 
@@ -136,7 +153,7 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
         return connectorGenerator.GenerateConnectors(dungeonRooms, 3); ;
     }
 
-    public void PopulateRoomTiles(List<DungeonRoom> dungeonRooms, StructureTypeToGridMapperSO structureToGridMapper)
+    public bool PopulateRoomTiles(List<DungeonRoom> dungeonRooms, StructureTypeToGridMapperSO structureToGridMapper)
     {
         structureToGridMapper.structureTypeToGridDict = structureToGridMapper.GetStructureTypeToGridDict();
 
@@ -157,20 +174,25 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
             WaveFunctionCollapse2 wfc;
             if (dungeonRoom.theme == ElementTheme.Air)
             {
-                wfc = new WaveFunctionCollapse2(dungeonRoom.structure.structureTiles, airRoomProperties, 10);
+                wfc = new WaveFunctionCollapse2(dungeonRoom.structure.structureTiles, airRoomProperties, 3);
             } else if (dungeonRoom.theme == ElementTheme.Earth) 
             {
-                wfc = new WaveFunctionCollapse2(dungeonRoom.structure.structureTiles, earthRoomProperties, 10);
+                wfc = new WaveFunctionCollapse2(dungeonRoom.structure.structureTiles, earthRoomProperties, 3);
             } else if (dungeonRoom.theme == ElementTheme.Fire)
             {
-                wfc = new WaveFunctionCollapse2(dungeonRoom.structure.structureTiles, fireRoomProperties, 10);
+                wfc = new WaveFunctionCollapse2(dungeonRoom.structure.structureTiles, fireRoomProperties, 3);
             } else
             {
-                wfc = new WaveFunctionCollapse2(dungeonRoom.structure.structureTiles, waterRoomProperties, 10);
+                wfc = new WaveFunctionCollapse2(dungeonRoom.structure.structureTiles, waterRoomProperties, 3);
             }
 
-            wfc.PopulateOutputCells();
+            bool solved = wfc.PopulateOutputCells();
+            if (!solved)
+            {
+                return false;
+            }
         }
+        return true;
     }
 
     public void PopulateOpenDoorTiles(List<DungeonRoom> dungeonRooms, StructureTypeToGridMapperSO structureToGridMapper)
@@ -309,7 +331,7 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
 
             if (child.name != "Grid" && child.name != "Environment")
             {
-                Destroy(child.gameObject);
+                DestroyImmediate(child.gameObject);
             }
         }
         if (dungeonLayers)

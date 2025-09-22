@@ -1,17 +1,13 @@
-using DarkPixelRPGUI.Scripts.UI.Equipment;
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
-using static UnityEngine.Rendering.DebugUI;
 
 public class AbilitySelectorUI : MonoBehaviour
 {
     [SerializeField] private AbilityUI abilityUIPrefab;
     [SerializeField] private RectTransform abilities;
-    [SerializeField] private ItemDetailsUI itemDetailsUI;
+    [SerializeField] private DetailsUI detailsUI;
     [SerializeField] private ActionKeysSO actionKeys;
     List<AbilityUI> abilityUIList = new List<AbilityUI>();
 
@@ -20,7 +16,7 @@ public class AbilitySelectorUI : MonoBehaviour
 
     private void Awake()
     {
-        itemDetailsUI.ResetItemDetails();
+        detailsUI.ResetDetails();
     }
 
     private void Update()
@@ -46,6 +42,14 @@ public class AbilitySelectorUI : MonoBehaviour
             abilityUI.InitialiseControl(actionBtnTxt);
             abilityUIList.Add(abilityUI);
             abilityUI.OnAbilityClicked += HandleAbilitySelected;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        for (int i = 0; i < abilityUIList.Count; i++)
+        {
+            abilityUIList[i].OnAbilityClicked -= HandleAbilitySelected;
         }
     }
 
@@ -84,7 +88,7 @@ public class AbilitySelectorUI : MonoBehaviour
     public void Unfocus()
     {
         DeselectAllAbilities();
-        itemDetailsUI.ResetItemDetails();
+        detailsUI.ResetDetails();
     }
 
     public void DeselectAllAbilities()
@@ -97,6 +101,7 @@ public class AbilitySelectorUI : MonoBehaviour
 
     internal void ResetAllAbilities()
     {
+        detailsUI.ResetDetails();
         foreach (var abilityUI in abilityUIList)
         {
             abilityUI.ResetSlot();

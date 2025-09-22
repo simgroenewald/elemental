@@ -610,8 +610,8 @@ PolygonCollider2D:
       - {x: -0.095016, y: 0.33406323}
       - {x: -0.15585518, y: 0.26314545}
       - {x: -0.14753056, y: 0.09270514}
-      - {x: -0.08359808, y: 0.093423255}
-      - {x: 0.09993327, y: 0.08091116}
+      - {x: -0.0925302, y: 0.004102029}
+      - {x: 0.111098416, y: -0.010643095}
       - {x: 0.10301733, y: 0.17222004}
   m_UseDelaunayMesh: 0
 --- !u!50 &6956750248866094596
@@ -906,6 +906,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   backpack: {fileID: 11400000, guid: 9ecb956214851bc418c9982e8d2b043b, type: 2}
   itemCollectSound: {fileID: 11400000, guid: 4ab07462f854fa04386ba0c81c09bd1c, type: 2}
+  polygonCollider: {fileID: 4084375577826455659}
 --- !u!114 &8045889658126868808
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -931,7 +932,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   backpackUI: {fileID: 2785830387788808169, guid: 8680d9127b161ac4a900c6dc1f303980, type: 3}
-  itemDetails: {fileID: 8097006128307456591, guid: 079c2d80e46be7c4ea350c19baf35dd8, type: 3}
+  detailsUI: {fileID: 0}
   backpack: {fileID: 11400000, guid: 9ecb956214851bc418c9982e8d2b043b, type: 2}
   initialItems:
   - quantity: 2
@@ -1049,7 +1050,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilitySelectorUI: {fileID: 0}
   abilityUnlockedUI: {fileID: 0}
-  itemDetails: {fileID: 0}
+  details: {fileID: 0}
   actionKeys: {fileID: 11400000, guid: 35e2fa1f44f721842a51f83d4ac8d880, type: 2}
   abilityUnlockedSound: {fileID: 11400000, guid: c67e23104011a99419ebbc0a598e94e7, type: 2}
   initialItems: []

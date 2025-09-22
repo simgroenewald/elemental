@@ -22,6 +22,6 @@ MonoBehaviour:
   <ItemPrefab>k__BackingField: {fileID: 8996314221050668956, guid: 6d3dacd27b9802b4992cb30b07882177, type: 3}
   modifiersData:
   - statModifier: {fileID: 11400000, guid: 468695d91446670468eccf0ae434f3e4, type: 2}
-    statType: 10
-    value: 15
+    statType: 1
+    value: 20
     isPercentage: 1

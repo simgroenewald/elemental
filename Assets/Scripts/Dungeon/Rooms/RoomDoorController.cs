@@ -31,7 +31,10 @@ public class RoomDoorController : MonoBehaviour
             foreach (var door in dungeonRoom.doorways)
             {
                 if (GameManager.Instance.state != GameState.bossRoom && door.isBossRoomDoorway)
+                {
+                    door.Close(dungeonRoom.structure.tilemapLayers);
                     continue;
+                }
                 door.Open(dungeonRoom.structure.tilemapLayers);
             }
         }

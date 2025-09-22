@@ -33,10 +33,9 @@ public class EnemyProvider : MonoBehaviour
 
     public List<Enemy> SpawnEnemies(DungeonRoom room, Transform transform)
     {
-        SimpleEnemyInitialiser enemyInitialiser = GetComponent<SimpleEnemyInitialiser>();
         Transform roomTransform = GetComponent<Transform>();
 
-        int enemyCount = GetCount(room.roomSize);
+        int enemyCount = GetEnemyCount(room.structure.floorPositions.Count);
 
         List<Enemy> enemies = new List<Enemy>();
 
@@ -82,20 +81,49 @@ public class EnemyProvider : MonoBehaviour
         enemyGO.transform.rotation = Quaternion.identity;
 
         Enemy enemy = enemyGO.GetComponent<Enemy>();
+
+        Material dimmedMaterial = new Material(GameResources.Instance.dimmedMaterial);
+        SpriteRenderer spriteRenderer = enemyGO.GetComponent<SpriteRenderer>();
+        spriteRenderer.material = dimmedMaterial;
+        
         enemy.SetRoom(room);
         return enemy;
     }
 
-    private int GetCount(RoomSizeSO roomSize)
+    private int GetCount(DungeonRoom room)
     {
-        foreach (var enemySpawnCount in enemySpawnCounts)
-        {
-            if (roomSize == enemySpawnCount.roomSizeSO)
-            {
-                return enemySpawnCount.count;
-            }
+        int enemyCount = room.structure.floorPositions.Count / 200;
+        if (enemyCount <= 0) {
+            return 1;
         }
-        return 0;
+        return enemyCount;
+    }
+
+    public static int GetEnemyCount(
+    int tileCount,
+    float density = 0.02f,     // overall scale
+    float exponent = 0.80f,    // <1.0 => diminishing returns
+    int minEnemies = 4,        // ensure small rooms still feel occupied
+    int maxEnemies = 12        // cap huge rooms
+)
+    {
+        // Optional: ignore the first few tiles as "free space"
+        const int freeBuffer = 30;
+        float effectiveTiles = Mathf.Max(0, tileCount - freeBuffer);
+
+        // Sublinear growth
+        float raw = density * Mathf.Pow(effectiveTiles, exponent);
+
+        // Baseline body count
+        raw += minEnemies - 0.5f; // shift so minEnemies is common but not guaranteed
+
+        // Probabilistic rounding (stochastic)
+        int flo = Mathf.FloorToInt(raw);
+        float frac = raw - flo;
+        int result = flo + (UnityEngine.Random.value < frac ? 1 : 0);
+
+        // Clamp
+        return Mathf.Clamp(result, minEnemies, maxEnemies);
     }
 
 }

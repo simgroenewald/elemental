@@ -130,7 +130,30 @@ public class DungeonRoom : MonoBehaviour
 
     public Vector2Int GetValidSpawnPosition()
     {
-        return structure.floorPositions.ElementAt(UnityEngine.Random.Range(0, structure.floorPositions.Count));
+        int tryCount = 5;
+        bool validPos = false;
+        Vector2Int position = new Vector2Int();
+        while (tryCount > 0 && validPos==false)
+        {
+            position = structure.floorPositions.ElementAt(UnityEngine.Random.Range(0, structure.floorPositions.Count));
+            validPos = CheckValidSpawnPos(position);
+            tryCount--;
+        }
+        return position;
+    }
+
+    private bool CheckValidSpawnPos(Vector2Int position)
+    {
+        foreach (var door in doorways)
+        {
+            foreach(var tile in door.structure.floorPositions)
+            {
+                // Manhattan distance (grid steps)
+                int dist = Mathf.Abs(position.x - tile.x) + Mathf.Abs(position.y - tile.y);
+                if (dist < 5) return false;
+            }
+        }
+        return true;
     }
 
     private void SetName()

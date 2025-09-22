@@ -3361,7 +3361,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &883778741
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4126,9 +4126,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0
-    width: 1
-    height: 1
+    y: 0.23518518
+    width: 0.3932292
+    height: 0.39322916
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -5394,7 +5394,7 @@ MonoBehaviour:
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
-  m_ScreenMatchMode: 0
+  m_ScreenMatchMode: 2
   m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
@@ -6600,7 +6600,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   abilityUIPrefab: {fileID: 8250541827627164890, guid: 9cb0f876f9dd6e147833ae8f42f26f60, type: 3}
   abilities: {fileID: 1516698568}
-  itemDetailsUI: {fileID: 1843689104400888206}
+  detailsUI: {fileID: 1843689104400888206}
   actionKeys: {fileID: 11400000, guid: 35e2fa1f44f721842a51f83d4ac8d880, type: 2}
 --- !u!114 &1516698574
 MonoBehaviour:
@@ -8058,7 +8058,7 @@ MonoBehaviour:
   previousState: 0
   currentDungeonRoom: {fileID: 0}
   backpackUI: {fileID: 4753239401390923751}
-  itemDetailsUI: {fileID: 1843689104400888206}
+  detailsUI: {fileID: 1843689104400888206}
   abilitySelectorUI: {fileID: 1516698573}
   abilityUnlockedUI: {fileID: 1079409159}
   pauseMenuUI: {fileID: 141073215}
@@ -9373,10 +9373,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 418b9ec97f76ccb4795509f70f2ce56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemImage: {fileID: 4564514428056360199}
-  itemName: {fileID: 6197011107898259361}
-  itemDescription: {fileID: 3026697824939645270}
-  itemDetailsGO: {fileID: 7111895847722445258}
+  image: {fileID: 4564514428056360199}
+  descName: {fileID: 6197011107898259361}
+  description: {fileID: 3026697824939645270}
+  detailsGO: {fileID: 7111895847722445258}
 --- !u!224 &1961904190503378335
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10504,7 +10504,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemUIPrefab: {fileID: 564417196181983104, guid: 1f7ee7a3e0695ef4598681e3f09045fe, type: 3}
   backpack: {fileID: 2390020750246431887}
-  itemDetailsUI: {fileID: 1843689104400888206}
+  detailsUI: {fileID: 1843689104400888206}
   dragItemUI: {fileID: 541635702012776713}
   itemActionUI: {fileID: 478300594}
   actionKeys: {fileID: 11400000, guid: c60629b39c8254c4983332fc9fb7020b, type: 2}
@@ -11464,7 +11464,7 @@ GameObject:
   - component: {fileID: 482772779851647709}
   - component: {fileID: 1843689104400888206}
   m_Layer: 5
-  m_Name: ItemDetailsUI
+  m_Name: DetailsUI
   m_TagString: ItemDetails
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

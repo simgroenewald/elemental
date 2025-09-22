@@ -16,7 +16,7 @@ MonoBehaviour:
   description: 
   icon: {fileID: 0}
   attackAnimationTrigger: isAttacking
-  range: 1.5
+  range: 1.2
   abilityAttackSound: {fileID: 11400000, guid: 0a5ed9483c85b6d48b6bd00c6a9efd53, type: 2}
   abilityActivateSound: {fileID: 0}
   isBaseAbility: 1
@@ -55,6 +55,6 @@ MonoBehaviour:
   _projectileSpeed: 0
   _coolDownTime: 0
   _critChance: 0
-  _range: 1.5
+  _range: 1.2
   _manaCost: 0
   triggerKey: 0
