@@ -44,10 +44,7 @@ public class Propagator
         // If it isnt then loop through each direction
         foreach (WFCDirection direction in Enum.GetValues(typeof(WFCDirection)))
         {
-            if (waveCell.Position == new Vector2Int(58, 41))
-            {
-                Debug.Log("Gotcha!!");
-            }
+
             // Get the pos of the cell in that direction
             WaveCell compWaveCell = waveCell.GetNeigbouringCell(direction, outputCells);
             // Check if that cell exists
@@ -59,10 +56,6 @@ public class Propagator
                 continue;
             }
 
-            if (compWaveCell.Position.Equals(new Vector2Int(58, 41)))
-            {
-                Debug.Log("Gotcha!!");
-            }
 
             // If it does then update its possible tiles
             bool updated = UpdatePossibleTiles(compWaveCell, waveCell.PossibleTiles, direction);
@@ -148,10 +141,6 @@ public class Propagator
             {
                 int index = WFCUtils.SelectSolutionFromIndex(waveCell.PossibleTiles);
 
-                if (waveCell.TileType.Equals(TileType.WallFront))
-                {
-                    Debug.Log("Gotcha!!");
-                }
                 bool valueAllowed = CheckForCollisions(waveCell, index);
                 if (valueAllowed)
                 {
@@ -181,10 +170,6 @@ public class Propagator
     public void CollapseCellNew(WaveCell waveCell)
     {
 
-        if (waveCell.Position == new Vector2Int(58, 41))
-        {
-            Debug.Log("Gotcha");
-        }
         HashSet<int> possibleTiles = waveCell.PossibleTiles;
 
         if (possibleTiles.Count == 0)

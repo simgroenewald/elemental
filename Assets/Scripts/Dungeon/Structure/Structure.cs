@@ -39,10 +39,6 @@ public class Structure: MonoBehaviour
 
                 Vector2Int search = new Vector2Int(121, 26);
 
-                if (pos == search)
-                {
-                    Debug.Log("Gotcha");
-                }
 
                 if (floorPositions.Contains(pos))
                 {
@@ -164,10 +160,6 @@ public class Structure: MonoBehaviour
 
                 Vector2Int search = new Vector2Int(-9, 92);
 
-                if (pos == search)
-                {
-                    Debug.Log("Gotcha");
-                }
 
                 TileType tileType = GetTileType(pos, floorPositions);
                 if (tileType == TileType.None)

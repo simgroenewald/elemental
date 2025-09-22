@@ -17,10 +17,6 @@ public class RulesGenerator
 
         foreach (var hash in mapProperties.IndexToCell.Keys)
         {
-            if (hash == 409874991)
-            {
-                Debug.Log("Gotcha");
-            }
             TileRules[hash] = new Dictionary<WFCDirection, HashSet<int>>();
             foreach (WFCDirection dir in System.Enum.GetValues(typeof(WFCDirection)))
             {
@@ -32,15 +28,9 @@ public class RulesGenerator
     {
         foreach (var position in mapProperties.PositionToIndex.Keys)
         {
-            if (position == new Vector2Int(-38, -1))
-            {
-                Debug.Log("Gotcha");
-            }
+
             var hash = mapProperties.PositionToIndex[position];
-            if (hash == 409874991)
-            {
-                Debug.Log("Gotcha");
-            }
+
             TryAddNeighbor(mapProperties, position.x, position.y + 1, hash, WFCDirection.Up);
             TryAddNeighbor(mapProperties, position.x, position.y - 1, hash, WFCDirection.Down);
             TryAddNeighbor(mapProperties, position.x - 1, position.y, hash, WFCDirection.Left);

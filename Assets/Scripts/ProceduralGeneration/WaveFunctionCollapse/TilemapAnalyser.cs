@@ -31,10 +31,6 @@ public class TilemapAnalyser
         {
             for (int x = bounds.xMin; x < bounds.xMax; x++)
             {
-                if (x == -35 && y == 13)
-                {
-                    Debug.Log("Gotcha");
-                }
 
                 Vector3Int pos = new Vector3Int(x, y, 0);
 
@@ -110,10 +106,7 @@ public class TilemapAnalyser
                 // Store tile index in flattened array (row-major order)
                 //Debug.Log("Adding key");
                 tileIndices.Add(key);
-                if (x == -38 && y == 0)
-                {
-                    Debug.Log("Gotcha");
-                }
+
                 positionToIndex[new Vector2Int(x, y)] = key;
             }
         }

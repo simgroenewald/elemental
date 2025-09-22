@@ -50,10 +50,6 @@ public class WaveFunctionCollapse2
                     solved = true;
                     break;
                 }
-                if (waveCell.Position.Equals(new Vector2Int(100, 107)))
-                {
-                    Debug.Log("Gotcha");
-                }
                 propagator.CollapseCellNew(waveCell);
                 propagator.Propagate(waveCell);
                 propagator.propagationSet.Clear();

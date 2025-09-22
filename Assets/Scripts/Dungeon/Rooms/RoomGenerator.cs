@@ -75,10 +75,6 @@ using UnityEngine.Tilemaps;
             for (var y = roomBounds.position.y; y < roomBounds.position.y + roomBounds.size.y; y++)
             {
                 Vector2Int pos = new Vector2Int(x, y);
-                if (pos == new Vector2Int(-9, 92))
-                {
-                    Debug.Log("gotcha");
-                }
                 Vector2Int up = pos + Vector2Int.up;
                 Vector2Int down = pos + Vector2Int.down;
                 Vector2Int left = pos + Vector2Int.left;
@@ -143,10 +139,7 @@ using UnityEngine.Tilemaps;
 
     private static void AddFloorPosition(BoundsInt roomBounds, HashSet<Vector2Int> floorPositions, Vector2Int newPos)
     {
-        if (newPos == new Vector2Int(-9, 93))
-        {
-            Debug.Log("gotcha");
-        }
+
         if (newPos.x > roomBounds.position.x + 1 && 
             newPos.x < roomBounds.position.x -1 + roomBounds.size.x && 
             newPos.y > roomBounds.position.y + 1 && 
